@@ -41,11 +41,6 @@ const projects = [
     }
 ];
 
-/**
- * @component CaseStudyVault
- * @description Rearchitected to use GSAP Pinning. 
- * This fixes the messy reverse-scroll artifacts by controlling the stack via a single frame-synced timeline.
- */
 export default function CaseStudyVault() {
     const sectionRef = useRef<HTMLElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -56,37 +51,51 @@ export default function CaseStudyVault() {
 
         const cards = cardsRef.current.filter(Boolean) as HTMLDivElement[];
 
-        // --- MOTION: Master Stacking Timeline ---
+        // --- MOTION: Linear Sync Stacking ---
+        // We use a duration that matches the number of projects exactly.
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: sectionRef.current,
                 start: 'top top',
-                end: `+=${projects.length * 100}%`, // Scroll height based on project count
-                pin: true, // Pin the entire section
-                scrub: 1, // Smoothly link to scroll
-                anticipatePin: 1,
+                end: `+=${projects.length * 100}%`, // 100% VH per card
+                pin: true,
+                scrub: true, // Direct linear link
             }
         });
 
-        // Initialize cards state: All but the first are down
+        // Initial setup
         gsap.set(cards.slice(1), { yPercent: 100 });
 
+        // Build the stack logic:
+        // Duration 1.0 = Card 0 is visible.
+        // Duration 2.0 = Card 1 slides in, Card 0 recedes.
+        // Duration 3.0 = Card 2 slides in, Card 1 recedes.
+
         cards.forEach((card, i) => {
-            if (i === projects.length - 1) return; // Last card doesn't need to recede or have a next card slide over it
+            if (i === 0) {
+                // First card just stays until the next one starts (at time 1.0)
+                tl.to({}, { duration: 1 });
+            } else {
+                const prevCard = cards[i - 1];
 
-            const nextCard = cards[i + 1];
-
-            // 1. Current card recedes (Scale down & Dim)
-            // 2. Next card slides in over it
-            tl.to(card, {
-                scale: 0.9,
-                opacity: 0.4,
-                ease: 'none'
-            }, i) // Start at time 'i'
-                .to(nextCard, {
-                    yPercent: 0,
+                // Transition: Prev card recedes, Current card enters
+                tl.to(prevCard, {
+                    scale: 0.9,
+                    opacity: 0.4,
+                    duration: 1,
                     ease: 'none'
-                }, i); // Sync with current card recession
+                }, i) // Start at time i
+                    .to(card, {
+                        yPercent: 0,
+                        duration: 1,
+                        ease: 'none'
+                    }, i);
+
+                // Hold this card visible for 1 unit if it's not the last one
+                if (i < projects.length - 1) {
+                    tl.to({}, { duration: 1 });
+                }
+            }
         });
 
         /* --- MOTION: Section Header Reveal --- */
@@ -128,13 +137,11 @@ export default function CaseStudyVault() {
                         >
                             <div className="group relative w-full h-full max-w-6xl aspect-[16/9] md:aspect-auto md:h-[75vh] bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl flex flex-col md:flex-row gap-12 transition-all duration-700 hover:border-white/20 overflow-hidden">
 
-                                {/* Background Accent Glow */}
                                 <div
                                     className="absolute -right-24 -top-24 w-96 h-96 rounded-full opacity-5 blur-[100px] transition-colors duration-700 group-hover:opacity-10"
                                     style={{ backgroundColor: project.color }}
                                 />
 
-                                {/* Left: Content */}
                                 <div className="w-full md:w-1/2 flex flex-col justify-center relative z-10">
                                     <span
                                         className="font-mono text-xs tracking-[0.3em] uppercase mb-4"
@@ -174,7 +181,6 @@ export default function CaseStudyVault() {
                                     </div>
                                 </div>
 
-                                {/* Right: Visual */}
                                 <div className="hidden md:block w-1/2 relative group-hover:scale-[1.02] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] transform-gpu">
                                     <div className="w-full h-full rounded-2xl bg-[#050505] border border-white/5 overflow-hidden shadow-Inner shadow-white/5 relative">
                                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent transform -translate-x-full group-hover:translate-x-full duration-[1500ms] transition-transform" />
