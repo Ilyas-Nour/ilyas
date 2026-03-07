@@ -104,7 +104,7 @@ export default function CaseStudyVault() {
     }, { scope: sectionRef });
 
     return (
-        <section ref={sectionRef} id="vault" className="relative w-full min-h-screen bg-[#050505] overflow-hidden z-40">
+        <section ref={sectionRef} id="vault" className="relative w-full min-h-screen bg-[#050505] overflow-hidden z-50">
             <div className="max-w-7xl w-full mx-auto px-6 py-20 h-full flex flex-col">
 
                 {/* Section Header */}
