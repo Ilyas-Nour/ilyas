@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/motion/SmoothScroll";
 import CustomCursor from "@/components/motion/CustomCursor";
 import GlassNav from "@/components/ui/GlassNav";
 import PageTransition from "@/components/motion/PageTransition";
+import DataDecompressionLoader from "@/components/motion/DataDecompressionLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#050505] text-white selection:bg-[#6610f2] selection:text-white`}
       >
+        <DataDecompressionLoader />
         <SmoothScroll>
           <CustomCursor />
           <GlassNav />

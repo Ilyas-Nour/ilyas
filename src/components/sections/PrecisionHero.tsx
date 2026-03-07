@@ -1,8 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import AmbientLightCanvas from '@/components/canvas/AmbientLightCanvas';
+import AmazingTypography from '@/components/motion/AmazingTypography';
+
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 /**
  * @component: PrecisionHero
@@ -10,30 +18,52 @@ import AmbientLightCanvas from '@/components/canvas/AmbientLightCanvas';
  * Features stark typography and a subtle 3D ambient background.
  */
 export default function PrecisionHero() {
+    const heroRef = useRef<HTMLElement>(null);
+    const textRef = useRef<HTMLHeadingElement>(null);
+
+    useGSAP(() => {
+        /* --- MOTION: Hero Parallax Scroll --- */
+        if (textRef.current && heroRef.current) {
+            gsap.to(textRef.current, {
+                y: -150, // Subtle upward movement
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: heroRef.current,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1, // Momentum-based scrub
+                }
+            });
+        }
+    }, { scope: heroRef });
+
     return (
-        <section className="relative w-full h-screen flex flex-col justify-center overflow-hidden">
+        <section ref={heroRef} className="relative w-full h-screen flex flex-col justify-center overflow-hidden">
             {/* 3D Background */}
             <AmbientLightCanvas />
 
             {/* Foreground Content */}
             <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center h-full pointer-events-none">
 
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                >
-                    <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-medium tracking-tighter leading-[1.1] text-white">
-                        Ilyas Nour <span className="text-neutral-500">—</span> <br className="hidden md:block" />
-                        Full-Stack Engineer.
-                    </h1>
-                </motion.div>
+                <div className="relative z-[15]">
+                    <AmazingTypography
+                        text="Ilyas Nour —"
+                        className="text-5xl md:text-7xl lg:text-[6rem] font-medium tracking-tighter leading-[1.1] text-white"
+                        delay={1.0}
+                    />
+                    <AmazingTypography
+                        as="h2"
+                        text="Full-Stack Engineer."
+                        className="text-5xl md:text-7xl lg:text-[6rem] font-medium tracking-tighter leading-[1.1] text-neutral-500"
+                        delay={1.2}
+                    />
+                </div>
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-                    className="mt-8 max-w-2xl"
+                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 1.6 }}
+                    className="mt-12 max-w-2xl"
                 >
                     <p className="text-lg md:text-xl text-neutral-400 font-medium leading-relaxed">
                         Specializing in Laravel, SQL, and Architecture. <br className="hidden md:block" />
