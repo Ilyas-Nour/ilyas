@@ -80,7 +80,7 @@ export default function ContactFooter() {
     }, { scope: containerRef });
 
     return (
-        <section ref={containerRef} id="contact" className="relative w-full min-h-screen bg-[#050505] flex flex-col items-center justify-center px-6 py-32 overflow-hidden gpu-accelerated">
+        <section ref={containerRef} id="contact" className="relative w-full min-h-screen bg-[#050505] flex flex-col items-center justify-center px-6 py-32 overflow-hidden gpu-accelerated z-50">
 
             {/* Background Kinetic Dots (Subtle) */}
             <div className="absolute inset-0 opacity-20 pointer-events-none">

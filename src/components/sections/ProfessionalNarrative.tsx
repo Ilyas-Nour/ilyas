@@ -16,7 +16,7 @@ if (typeof window !== 'undefined') {
  * Refactored to use GSAP for high-end Mac-style Scale & Blur reveals.
  */
 export default function ProfessionalNarrative() {
-    const containerRef = useRef<HTMLElement>(null);
+    const sectionRef = useRef<HTMLElement>(null);
 
     useGSAP(() => {
         /* --- MOTION: Section Entry Logic --- */
@@ -46,10 +46,10 @@ export default function ProfessionalNarrative() {
                 }
             );
         });
-    }, { scope: containerRef });
+    }, { scope: sectionRef });
 
     return (
-        <section ref={containerRef} id="about" className="relative w-full min-h-screen flex items-center justify-center bg-[#050505] py-32 px-6">
+        <section ref={sectionRef} className="relative w-full min-h-[50vh] bg-[#050505] py-24 md:py-32 px-6 overflow-hidden z-20">
             <div className="max-w-4xl w-full mx-auto">
 
                 {/* Section Header */}

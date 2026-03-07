@@ -139,7 +139,7 @@ export default function IntelligenceSkills() {
     }, { scope: sectionRef });
 
     return (
-        <section ref={sectionRef} id="skills" className="relative w-full min-h-screen flex items-center justify-center bg-[#050505] py-32 px-6 overflow-hidden gpu-accelerated">
+        <section ref={sectionRef} id="skills" className="relative w-full min-h-screen flex items-center justify-center bg-[#050505] py-32 px-6 overflow-hidden gpu-accelerated z-30">
             <div className="max-w-6xl w-full mx-auto">
 
                 {/* Section Header */}
