@@ -43,18 +43,42 @@ const projects = [
 
 function ProjectCard({ project, index }: { project: typeof projects[0], index: number }) {
     const cardRef = useRef<HTMLDivElement>(null);
+    const innerCardRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(() => {
+        if (!innerCardRef.current || !cardRef.current) return;
+
+        // --- MOTION: Scale down previous card as next one comes over ---
+        // This prevents the "messy overlap" by visually receding the underlying card.
+        // We target the current card's exit or the next card's entrance.
+        // Actually, it's easier to trigger the scale-down on the card itself when it hits the top.
+
+        gsap.to(innerCardRef.current, {
+            scale: 0.9,
+            opacity: 0.5,
+            scrollTrigger: {
+                trigger: cardRef.current,
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true,
+            }
+        });
+
+    }, { scope: cardRef });
 
     return (
         <div
             ref={cardRef}
-            className="project-card-container sticky top-[10vh] w-full min-h-[80vh] flex items-center justify-center mb-[10vh] gpu-accelerated"
+            className="project-card-container sticky top-[10vh] w-full min-h-[85vh] flex items-center justify-center mb-[10vh] gpu-accelerated"
             style={{ zIndex: index + 1 }}
         >
-            <div className="group relative w-full h-full max-w-6xl aspect-[16/9] md:aspect-auto md:h-[70vh] bg-neutral-900/40 border border-white/5 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row gap-12 transition-all duration-700 hover:border-white/10">
-
+            <div
+                ref={innerCardRef}
+                className="group relative w-full h-full max-w-6xl aspect-[16/9] md:aspect-auto md:h-[75vh] bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl flex flex-col md:flex-row gap-12 transition-all duration-700 hover:border-white/20 overflow-hidden"
+            >
                 {/* Background Accent Glow */}
                 <div
-                    className="absolute -right-24 -top-24 w-96 h-96 rounded-full opacity-10 blur-[100px] transition-colors duration-700 group-hover:opacity-20"
+                    className="absolute -right-24 -top-24 w-96 h-96 rounded-full opacity-5 blur-[100px] transition-colors duration-700 group-hover:opacity-10"
                     style={{ backgroundColor: project.color }}
                 />
 
@@ -158,7 +182,7 @@ export default function CaseStudyVault() {
                 </div>
 
                 {/* Stacking Cards Container */}
-                <div className="relative flex flex-col">
+                <div className="relative flex flex-col pb-[20vh]">
                     {projects.map((project, index) => (
                         <ProjectCard key={index} project={project} index={index} />
                     ))}
