@@ -96,7 +96,7 @@ function MagneticTile({ children }: { children: React.ReactNode }) {
     }, []);
 
     return (
-        <div ref={tileRef} className="skill-tile w-full relative perspective-1000 origin-center opacity-0 transform translate-y-12">
+        <div ref={tileRef} className="skill-tile w-full relative perspective-1000 origin-center opacity-0 transform translate-y-12 gpu-accelerated">
             {children}
         </div>
     );
@@ -139,7 +139,7 @@ export default function IntelligenceSkills() {
     }, { scope: sectionRef });
 
     return (
-        <section ref={sectionRef} id="skills" className="relative w-full min-h-screen flex items-center justify-center bg-[#050505] py-32 px-6 overflow-hidden">
+        <section ref={sectionRef} id="skills" className="relative w-full min-h-screen flex items-center justify-center bg-[#050505] py-32 px-6 overflow-hidden gpu-accelerated">
             <div className="max-w-6xl w-full mx-auto">
 
                 {/* Section Header */}

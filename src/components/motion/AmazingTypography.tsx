@@ -41,7 +41,7 @@ export default function AmazingTypography({
         // For each line, wrap the text in a div to serve as the animated element
         split.lines?.forEach(line => {
             const content = line.innerHTML;
-            line.innerHTML = `<div class="line-internal">${content}</div>`;
+            line.innerHTML = `<div class="line-internal gpu-accelerated">${content}</div>`;
         });
 
         const lines = textRef.current.querySelectorAll('.line-internal');

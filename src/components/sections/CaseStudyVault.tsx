@@ -47,7 +47,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
     return (
         <div
             ref={cardRef}
-            className="project-card-container sticky top-[10vh] w-full min-h-[80vh] flex items-center justify-center mb-[10vh]"
+            className="project-card-container sticky top-[10vh] w-full min-h-[80vh] flex items-center justify-center mb-[10vh] gpu-accelerated"
             style={{ zIndex: index + 1 }}
         >
             <div className="group relative w-full h-full max-w-6xl aspect-[16/9] md:aspect-auto md:h-[70vh] bg-neutral-900/40 border border-white/5 rounded-[2.5rem] p-8 md:p-16 backdrop-blur-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row gap-12 transition-all duration-700 hover:border-white/10">

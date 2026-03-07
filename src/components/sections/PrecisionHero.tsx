@@ -38,7 +38,7 @@ export default function PrecisionHero() {
     }, { scope: heroRef });
 
     return (
-        <section ref={heroRef} className="relative w-full h-screen flex flex-col justify-center overflow-hidden">
+        <section ref={heroRef} className="relative w-full h-screen flex flex-col justify-center overflow-hidden gpu-accelerated">
             {/* 3D Background */}
             <AmbientLightCanvas />
 

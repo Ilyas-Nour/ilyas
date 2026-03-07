@@ -27,9 +27,19 @@ body {
 /* Base custom utilities */
 .glass-panel {
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(10px);
+  /* Reduced from 16px for better Windows/Chrome performance */
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* --- PERFORMANCE: Hardware Acceleration --- */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  /* Promote to its own layer */
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .text-gradient {

@@ -7,7 +7,7 @@ import * as THREE from 'three';
 /**
  * @component: AmbientLightMesh
  * @description: A subtle, dark 3D mesh that reacts to mouse movement.
- * Creates a mature, 'ambient light' effect suitable for a top-tier IT portfolio.
+ * Optimized: Reduced geometry density and throttled ticker logic.
  */
 const AmbientLightMesh = () => {
     const meshRef = useRef<THREE.Mesh>(null);
@@ -28,16 +28,17 @@ const AmbientLightMesh = () => {
 
         materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
 
-        // Smoothly interpolate mouse position for a sophisticated, slow follow effect
+        // Throttled mouse interpolation for performance
         materialRef.current.uniforms.uMouse.value.lerp(
-            new THREE.Vector2(mouse.x * 0.5, mouse.y * 0.5),
-            0.05
+            new THREE.Vector2(mouse.x * 0.6, mouse.y * 0.6),
+            0.02 // Lower lerp factor = more stable rendering
         );
     });
 
     return (
         <mesh ref={meshRef}>
-            <planeGeometry args={[viewport.width, viewport.height, 128, 128]} />
+            {/* PERFORMANCE: Reduced vertices from 128x128 to 48x48 */}
+            <planeGeometry args={[viewport.width, viewport.height, 48, 48]} />
             <shaderMaterial
                 ref={materialRef}
                 uniforms={uniforms}
@@ -50,10 +51,10 @@ const AmbientLightMesh = () => {
                         vUv = uv;
                         vec3 pos = position;
                         
-                        // Subtle wave distortion based on time and mouse proximity
+                        // Optimized wave distortion
                         float dist = distance(uv, vec2(0.5) + uMouse);
-                        float wave = sin(dist * 10.0 - uTime) * 0.1;
-                        pos.z += wave * smoothstep(0.8, 0.0, dist);
+                        float wave = sin(dist * 8.0 - uTime * 0.5) * 0.08;
+                        pos.z += wave * smoothstep(1.0, 0.0, dist);
                         
                         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
                     }
@@ -64,23 +65,16 @@ const AmbientLightMesh = () => {
                     uniform vec2 uMouse;
                     
                     void main() {
-                        // Base monolith dark color
                         vec3 baseColor = vec3(0.02, 0.02, 0.02);
-                        
-                        // Subtle Electric Indigo highlight
                         vec3 highlightColor = vec3(0.4, 0.06, 0.95);
                         
-                        // Distance from mouse center
                         float dist = distance(vUv, vec2(0.5) + uMouse);
+                        float intensity = smoothstep(0.8, 0.0, dist) * 0.18;
                         
-                        // Soft, wide radial gradient for the ambient light
-                        float intensity = smoothstep(0.7, 0.0, dist) * 0.15;
-                        
-                        // Subtle noise/grain pattern
-                        float noise = fract(sin(dot(vUv * uTime, vec2(12.9898, 78.233))) * 43758.5453) * 0.02;
+                        // Simplified grain for performance
+                        float noise = fract(sin(dot(vUv, vec2(12.9898, 78.233))) * 43758.5453) * 0.015;
                         
                         vec3 finalColor = mix(baseColor, highlightColor, intensity) + noise;
-                        
                         gl_FragColor = vec4(finalColor, 1.0);
                     }
                 `}
@@ -93,7 +87,7 @@ const AmbientLightMesh = () => {
 export default function AmbientLightCanvas() {
     return (
         <div className="absolute inset-0 z-0 bg-[#050505] overflow-hidden pointer-events-none">
-            <Canvas camera={{ position: [0, 0, 1] }}>
+            <Canvas camera={{ position: [0, 0, 1] }} dpr={[1, 1.5]}> {/* Limit pixel ratio for performance */}
                 <AmbientLightMesh />
             </Canvas>
         </div>
