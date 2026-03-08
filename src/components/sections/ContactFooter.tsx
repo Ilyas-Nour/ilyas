@@ -1,32 +1,96 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useRef, useState, useMemo } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import * as THREE from 'three';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Github, Linkedin, Mail, ArrowUpRight, Copy, Check } from 'lucide-react';
 import AmazingTypography from '@/components/motion/AmazingTypography';
 
-if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-}
+/**
+ * @component GravityCore
+ * @description The central light source for the Gravity Well.
+ * Simulates a glowing, pulsating energy core using custom shaders.
+ */
+const GravityCore = () => {
+    const meshRef = useRef<THREE.Mesh>(null);
+    const materialRef = useRef<THREE.ShaderMaterial>(null);
+    const { viewport, mouse } = useThree();
+
+    const uniforms = useMemo(() => ({
+        uTime: { value: 0 },
+        uMouse: { value: new THREE.Vector2(0, 0) },
+        uIntensity: { value: 0.5 }
+    }), []);
+
+    useFrame((state) => {
+        if (!materialRef.current) return;
+        materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
+        materialRef.current.uniforms.uMouse.value.lerp(
+            new THREE.Vector2(mouse.x * viewport.width / 2, mouse.y * viewport.height / 2),
+            0.05
+        );
+    });
+
+    return (
+        <mesh ref={meshRef}>
+            <sphereGeometry args={[1.5, 64, 64]} />
+            <shaderMaterial
+                ref={materialRef}
+                uniforms={uniforms}
+                transparent={true}
+                vertexShader={`
+                    varying vec2 vUv;
+                    varying vec3 vNormal;
+                    varying vec3 vPosition;
+                    uniform float uTime;
+                    
+                    void main() {
+                        vUv = uv;
+                        vNormal = normalize(normalMatrix * normal);
+                        vPosition = (modelViewMatrix * vec4(position, 1.0)).xyz;
+                        
+                        vec3 pos = position;
+                        float pulse = sin(uTime * 2.0 + position.y * 2.0) * 0.1;
+                        pos += normal * pulse;
+                        
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                    }
+                `}
+                fragmentShader={`
+                    varying vec2 vUv;
+                    varying vec3 vNormal;
+                    varying vec3 vPosition;
+                    uniform float uTime;
+                    uniform vec2 uMouse;
+
+                    void main() {
+                        vec3 viewDir = normalize(-vPosition);
+                        float fresnel = pow(1.0 - dot(vNormal, viewDir), 2.0);
+                        
+                        vec3 coreColor = vec3(0.5, 0.3, 1.0); // Indigo
+                        vec3 outerColor = vec3(0.7, 0.5, 1.0); // Purple
+                        
+                        float pulse = (sin(uTime * 3.0) * 0.5 + 0.5) * 0.2 + 0.8;
+                        vec3 finalColor = mix(coreColor, outerColor, fresnel) * pulse;
+                        
+                        float alpha = smoothstep(0.0, 1.0, fresnel * 2.0);
+                        gl_FragColor = vec4(finalColor, alpha * 0.8);
+                    }
+                `}
+            />
+        </mesh>
+    );
+};
 
 /**
  * @component ContactFooter
- * @description Refined "Digital Monolith" contact section. 
- * Features a 3D tilting glass card, sophisticated masked reveals, and a sharp minimalist footer.
- */
-/**
- * @component ContactFooter
- * @description The final section of the portfolio. 
- * Leverages backdrop-blur for a glass-morphism aesthetic and provides 
- * clear calls-to-action for professional inquiries.
+ * @description Radical "Gravity Well" contact section. 
+ * Replaces the static UI with a physical simulation of orbiting satellites.
  */
 export default function ContactFooter() {
     const containerRef = useRef<HTMLElement>(null);
-    const cardRef = useRef<HTMLDivElement>(null);
     const [copied, setCopied] = useState(false);
-
     const email = "nour.ilyas@outlook.com";
 
     const copyEmail = () => {
@@ -35,179 +99,186 @@ export default function ContactFooter() {
         setTimeout(() => setCopied(false), 2000);
     };
 
-    useGSAP(() => {
-        if (!containerRef.current || !cardRef.current) return;
-
-        /* --- MOTION: Section Entry --- */
-        gsap.fromTo(cardRef.current,
-            { opacity: 0, scale: 0.9, y: 50, filter: 'blur(10px)' },
-            {
-                opacity: 1, scale: 1, y: 0, filter: 'blur(0px)',
-                duration: 1.5,
-                ease: 'power4.out',
-                scrollTrigger: {
-                    trigger: cardRef.current,
-                    start: 'top 85%',
-                }
-            }
-        );
-
-        /* --- MOTION: 3D Parallax Tilt --- */
-        const card = cardRef.current;
-        const xTo = gsap.quickTo(card, 'rotateY', { duration: 0.7, ease: 'power3.out' });
-        const yTo = gsap.quickTo(card, 'rotateX', { duration: 0.7, ease: 'power3.out' });
-
-        const handleMouseMove = (e: MouseEvent) => {
-            const rect = card.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const mouseX = e.clientX - centerX;
-            const mouseY = e.clientY - centerY;
-
-            // Constrain rotation
-            const rotateY = (mouseX / (rect.width / 2)) * 8; // Max 8 degrees
-            const rotateX = (mouseY / (rect.height / 2)) * -8; // Max -8 degrees
-
-            xTo(rotateY);
-            yTo(rotateX);
-        };
-
-        const handleMouseLeave = () => {
-            xTo(0);
-            yTo(0);
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        containerRef.current.addEventListener('mouseleave', handleMouseLeave);
-
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-        };
-    }, { scope: containerRef });
+    const socialLinks = [
+        { name: 'GitHub', icon: <Github size={24} />, url: 'https://github.com/Ilyas-Nour', color: '#818cf8', angle: 0 },
+        { name: 'LinkedIn', icon: <Linkedin size={24} />, url: '#', color: '#c084fc', angle: Math.PI * 0.66 },
+        { name: 'Email', icon: <Mail size={24} />, url: `mailto:${email}`, color: '#6366f1', angle: Math.PI * 1.33 }
+    ];
 
     return (
         <>
-            <section ref={containerRef} id="contact" className="relative w-full min-h-screen bg-[#050505] flex flex-col items-center justify-center px-6 py-20 overflow-hidden gpu-accelerated z-10">
+            <section ref={containerRef} id="contact" className="relative w-full h-[120vh] bg-[#030303] overflow-hidden z-10">
 
-                {/* Background Kinetic Dots (Subtle) */}
-                <div className="absolute inset-0 opacity-20 pointer-events-none">
-                    <div className="absolute inset-0 bg-[radial-gradient(#ffffff10_1px,transparent_1px)] [background-size:40px_40px]" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505]" />
+                {/* 3D Gravity Well Background */}
+                <div className="absolute inset-0 z-0">
+                    <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+                        <ambientLight intensity={0.5} />
+                        <GravityCore />
+                        {/* Starfield effect */}
+                        <points>
+                            <bufferGeometry>
+                                <bufferAttribute
+                                    attach="attributes-position"
+                                    count={1000}
+                                    array={new Float32Array(Array.from({ length: 3000 }, () => (Math.random() - 0.5) * 20))}
+                                    itemSize={3}
+                                />
+                            </bufferGeometry>
+                            <pointsMaterial size={0.02} color="#ffffff" transparent opacity={0.3} />
+                        </points>
+                    </Canvas>
                 </div>
 
-                <div className="relative z-10 w-full px-6 md:px-12 lg:px-24 flex flex-col items-center">
-
-                    {/* Section Tag */}
-                    <div className="mb-12 flex items-center gap-4 opacity-50">
-                        <div className="w-8 h-px bg-white" />
-                        <span className="text-xs font-mono uppercase tracking-[0.3em] font-medium text-white">Get in Touch</span>
-                        <div className="w-8 h-px bg-white" />
-                    </div>
-
-                    {/* The Digital Monolith (Glass Card) */}
-                    <div
-                        ref={cardRef}
-                        className="relative w-full aspect-video md:aspect-[21/9] bg-white/[0.02] border border-white/[0.05] rounded-[2rem] p-8 md:p-12 backdrop-blur-3xl shadow-2xl flex flex-col items-center justify-center text-center perspective-1000 transform-gpu"
-                    >
-                        {/* Inner Accent Line */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-[2px] bg-gradient-to-r from-transparent via-[#6610f2] to-transparent opacity-50" />
-
-                        <AmazingTypography
-                            text="Let's build something exceptional."
-                            className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-white mb-8"
-                            stagger={0.04}
-                        />
-
-                        <p className="text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12">
-                            I'm always open to new opportunities, collaborations, or simply sharing technical ideas. Reach out and let's start a conversation.
-                        </p>
-
-                        {/* Email Copy Box */}
-                        <div
-                            onClick={copyEmail}
-                            className="group flex items-center gap-4 px-6 py-4 bg-white/5 border border-white/10 rounded-2xl cursor-pointer transition-all hover:bg-white/10 hover:border-[#6610f2]/50"
-                        >
-                            <span className="font-mono text-sm md:text-base text-neutral-300 group-hover:text-white transition-colors">{email}</span>
-                            <div className="w-px h-4 bg-white/10" />
-                            {copied ? <Check size={16} className="text-green-400" /> : <Copy size={16} className="text-neutral-500 group-hover:text-white" />}
+                {/* Foreground Narrative */}
+                <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6 pointer-events-none">
+                    <div className="max-w-4xl text-center space-y-12">
+                        <div className="space-y-4">
+                            <AmazingTypography
+                                as="h2"
+                                text="Let's build the next"
+                                className="text-5xl md:text-8xl font-display font-medium tracking-tighter text-white"
+                                delay={0.2}
+                            />
+                            <AmazingTypography
+                                as="h2"
+                                text="exceptional system."
+                                className="text-5xl md:text-8xl font-display font-medium tracking-tighter text-accent/40"
+                                delay={0.4}
+                            />
                         </div>
 
-                        {/* Reflection effect */}
-                        <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-white/[0.05] to-transparent pointer-events-none" />
+                        <p className="text-neutral-500 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+                            Currently exploring the intersection of clean architecture and experimental interfaces.
+                            Available for high-impact collaborations.
+                        </p>
                     </div>
 
-                    {/* Social Grid (GSAP Row) */}
-                    <div className="mt-16 grid grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-2xl">
-                        <a href="https://github.com/Ilyas-Nour" target="_blank" className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-2xl group transition-all hover:bg-white/[0.05] hover:border-white/20">
-                            <div className="flex items-center gap-4">
-                                <Github className="text-neutral-500 group-hover:text-white transition-colors" size={24} />
-                                <span className="text-sm font-medium text-neutral-400 group-hover:text-white">GitHub</span>
-                            </div>
-                            <ArrowUpRight className="text-neutral-700 group-hover:text-white transition-all transform group-hover:translate-x-1 group-hover:-translate-y-1" size={16} />
-                        </a>
-
-                        <a href="#" className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-2xl group transition-all hover:bg-white/[0.05] hover:border-white/20">
-                            <div className="flex items-center gap-4">
-                                <Linkedin className="text-neutral-500 group-hover:text-[#0077b5] transition-colors" size={24} />
-                                <span className="text-sm font-medium text-neutral-400 group-hover:text-white">LinkedIn</span>
-                            </div>
-                            <ArrowUpRight className="text-neutral-700 group-hover:text-white transition-all transform group-hover:translate-x-1 group-hover:-translate-y-1" size={16} />
-                        </a>
-
-                        <a href="mailto:nour.ilyas@outlook.com" className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-2xl group transition-all hover:bg-white/[0.05] hover:border-white/20 md:col-span-1 col-span-2">
-                            <div className="flex items-center gap-4">
-                                <Mail className="text-neutral-500 group-hover:text-[#6610f2] transition-colors" size={24} />
-                                <span className="text-sm font-medium text-neutral-400 group-hover:text-white">Contact Direct</span>
-                            </div>
-                            <ArrowUpRight className="text-neutral-700 group-hover:text-white transition-all transform group-hover:translate-x-1 group-hover:-translate-y-1" size={16} />
-                        </a>
+                    {/* Interactive Satellite Orbit (Simulated via Framer Motion) */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="relative w-full max-w-xl aspect-square">
+                            {socialLinks.map((social, i) => (
+                                <motion.div
+                                    key={social.name}
+                                    className="absolute pointer-events-auto"
+                                    animate={{
+                                        rotate: [0, 360],
+                                    }}
+                                    transition={{
+                                        duration: 20 + i * 5,
+                                        repeat: Infinity,
+                                        ease: "linear"
+                                    }}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        top: 0,
+                                        left: 0,
+                                    }}
+                                >
+                                    <motion.a
+                                        href={social.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="absolute top-0 left-1/2 -translate-x-1/2 p-6 rounded-3xl bg-white/[0.03] border border-white/[0.05] backdrop-blur-xl group hover:border-white/20 transition-all duration-500"
+                                        whileHover={{ scale: 1.1, backgroundColor: social.color + '20' }}
+                                    >
+                                        <div className="flex flex-col items-center gap-4">
+                                            <span className="text-white opacity-40 group-hover:opacity-100 transition-opacity">
+                                                {social.icon}
+                                            </span>
+                                            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 group-hover:text-white transition-colors">
+                                                {social.name}
+                                            </span>
+                                        </div>
+                                        <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <ArrowUpRight size={14} className="text-white" />
+                                        </div>
+                                    </motion.a>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
 
+                    {/* Email CTA (Stationary but distorted) */}
+                    <div className="absolute bottom-24 z-20 pointer-events-auto">
+                        <div
+                            onClick={copyEmail}
+                            className="group relative flex items-center gap-6 px-10 py-6 bg-white/[0.02] border border-white/[0.05] rounded-[2.5rem] cursor-pointer transition-all duration-700 hover:bg-white/[0.05] hover:border-accent/40 hover:scale-[1.02]"
+                        >
+                            <span className="text-lg md:text-2xl font-display font-medium tracking-tight text-white/50 group-hover:text-white">
+                                {email}
+                            </span>
+                            <div className="w-px h-6 bg-white/10" />
+                            <AnimatePresence mode="wait">
+                                {copied ? (
+                                    <motion.div
+                                        key="check"
+                                        initial={{ scale: 0 }}
+                                        animate={{ scale: 1 }}
+                                        exit={{ scale: 0 }}
+                                    >
+                                        <Check size={20} className="text-green-400" />
+                                    </motion.div>
+                                ) : (
+                                    <motion.div
+                                        key="copy"
+                                        initial={{ scale: 0 }}
+                                        animate={{ scale: 1 }}
+                                        exit={{ scale: 0 }}
+                                    >
+                                        <Copy size={20} className="text-neutral-500 group-hover:text-white" />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+
+                            {/* Inner pulse */}
+                            <div className="absolute inset-0 rounded-[2.5rem] bg-accent/0 group-hover:bg-accent/5 transition-colors duration-700" />
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            {/* Professional Footer */}
-            <footer className="relative w-full py-20 px-6 md:px-12 lg:px-24 border-t border-white/5 bg-[#050505] z-30">
-                <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-24 mb-20">
-                    {/* Brand Column */}
-                    <div className="md:col-span-2">
-                        <span className="text-2xl font-bold tracking-tighter text-white block mb-6">ILYAS NOUR</span>
+            {/* Premium Footer */}
+            <footer className="relative w-full py-24 px-6 md:px-12 lg:px-24 border-t border-white/5 bg-[#030303] z-30">
+                <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-32 mb-24">
+                    <div className="md:col-span-2 space-y-8">
+                        <span className="text-3xl font-display font-medium tracking-tighter text-white block">ILYAS NOUR //</span>
                         <p className="text-neutral-500 text-sm leading-relaxed max-w-sm">
-                            Focusing on high-performance digital systems and clean architectural patterns.
-                            Based in Casablanca, working globally.
+                            Architecting performant digital experiences with Laravel, React, and Experimental 3D.
+                            Currently pushing the limits of the web from Casablanca.
                         </p>
                     </div>
 
-                    {/* Sitemaps */}
-                    <div>
-                        <h4 className="text-white text-xs font-display uppercase tracking-[0.2em] mb-6">Navigation</h4>
-                        <ul className="flex flex-col gap-4 text-sm text-neutral-500 font-medium">
-                            <li><a href="#about" className="hover:text-white transition-colors">About</a></li>
+                    <div className="space-y-8">
+                        <h4 className="text-white text-xs font-display uppercase tracking-[0.3em] font-medium opacity-40">System</h4>
+                        <ul className="flex flex-col gap-6 text-sm text-neutral-500 font-medium">
+                            <li><a href="#about" className="hover:text-white transition-colors">Background</a></li>
                             <li><a href="#skills" className="hover:text-white transition-colors">Expertise</a></li>
-                            <li><a href="#projects" className="hover:text-white transition-colors">Projects</a></li>
-                            <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
+                            <li><a href="#projects" className="hover:text-white transition-colors">Curvature</a></li>
+                            <li><a href="#contact" className="hover:text-white transition-colors">Connect</a></li>
                         </ul>
                     </div>
 
-                    {/* Contact Links */}
-                    <div>
-                        <h4 className="text-white text-xs font-display uppercase tracking-[0.2em] mb-6">Social</h4>
-                        <ul className="flex flex-col gap-4 text-sm text-neutral-500 font-medium">
+                    <div className="space-y-8">
+                        <h4 className="text-white text-xs font-display uppercase tracking-[0.3em] font-medium opacity-40">Frequency</h4>
+                        <ul className="flex flex-col gap-6 text-sm text-neutral-500 font-medium">
                             <li><a href="https://github.com/Ilyas-Nour" target="_blank" className="hover:text-white transition-colors">GitHub</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">LinkedIn</a></li>
-                            <li><a href="mailto:nour.ilyas@outlook.com" className="hover:text-white transition-colors">Email</a></li>
+                            <li><a href="mailto:nour.ilyas@outlook.com" className="hover:text-white transition-colors">Direct Mail</a></li>
                         </ul>
                     </div>
                 </div>
 
-                <div className="w-full flex flex-col md:flex-row justify-between items-center pt-10 border-t border-white/5 gap-6">
-                    <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-neutral-600">
-                        © 2026 Ilyas Nour. All Rights Reserved.
+                <div className="w-full flex flex-col md:flex-row justify-between items-center pt-12 border-t border-white/5 gap-8">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.5em] text-neutral-600">
+                        © 2026 Ilyas Nour — Integrated Architecture
                     </span>
-                    <div className="flex items-center gap-8 text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
-                        <span>Casablanca, Morocco</span>
-                        <div className="w-1 h-1 rounded-full bg-neutral-800" />
-                        <span>Available for Hire</span>
+                    <div className="flex items-center gap-10 text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
+                        <div className="flex items-center gap-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                            <span>Loc: 33.5731° N, 7.5898° W</span>
+                        </div>
+                        <span>Status: Seeking High-Intensity Projects</span>
                     </div>
                 </div>
             </footer>
