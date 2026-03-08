@@ -1,33 +1,33 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 
+/**
+ * @component CustomCursor
+ * @description "The Prism" - A purely visual, zero-delay precision cursor.
+ * Avoids all magnetic, sticky, or laggy sensations.
+ */
 export default function CustomCursor() {
     const [isHovered, setIsHovered] = useState(false);
+    const [isClicking, setIsClicking] = useState(false);
 
-    const cursorX = useMotionValue(-100);
-    const cursorY = useMotionValue(-100);
-
-    const springConfig = { damping: 25, stiffness: 200, mass: 0.5 };
-    const cursorXSpring = useSpring(cursorX, springConfig);
-    const cursorYSpring = useSpring(cursorY, springConfig);
+    // ZERO-DELAY hardware synchronization
+    const mouseX = useMotionValue(-100);
+    const mouseY = useMotionValue(-100);
 
     useEffect(() => {
         const moveCursor = (e: MouseEvent) => {
-            cursorX.set(e.clientX - 16);
-            cursorY.set(e.clientY - 16);
+            mouseX.set(e.clientX);
+            mouseY.set(e.clientY);
         };
+
+        const handleMouseDown = () => setIsClicking(true);
+        const handleMouseUp = () => setIsClicking(false);
 
         const handleMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
-            if (
-                target.tagName.toLowerCase() === 'a' ||
-                target.tagName.toLowerCase() === 'button' ||
-                target.closest('a') ||
-                target.closest('button') ||
-                target.dataset.cursor === 'hover'
-            ) {
+            if (target.closest('a, button, [data-cursor="hover"]')) {
                 setIsHovered(true);
             } else {
                 setIsHovered(false);
@@ -35,15 +35,18 @@ export default function CustomCursor() {
         };
 
         window.addEventListener('mousemove', moveCursor);
+        window.addEventListener('mousedown', handleMouseDown);
+        window.addEventListener('mouseup', handleMouseUp);
         window.addEventListener('mouseover', handleMouseOver);
 
         return () => {
             window.removeEventListener('mousemove', moveCursor);
+            window.removeEventListener('mousedown', handleMouseDown);
+            window.removeEventListener('mouseup', handleMouseUp);
             window.removeEventListener('mouseover', handleMouseOver);
         };
-    }, [cursorX, cursorY]);
+    }, [mouseX, mouseY]);
 
-    // Optionally hide cursor on touch devices or fine pointer
     useEffect(() => {
         document.body.style.cursor = 'none';
         return () => {
@@ -52,17 +55,38 @@ export default function CustomCursor() {
     }, []);
 
     return (
-        <motion.div
-            className="fixed top-0 left-0 w-8 h-8 rounded-full border-2 border-white pointer-events-none z-50 mix-blend-difference hidden md:block"
-            style={{
-                x: cursorXSpring,
-                y: cursorYSpring,
-            }}
-            animate={{
-                scale: isHovered ? 1.5 : 1,
-                backgroundColor: isHovered ? '#ffffff' : 'transparent',
-            }}
-            transition={{ duration: 0.2 }}
-        />
+        <div className="fixed inset-0 pointer-events-none z-[9999] hidden md:block mix-blend-difference">
+            {/* Precision Prism Point */}
+            <motion.div
+                className="absolute flex items-center justify-center -translate-x-1/2 -translate-y-1/2"
+                style={{ x: mouseX, y: mouseY }}
+            >
+                {/* Horizontal Crosshair */}
+                <div className="absolute w-[18px] h-[1px] bg-white opacity-40" />
+                {/* Vertical Crosshair */}
+                <div className="absolute w-[1px] h-[18px] bg-white opacity-40" />
+
+                {/* Inner core */}
+                <motion.div
+                    className="w-1.5 h-1.5 bg-white rounded-full"
+                    animate={{
+                        scale: isClicking ? 0.8 : (isHovered ? 1.4 : 1),
+                        opacity: isClicking ? 1 : 0.8
+                    }}
+                />
+
+                {/* Subtle Hover Ring (Non-Magnetic) */}
+                <motion.div
+                    className="absolute border border-white rounded-full"
+                    initial={{ width: 0, height: 0, opacity: 0 }}
+                    animate={{
+                        width: isHovered ? 28 : 0,
+                        height: isHovered ? 28 : 0,
+                        opacity: isHovered ? 0.3 : 0
+                    }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                />
+            </motion.div>
+        </div>
     );
 }

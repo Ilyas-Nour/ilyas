@@ -26,10 +26,7 @@ const LiquidScape = () => {
     useFrame((state) => {
         if (!materialRef.current) return;
         materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
-        materialRef.current.uniforms.uMouse.value.lerp(
-            new THREE.Vector2(mouse.x, mouse.y),
-            0.05
-        );
+        materialRef.current.uniforms.uMouse.value.set(mouse.x, mouse.y);
     });
 
     return (

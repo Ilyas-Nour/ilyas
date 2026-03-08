@@ -37,65 +37,58 @@ export default function GlassNav() {
                 visible: { y: 0, opacity: 1 },
                 hidden: { y: -20, opacity: 0 },
             }}
+            initial="visible"
             animate={hidden ? "hidden" : "visible"}
-            className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] flex items-center"
+            className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-4"
         >
-            <div className="flex items-center gap-2 p-2 bg-white/[0.03] border border-white/[0.05] backdrop-blur-2xl rounded-full shadow-2xl">
+            {/* Magnetic Brand Indicator */}
+            <div className="flex flex-col items-center opacity-40">
+                <span className="text-[9px] font-mono text-neutral-400 uppercase tracking-[0.6em]">System.active</span>
+                <div className="w-px h-3 bg-accent/30 mt-1" />
+            </div>
+
+            <div className="flex items-center gap-1 p-1.5 bg-black/40 border border-white/10 backdrop-blur-md rounded-full shadow-2xl">
                 {NavItems.map((item, i) => {
                     const Icon = item.icon;
                     const isHovered = hovered === i;
 
                     return (
-                        <motion.a
+                        <a
                             key={item.name}
                             href={item.href}
                             onMouseEnter={() => setHovered(i)}
                             onMouseLeave={() => setHovered(null)}
-                            className="relative flex items-center justify-center h-12 rounded-full overflow-hidden px-4 group transition-all"
-                            initial={false}
-                            animate={{
-                                width: isHovered ? 'auto' : 48,
-                                backgroundColor: isHovered ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0)',
-                            }}
-                            transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                            className="relative flex items-center h-11 px-4 rounded-full transition-all duration-300 group"
                         >
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2.5 z-10 relative">
                                 <Icon
-                                    size={18}
+                                    size={16}
                                     className={`transition-colors duration-300 ${isHovered ? 'text-white' : 'text-neutral-500'}`}
                                 />
-                                <AnimatePresence mode="wait">
-                                    {isHovered && (
-                                        <motion.span
-                                            initial={{ opacity: 0, x: -10 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            exit={{ opacity: 0, x: -5 }}
-                                            className="text-xs font-display font-medium tracking-widest text-white uppercase whitespace-nowrap"
-                                        >
-                                            {item.name}
-                                        </motion.span>
-                                    )}
-                                </AnimatePresence>
+                                <span
+                                    className={`text-[11px] font-display font-medium tracking-widest uppercase whitespace-nowrap overflow-hidden transition-all duration-300 ${isHovered
+                                        ? 'w-auto opacity-100 ml-0'
+                                        : 'w-0 opacity-0 ml-[-10px]'
+                                        } ${isHovered ? 'text-white' : 'text-neutral-500'}`}
+                                >
+                                    {item.name}
+                                </span>
                             </div>
 
-                            {/* Refractive highlight */}
+                            {/* Performant Snappy Pill */}
                             {isHovered && (
                                 <motion.div
-                                    layoutId="nav-glow"
-                                    className="absolute inset-0 bg-gradient-to-r from-accent/20 to-transparent pointer-events-none"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
+                                    layoutId="nav-pill"
+                                    className="absolute inset-0 bg-white/10 rounded-full z-0"
+                                    transition={{ type: 'spring', stiffness: 600, damping: 40 }}
                                 />
                             )}
-                        </motion.a>
+
+                            {/* Refractive Glow */}
+                            <div className={`absolute inset-0 rounded-full bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                        </a>
                     );
                 })}
-            </div>
-
-            {/* Magnetic Brand Indicator */}
-            <div className="absolute -top-10 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                <span className="text-[10px] font-mono text-neutral-600 uppercase tracking-[0.6em]">System.active</span>
-                <div className="w-px h-4 bg-accent/20 mt-1" />
             </div>
         </motion.nav>
     );

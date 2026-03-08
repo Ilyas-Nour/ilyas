@@ -26,9 +26,9 @@ const MagneticFluidMesh = () => {
     useFrame((state) => {
         if (!materialRef.current) return;
         materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
-        materialRef.current.uniforms.uMouse.value.lerp(
-            new THREE.Vector2(mouse.x * viewport.width / 2, mouse.y * viewport.height / 2),
-            0.05
+        materialRef.current.uniforms.uMouse.value.set(
+            mouse.x * viewport.width / 2,
+            mouse.y * viewport.height / 2
         );
     });
 
