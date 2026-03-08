@@ -44,7 +44,7 @@ export default function PrecisionHero() {
             <AmbientLightCanvas />
 
             {/* Foreground Content */}
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center h-full pointer-events-none">
+            <div className="relative z-10 w-full px-6 md:px-12 lg:px-24 flex flex-col justify-center h-full pointer-events-none">
 
                 <div className="relative z-[15]">
                     <AmazingTypography
@@ -54,7 +54,7 @@ export default function PrecisionHero() {
                     />
                     <AmazingTypography
                         as="h2"
-                        text="Full-Stack Engineer."
+                        text="Full-Stack Developer."
                         className="text-5xl md:text-7xl lg:text-[6rem] font-medium tracking-tighter leading-[1.1] text-neutral-500"
                         delay={1.2}
                     />
@@ -67,8 +67,8 @@ export default function PrecisionHero() {
                     className="mt-12 max-w-2xl"
                 >
                     <p className="text-lg md:text-xl text-neutral-400 font-medium leading-relaxed">
-                        Specializing in Laravel, SQL, and Architecture. <br className="hidden md:block" />
-                        Currently refining digital systems at OFPPT Ben M’sik.
+                        I specialize in building scalable web applications with Laravel and React. <br className="hidden md:block" />
+                        Currently based in Casablanca, focusing on clean architecture and high-performance logic.
                     </p>
                 </motion.div>
 

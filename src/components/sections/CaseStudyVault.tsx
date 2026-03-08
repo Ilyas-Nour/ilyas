@@ -119,13 +119,13 @@ export default function CaseStudyVault() {
 
     return (
         <section ref={sectionRef} id="vault" className="relative w-full min-h-screen bg-[#050505] overflow-hidden z-10">
-            <div className="max-w-7xl w-full mx-auto px-6 py-20 h-full flex flex-col items-center justify-center">
+            <div className="w-full px-6 md:px-12 lg:px-24 py-20 h-full flex flex-col items-center justify-center">
 
                 {/* Section Header */}
                 <div className="vault-header mb-12 flex items-center gap-6 w-full relative z-[60]">
                     <AmazingTypography
                         as="h2"
-                        text="03 — The Vault (Case Studies)"
+                        text="03 — Selected Projects"
                         className="text-sm font-mono tracking-[0.2em] text-neutral-500 uppercase"
                     />
                     <div className="h-px flex-1 bg-gradient-to-r from-neutral-800 to-transparent" />
@@ -141,7 +141,7 @@ export default function CaseStudyVault() {
                             className="absolute inset-0 flex items-center justify-center gpu-accelerated"
                             style={{ zIndex: index + 1 }}
                         >
-                            <div className="group relative w-full h-full max-w-6xl bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl flex flex-col md:flex-row gap-12 transition-all duration-700 hover:border-white/20 overflow-hidden">
+                            <div className="group relative w-full h-full max-w-none bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl flex flex-col md:flex-row gap-12 transition-all duration-700 hover:border-white/20 overflow-hidden">
 
                                 <div
                                     className="absolute -right-24 -top-24 w-96 h-96 rounded-full opacity-5 blur-[100px] transition-colors duration-700 group-hover:opacity-10"
@@ -196,9 +196,6 @@ export default function CaseStudyVault() {
                                                 className="w-32 h-32 rounded-full blur-[60px] opacity-20"
                                                 style={{ backgroundColor: project.color }}
                                             />
-                                            <span className="font-mono text-[10px] text-neutral-800 tracking-[0.5em] uppercase pointer-events-none">
-                                                System Visualization
-                                            </span>
                                         </div>
                                     </div>
                                 </div>

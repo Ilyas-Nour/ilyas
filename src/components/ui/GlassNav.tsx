@@ -32,7 +32,7 @@ export default function GlassNav() {
             transition={{ duration: 0.35, ease: "easeInOut" }}
             className="fixed top-0 inset-x-0 z-[100] h-20 border-b border-white/5 bg-black/40 backdrop-blur-xl flex items-center justify-center px-6"
         >
-            <div className="w-full max-w-7xl flex items-center justify-between">
+            <div className="w-full px-6 md:px-12 lg:px-24 flex items-center justify-between">
                 {/* Brand */}
                 <div className="text-white font-medium tracking-tight flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-white" />
@@ -42,8 +42,8 @@ export default function GlassNav() {
                 {/* Links */}
                 <div className="hidden md:flex items-center gap-8 text-sm text-neutral-400 font-medium">
                     <a href="#about" className="hover:text-white transition-colors duration-300">About</a>
-                    <a href="#skills" className="hover:text-white transition-colors duration-300">Skills</a>
-                    <a href="#vault" className="hover:text-white transition-colors duration-300">The Vault</a>
+                    <a href="#skills" className="hover:text-white transition-colors duration-300">Expertise</a>
+                    <a href="#vault" className="hover:text-white transition-colors duration-300">Projects</a>
                 </div>
 
                 {/* Action */}

@@ -50,14 +50,14 @@ export default function ProfessionalNarrative() {
     }, { scope: sectionRef });
 
     return (
-        <section ref={sectionRef} className="relative w-full min-h-[50vh] bg-[#050505] py-24 md:py-32 px-6 overflow-hidden z-20">
-            <div className="max-w-4xl w-full mx-auto">
+        <section ref={sectionRef} className="relative w-full min-h-[50vh] bg-[#050505] py-24 md:py-32 px-6 md:px-12 lg:px-24 overflow-hidden z-20">
+            <div className="w-full">
 
                 {/* Section Header */}
                 <div className="mb-16 md:mb-24 flex items-center gap-6">
                     <AmazingTypography
                         as="h2"
-                        text="01 — Professional Narrative"
+                        text="01 — The Background"
                         className="text-sm font-mono tracking-[0.2em] text-neutral-500 uppercase"
                     />
                     <div className="h-px flex-1 bg-gradient-to-r from-neutral-800 to-transparent" />
@@ -91,7 +91,7 @@ export default function ProfessionalNarrative() {
                     </div>
                     <div className="flex flex-col gap-2">
                         <span className="text-xs font-mono tracking-widest text-neutral-600 uppercase">Location</span>
-                        <span className="text-sm font-medium text-white">Earth</span>
+                        <span className="text-sm font-medium text-white">Casablanca, Morocco</span>
                     </div>
                     <div className="flex flex-col gap-2">
                         <span className="text-xs font-mono tracking-widest text-neutral-600 uppercase">Focus</span>

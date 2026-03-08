@@ -76,7 +76,7 @@ export default function DataDecompressionLoader() {
                 {/* The 0-100 Percentage Counter */}
                 {!isLoaded && (
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 mix-blend-difference">
-                        <span className="text-[#6610f2] text-xs uppercase tracking-widest mr-2">SYS_LOAD</span>
+                        <span className="text-[#6610f2] text-xs uppercase tracking-[0.4em] mr-4 opacity-50 font-medium">Initializing</span>
                         <span className="text-4xl font-light tracking-tighter">
                             {progress.toString().padStart(2, '0')}
                         </span>
