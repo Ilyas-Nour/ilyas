@@ -180,7 +180,7 @@ export default function ContactFooter() {
 
                     {/* Sitemaps */}
                     <div>
-                        <h4 className="text-white text-xs font-mono uppercase tracking-widest mb-6">Navigation</h4>
+                        <h4 className="text-white text-xs font-display uppercase tracking-[0.2em] mb-6">Navigation</h4>
                         <ul className="flex flex-col gap-4 text-sm text-neutral-500 font-medium">
                             <li><a href="#about" className="hover:text-white transition-colors">About</a></li>
                             <li><a href="#skills" className="hover:text-white transition-colors">Expertise</a></li>
@@ -191,7 +191,7 @@ export default function ContactFooter() {
 
                     {/* Contact Links */}
                     <div>
-                        <h4 className="text-white text-xs font-mono uppercase tracking-widest mb-6">Social</h4>
+                        <h4 className="text-white text-xs font-display uppercase tracking-[0.2em] mb-6">Social</h4>
                         <ul className="flex flex-col gap-4 text-sm text-neutral-500 font-medium">
                             <li><a href="https://github.com/Ilyas-Nour" target="_blank" className="hover:text-white transition-colors">GitHub</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">LinkedIn</a></li>

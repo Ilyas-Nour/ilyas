@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Outfit, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import CustomCursor from "@/components/motion/CustomCursor";
 import GlassNav from "@/components/ui/GlassNav";
 import PageTransition from "@/components/motion/PageTransition";
-import DataDecompressionLoader from "@/components/motion/DataDecompressionLoader";
+import MolecularAssemblyLoader from "@/components/motion/MolecularAssemblyLoader";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
@@ -30,9 +35,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#050505] text-white selection:bg-[#6610f2] selection:text-white`}
+        className={`${inter.variable} ${outfit.variable} ${geistMono.variable} antialiased bg-[#030303] text-white selection:bg-[#c084fc]/30 selection:text-white`}
       >
-        <DataDecompressionLoader />
+        <MolecularAssemblyLoader />
         <SmoothScroll>
           <CustomCursor />
           <GlassNav />

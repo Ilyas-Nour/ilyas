@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Github, ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -14,198 +14,187 @@ if (typeof window !== 'undefined') {
 const projects = [
     {
         title: 'Animy',
-        focus: 'Performance & Scalability',
-        description: 'A high-performance anime streaming aggregator built for extreme concurrent loads. Features edge caching and optimized video delivery pipelines.',
-        tech: ['React', 'Node.js', 'Redis', 'PostgreSQL'],
-        color: '#6610f2',
+        focus: 'Performance',
+        description: 'A high-performance anime streaming aggregator built for extreme concurrent loads.',
+        tech: ['React', 'Redis', 'Node.js'],
+        color: '#818cf8',
         link: '#',
         github: '#'
     },
     {
         title: 'PrivaFlow',
-        focus: 'Data Security & Privacy-First UI',
-        description: 'An encrypted workflow management system ensuring zero-knowledge data processing. Architected with strict access controls and end-to-end encryption.',
-        tech: ['Next.js', 'TypeScript', 'AES-256', 'Tailwind'],
-        color: '#8e44ff',
+        focus: 'Security',
+        description: 'An encrypted workflow management system ensuring zero-knowledge processing.',
+        tech: ['Next.js', 'AES-256', 'Crypto'],
+        color: '#c084fc',
         link: '#',
         github: '#'
     },
     {
         title: 'TopNature',
-        focus: 'E-Commerce Architecture & Conversion',
-        description: 'A robust e-commerce platform designed for maximum conversion rates. Implements Headless architecture for instant page loads and seamless checkout.',
-        tech: ['Laravel', 'Vue.js', 'Stripe', 'MySQL'],
-        color: '#00d2ff',
+        focus: 'E-Commerce',
+        description: 'A robust e-commerce platform designed for maximum conversion rates.',
+        tech: ['Laravel', 'Vue.js', 'Stripe'],
+        color: '#6366f1',
+        link: '#',
+        github: '#'
+    },
+    {
+        title: 'Nexus OS',
+        focus: 'Interface',
+        description: 'A conceptual operating system interface focused on spatial computing.',
+        tech: ['Three.js', 'React', 'GLSL'],
+        color: '#a855f7',
         link: '#',
         github: '#'
     }
 ];
 
-/**
- * @component CaseStudyVault
- * @description The project showcase engine. 
- * Features a frame-perfect 'Stacking Cards' mechanism using GSAP ScrollTrigger 
- * pinning. Uses a linear normalized timeline (0 -> 1 per project) to ensure 
- * 100% viewport synchronization and zero-jitter transitions.
- */
 export default function CaseStudyVault() {
     const sectionRef = useRef<HTMLElement>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
-        if (!sectionRef.current || !containerRef.current) return;
+        if (!sectionRef.current || !scrollContainerRef.current) return;
 
-        const cards = cardsRef.current.filter(Boolean) as HTMLDivElement[];
+        const items = gsap.utils.toArray('.project-item') as HTMLElement[];
 
-        // --- MOTION: Master Stacking Engine ---
-        // end: "300%" means we have 3 segments of 100vh each.
-        const tl = gsap.timeline({
+        // Calculate the horizontal distance to move the track
+        const scrollAmount = scrollContainerRef.current.scrollWidth - window.innerWidth;
+
+        let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: sectionRef.current,
-                start: 'top top',
-                end: `+=${projects.length * 150}%`, // Larger distance for slower, premium feel
+                start: "top top",
+                end: () => `+=${scrollAmount * 2}`, // Extend pinning duration
                 pin: true,
-                pinSpacing: true, // Force space to push Contact down
+                pinSpacing: true,
                 scrub: 1,
-                anticipatePin: 1,
+                invalidateOnRefresh: true,
+                anticipatePin: 1
             }
         });
 
-        // 1. Initial State
-        gsap.set(cards.slice(1), { yPercent: 100 });
-
-        // 2. Linear Segment Transitions (Normalized 0 -> 1 per project)
-        projects.forEach((_, i) => {
-            // If there's a next project, animate the transition
-            if (i < projects.length - 1) {
-                const currentCard = cards[i];
-                const nextCard = cards[i + 1];
-
-                // Move from current to next between time 'i' and 'i+1'
-                // We use durations so the total timeline duration becomes 'projects.length'
-                // Transition: Current recedes, Next enters
-                tl.to(currentCard, {
-                    scale: 0.85,
-                    opacity: 0.2,
-                    filter: 'blur(15px)',
-                    duration: 1,
-                    ease: 'power1.inOut'
-                }, i + 0.2) // Slight delay for "rest" time
-                    .to(nextCard, {
-                        yPercent: 0,
-                        duration: 1,
-                        ease: 'power1.inOut'
-                    }, i + 0.2);
-            }
+        // Translate the entire container track
+        tl.to(scrollContainerRef.current, {
+            x: -scrollAmount,
+            ease: "none",
         });
 
-        // 3. Final Hold: Ensure the last card stays visible for a moment
-        tl.to({}, { duration: 0.5 });
-
-        /* --- MOTION: Section Header Reveal --- */
-        gsap.fromTo('.vault-header',
-            { opacity: 0, x: -50, filter: 'blur(10px)' },
-            {
-                opacity: 1, x: 0, filter: 'blur(0px)', duration: 1, ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top 80%',
+        // Curvature / Scaling effect for items
+        items.forEach((item) => {
+            gsap.fromTo(item,
+                { scale: 0.8, opacity: 0.3, filter: 'blur(10px)' },
+                {
+                    scale: 1, opacity: 1, filter: 'blur(0px)',
+                    ease: "sine.inOut",
+                    scrollTrigger: {
+                        trigger: item,
+                        containerAnimation: tl,
+                        start: "left 85%",
+                        end: "left 50%",
+                        scrub: true,
+                    }
                 }
-            }
-        );
+            );
+
+            gsap.to(item, {
+                scale: 0.8, opacity: 0.3, filter: 'blur(10px)',
+                ease: "sine.inOut",
+                scrollTrigger: {
+                    trigger: item,
+                    containerAnimation: tl,
+                    start: "left 25%",
+                    end: "left -5%",
+                    scrub: true,
+                }
+            });
+        });
 
     }, { scope: sectionRef });
 
     return (
-        <section ref={sectionRef} id="vault" className="relative w-full min-h-screen bg-[#050505] overflow-hidden z-10">
-            <div className="w-full px-6 md:px-12 lg:px-24 py-20 h-full flex flex-col items-center justify-center">
+        <section ref={sectionRef} id="projects" className="relative w-full h-screen bg-[#030303] overflow-hidden flex flex-col justify-center">
 
-                {/* Section Header */}
-                <div className="vault-header mb-12 flex items-center gap-6 w-full relative z-[60]">
+            {/* Header */}
+            <div className="absolute top-20 left-0 w-full px-6 md:px-12 lg:px-24 z-20">
+                <div className="flex items-center gap-6">
                     <AmazingTypography
                         as="h2"
-                        text="03 — Selected Projects"
-                        className="text-sm font-mono tracking-[0.2em] text-neutral-500 uppercase"
+                        text="03 — Curvature Gallery"
+                        className="text-sm font-display tracking-[0.2em] text-neutral-500 uppercase"
                     />
-                    <div className="h-px flex-1 bg-gradient-to-r from-neutral-800 to-transparent" />
+                    <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
                 </div>
+            </div>
 
-                {/* Stacking Cards Deck */}
-                {/* Fixed height container ensures the spacer doesn't collapse */}
-                <div ref={containerRef} className="relative w-full h-[75vh] md:h-[80vh] perspective-1000">
-                    {projects.map((project, index) => (
-                        <div
-                            key={index}
-                            ref={(el) => { cardsRef.current[index] = el; }}
-                            className="absolute inset-0 flex items-center justify-center gpu-accelerated"
-                            style={{ zIndex: index + 1 }}
-                        >
-                            <div className="group relative w-full h-full max-w-none bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl flex flex-col md:flex-row gap-12 transition-all duration-700 hover:border-white/20 overflow-hidden">
+            {/* Horizontal Track */}
+            <div ref={scrollContainerRef} className="flex items-center h-[60vh] px-[20vw] gap-[15vw]">
+                {projects.map((project, index) => (
+                    <div
+                        key={index}
+                        className="project-item relative flex-shrink-0 w-[70vw] md:w-[45vw] aspect-video group"
+                    >
+                        {/* 3D Card Shell */}
+                        <div className="relative w-full h-full bg-[#080808] border border-white/[0.04] rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-[0_0_50px_rgba(129,140,248,0.1)]">
 
+                            {/* Visual Background (refraction-like) */}
+                            <div className="absolute inset-0 z-0 opacity-40">
                                 <div
-                                    className="absolute -right-24 -top-24 w-96 h-96 rounded-full opacity-5 blur-[100px] transition-colors duration-700 group-hover:opacity-10"
-                                    style={{ backgroundColor: project.color }}
+                                    className="absolute inset-0 bg-gradient-to-br from-transparent via-accent/5 to-transparent"
+                                    style={{ backgroundColor: `${project.color}10` }}
                                 />
+                                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+                            </div>
 
-                                <div className="w-full md:w-1/2 flex flex-col justify-center relative z-10">
-                                    <span
-                                        className="font-mono text-xs tracking-[0.3em] uppercase mb-4"
-                                        style={{ color: project.color }}
-                                    >
-                                        Project 0{index + 1} // {project.focus}
+                            {/* Content */}
+                            <div className="relative z-10 h-full p-8 md:p-12 flex flex-col justify-between">
+                                <div>
+                                    <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-accent mb-4 block">
+                                        // {project.focus}
                                     </span>
-
-                                    <AmazingTypography
-                                        text={project.title}
-                                        className="text-4xl md:text-7xl font-semibold tracking-tighter text-white mb-6 md:mb-8"
-                                        stagger={0.05}
-                                    />
-
-                                    <p className="text-neutral-400 text-sm md:text-xl leading-relaxed mb-8 md:mb-10 max-w-md">
+                                    <h3 className="text-4xl md:text-6xl font-display font-medium tracking-tighter text-white mb-4">
+                                        {project.title}
+                                    </h3>
+                                    <p className="text-neutral-400 text-sm md:text-lg max-w-sm leading-relaxed">
                                         {project.description}
                                     </p>
+                                </div>
 
-                                    <div className="flex flex-wrap gap-2 md:gap-3 mb-8 md:mb-12">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex gap-4">
+                                        <a href={project.link} className="flex items-center gap-2 text-xs font-display tracking-widest text-white uppercase group/btn">
+                                            <span>Explore Case</span>
+                                            <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />
+                                        </a>
+                                        <a href={project.github} className="text-neutral-500 hover:text-white transition-colors">
+                                            <Github size={18} />
+                                        </a>
+                                    </div>
+                                    <div className="hidden md:flex gap-2">
                                         {project.tech.map((t, i) => (
-                                            <span key={i} className="px-3 py-1 md:px-4 md:py-1.5 text-[10px] md:text-xs font-mono text-neutral-400 bg-white/5 border border-white/10 rounded-full">
+                                            <span key={i} className="text-[9px] font-mono text-neutral-600 border border-white/5 px-2 py-1 rounded">
                                                 {t}
                                             </span>
                                         ))}
                                     </div>
-
-                                    <div className="flex items-center gap-8">
-                                        <a href={project.link} className="flex items-center gap-3 text-sm font-medium text-white group/link transition-all hover:gap-5">
-                                            <span className="relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-white after:transition-all group-hover/link:after:w-full">
-                                                View System
-                                            </span>
-                                            <ArrowRight size={18} />
-                                        </a>
-                                        <a href={project.github} className="text-neutral-500 hover:text-white transition-colors">
-                                            <Github size={20} />
-                                        </a>
-                                    </div>
                                 </div>
-
-                                <div className="hidden md:block w-1/2 relative group-hover:scale-[1.02] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] transform-gpu">
-                                    <div className="w-full h-full rounded-2xl bg-[#050505] border border-white/5 overflow-hidden shadow-Inner shadow-white/5 relative">
-                                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent transform -translate-x-full group-hover:translate-x-full duration-[1500ms] transition-transform" />
-                                        <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-                                        <div className="absolute inset-0 flex items-center justify-center">
-                                            <div
-                                                className="w-32 h-32 rounded-full blur-[60px] opacity-20"
-                                                style={{ backgroundColor: project.color }}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
-                        </div>
-                    ))}
-                </div>
 
+                            {/* Hover Highlight */}
+                            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+                        </div>
+                    </div>
+                ))}
             </div>
+
+            {/* Background Ambient Text (Experimental) */}
+            <div className="absolute bottom-10 left-0 w-full overflow-hidden pointer-events-none opacity-5">
+                <span className="text-[15vh] font-display font-bold text-white whitespace-nowrap tracking-tighter mix-blend-overlay">
+                    EXPERIMENTAL ARCHITECTURE // BEYOND THE GRID // EXPERIMENTAL ARCHITECTURE //
+                </span>
+            </div>
+
         </section>
     );
 }

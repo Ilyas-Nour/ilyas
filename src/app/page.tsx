@@ -12,7 +12,7 @@ import ContactFooter from '@/components/sections/ContactFooter';
  */
 export default function Home() {
   return (
-    <main className="relative min-h-screen flex flex-col items-center bg-[#050505]">
+    <main className="relative min-h-screen bg-[#030303]">
 
       {/* 1. The 'Precision' Hero Section */}
       <PrecisionHero />

@@ -34,13 +34,13 @@ export default function GlassNav() {
         >
             <div className="w-full px-6 md:px-12 lg:px-24 flex items-center justify-between">
                 {/* Brand */}
-                <div className="text-white font-medium tracking-tight flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-white" />
+                <div className="text-white font-display font-medium tracking-tight flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-accent" />
                     <span>ILYAS NOUR</span>
                 </div>
 
                 {/* Links */}
-                <div className="hidden md:flex items-center gap-8 text-sm text-neutral-400 font-medium">
+                <div className="hidden md:flex items-center gap-8 text-xs font-display tracking-widest text-neutral-400 uppercase">
                     <a href="#about" className="hover:text-white transition-colors duration-300">About</a>
                     <a href="#skills" className="hover:text-white transition-colors duration-300">Expertise</a>
                     <a href="#vault" className="hover:text-white transition-colors duration-300">Projects</a>

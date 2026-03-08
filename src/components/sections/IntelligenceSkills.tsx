@@ -146,10 +146,10 @@ export default function IntelligenceSkills() {
 
                 {/* Section Header */}
                 <div className="skills-header mb-20 flex items-center gap-6">
-                    <h2 className="text-sm font-mono tracking-[0.2em] text-neutral-500 uppercase">
+                    <h2 className="text-sm font-display tracking-[0.2em] text-neutral-500 uppercase">
                         02 — Core Expertise
                     </h2>
-                    <div className="h-px flex-1 bg-gradient-to-r from-neutral-800 to-transparent" />
+                    <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
                 </div>
 
                 {/* Marquee Rows */}
@@ -160,7 +160,7 @@ export default function IntelligenceSkills() {
                             {row1Skills.map((skill, i) => {
                                 const Icon = skill.icon;
                                 return (
-                                    <div key={i} className="flex items-center gap-3 px-6 py-4 rounded-xl bg-white/[0.03] border border-white/[0.05] backdrop-blur-md transition-all duration-300 hover:bg-white/[0.07] hover:border-white/20 group cursor-default">
+                                    <div key={i} className="flex items-center gap-3 px-6 py-4 rounded-xl bg-white/[0.02] border border-white/[0.04] backdrop-blur-md transition-all duration-300 hover:bg-white/[0.04] hover:border-white/10 group cursor-default">
                                         <div className="transition-transform duration-300 group-hover:scale-110" style={{ color: skill.color }}>
                                             <Icon size={28} />
                                         </div>
@@ -179,7 +179,7 @@ export default function IntelligenceSkills() {
                             {row2Skills.map((skill, i) => {
                                 const Icon = skill.icon;
                                 return (
-                                    <div key={i} className="flex items-center gap-3 px-6 py-4 rounded-xl bg-white/[0.03] border border-white/[0.05] backdrop-blur-md transition-all duration-300 hover:bg-white/[0.07] hover:border-white/20 group cursor-default">
+                                    <div key={i} className="flex items-center gap-3 px-6 py-4 rounded-xl bg-white/[0.02] border border-white/[0.04] backdrop-blur-md transition-all duration-300 hover:bg-white/[0.04] hover:border-white/10 group cursor-default">
                                         <div className="transition-transform duration-300 group-hover:scale-110" style={{ color: skill.color }}>
                                             <Icon size={28} />
                                         </div>

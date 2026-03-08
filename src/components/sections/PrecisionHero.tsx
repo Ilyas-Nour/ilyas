@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import AmbientLightCanvas from '@/components/canvas/AmbientLightCanvas';
+import MagneticFluidCanvas from '@/components/canvas/MagneticFluidCanvas';
 import AmazingTypography from '@/components/motion/AmazingTypography';
 
 if (typeof window !== 'undefined') {
@@ -41,23 +41,32 @@ export default function PrecisionHero() {
     return (
         <section ref={heroRef} className="relative w-full h-screen flex flex-col justify-center overflow-hidden gpu-accelerated z-10">
             {/* 3D Background */}
-            <AmbientLightCanvas />
+            <MagneticFluidCanvas />
 
             {/* Foreground Content */}
             <div className="relative z-10 w-full px-6 md:px-12 lg:px-24 flex flex-col justify-center h-full pointer-events-none">
 
-                <div className="relative z-[15]">
-                    <AmazingTypography
-                        text="Ilyas Nour —"
-                        className="text-5xl md:text-7xl lg:text-[6rem] font-medium tracking-tighter leading-[1.1] text-white"
-                        delay={1.0}
-                    />
-                    <AmazingTypography
-                        as="h2"
-                        text="Full-Stack Developer."
-                        className="text-5xl md:text-7xl lg:text-[6rem] font-medium tracking-tighter leading-[1.1] text-neutral-500"
-                        delay={1.2}
-                    />
+                <div className="relative z-[15] mix-blend-difference">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8, filter: 'blur(20px)' }}
+                        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                        transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.8 }}
+                    >
+                        <AmazingTypography
+                            text="Ilyas Nour —"
+                            className="text-6xl md:text-8xl lg:text-[7.5rem] font-display font-medium tracking-tighter leading-[0.9] text-white"
+                            delay={1.2}
+                        />
+                        <AmazingTypography
+                            as="h2"
+                            text="Full-Stack Developer."
+                            className="text-6xl md:text-8xl lg:text-[7.5rem] font-display font-medium tracking-tighter leading-[0.9] text-accent-secondary/40"
+                            delay={1.4}
+                        />
+                    </motion.div>
+
+                    {/* Glass Refraction Layer */}
+                    <div className="absolute inset-0 z-[-1] backdrop-blur-[2px] opacity-30" />
                 </div>
 
                 <motion.div
@@ -72,18 +81,17 @@ export default function PrecisionHero() {
                     </p>
                 </motion.div>
 
-                {/* Scroll Indicator */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 1 }}
                     className="absolute bottom-12 left-6 md:left-12 flex items-center gap-4"
                 >
-                    <div className="w-[1px] h-12 bg-neutral-800 relative overflow-hidden">
+                    <div className="w-[1px] h-12 bg-white/10 relative overflow-hidden">
                         <motion.div
                             animate={{ y: ['-100%', '100%'] }}
                             transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }}
-                            className="absolute inset-0 bg-white"
+                            className="absolute inset-0 bg-accent"
                         />
                     </div>
                     <span className="text-xs font-mono uppercase tracking-widest text-neutral-500 hidden md:block">

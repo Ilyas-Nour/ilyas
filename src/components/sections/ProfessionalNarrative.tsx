@@ -58,16 +58,16 @@ export default function ProfessionalNarrative() {
                     <AmazingTypography
                         as="h2"
                         text="01 — The Background"
-                        className="text-sm font-mono tracking-[0.2em] text-neutral-500 uppercase"
+                        className="text-sm font-display tracking-[0.2em] text-neutral-500 uppercase"
                     />
-                    <div className="h-px flex-1 bg-gradient-to-r from-neutral-800 to-transparent" />
+                    <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
                 </div>
 
                 {/* Core Narrative */}
                 <div className="gsap-reveal">
                     <AmazingTypography
                         text="I am a developer driven by logic and clean code."
-                        className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.2] text-white"
+                        className="text-3xl md:text-5xl lg:text-6xl font-display font-medium tracking-tight leading-[1.2] text-white"
                         stagger={0.06}
                     />
 
@@ -84,11 +84,12 @@ export default function ProfessionalNarrative() {
                 </div>
 
                 {/* Metrics / Status */}
-                <div className="gsap-reveal mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-t border-neutral-900">
+                <div className="gsap-reveal mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-t border-white/5">
                     <div className="flex flex-col gap-2">
-                        <span className="text-xs font-mono tracking-widest text-[#6610f2] uppercase">Status</span>
+                        <span className="text-xs font-mono tracking-widest text-accent-secondary uppercase">Status</span>
                         <span className="text-sm font-medium text-white">Available for Hire</span>
                     </div>
+                    {/* ... other metrics ... */}
                     <div className="flex flex-col gap-2">
                         <span className="text-xs font-mono tracking-widest text-neutral-600 uppercase">Location</span>
                         <span className="text-sm font-medium text-white">Casablanca, Morocco</span>

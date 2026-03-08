@@ -1,18 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505;
-  /* Monolith Deep Black */
+  --background: #030303;
+  /* Deep Onyx Black */
   --foreground: #F5F5F5;
-  --accent: #6610f2;
-  /* Electric Indigo */
+  --accent: #818cf8;
+  /* Soft Indigo */
+  --accent-secondary: #c084fc;
+  /* Radiant Purple */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
-  --font-sans: var(--font-geist-sans);
+  --color-accent-secondary: var(--accent-secondary);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-outfit);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -26,11 +30,24 @@ body {
 
 /* Base custom utilities */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  /* Reduced from 16px for better Windows/Chrome performance */
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(to right, #ffffff, #a3a3a3);
+}
+
+.text-accent-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(to right, #818cf8, #c084fc);
 }
 
 /* --- PERFORMANCE: Hardware Acceleration --- */
