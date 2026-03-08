@@ -128,11 +128,9 @@ export default function IntelligenceSkills() {
             row.addEventListener('mouseleave', () => animation.play());
         };
 
-        // Initialize rows with slight delay to ensure offsetWidth is captured correctly
-        setTimeout(() => {
-            setupMarquee(row1Ref.current!, 1);  // Right to Left
-            setupMarquee(row2Ref.current!, -1); // Left to Right
-        }, 100);
+        // Initialize rows
+        setupMarquee(row1Ref.current!, 1);  // Right to Left
+        setupMarquee(row2Ref.current!, -1); // Left to Right
 
     }, { scope: sectionRef });
 

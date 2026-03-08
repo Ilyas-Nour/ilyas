@@ -150,8 +150,13 @@ const MagneticFluidMesh = () => {
 
 export default function MagneticFluidCanvas() {
     return (
-        <div className="absolute inset-0 z-0 bg-[#030303] overflow-hidden pointer-events-none">
-            <Canvas camera={{ position: [0, 0, 8], fov: 45 }} dpr={[1, 1.5]}>
+        <div className="absolute inset-0 z-0 bg-[#030303] overflow-hidden pointer-events-none text-white selection:bg-[#c084fc]/30 selection:text-white">
+            <Canvas
+                camera={{ position: [0, 0, 8], fov: 45 }}
+                dpr={[1, 1.5]}
+                gl={{ antialias: false, powerPreference: "high-performance" }}
+            >
+                <ambientLight intensity={0.5} />
                 <MagneticFluidMesh />
             </Canvas>
         </div>
