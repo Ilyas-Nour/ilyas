@@ -36,6 +36,7 @@ export default function RootLayout({
     <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${outfit.variable} ${geistMono.variable} antialiased bg-[#030303] text-white selection:bg-[#c084fc]/30 selection:text-white`}
+        suppressHydrationWarning
       >
         <MolecularAssemblyLoader />
         <SmoothScroll>
