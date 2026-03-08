@@ -5,6 +5,11 @@ import IntelligenceSkills from '@/components/sections/IntelligenceSkills';
 import CaseStudyVault from '@/components/sections/CaseStudyVault';
 import ContactFooter from '@/components/sections/ContactFooter';
 
+/**
+ * @page Home
+ * @description The primary entry point of the portfolio. 
+ * Assembles the 'Monolith' sections into a cohesive vertical scroll journey.
+ */
 export default function Home() {
   return (
     <main className="relative min-h-screen flex flex-col items-center bg-[#050505]">

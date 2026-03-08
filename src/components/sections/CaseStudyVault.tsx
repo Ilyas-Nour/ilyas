@@ -41,6 +41,13 @@ const projects = [
     }
 ];
 
+/**
+ * @component CaseStudyVault
+ * @description The project showcase engine. 
+ * Features a frame-perfect 'Stacking Cards' mechanism using GSAP ScrollTrigger 
+ * pinning. Uses a linear normalized timeline (0 -> 1 per project) to ensure 
+ * 100% viewport synchronization and zero-jitter transitions.
+ */
 export default function CaseStudyVault() {
     const sectionRef = useRef<HTMLElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -51,58 +58,56 @@ export default function CaseStudyVault() {
 
         const cards = cardsRef.current.filter(Boolean) as HTMLDivElement[];
 
-        // --- MOTION: Linear Sync Stacking ---
-        // We use a duration that matches the number of projects exactly.
+        // --- MOTION: Master Stacking Engine ---
+        // end: "300%" means we have 3 segments of 100vh each.
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: sectionRef.current,
                 start: 'top top',
-                end: `+=${projects.length * 100}%`, // 100% VH per card
+                end: `+=${projects.length * 150}%`, // Larger distance for slower, premium feel
                 pin: true,
-                scrub: true, // Direct linear link
+                pinSpacing: true, // Force space to push Contact down
+                scrub: 1,
+                anticipatePin: 1,
             }
         });
 
-        // Initial setup
+        // 1. Initial State
         gsap.set(cards.slice(1), { yPercent: 100 });
 
-        // Build the stack logic:
-        // Duration 1.0 = Card 0 is visible.
-        // Duration 2.0 = Card 1 slides in, Card 0 recedes.
-        // Duration 3.0 = Card 2 slides in, Card 1 recedes.
+        // 2. Linear Segment Transitions (Normalized 0 -> 1 per project)
+        projects.forEach((_, i) => {
+            // If there's a next project, animate the transition
+            if (i < projects.length - 1) {
+                const currentCard = cards[i];
+                const nextCard = cards[i + 1];
 
-        cards.forEach((card, i) => {
-            if (i === 0) {
-                // First card just stays until the next one starts (at time 1.0)
-                tl.to({}, { duration: 1 });
-            } else {
-                const prevCard = cards[i - 1];
-
-                // Transition: Prev card recedes, Current card enters
-                tl.to(prevCard, {
-                    scale: 0.9,
-                    opacity: 0.4,
+                // Move from current to next between time 'i' and 'i+1'
+                // We use durations so the total timeline duration becomes 'projects.length'
+                // Transition: Current recedes, Next enters
+                tl.to(currentCard, {
+                    scale: 0.85,
+                    opacity: 0.2,
+                    filter: 'blur(15px)',
                     duration: 1,
-                    ease: 'none'
-                }, i) // Start at time i
-                    .to(card, {
+                    ease: 'power1.inOut'
+                }, i + 0.2) // Slight delay for "rest" time
+                    .to(nextCard, {
                         yPercent: 0,
                         duration: 1,
-                        ease: 'none'
-                    }, i);
-
-                // Hold this card visible for 1 unit if it's not the last one
-                if (i < projects.length - 1) {
-                    tl.to({}, { duration: 1 });
-                }
+                        ease: 'power1.inOut'
+                    }, i + 0.2);
             }
         });
+
+        // 3. Final Hold: Ensure the last card stays visible for a moment
+        tl.to({}, { duration: 0.5 });
 
         /* --- MOTION: Section Header Reveal --- */
         gsap.fromTo('.vault-header',
-            { opacity: 0, scale: 0.95, filter: 'blur(10px)' },
+            { opacity: 0, x: -50, filter: 'blur(10px)' },
             {
-                opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1, ease: 'power4.out',
+                opacity: 1, x: 0, filter: 'blur(0px)', duration: 1, ease: 'power3.out',
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: 'top 80%',
@@ -113,11 +118,11 @@ export default function CaseStudyVault() {
     }, { scope: sectionRef });
 
     return (
-        <section ref={sectionRef} id="vault" className="relative w-full min-h-screen bg-[#050505] overflow-hidden z-50">
-            <div className="max-w-7xl w-full mx-auto px-6 py-20 h-full flex flex-col">
+        <section ref={sectionRef} id="vault" className="relative w-full min-h-screen bg-[#050505] overflow-hidden z-10">
+            <div className="max-w-7xl w-full mx-auto px-6 py-20 h-full flex flex-col items-center justify-center">
 
                 {/* Section Header */}
-                <div className="vault-header mb-12 flex items-center gap-6 relative z-50">
+                <div className="vault-header mb-12 flex items-center gap-6 w-full relative z-[60]">
                     <AmazingTypography
                         as="h2"
                         text="03 — The Vault (Case Studies)"
@@ -127,7 +132,8 @@ export default function CaseStudyVault() {
                 </div>
 
                 {/* Stacking Cards Deck */}
-                <div ref={containerRef} className="relative flex-1 w-full flex items-center justify-center perspective-1000">
+                {/* Fixed height container ensures the spacer doesn't collapse */}
+                <div ref={containerRef} className="relative w-full h-[75vh] md:h-[80vh] perspective-1000">
                     {projects.map((project, index) => (
                         <div
                             key={index}
@@ -135,7 +141,7 @@ export default function CaseStudyVault() {
                             className="absolute inset-0 flex items-center justify-center gpu-accelerated"
                             style={{ zIndex: index + 1 }}
                         >
-                            <div className="group relative w-full h-full max-w-6xl aspect-[16/9] md:aspect-auto md:h-[75vh] bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl flex flex-col md:flex-row gap-12 transition-all duration-700 hover:border-white/20 overflow-hidden">
+                            <div className="group relative w-full h-full max-w-6xl bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl flex flex-col md:flex-row gap-12 transition-all duration-700 hover:border-white/20 overflow-hidden">
 
                                 <div
                                     className="absolute -right-24 -top-24 w-96 h-96 rounded-full opacity-5 blur-[100px] transition-colors duration-700 group-hover:opacity-10"

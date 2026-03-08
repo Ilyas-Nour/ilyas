@@ -5,9 +5,10 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 /**
- * @component: AmbientLightMesh
- * @description: A subtle, dark 3D mesh that reacts to mouse movement.
- * Optimized: Reduced geometry density and throttled ticker logic.
+ * @component AmbientLightMesh
+ * @description A high-performance 3D mesh driven by custom GLSL shaders. 
+ * Performs a soft wave distortion based on cursor distance and current time, 
+ * providing an organic, living atmosphere to the Hero section.
  */
 const AmbientLightMesh = () => {
     const meshRef = useRef<THREE.Mesh>(null);

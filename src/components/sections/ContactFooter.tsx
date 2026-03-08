@@ -16,6 +16,12 @@ if (typeof window !== 'undefined') {
  * @description Refined "Digital Monolith" contact section. 
  * Features a 3D tilting glass card, sophisticated masked reveals, and a sharp minimalist footer.
  */
+/**
+ * @component ContactFooter
+ * @description The final section of the portfolio. 
+ * Leverages backdrop-blur for a glass-morphism aesthetic and provides 
+ * clear calls-to-action for professional inquiries.
+ */
 export default function ContactFooter() {
     const containerRef = useRef<HTMLElement>(null);
     const cardRef = useRef<HTMLDivElement>(null);

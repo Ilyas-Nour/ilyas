@@ -4,9 +4,10 @@ import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 
 /**
- * @component: GlassNav
- * @description: Top-fixed navigation leveraging deep backdrop-filter blurs.
- * Automatically hides on scroll down, reveals on scroll up for maximized screen real estate.
+ * @component GlassNav
+ * @description Top-fixed navigation leveraging deep backdrop-filter blurs.
+ * Uses Framer Motion to automatically hide on scroll down and reveal on scroll up, 
+ * maximizing screen real estate for the user.
  */
 export default function GlassNav() {
     const { scrollY } = useScroll();

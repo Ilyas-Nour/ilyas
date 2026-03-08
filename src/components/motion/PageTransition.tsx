@@ -5,9 +5,10 @@ import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
 
 /**
- * @component: PageTransition
- * @description: Wraps route changes in a sophisticated 'Fade and Scale' transition.
- * Avoids aggressive jitter or glitching. The current view slightly shrinks while fading out.
+ * @component PageTransition
+ * @description Wraps route changes in a sophisticated 'Fade and Scale' transition.
+ * Uses Framer Motion's AnimatePresence to orchestrate exit/entry frames when the 
+ * Next.js pathname changes.
  */
 export default function PageTransition({ children }: { children: ReactNode }) {
     const pathname = usePathname();

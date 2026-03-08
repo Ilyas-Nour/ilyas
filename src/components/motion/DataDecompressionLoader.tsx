@@ -5,6 +5,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
+/**
+ * @component DataDecompressionLoader
+ * @description A high-end preloader that simulates system data decompression.
+ * Uses a combination of randomized progress state and a GSAP 'Camera Shutter' expansion 
+ * to transition into the main site content.
+ */
 export default function DataDecompressionLoader() {
     const [progress, setProgress] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);

@@ -2,6 +2,11 @@
 
 import { motion } from 'framer-motion';
 
+/**
+ * @component Template
+ * @description Next.js Page Template used for orchestrating Framer Motion exit/entry animations
+ * between route changes. Provides a solid 'curtain' reveal effect.
+ */
 export default function Template({ children }: { children: React.ReactNode }) {
     return (
         <>

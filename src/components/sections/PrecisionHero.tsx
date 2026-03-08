@@ -13,9 +13,10 @@ if (typeof window !== 'undefined') {
 }
 
 /**
- * @component: PrecisionHero
- * @description: The entry point of the Monolith portfolio. 
- * Features stark typography and a subtle 3D ambient background.
+ * @component PrecisionHero
+ * @description The high-impact entry point of the portfolio. 
+ * Integrates an 'AmbientLightCanvas' (R3F) for visual depth and utilizes GSAP 
+ * for a momentum-based parallax scroll on the main headings.
  */
 export default function PrecisionHero() {
     const heroRef = useRef<HTMLElement>(null);

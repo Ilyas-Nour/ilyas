@@ -11,9 +11,10 @@ if (typeof window !== 'undefined') {
 }
 
 /**
- * @component: ProfessionalNarrative
- * @description: The 'About' section for the Monolith portfolio.
- * Refactored to use GSAP for high-end Mac-style Scale & Blur reveals.
+ * @component ProfessionalNarrative
+ * @description The 'About' section of the portfolio. 
+ * Replaces standard fades with a premium GSAP-driven 'Scale & Blur' reveal 
+ * to maintain the cinematic aesthetic of the Monolith design system.
  */
 export default function ProfessionalNarrative() {
     const sectionRef = useRef<HTMLElement>(null);

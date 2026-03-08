@@ -17,11 +17,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Ilyas Nour | Full-Stack Engineer",
-  description: "Professional portfolio demonstrating technical maturity, clean architecture, and high-end UX.",
-};
-
+/**
+ * @component RootLayout
+ * @description The global outer wrapper for the application. 
+ * Orchestrates fonts, meta-tags, and global motion providers (SmoothScroll, CustomCursor).
+ */
 export default function RootLayout({
   children,
 }: Readonly<{

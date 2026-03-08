@@ -102,6 +102,12 @@ function MagneticTile({ children }: { children: React.ReactNode }) {
     );
 }
 
+/**
+ * @component IntelligenceSkills
+ * @description Displays a professional 'Bento' grid of technical competencies. 
+ * Features a high-performance 'MagneticTile' effect using GSAP quickTo and a 
+ * sophisticated stagger-reveal entrance triggered by ScrollTrigger.
+ */
 export default function IntelligenceSkills() {
     const sectionRef = useRef<HTMLElement>(null);
 
