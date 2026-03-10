@@ -79,7 +79,6 @@ const LiquidScape = () => {
                         vec3 col = vec3(0.02); // Deep black
                         
                         if(t < 20.0) {
-                            // Simple lighting for the liquid
                             vec3 n = normalize(vec3(
                                 map(p + vec3(0.01, 0, 0)) - map(p - vec3(0.01, 0, 0)),
                                 0.01,
@@ -89,13 +88,15 @@ const LiquidScape = () => {
                             float dif = dot(n, normalize(vec3(1.0, 2.0, -1.0))) * 0.5 + 0.5;
                             float spec = pow(max(dot(reflect(normalize(vec3(1,2,-1)), n), rd), 0.0), 32.0);
                             
-                            col = mix(vec3(0.05), vec3(0.5, 0.3, 1.0), dif * 0.3);
-                            col += spec * 0.8;
+                            // Astral Scape Colors: Teal/Violet
+                            vec3 teal = vec3(0.17, 0.83, 0.75);
+                            vec3 violet = vec3(0.66, 0.33, 0.97);
+                            col = mix(vec3(0.01), teal, dif * 0.3);
+                            col = mix(col, violet, 1.0 - dif);
+                            col += spec * 0.6;
                         }
                         
-                        // Atmospheric fog
-                        col = mix(col, vec3(0.01, 0.01, 0.02), 1.0 - exp(-0.05 * t));
-                        
+                        col = mix(col, vec3(0.01, 0.02, 0.03), 1.0 - exp(-0.06 * t));
                         gl_FragColor = vec4(col, 1.0);
                     }
                 `}
@@ -104,11 +105,6 @@ const LiquidScape = () => {
     );
 };
 
-/**
- * @component ContactFooter
- * @description "The Scape" Artistic Contact Section.
- * Immersive 3D liquid landscape with integrated contact architecture.
- */
 export default function ContactFooter() {
     const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
 
@@ -119,122 +115,118 @@ export default function ContactFooter() {
     };
 
     return (
-        <section id="contact" className="relative w-full min-h-screen bg-[#030303] overflow-hidden">
+        <section id="contact" className="relative w-full min-h-screen overflow-hidden">
 
             {/* Background Narrative Scape */}
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0 bg-[#020408]">
                 <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 5] }}>
                     <LiquidScape />
                 </Canvas>
             </div>
 
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-32 flex flex-col md:grid md:grid-cols-2 gap-24 min-h-screen items-center">
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-32 flex flex-col lg:grid lg:grid-cols-12 gap-24 min-h-screen items-center">
 
                 {/* Visual Narrative Side */}
-                <div className="space-y-12">
-                    <div className="space-y-6">
-                        <AmazingTypography
-                            as="h2"
-                            text="The Scape"
-                            className="text-[10px] font-mono uppercase tracking-[0.8em] text-accent"
-                        />
+                <div className="lg:col-span-6 space-y-16">
+                    <div className="space-y-8">
+                        <div className="flex items-center gap-6">
+                            <span className="text-xs font-mono tracking-[0.4em] text-accent uppercase">04 / Intersection</span>
+                            <div className="h-px w-24 bg-gradient-to-r from-accent/50 to-transparent" />
+                        </div>
                         <AmazingTypography
                             as="h1"
-                            text="Collaborative Intelligence."
-                            className="text-6xl md:text-8xl font-display font-medium tracking-tighter text-white leading-[0.9]"
+                            text="Converging Visions."
+                            className="text-7xl md:text-9xl font-display font-bold tracking-tighter text-white leading-[0.85]"
                         />
                     </div>
 
-                    <p className="text-neutral-500 text-lg leading-relaxed max-w-md">
-                        Merging architectural precision with experimental design.
-                        Let's define the next digital frontier together.
+                    <p className="text-slate-400 text-xl md:text-2xl leading-relaxed max-w-md font-medium">
+                        Designing the future through architectural rigor and experimental alchemy.
                     </p>
 
-                    <div className="flex flex-col gap-8 pt-12">
-                        <div className="flex items-center gap-6 group cursor-pointer">
-                            <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-accent group-hover:bg-accent/10 transition-all">
-                                <Mail size={18} className="text-neutral-500 group-hover:text-white" />
+                    <div className="flex flex-col gap-10">
+                        <div className="flex items-center gap-8 group cursor-pointer">
+                            <div className="w-16 h-16 rounded-[1.5rem] astral-glass flex items-center justify-center group-hover:scale-110 group-hover:bg-accent/10 transition-all duration-500">
+                                <Mail size={24} className="text-slate-500 group-hover:text-accent" />
                             </div>
-                            <div>
-                                <span className="block text-[10px] font-mono text-neutral-600 uppercase tracking-widest">Inquiries</span>
-                                <span className="text-white font-display">nour.ilyas@outlook.com</span>
+                            <div className="space-y-1">
+                                <span className="block text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em]">Communication</span>
+                                <span className="text-white text-xl font-display font-medium border-b border-transparent group-hover:border-accent transition-all duration-500 pb-1">nour.ilyas@outlook.com</span>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-6 group cursor-pointer">
-                            <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-accent group-hover:bg-accent/10 transition-all">
-                                <MapPin size={18} className="text-neutral-500 group-hover:text-white" />
+                        <div className="flex items-center gap-8 group cursor-pointer">
+                            <div className="w-16 h-16 rounded-[1.5rem] astral-glass flex items-center justify-center group-hover:scale-110 group-hover:bg-accent/10 transition-all duration-500">
+                                <MapPin size={24} className="text-slate-500 group-hover:text-accent" />
                             </div>
-                            <div>
-                                <span className="block text-[10px] font-mono text-neutral-600 uppercase tracking-widest">Base</span>
-                                <span className="text-white font-display">Casablanca, Morocco</span>
+                            <div className="space-y-1">
+                                <span className="block text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em]">Coordinates</span>
+                                <span className="text-white text-xl font-display font-medium">Casablanca, Morocco</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Integrated Action Side */}
-                <div className="relative w-full">
-                    <div className="p-1 w-full bg-gradient-to-b from-white/10 to-transparent rounded-[2.5rem]">
-                        <div className="bg-[#050505]/60 backdrop-blur-3xl rounded-[2.4rem] p-8 md:p-12 border border-white/5 space-y-12 shadow-2xl">
+                <div className="lg:col-span-6 relative w-full">
+                    <div className="p-[1px] w-full bg-gradient-to-b from-white/20 to-transparent rounded-[3rem]">
+                        <div className="astral-glass-bright rounded-[2.95rem] p-10 md:p-16 space-y-12 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)]">
                             <form onSubmit={handleSend} className="space-y-12">
-                                <div className="space-y-2 group">
-                                    <label className="text-[10px] font-mono text-neutral-600 uppercase tracking-widest block transition-colors group-focus-within:text-accent">Identification</label>
+                                <div className="space-y-3 group">
+                                    <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block transition-colors group-focus-within:text-accent">Identification Signal</label>
                                     <input
                                         required
                                         type="text"
-                                        placeholder="Identity Name"
-                                        className="w-full bg-transparent border-b border-white/10 py-4 text-xl font-display text-white placeholder:text-white/5 focus:outline-none focus:border-accent transition-all"
+                                        placeholder="Entity Name"
+                                        className="w-full bg-transparent border-b border-white/5 py-5 text-2xl font-display text-white placeholder:text-white/5 focus:outline-none focus:border-accent transition-all duration-500"
                                     />
                                 </div>
 
-                                <div className="space-y-2 group">
-                                    <label className="text-[10px] font-mono text-neutral-600 uppercase tracking-widest block transition-colors group-focus-within:text-accent">Communication Payload</label>
+                                <div className="space-y-3 group">
+                                    <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block transition-colors group-focus-within:text-accent">Conceptual Pipeline</label>
                                     <textarea
                                         required
-                                        rows={4}
-                                        placeholder="What architectural vision are we building?"
-                                        className="w-full bg-transparent border-b border-white/10 py-4 text-xl font-display text-white placeholder:text-white/5 focus:outline-none focus:border-accent transition-all resize-none"
+                                        rows={3}
+                                        placeholder="Describe the architectural challenge..."
+                                        className="w-full bg-transparent border-b border-white/5 py-5 text-2xl font-display text-white placeholder:text-white/5 focus:outline-none focus:border-accent transition-all duration-500 resize-none"
                                     />
                                 </div>
 
                                 <motion.button
-                                    whileHover={{ scale: 1.02 }}
+                                    whileHover={{ scale: 1.02, y: -2 }}
                                     whileTap={{ scale: 0.98 }}
                                     disabled={status !== 'idle'}
-                                    className="w-full py-6 rounded-2xl bg-white text-black font-display font-bold text-lg flex items-center justify-center gap-4 hover:bg-accent hover:text-white transition-all disabled:opacity-50"
+                                    className="w-full py-7 rounded-[1.5rem] bg-white text-black font-display font-bold text-xl flex items-center justify-center gap-4 hover:bg-accent hover:text-white transition-all duration-500 disabled:opacity-50 group/btn"
                                 >
                                     {status === 'idle' && (
-                                        <>Transmit Pulse <Send size={18} /></>
+                                        <>Initialize Pulse <Send size={20} className="transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" /></>
                                     )}
                                     {status === 'sending' && "Transmitting..."}
-                                    {status === 'success' && "Integrated."}
+                                    {status === 'success' && "Integrated into Nexus."}
                                 </motion.button>
                             </form>
 
                             {/* Social Connectivity */}
-                            <div className="pt-8 border-t border-white/5 flex items-center justify-between">
-                                <span className="text-[10px] font-mono text-neutral-600 uppercase tracking-widest">Connect Sequence</span>
-                                <div className="flex gap-6">
-                                    <a href="https://github.com/Ilyas-Nour" target="_blank" className="text-neutral-500 hover:text-white transition-colors"><Github size={20} /></a>
-                                    <a href="#" className="text-neutral-500 hover:text-white transition-colors"><Linkedin size={20} /></a>
+                            <div className="pt-10 border-t border-white/5 flex items-center justify-between">
+                                <span className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">Connect Sequence</span>
+                                <div className="flex gap-8">
+                                    <a href="https://github.com/Ilyas-Nour" target="_blank" className="text-slate-500 hover:text-white transition-all duration-500 scale-125"><Github size={20} /></a>
+                                    <a href="#" className="text-slate-500 hover:text-white transition-all duration-500 scale-125"><Linkedin size={20} /></a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Decorative 3D elements */}
-                    <div className="absolute -top-12 -right-12 w-64 h-64 bg-accent/20 blur-[120px] rounded-full pointer-events-none" />
-                    <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-purple-500/10 blur-[100px] rounded-full pointer-events-none" />
+                    <div className="absolute -top-12 -right-12 w-80 h-80 bg-accent/20 blur-[150px] rounded-full pointer-events-none" />
                 </div>
             </div>
 
             {/* Sub-Footer Meta */}
-            <div className="relative z-10 w-full px-6 py-12 border-t border-white/5 bg-[#030303]/40 backdrop-blur-md">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 opacity-30">
-                    <span className="text-[9px] font-mono uppercase tracking-[0.6em]">© 2026 Ilyas Nour System — All Protocols Reserved</span>
-                    <div className="flex gap-10 text-[9px] font-mono uppercase tracking-[0.4em]">
-                        <span>33.57° N / 7.58° W</span>
+            <div className="relative z-10 w-full px-8 py-16 border-t border-white/5 bg-[#020408]/60 backdrop-blur-3xl">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 opacity-20">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.8em]">© 2026 Ilyas Nour System — Neural Protocols Active</span>
+                    <div className="flex gap-12 text-[10px] font-mono uppercase tracking-[0.5em]">
+                        <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" /> Local Time: {new Date().toLocaleTimeString()}</span>
                         <span>Casablanca // Morocco</span>
                     </div>
                 </div>
@@ -242,3 +234,4 @@ export default function ContactFooter() {
         </section>
     );
 }
+

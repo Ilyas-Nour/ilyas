@@ -26,13 +26,14 @@ export default function PrecisionHero() {
         /* --- MOTION: Hero Parallax Scroll --- */
         if (textRef.current && heroRef.current) {
             gsap.to(textRef.current, {
-                y: -150, // Subtle upward movement
+                y: -100,
+                scale: 1.05,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: heroRef.current,
                     start: 'top top',
                     end: 'bottom top',
-                    scrub: 1, // Momentum-based scrub
+                    scrub: true,
                 }
             });
         }
@@ -43,63 +44,91 @@ export default function PrecisionHero() {
             {/* 3D Background */}
             <MagneticFluidCanvas />
 
+            {/* Subtle Vignette Overlay */}
+            <div className="absolute inset-0 z-[1] bg-radial from-transparent via-[#020408]/40 to-[#020408] pointer-events-none" />
+
             {/* Foreground Content */}
-            <div className="relative z-10 w-full px-6 md:px-12 lg:px-24 flex flex-col justify-center h-full pointer-events-none">
+            <div className="relative z-10 w-full px-6 md:px-12 lg:px-24 flex flex-col justify-center h-full">
 
-                <div className="relative z-[15] mix-blend-difference">
+                <div ref={textRef} className="relative z-[15]">
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.8, filter: 'blur(20px)' }}
+                        initial={{ opacity: 0, scale: 0.9, filter: 'blur(20px)' }}
                         animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                        transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.8 }}
+                        transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <AmazingTypography
-                            text="Ilyas Nour —"
-                            className="text-6xl md:text-8xl lg:text-[7.5rem] font-display font-medium tracking-tighter leading-[0.9] text-white"
-                            delay={1.2}
-                        />
-                        <AmazingTypography
-                            as="h2"
-                            text="Full-Stack Developer."
-                            className="text-6xl md:text-8xl lg:text-[7.5rem] font-display font-medium tracking-tighter leading-[0.9] text-accent-secondary/40"
-                            delay={1.4}
-                        />
-                    </motion.div>
+                        <span className="inline-block text-xs md:text-sm font-mono uppercase tracking-[0.5em] text-accent mb-6">
+                            Architecting Digital Excellence
+                        </span>
 
-                    {/* Glass Refraction Layer */}
-                    <div className="absolute inset-0 z-[-1] backdrop-blur-[2px] opacity-30" />
+                        <AmazingTypography
+                            text="Ilyas Nour"
+                            className="text-7xl md:text-9xl lg:text-[10rem] font-display font-bold tracking-tighter leading-[0.8] text-white"
+                            delay={0.4}
+                        />
+                        <div className="flex flex-wrap items-baseline gap-4 md:gap-8 mt-4 overflow-hidden">
+                            <AmazingTypography
+                                as="h2"
+                                text="Full-Stack"
+                                className="text-5xl md:text-8xl lg:text-[8rem] font-display font-medium tracking-tight text-white/20"
+                                delay={0.6}
+                            />
+                            <AmazingTypography
+                                as="h2"
+                                text="Engineer."
+                                className="text-5xl md:text-8xl lg:text-[8rem] font-display font-medium tracking-tight text-accent-gradient"
+                                delay={0.8}
+                            />
+                        </div>
+                    </motion.div>
                 </div>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 1.6 }}
-                    className="mt-12 max-w-2xl"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 1.2 }}
+                    className="mt-16 max-w-xl backdrop-blur-sm p-8 rounded-2xl astral-glass relative group"
                 >
-                    <p className="text-lg md:text-xl text-neutral-400 font-medium leading-relaxed">
-                        I specialize in building scalable web applications with Laravel and React. <br className="hidden md:block" />
-                        Currently based in Casablanca, focusing on clean architecture and high-performance logic.
+                    <div className="absolute -inset-[1px] bg-gradient-to-r from-accent/50 to-accent-secondary/50 rounded-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+                    <p className="text-base md:text-lg text-slate-300 font-medium leading-relaxed relative z-10">
+                        Synthesizing clean architecture with immersive user experiences.
+                        Currently sculpting high-performance applications with Laravel and the modern web stack.
                     </p>
                 </motion.div>
 
+                {/* Status Indicator */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 1 }}
-                    className="absolute bottom-12 left-6 md:left-12 flex items-center gap-4"
+                    transition={{ duration: 1.5, delay: 2 }}
+                    className="absolute bottom-12 right-6 md:right-12 flex flex-col items-end gap-2"
                 >
-                    <div className="w-[1px] h-12 bg-white/10 relative overflow-hidden">
+                    <div className="flex items-center gap-3 astral-glass px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-widest text-slate-400">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+                        </span>
+                        Available for innovation
+                    </div>
+                </motion.div>
+
+                {/* Scroll Prompt */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 2.2 }}
+                    className="absolute bottom-12 left-6 md:left-12"
+                >
+                    <div className="w-[1px] h-24 bg-white/5 relative overflow-hidden">
                         <motion.div
                             animate={{ y: ['-100%', '100%'] }}
-                            transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }}
-                            className="absolute inset-0 bg-accent"
+                            transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+                            className="absolute inset-0 bg-gradient-to-b from-transparent via-accent to-transparent"
                         />
                     </div>
-                    <span className="text-xs font-mono uppercase tracking-widest text-neutral-500 hidden md:block">
-                        Scroll to explore
-                    </span>
                 </motion.div>
 
             </div>
         </section>
     );
 }
+

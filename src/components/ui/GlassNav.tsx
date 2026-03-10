@@ -39,15 +39,9 @@ export default function GlassNav() {
             }}
             initial="visible"
             animate={hidden ? "hidden" : "visible"}
-            className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-4"
+            className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-6"
         >
-            {/* Magnetic Brand Indicator */}
-            <div className="flex flex-col items-center opacity-40">
-                <span className="text-[9px] font-mono text-neutral-400 uppercase tracking-[0.6em]">System.active</span>
-                <div className="w-px h-3 bg-accent/30 mt-1" />
-            </div>
-
-            <div className="flex items-center gap-1 p-1.5 bg-black/40 border border-white/10 backdrop-blur-md rounded-full shadow-2xl">
+            <div className="flex items-center gap-2 p-1.5 astral-glass rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-white/5">
                 {NavItems.map((item, i) => {
                     const Icon = item.icon;
                     const isHovered = hovered === i;
@@ -58,38 +52,50 @@ export default function GlassNav() {
                             href={item.href}
                             onMouseEnter={() => setHovered(i)}
                             onMouseLeave={() => setHovered(null)}
-                            className="relative flex items-center h-11 px-4 rounded-full transition-all duration-300 group"
+                            className="relative flex items-center h-10 px-4 rounded-full transition-all duration-500 group"
                         >
-                            <div className="flex items-center gap-2.5 z-10 relative">
+                            <div className="flex items-center gap-3 z-10 relative">
                                 <Icon
-                                    size={16}
-                                    className={`transition-colors duration-300 ${isHovered ? 'text-white' : 'text-neutral-500'}`}
+                                    size={15}
+                                    className={`transition-all duration-500 ${isHovered ? 'text-accent scale-110' : 'text-slate-400 group-hover:text-slate-200'}`}
                                 />
                                 <span
-                                    className={`text-[11px] font-display font-medium tracking-widest uppercase whitespace-nowrap overflow-hidden transition-all duration-300 ${isHovered
-                                        ? 'w-auto opacity-100 ml-0'
-                                        : 'w-0 opacity-0 ml-[-10px]'
-                                        } ${isHovered ? 'text-white' : 'text-neutral-500'}`}
+                                    className={`text-[10px] font-mono font-medium tracking-[0.3em] uppercase whitespace-nowrap overflow-hidden transition-all duration-500 ${isHovered
+                                        ? 'w-auto opacity-100'
+                                        : 'w-0 opacity-0'
+                                        } ${isHovered ? 'text-white' : 'text-slate-500'}`}
                                 >
                                     {item.name}
                                 </span>
                             </div>
 
-                            {/* Performant Snappy Pill */}
+                            {/* Refractive Pill */}
                             {isHovered && (
                                 <motion.div
                                     layoutId="nav-pill"
-                                    className="absolute inset-0 bg-white/10 rounded-full z-0"
-                                    transition={{ type: 'spring', stiffness: 600, damping: 40 }}
+                                    className="absolute inset-0 bg-white/5 border border-white/10 rounded-full z-0"
+                                    style={{ backdropFilter: 'blur(10px) saturate(200%)' }}
+                                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                                 />
                             )}
 
-                            {/* Refractive Glow */}
-                            <div className={`absolute inset-0 rounded-full bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                            {/* Glow Effect */}
+                            <div className={`absolute inset-0 rounded-full bg-accent/20 blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none`} />
                         </a>
                     );
                 })}
             </div>
+
+            {/* Magnetic status bead */}
+            <motion.div
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
+                transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+                className="flex flex-col items-center gap-2"
+            >
+                <div className="w-[1px] h-6 bg-gradient-to-b from-accent/50 to-transparent" />
+                <span className="text-[8px] font-mono text-slate-500 uppercase tracking-[0.6em] ml-1">System.Sync</span>
+            </motion.div>
         </motion.nav>
     );
 }
+

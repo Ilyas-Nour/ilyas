@@ -99,7 +99,7 @@ export default function IntelligenceSkills() {
         gsap.fromTo('.skills-header',
             { opacity: 0, y: 30, filter: 'blur(10px)' },
             {
-                opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: 'power4.out',
+                opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: 'expo.out',
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: 'top 80%',
@@ -107,62 +107,61 @@ export default function IntelligenceSkills() {
             }
         );
 
-        // Infinite Marquee Logic: uses xPercent for a resolution-independent seamless loop
         const setupMarquee = (row: HTMLDivElement, direction: number) => {
-            // Duplicate content once to ensure we have a trailing set to loop into
             const content = row.innerHTML;
             row.innerHTML = content + content;
 
-            // Animate from 0 to -50% (or vice versa) for a perfect loop
             const animation = gsap.fromTo(row,
                 { xPercent: direction > 0 ? 0 : -50 },
                 {
                     xPercent: direction > 0 ? -50 : 0,
-                    duration: 60, // Slow, premium crawl
+                    duration: 40, // Slightly faster but still premium
                     ease: 'none',
                     repeat: -1,
                 }
             );
 
-            row.addEventListener('mouseenter', () => animation.pause());
-            row.addEventListener('mouseleave', () => animation.play());
+            row.addEventListener('mouseenter', () => gsap.to(animation, { timeScale: 0.2, duration: 1 }));
+            row.addEventListener('mouseleave', () => gsap.to(animation, { timeScale: 1, duration: 1 }));
         };
 
-        // Initialize rows
-        setupMarquee(row1Ref.current!, 1);  // Right to Left
-        setupMarquee(row2Ref.current!, -1); // Left to Right
+        setupMarquee(row1Ref.current!, 1);
+        setupMarquee(row2Ref.current!, -1);
 
     }, { scope: sectionRef });
 
-    // Split skills into two rows
     const row1Skills = skills.slice(0, Math.ceil(skills.length / 2));
     const row2Skills = skills.slice(Math.ceil(skills.length / 2));
 
     return (
-        <section ref={sectionRef} id="skills" className="relative w-full min-h-[70vh] flex flex-col items-center justify-center bg-[#050505] py-24 px-6 md:px-12 lg:px-24 overflow-hidden gpu-accelerated z-30">
-            <div className="w-full">
+        <section ref={sectionRef} id="skills" className="relative w-full min-h-[70vh] flex flex-col items-center justify-center py-32 px-6 md:px-12 lg:px-24 overflow-hidden gpu-accelerated z-30">
+            <div className="w-full max-w-7xl mx-auto">
 
                 {/* Section Header */}
-                <div className="skills-header mb-20 flex items-center gap-6">
-                    <h2 className="text-sm font-display tracking-[0.2em] text-neutral-500 uppercase">
-                        02 — Core Expertise
+                <div className="skills-header mb-24 flex items-center gap-6">
+                    <span className="text-xs font-mono tracking-[0.4em] text-accent uppercase">02 / Expertise</span>
+                    <div className="h-px w-24 bg-gradient-to-r from-accent/50 to-transparent" />
+                    <h2 className="text-4xl md:text-6xl font-display font-medium text-white/40">
+                        Capabilities —
                     </h2>
-                    <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
                 </div>
 
                 {/* Marquee Rows */}
-                <div className="flex flex-col gap-8 w-full">
+                <div className="flex flex-col gap-10 w-full relative">
+                    {/* Decorative Background Glows */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-full bg-radial from-accent/5 to-transparent pointer-events-none blur-3xl" />
+
                     {/* Row 1: Right to Left */}
                     <div className="relative w-full overflow-hidden py-4">
-                        <div ref={row1Ref} className="flex gap-4 whitespace-nowrap will-change-transform">
+                        <div ref={row1Ref} className="flex gap-6 whitespace-nowrap will-change-transform">
                             {row1Skills.map((skill, i) => {
                                 const Icon = skill.icon;
                                 return (
-                                    <div key={i} className="flex items-center gap-3 px-6 py-4 rounded-xl bg-white/[0.02] border border-white/[0.04] backdrop-blur-md transition-all duration-300 hover:bg-white/[0.04] hover:border-white/10 group cursor-default">
-                                        <div className="transition-transform duration-300 group-hover:scale-110" style={{ color: skill.color }}>
-                                            <Icon size={28} />
+                                    <div key={i} className="flex items-center gap-4 px-8 py-5 rounded-[2rem] astral-glass transition-all duration-500 hover:scale-105 group cursor-default">
+                                        <div className="transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" style={{ color: skill.color }}>
+                                            <Icon size={32} />
                                         </div>
-                                        <span className="text-sm font-medium tracking-wide transition-colors duration-300" style={{ color: skill.color }}>
+                                        <span className="text-sm font-display font-medium tracking-widest uppercase text-slate-300 group-hover:text-white transition-colors duration-500">
                                             {skill.name}
                                         </span>
                                     </div>
@@ -173,15 +172,15 @@ export default function IntelligenceSkills() {
 
                     {/* Row 2: Left to Right */}
                     <div className="relative w-full overflow-hidden py-4">
-                        <div ref={row2Ref} className="flex gap-4 whitespace-nowrap will-change-transform">
+                        <div ref={row2Ref} className="flex gap-6 whitespace-nowrap will-change-transform">
                             {row2Skills.map((skill, i) => {
                                 const Icon = skill.icon;
                                 return (
-                                    <div key={i} className="flex items-center gap-3 px-6 py-4 rounded-xl bg-white/[0.02] border border-white/[0.04] backdrop-blur-md transition-all duration-300 hover:bg-white/[0.04] hover:border-white/10 group cursor-default">
-                                        <div className="transition-transform duration-300 group-hover:scale-110" style={{ color: skill.color }}>
-                                            <Icon size={28} />
+                                    <div key={i} className="flex items-center gap-4 px-8 py-5 rounded-[2rem] astral-glass transition-all duration-500 hover:scale-105 group cursor-default">
+                                        <div className="transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" style={{ color: skill.color }}>
+                                            <Icon size={32} />
                                         </div>
-                                        <span className="text-sm font-medium tracking-wide transition-colors duration-300" style={{ color: skill.color }}>
+                                        <span className="text-sm font-display font-medium tracking-widest uppercase text-slate-300 group-hover:text-white transition-colors duration-500">
                                             {skill.name}
                                         </span>
                                     </div>
@@ -195,3 +194,4 @@ export default function IntelligenceSkills() {
         </section>
     );
 }
+

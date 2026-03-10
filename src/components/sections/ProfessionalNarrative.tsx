@@ -21,27 +21,26 @@ export default function ProfessionalNarrative() {
 
     useGSAP(() => {
         /* --- MOTION: Section Entry Logic --- */
-        // Replaces basic fade with a premium weighted scale & gaussian blur
         const elements = gsap.utils.toArray('.gsap-reveal');
 
         elements.forEach((el: any) => {
             gsap.fromTo(el,
                 {
                     opacity: 0,
-                    scale: 0.95,
-                    filter: 'blur(10px)',
-                    y: 30
+                    scale: 0.98,
+                    filter: 'blur(15px)',
+                    y: 40
                 },
                 {
                     opacity: 1,
                     scale: 1,
                     filter: 'blur(0px)',
                     y: 0,
-                    duration: 1.2,
-                    ease: 'power4.out',
+                    duration: 1.5,
+                    ease: 'expo.out',
                     scrollTrigger: {
                         trigger: el,
-                        start: 'top 85%',
+                        start: 'top 90%',
                         toggleActions: 'play none none reverse'
                     }
                 }
@@ -50,57 +49,63 @@ export default function ProfessionalNarrative() {
     }, { scope: sectionRef });
 
     return (
-        <section ref={sectionRef} className="relative w-full min-h-[50vh] bg-[#050505] py-24 md:py-32 px-6 md:px-12 lg:px-24 overflow-hidden z-20">
-            <div className="w-full">
+        <section ref={sectionRef} className="relative w-full min-h-[70vh] py-32 md:py-48 px-6 md:px-12 lg:px-24 overflow-hidden z-20">
+            <div className="w-full max-w-7xl mx-auto">
 
                 {/* Section Header */}
-                <div className="mb-16 md:mb-24 flex items-center gap-6">
+                <div className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                    <div className="flex items-center gap-6">
+                        <span className="text-xs font-mono tracking-[0.4em] text-accent uppercase">01 / Foundation</span>
+                        <div className="h-px w-24 bg-gradient-to-r from-accent/50 to-transparent" />
+                    </div>
                     <AmazingTypography
                         as="h2"
-                        text="01 — The Background"
-                        className="text-sm font-display tracking-[0.2em] text-neutral-500 uppercase"
+                        text="Philosophy —"
+                        className="text-4xl md:text-6xl font-display font-medium text-white/40"
                     />
-                    <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
                 </div>
 
                 {/* Core Narrative */}
-                <div className="gsap-reveal">
-                    <AmazingTypography
-                        text="I am a developer driven by logic and clean code."
-                        className="text-3xl md:text-5xl lg:text-6xl font-display font-medium tracking-tight leading-[1.2] text-white"
-                        stagger={0.06}
-                    />
+                <div className="gsap-reveal grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                    <div className="lg:col-span-12">
+                        <AmazingTypography
+                            text="Architecture is the silence between the logic."
+                            className="text-4xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight leading-[1.05] text-white"
+                            stagger={0.06}
+                        />
+                    </div>
 
-                    <div className="mt-12 flex flex-col md:flex-row gap-8 md:gap-16">
-                        <p className="flex-1 text-lg md:text-xl text-neutral-400 leading-relaxed">
-                            My training at OFPPT has grounded me in the fundamentals of Full-Stack development,
-                            focusing on architectural patterns and database design.
+                    <div className="lg:col-span-5 flex flex-col gap-8">
+                        <p className="text-xl md:text-2xl text-slate-300 font-medium leading-relaxed">
+                            I construct digital ecosystems where performance meets aesthetic precision. My background is rooted in the rigor of technical mastery and the fluidity of creative design.
                         </p>
-                        <p className="flex-1 text-lg md:text-xl text-neutral-400 leading-relaxed">
-                            While training builds the foundation, my personal systems—like <span className="text-white font-medium">PrivaFlow</span> and <span className="text-white font-medium">Animy</span>—prove
-                            my ability to architect, refine, and ship production-ready software.
+                    </div>
+
+                    <div className="lg:col-span-7 astral-glass p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                        <p className="text-lg md:text-xl text-slate-400 leading-relaxed relative z-10">
+                            From the initial architectural blueprint to the final pixel-perfect interaction, I ensure every system is built to scale, endure, and inspire. My work on <span className="text-white font-semibold">PrivaFlow</span> and <span className="text-white font-semibold">Animy</span> showcases my dedication to shipping excellence.
                         </p>
                     </div>
                 </div>
 
-                {/* Metrics / Status */}
-                <div className="gsap-reveal mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-t border-white/5">
-                    <div className="flex flex-col gap-2">
-                        <span className="text-xs font-mono tracking-widest text-accent-secondary uppercase">Status</span>
-                        <span className="text-sm font-medium text-white">Available for Hire</span>
+                {/* Bento Status Grid */}
+                <div className="gsap-reveal mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <div className="astral-glass p-6 md:p-8 rounded-[2rem] flex flex-col justify-between aspect-square md:aspect-auto md:h-48">
+                        <span className="text-[10px] font-mono tracking-widest text-accent uppercase">Expertise</span>
+                        <span className="text-lg md:text-xl font-display font-medium text-white">Full-Stack<br />Systems</span>
                     </div>
-                    {/* ... other metrics ... */}
-                    <div className="flex flex-col gap-2">
-                        <span className="text-xs font-mono tracking-widest text-neutral-600 uppercase">Location</span>
-                        <span className="text-sm font-medium text-white">Casablanca, Morocco</span>
+                    <div className="astral-glass p-6 md:p-8 rounded-[2rem] flex flex-col justify-between aspect-square md:aspect-auto md:h-48 border-accent/20">
+                        <span className="text-[10px] font-mono tracking-widest text-accent uppercase">Availability</span>
+                        <span className="text-lg md:text-xl font-display font-medium text-white">Scaling<br />Now</span>
                     </div>
-                    <div className="flex flex-col gap-2">
-                        <span className="text-xs font-mono tracking-widest text-neutral-600 uppercase">Focus</span>
-                        <span className="text-sm font-medium text-white">Architecture & UX</span>
+                    <div className="astral-glass p-6 md:p-8 rounded-[2rem] flex flex-col justify-between aspect-square md:aspect-auto md:h-48">
+                        <span className="text-[10px] font-mono tracking-widest text-slate-500 uppercase">Focus</span>
+                        <span className="text-lg md:text-xl font-display font-medium text-white">Clean<br />Architect</span>
                     </div>
-                    <div className="flex flex-col gap-2">
-                        <span className="text-xs font-mono tracking-widest text-neutral-600 uppercase">Stack</span>
-                        <span className="text-sm font-medium text-white">Laravel / React</span>
+                    <div className="astral-glass p-6 md:p-8 rounded-[2rem] flex flex-col justify-between aspect-square md:aspect-auto md:h-48">
+                        <span className="text-[10px] font-mono tracking-widest text-slate-500 uppercase">Location</span>
+                        <span className="text-lg md:text-xl font-display font-medium text-white">Casablanca<br />Based</span>
                     </div>
                 </div>
 
@@ -108,3 +113,4 @@ export default function ProfessionalNarrative() {
         </section>
     );
 }
+

@@ -128,16 +128,17 @@ const MagneticFluidMesh = () => {
                     uniform float uTime;
                     
                     void main() {
-                        // High-contrast monochromatic liquid aesthetic
-                        vec3 baseColor = vec3(0.015, 0.015, 0.015);
-                        vec3 highlightColor = vec3(0.5, 0.3, 1.0); // Indigo-Purple spill
+                        // Astral liquid aesthetic: Teal highlights with Violet depth
+                        vec3 baseColor = vec3(0.005, 0.01, 0.015); // Deep navy base
+                        vec3 highlightColor = vec3(0.17, 0.83, 0.75); // Radiant Teal
+                        vec3 secondaryColor = vec3(0.66, 0.33, 0.97); // Ethereal Violet
                         
                         // Specular highlights based on distortion spikes
-                        float specular = pow(smoothstep(0.0, 4.0, vDistortion), 4.0);
-                        float rim = 1.0 - dot(vec3(0.0, 0.0, 1.0), vec3(0.0, 0.0, 1.0)); // Simple rim fake
+                        float specular = pow(smoothstep(0.0, 4.0, vDistortion), 3.5);
                         
-                        vec3 liquidColor = mix(baseColor, highlightColor * 1.5, specular);
-                        liquidColor += vec3(specular * 0.8); // White hot spikes
+                        vec3 liquidColor = mix(baseColor, highlightColor, specular);
+                        liquidColor = mix(liquidColor, secondaryColor, specular * 0.4);
+                        liquidColor += vec3(specular * 0.4); // Subtle bright peaks
                         
                         gl_FragColor = vec4(liquidColor, 1.0);
                     }
@@ -150,7 +151,7 @@ const MagneticFluidMesh = () => {
 
 export default function MagneticFluidCanvas() {
     return (
-        <div className="absolute inset-0 z-0 bg-[#030303] overflow-hidden pointer-events-none text-white selection:bg-[#c084fc]/30 selection:text-white">
+        <div className="absolute inset-0 z-0 bg-[#020408] overflow-hidden pointer-events-none">
             <Canvas
                 camera={{ position: [0, 0, 8], fov: 45 }}
                 dpr={[1, 1.5]}
@@ -162,3 +163,4 @@ export default function MagneticFluidCanvas() {
         </div>
     );
 }
+
