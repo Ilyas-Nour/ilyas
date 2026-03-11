@@ -14,21 +14,30 @@ const MagneticFluidMesh = () => {
     const materialRef = useRef<THREE.ShaderMaterial>(null);
     const { viewport, mouse } = useThree();
 
+    // Stable uniforms to prevent re-memoization during viewport changes
     const uniforms = useMemo(
         () => ({
             uTime: { value: 0 },
             uMouse: { value: new THREE.Vector2(0, 0) },
             uResolution: { value: new THREE.Vector2(viewport.width, viewport.height) }
         }),
-        [viewport.width, viewport.height]
+        [] // Initialize once
     );
 
     useFrame((state) => {
         if (!materialRef.current) return;
-        materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
-        materialRef.current.uniforms.uMouse.value.set(
-            mouse.x * viewport.width / 2,
-            mouse.y * viewport.height / 2
+
+        // Update time and resolution dynamically
+        materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
+        materialRef.current.uniforms.uResolution.value.set(viewport.width, viewport.height);
+
+        // Smoothly interp mouse
+        materialRef.current.uniforms.uMouse.value.lerp(
+            new THREE.Vector2(
+                mouse.x * viewport.width / 2,
+                mouse.y * viewport.height / 2
+            ),
+            0.1
         );
     });
 
@@ -155,6 +164,7 @@ export default function MagneticFluidCanvas() {
             <Canvas
                 camera={{ position: [0, 0, 8], fov: 45 }}
                 dpr={[1, 1.5]}
+                frameloop="always"
                 gl={{ antialias: false, powerPreference: "high-performance" }}
             >
                 <ambientLight intensity={0.5} />
