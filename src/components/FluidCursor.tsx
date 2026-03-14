@@ -1,8 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 
-// WebGL Fluid Simulation by Pavel Dobryakov (Modified for React/System Sync)
-// This is a high-performance solver for Navier-Stokes equations
-
 const config = {
   SIM_RESOLUTION: 128,
   DYE_RESOLUTION: 1024,
@@ -29,21 +26,34 @@ export const FluidCursor: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const { width, height } = canvas.getBoundingClientRect();
-    canvas.width = width;
-    canvas.height = height;
+    console.log('FluidCursor: Initializing WebGL simulation...');
 
-    const gl = canvas.getContext('webgl2', { alpha: true, depth: false, antialias: false });
-    if (!gl) return;
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      console.log(`FluidCursor: Canvas resized to ${canvas.width}x${canvas.height}`);
+    };
 
-    // Helper functions for WebGL
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const gl = canvas.getContext('webgl2', { alpha: true, depth: false, antialias: false }) ||
+               canvas.getContext('webgl', { alpha: true, depth: false, antialias: false }) as any;
+
+    if (!gl) {
+      console.error('FluidCursor: WebGL not supported.');
+      return;
+    }
+
+    console.log('FluidCursor: WebGL Context achieved.');
+
     const createShader = (gl: WebGL2RenderingContext, type: number, source: string) => {
       const shader = gl.createShader(type);
       if (!shader) return null;
       gl.shaderSource(shader, source);
       gl.compileShader(shader);
       if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error(gl.getShaderInfoLog(shader));
+        console.error('FluidCursor Shader Error:', gl.getShaderInfoLog(shader));
         gl.deleteShader(shader);
         return null;
       }
@@ -54,26 +64,38 @@ export const FluidCursor: React.FC = () => {
       const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
       const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
       const program = gl.createProgram();
-      if (!program || !vs || !fs) return null;
+      if (!program || !vs || !fs) {
+        console.error('FluidCursor Program Creation Failed');
+        return null;
+      }
       gl.attachShader(program, vs);
       gl.attachShader(program, fs);
       gl.linkProgram(program);
       if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        console.error(gl.getProgramInfoLog(program));
+        console.error('FluidCursor Program Link Error:', gl.getProgramInfoLog(program));
         return null;
       }
       return program;
     };
 
-    // Shaders (Simplified for performance & style)
-    const baseVertexShader = `#version 300 es
+    // Shaders Configuration
+    const isWebGL2 = gl instanceof WebGL2RenderingContext;
+    const version = isWebGL2 ? '#version 300 es' : '';
+    const vIn = isWebGL2 ? 'in' : 'attribute';
+    const vOut = isWebGL2 ? 'out' : 'varying';
+    const fIn = isWebGL2 ? 'in' : 'varying';
+    const fOut = isWebGL2 ? 'layout(location = 0) out vec4 outColor;' : '';
+    const fragColor = isWebGL2 ? 'outColor' : 'gl_FragColor';
+    const textureFunc = isWebGL2 ? 'texture' : 'texture2D';
+
+    const baseVertexShader = `${version}
       precision highp float;
-      in vec2 aPosition;
-      out vec2 vUv;
-      out vec2 vL;
-      out vec2 vR;
-      out vec2 vT;
-      out vec2 vB;
+      ${isWebGL2 ? 'layout(location = 0)' : ''} ${vIn} vec2 aPosition;
+      ${vOut} vec2 vUv;
+      ${vOut} vec2 vL;
+      ${vOut} vec2 vR;
+      ${vOut} vec2 vT;
+      ${vOut} vec2 vB;
       uniform vec2 texelSize;
       void main () {
           vUv = aPosition * 0.5 + 0.5;
@@ -85,127 +107,124 @@ export const FluidCursor: React.FC = () => {
       }
     `;
 
-    const displayFragmentShader = `#version 300 es
+    const displayFragmentShader = `${version}
       precision highp float;
-      precision highp sampler2D;
-      in vec2 vUv;
+      ${fIn} vec2 vUv;
       uniform sampler2D uTexture;
-      out vec4 outColor;
+      ${fOut}
       void main () {
-          vec3 c = texture(uTexture, vUv).rgb;
+          vec3 c = ${textureFunc}(uTexture, vUv).rgb;
           float a = max(c.r, max(c.g, c.b));
-          outColor = vec4(c, a);
+          ${fragColor} = vec4(c, a * 0.8);
       }
     `;
 
-    const splatFragmentShader = `#version 300 es
+    const splatFragmentShader = `${version}
       precision highp float;
-      precision highp sampler2D;
-      in vec2 vUv;
+      ${fIn} vec2 vUv;
       uniform sampler2D uTarget;
       uniform float aspectRatio;
       uniform vec3 color;
       uniform vec2 point;
       uniform float radius;
-      out vec4 outColor;
+      ${fOut}
       void main () {
           vec2 p = vUv - point.xy;
           p.x *= aspectRatio;
           vec3 splat = exp(-dot(p, p) / radius) * color;
-          vec3 base = texture(uTarget, vUv).xyz;
-          outColor = vec4(base + splat, 1.0);
+          vec3 base = ${textureFunc}(uTarget, vUv).xyz;
+          ${fragColor} = vec4(base + splat, 1.0);
       }
     `;
 
-    const advectionFragmentShader = `#version 300 es
+    const advectionFragmentShader = `${version}
       precision highp float;
-      precision highp sampler2D;
-      in vec2 vUv;
+      ${fIn} vec2 vUv;
       uniform sampler2D uVelocity;
       uniform sampler2D uSource;
       uniform vec2 texelSize;
       uniform float dt;
       uniform float dissipation;
-      out vec4 outColor;
+      ${fOut}
       void main () {
-          vec2 coord = vUv - dt * texture(uVelocity, vUv).xy * texelSize;
-          outColor = dissipation * texture(uSource, coord);
+          vec2 coord = vUv - dt * ${textureFunc}(uVelocity, vUv).xy * texelSize;
+          ${fragColor} = dissipation * ${textureFunc}(uSource, coord);
       }
     `;
 
-    const divergenceFragmentShader = `#version 300 es
+    const divergenceFragmentShader = `${version}
       precision highp float;
-      precision highp sampler2D;
-      in vec2 vUv;
-      in vec2 vL;
-      in vec2 vR;
-      in vec2 vT;
-      in vec2 vB;
+      ${fIn} vec2 vUv;
+      ${fIn} vec2 vL;
+      ${fIn} vec2 vR;
+      ${fIn} vec2 vT;
+      ${fIn} vec2 vB;
       uniform sampler2D uVelocity;
-      out vec4 outColor;
+      ${fOut}
       void main () {
-          float L = texture(uVelocity, vL).x;
-          float R = texture(uVelocity, vR).x;
-          float T = texture(uVelocity, vT).y;
-          float B = texture(uVelocity, vB).y;
+          float L = ${textureFunc}(uVelocity, vL).x;
+          float R = ${textureFunc}(uVelocity, vR).x;
+          float T = ${textureFunc}(uVelocity, vT).y;
+          float B = ${textureFunc}(uVelocity, vB).y;
           float div = 0.5 * (R - L + T - B);
-          outColor = vec4(div, 0.0, 0.0, 1.0);
+          ${fragColor} = vec4(div, 0.0, 0.0, 1.0);
       }
     `;
 
-    const pressureFragmentShader = `#version 300 es
+    const pressureFragmentShader = `${version}
       precision highp float;
-      precision highp sampler2D;
-      in vec2 vUv;
-      in vec2 vL;
-      in vec2 vR;
-      in vec2 vT;
-      in vec2 vB;
+      ${fIn} vec2 vUv;
+      ${fIn} vec2 vL;
+      ${fIn} vec2 vR;
+      ${fIn} vec2 vT;
+      ${fIn} vec2 vB;
       uniform sampler2D uPressure;
       uniform sampler2D uDivergence;
-      out vec4 outColor;
+      ${fOut}
       void main () {
-          float L = texture(uPressure, vL).x;
-          float R = texture(uPressure, vR).x;
-          float T = texture(uPressure, vT).x;
-          float B = texture(uPressure, vB).x;
-          float div = texture(uDivergence, vUv).x;
+          float L = ${textureFunc}(uPressure, vL).x;
+          float R = ${textureFunc}(uPressure, vR).x;
+          float T = ${textureFunc}(uPressure, vT).x;
+          float B = ${textureFunc}(uPressure, vB).x;
+          float div = ${textureFunc}(uDivergence, vUv).x;
           float p = (L + R + B + T - div) * 0.25;
-          outColor = vec4(p, 0.0, 0.0, 1.0);
+          ${fragColor} = vec4(p, 0.0, 0.0, 1.0);
       }
     `;
 
-    const gradientSubtractFragmentShader = `#version 300 es
+    const gradientSubtractFragmentShader = `${version}
       precision highp float;
-      precision highp sampler2D;
-      in vec2 vUv;
-      in vec2 vL;
-      in vec2 vR;
-      in vec2 vT;
-      in vec2 vB;
+      ${fIn} vec2 vUv;
+      ${fIn} vec2 vL;
+      ${fIn} vec2 vR;
+      ${fIn} vec2 vT;
+      ${fIn} vec2 vB;
       uniform sampler2D uPressure;
       uniform sampler2D uVelocity;
-      out vec4 outColor;
+      ${fOut}
       void main () {
-          float L = texture(uPressure, vL).x;
-          float R = texture(uPressure, vR).x;
-          float T = texture(uPressure, vT).x;
-          float B = texture(uPressure, vB).x;
-          vec2 vel = texture(uVelocity, vUv).xy;
+          float L = ${textureFunc}(uPressure, vL).x;
+          float R = ${textureFunc}(uPressure, vR).x;
+          float T = ${textureFunc}(uPressure, vT).x;
+          float B = ${textureFunc}(uPressure, vB).x;
+          vec2 vel = ${textureFunc}(uVelocity, vUv).xy;
           vel.xy -= vec2(R - L, T - B) * 0.5;
-          outColor = vec4(vel, 0.0, 1.0);
+          ${fragColor} = vec4(vel, 0.0, 1.0);
       }
     `;
 
-    // Initialization and Buffer Setup (Internal logic omitted for brevity in thought, fully implemented below)
-    const splashProgram = createProgram(gl, baseVertexShader, splatFragmentShader)!;
-    const advectionProgram = createProgram(gl, baseVertexShader, advectionFragmentShader)!;
-    const divergenceProgram = createProgram(gl, baseVertexShader, divergenceFragmentShader)!;
-    const pressureProgram = createProgram(gl, baseVertexShader, pressureFragmentShader)!;
-    const gradSubProgram = createProgram(gl, baseVertexShader, gradientSubtractFragmentShader)!;
-    const displayProgram = createProgram(gl, baseVertexShader, displayFragmentShader)!;
+    const splashProgram = createProgram(gl, baseVertexShader, splatFragmentShader);
+    const advectionProgram = createProgram(gl, baseVertexShader, advectionFragmentShader);
+    const divergenceProgram = createProgram(gl, baseVertexShader, divergenceFragmentShader);
+    const pressureProgram = createProgram(gl, baseVertexShader, pressureFragmentShader);
+    const gradSubProgram = createProgram(gl, baseVertexShader, gradientSubtractFragmentShader);
+    const displayProgram = createProgram(gl, baseVertexShader, displayFragmentShader);
 
-    // Buffer creation helpers...
+    if (!splashProgram || !advectionProgram || !divergenceProgram || !pressureProgram || !gradSubProgram || !displayProgram) {
+      console.error('FluidCursor: Critical failure during program creation. Simulation aborted.');
+      return;
+    }
+
     const createFBO = (w: number, h: number, internalFormat: number, format: number, type: number, param: number) => {
       gl.activeTexture(gl.TEXTURE0);
       const texture = gl.createTexture();
@@ -235,9 +254,9 @@ export const FluidCursor: React.FC = () => {
       };
     };
 
-    const ext = gl.getExtension('EXT_color_buffer_float');
-    const type = gl.HALF_FLOAT;
-    const internalFormat = gl.RGBA16F;
+    gl.getExtension('EXT_color_buffer_float');
+    const type = isWebGL2 ? gl.HALF_FLOAT : (gl.getExtension('OES_texture_half_float')?.HALF_FLOAT_OES || gl.FLOAT);
+    const internalFormat = isWebGL2 ? gl.RGBA16F : gl.RGBA;
     const format = gl.RGBA;
     
     let density = createDoubleFBO(config.SIM_RESOLUTION, config.SIM_RESOLUTION, internalFormat, format, type, gl.LINEAR);
@@ -250,13 +269,15 @@ export const FluidCursor: React.FC = () => {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, -1, 1, 1, 1, 1, -1]), gl.STATIC_DRAW);
 
     const renderQuad = () => {
+      gl.bindBuffer(gl.ARRAY_BUFFER, quadBuffer);
+      gl.enableVertexAttribArray(0);
+      gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
       gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
     };
 
     const splat = (x: number, y: number, dx: number, dy: number, color: {r: number, g: number, b: number}) => {
       gl.viewport(0, 0, config.SIM_RESOLUTION, config.SIM_RESOLUTION);
       
-      // Add velocity
       gl.useProgram(splashProgram);
       gl.uniform1f(gl.getUniformLocation(splashProgram, 'aspectRatio'), canvas.width / canvas.height);
       gl.uniform2f(gl.getUniformLocation(splashProgram, 'point'), x, y);
@@ -269,7 +290,6 @@ export const FluidCursor: React.FC = () => {
       renderQuad();
       velocity.swap();
 
-      // Add density
       gl.uniform3f(gl.getUniformLocation(splashProgram, 'color'), color.r, color.g, color.b);
       gl.bindFramebuffer(gl.FRAMEBUFFER, density.write.fbo);
       gl.activeTexture(gl.TEXTURE0);
@@ -278,22 +298,28 @@ export const FluidCursor: React.FC = () => {
       density.swap();
     };
 
+    // Subdued initial splat for immediate visual confirmation
+    setTimeout(() => {
+      splat(0.5, 0.5, 200, 200, { r: 0.23, g: 0.51, b: 0.96 });
+    }, 1000);
+
     let lastMouseX = 0, lastMouseY = 0;
     const moveListener = (e: MouseEvent | TouchEvent) => {
-      const x = (e instanceof MouseEvent ? e.pageX : e.touches[0].pageX) / canvas.width;
-      const y = 1.0 - (e instanceof MouseEvent ? e.pageY : e.touches[0].pageY) / canvas.height;
+      const clientX = (e instanceof MouseEvent ? e.clientX : e.touches[0].clientX);
+      const clientY = (e instanceof MouseEvent ? e.clientY : e.touches[0].clientY);
+      const x = clientX / window.innerWidth;
+      const y = 1.0 - clientY / window.innerHeight;
       const dx = (x - lastMouseX) * config.SPLAT_FORCE;
       const dy = (y - lastMouseY) * config.SPLAT_FORCE;
 
-      // System Palette Colors: Cyber Blue (#3b82f6) / Volcanic Orange (#f97316)
       const colors = [
         { r: 0.23, g: 0.51, b: 0.96 }, // Cyber Blue
         { r: 0.98, g: 0.45, b: 0.09 }, // Volcanic Orange
-        { r: 0.8, g: 0.4, b: 1.0 },   // Indigo accent
+        { r: 0.5, g: 0.2, b: 1.0 },    // Indigo
       ];
       const color = colors[Math.floor(Math.random() * colors.length)];
       
-      if (Math.abs(dx) > 0 || Math.abs(dy) > 0) {
+      if (Math.abs(dx) > 0.0001 || Math.abs(dy) > 0.0001) {
         splat(x, y, dx, dy, color);
       }
       lastMouseX = x;
@@ -303,11 +329,11 @@ export const FluidCursor: React.FC = () => {
     window.addEventListener('mousemove', moveListener);
     window.addEventListener('touchstart', moveListener);
 
+    let animationId: number;
     const update = () => {
       gl.disable(gl.BLEND);
       gl.viewport(0, 0, config.SIM_RESOLUTION, config.SIM_RESOLUTION);
 
-      // Advection
       gl.useProgram(advectionProgram);
       gl.uniform2f(gl.getUniformLocation(advectionProgram, 'texelSize'), 1.0 / config.SIM_RESOLUTION, 1.0 / config.SIM_RESOLUTION);
       gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dt'), 0.016);
@@ -325,10 +351,11 @@ export const FluidCursor: React.FC = () => {
       gl.activeTexture(gl.TEXTURE1);
       gl.bindTexture(gl.TEXTURE_2D, density.read.texture);
       gl.bindFramebuffer(gl.FRAMEBUFFER, density.write.fbo);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, velocity.read.texture);
       renderQuad();
       density.swap();
 
-      // Divergence
       gl.useProgram(divergenceProgram);
       gl.uniform2f(gl.getUniformLocation(divergenceProgram, 'texelSize'), 1.0 / config.SIM_RESOLUTION, 1.0 / config.SIM_RESOLUTION);
       gl.activeTexture(gl.TEXTURE0);
@@ -336,7 +363,6 @@ export const FluidCursor: React.FC = () => {
       gl.bindFramebuffer(gl.FRAMEBUFFER, divergence.fbo);
       renderQuad();
 
-      // Pressure
       gl.useProgram(pressureProgram);
       gl.uniform2f(gl.getUniformLocation(pressureProgram, 'texelSize'), 1.0 / config.SIM_RESOLUTION, 1.0 / config.SIM_RESOLUTION);
       gl.activeTexture(gl.TEXTURE0);
@@ -351,7 +377,6 @@ export const FluidCursor: React.FC = () => {
         pressure.swap();
       }
 
-      // Gradient Subtract
       gl.useProgram(gradSubProgram);
       gl.uniform2f(gl.getUniformLocation(gradSubProgram, 'texelSize'), 1.0 / config.SIM_RESOLUTION, 1.0 / config.SIM_RESOLUTION);
       gl.activeTexture(gl.TEXTURE0);
@@ -364,7 +389,6 @@ export const FluidCursor: React.FC = () => {
       renderQuad();
       velocity.swap();
 
-      // Display
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.useProgram(displayProgram);
       gl.activeTexture(gl.TEXTURE0);
@@ -375,7 +399,7 @@ export const FluidCursor: React.FC = () => {
       gl.clear(gl.COLOR_BUFFER_BIT);
       renderQuad();
 
-      requestAnimationFrame(update);
+      animationId = requestAnimationFrame(update);
     };
 
     update();
@@ -383,13 +407,15 @@ export const FluidCursor: React.FC = () => {
     return () => {
       window.removeEventListener('mousemove', moveListener);
       window.removeEventListener('touchstart', moveListener);
+      window.removeEventListener('resize', resizeCanvas);
+      cancelAnimationFrame(animationId);
     };
   }, []);
 
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed inset-0 w-full h-full pointer-events-none z-[5] opacity-60 mix-blend-screen overflow-hidden" 
+      className="fixed inset-0 w-screen h-screen pointer-events-none z-[9999] opacity-80 mix-blend-screen overflow-hidden" 
     />
   );
 };

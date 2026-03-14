@@ -10,7 +10,7 @@ const skillsRow1 = [
   { name: 'Three.js', icon: 'threedotjs', color: '#ffffff' },
   { name: 'Framer Motion', icon: 'framer', color: '#ff0055' },
   { name: 'PostgreSQL', icon: 'postgresql', color: '#4169E1' },
-  { name: 'AWS', icon: 'amazonaws', color: '#232F3E' },
+  { name: 'AWS', icon: 'amazonwebservices', color: '#FF9900' }, // Corrected slug and vibrant brand color
   { name: 'Docker', icon: 'docker', color: '#2496ED' },
   { name: 'Postman', icon: 'postman', color: '#FF6C37' },
 ];
@@ -44,13 +44,13 @@ const MarqueeRow: React.FC<{ items: typeof skillsRow1; direction: number }> = ({
         {[...items, ...items, ...items].map((skill, i) => (
           <div
             key={i}
-            className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-xl px-6 py-4 glass hover:border-[var(--color-accent)]/40 transition-all duration-300 group"
+            className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-xl px-6 py-4 glass hover:border-[var(--color-accent)]/40 transition-all duration-300 group relative"
           >
-            <div className="p-2 rounded bg-white/5 border border-white/5 group-hover:border-[var(--color-accent)]/30 transition-colors">
+            <div className="p-2 rounded bg-white/5 border border-white/5 group-hover:border-[var(--color-accent)]/30 group-hover:shadow-[0_0_15px_rgba(var(--color-accent-rgb),0.2)] transition-all">
               <img
                 src={`https://cdn.simpleicons.org/${skill.icon}/${skill.color.replace('#', '')}`}
                 alt={skill.name}
-                className="w-5 h-5 grayscale group-hover:grayscale-0 transition-all duration-500"
+                className="w-5 h-5 object-contain transition-all duration-500"
                 width={20}
                 height={20}
               />
