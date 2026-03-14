@@ -64,3 +64,5 @@ export const TechStack: React.FC = () => {
     </section>
   );
 };
+
+export default TechStack;

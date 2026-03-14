@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { CustomCursor } from './components/CustomCursor';
 import { IntroLoader } from './components/IntroLoader';
 import ArtisticHero from './components/ArtisticHero';
-import IdentityArchive from './components/IdentityArchive';
-import { TechStack } from './components/TechStack';
-import { ProjectCatalog } from './components/ProjectCatalog';
-import { MassiveFooter } from './components/MassiveFooter';
-import { InquiryContact } from './components/InquiryContact';
+
+// Lazy loaded components for lightning speed
+const IdentityArchive = lazy(() => import('./components/IdentityArchive'));
+const TechStack = lazy(() => import('./components/TechStack'));
+const ProjectCatalog = lazy(() => import('./components/ProjectCatalog'));
+const InquiryContact = lazy(() => import('./components/InquiryContact'));
+const MassiveFooter = lazy(() => import('./components/MassiveFooter'));
 
 function App() {
   const [loading, setLoading] = React.useState(true);
@@ -25,11 +27,14 @@ function App() {
 
       <div className="relative z-10 w-full">
         <ArtisticHero />
-        <IdentityArchive />
-        <TechStack />
-        <ProjectCatalog />
-        <InquiryContact />
-        <MassiveFooter />
+        
+        <Suspense fallback={<div className="h-screen flex items-center justify-center opacity-5 font-mono text-[8px] uppercase tracking-widest">Hydrating_Module...</div>}>
+          <IdentityArchive />
+          <TechStack />
+          <ProjectCatalog />
+          <InquiryContact />
+          <MassiveFooter />
+        </Suspense>
       </div>
     </main>
   );

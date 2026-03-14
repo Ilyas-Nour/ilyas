@@ -63,3 +63,5 @@ export const MassiveFooter = () => {
     </footer>
   );
 };
+
+export default MassiveFooter;

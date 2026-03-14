@@ -18,6 +18,8 @@ export const InquiryContact: React.FC = () => {
                 whileInView={{ opacity: 0.6, scale: 1 }}
                 src="/projects/signature.jpg"
                 alt="Ilyas Signature"
+                loading="eager"
+                fetchPriority="high"
                 className="w-32 md:w-48 invert grayscale mix-blend-screen opacity-60"
               />
             </div>
@@ -90,3 +92,5 @@ export const InquiryContact: React.FC = () => {
     </section>
   );
 };
+
+export default InquiryContact;

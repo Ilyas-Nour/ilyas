@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme:root {
+@theme {
   --color-background: #0a0a0c;
   --color-foreground: #ececec;
   --color-accent: #3b82f6; /* Cyber Blue */
@@ -75,13 +75,13 @@
 }
 
 .magnetic-button {
-  @apply relative px-4 md:px-8 py-3 md:py-4 bg-transparent border border-accent text-accent font-mono 
-         overflow-hidden transition-all duration-300 hover:text-background z-10 text-[10px] md:text-xs;
+  @apply relative px-4 md:px-8 py-3 md:py-4 bg-transparent border border-[var(--color-accent)] text-[var(--color-accent)] font-mono 
+         overflow-hidden transition-all duration-300 hover:text-[var(--color-background)] z-10 text-[10px] md:text-xs;
 }
 
 .magnetic-button::before {
   content: '';
-  @apply absolute inset-0 bg-accent translate-y-full transition-transform duration-300 -z-10;
+  @apply absolute inset-0 bg-[var(--color-accent)] translate-y-full transition-transform duration-300 -z-10;
 }
 
 .magnetic-button:hover::before {
@@ -90,7 +90,7 @@
 
 /* Custom Cursor Refinement */
 .custom-cursor {
-  @apply fixed top-0 left-0 w-4 h-4 bg-accent rounded-full pointer-events-none z-[9999] mix-blend-difference;
+  @apply fixed top-0 left-0 w-4 h-4 bg-[var(--color-accent)] rounded-full pointer-events-none z-[9999] mix-blend-difference;
 }
 
 .perspective-1000 {

@@ -72,6 +72,8 @@ export const ProjectCatalog: React.FC = () => {
                 <img 
                   src={project.image} 
                   alt={project.title}
+                  loading={i < 2 ? "eager" : "lazy"}
+                  fetchPriority={i === 0 ? "high" : "auto"}
                   className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-1000 scale-95 group-hover:scale-100"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
