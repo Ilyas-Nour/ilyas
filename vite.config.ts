@@ -11,12 +11,18 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          'framer-motion': ['framer-motion'],
-          'react-vendor': ['react', 'react-dom'],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('three')) return 'three-vendor';
+            if (id.includes('framer-motion')) return 'motion-vendor';
+            if (id.includes('react')) return 'react-vendor';
+            if (id.includes('lucide')) return 'icons-vendor';
+            return 'vendor'; // all other package dependencies
+          }
         },
       },
     },
     minify: 'esbuild',
+    cssMinify: true,
   },
 })

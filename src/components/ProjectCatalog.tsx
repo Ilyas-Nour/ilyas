@@ -73,16 +73,18 @@ export const ProjectCatalog: React.FC = () => {
               style={{ marginTop: project.offset }}
             >
               {/* Uncropped Screenshot Container */}
-              <div className="absolute inset-0 p-8 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-all duration-500">
+              <div className="absolute inset-0 p-8 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-all duration-500 aspect-video">
                 <img 
                   src={project.image} 
                   alt={project.title}
+                  width={800}
+                  height={450}
                   loading={i < 2 ? "eager" : "lazy"}
                   fetchPriority={i === 0 ? "high" : "auto"}
                   className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-1000 scale-95 group-hover:scale-100"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.src = "https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+Artifact";
+                    target.src = "https://via.placeholder.com/800x450/000000/FFFFFF?text=Project+Artifact";
                   }}
                 />
               </div>
