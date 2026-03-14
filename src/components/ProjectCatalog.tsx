@@ -1,133 +1,187 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const projects = [
   {
     title: "Privaflow",
-    description: "Encryption-First Architecture",
-    tags: ["Security", "Encryption", "Architecture"],
+    id: "ARTIFACT_PX_001",
+    description: "High-integrity encryption architecture for secure data flow.",
+    tags: ["Rust", "Wasm", "Identity"],
     image: "/projects/privaflow.png",
-    size: "lg",
-    offset: 0
+    access: "Level_04",
+    status: "ENCRYPTED"
   },
   {
     title: "Top Nature",
-    description: "Organic Visual Intelligence",
-    tags: ["Motion", "AI", "Design"],
+    id: "ARTIFACT_PX_002",
+    description: "Bio-organic AI interface for environmental synchronization.",
+    tags: ["React", "TensorFlow", "WebGL"],
     image: "/projects/top_nature.png",
-    size: "md",
-    offset: 20
+    access: "Level_02",
+    status: "SYNC_ACTIVE"
   },
   {
     title: "Core Aggregator",
-    description: "High-Throughput Data Node",
-    tags: ["Backend", "Efficiency", "Scale"],
+    id: "ARTIFACT_PX_003",
+    description: "Neural-linked data processing unit for high-throughput nodes.",
+    tags: ["Node.js", "Redis", "Kafka"],
     image: "/projects/aggregator.png",
-    size: "md",
-    offset: -20
+    access: "Level_05",
+    status: "OPTIMIZED"
   },
   {
     title: "Artisan Lab",
-    description: "Avant-Garde Experiments",
-    tags: ["Creative", "WebGL", "UX"],
+    id: "ARTIFACT_PX_004",
+    description: "Experimental workspace for avant-garde UI/UX research.",
+    tags: ["Three.js", "Shaders", "Framer"],
     image: "/projects/lab.png",
-    size: "sm",
-    offset: 10
+    access: "Level_01",
+    status: "LAB_STAGE"
   }
 ];
 
-export const ProjectCatalog: React.FC = () => {
-  const { scrollYProgress } = useScroll();
-  
+const ProjectItem: React.FC<{ project: typeof projects[0]; index: number }> = ({ project, index }) => {
+  const itemRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: itemRef,
+    offset: ["start end", "end start"]
+  });
+
+  const imgY = useTransform(scrollYProgress, [0, 1], [-50, 50]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
   return (
-    <section id="projects" className="relative py-32 px-6 overflow-hidden bg-projects-studio">
-      {/* Anime Motif Layer */}
-      <div 
-        className="anime-motif opacity-[0.03]"
-        style={{ backgroundImage: 'url(/assets/anime_hero.png)', backgroundSize: 'cover', backgroundPosition: 'center center' }} 
-      />
-      <div className="container mx-auto">
-        <div className="mb-24 flex flex-col md:flex-row justify-between items-end gap-8">
-          <div className="space-y-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)] block">Exhibition // v2.0</span>
-            <h2 className="text-6xl md:text-8xl font-display italic text-white leading-[0.8]">The Studio Moodboard</h2>
+    <motion.div 
+      ref={itemRef}
+      style={{ opacity }}
+      className="grid grid-cols-1 lg:grid-cols-12 gap-12 py-32 border-b border-white/5 relative group"
+    >
+      {/* HUD Background Decoration */}
+      <div className="absolute left-[-2rem] top-1/2 -translate-y-1/2 font-mono text-[80px] text-white/[0.02] font-black select-none pointer-events-none uppercase">
+        {project.id.split('_').pop()}
+      </div>
+
+      {/* Content Column */}
+      <div className="lg:col-span-5 flex flex-col justify-center space-y-8 relative z-10">
+        <div className="space-y-4">
+          <div className="flex items-center gap-4">
+            <span className="font-mono text-[10px] text-[var(--color-accent)] uppercase tracking-[0.3em] font-bold">Registry // {project.id}</span>
+            <div className="h-px w-8 bg-white/10" />
+            <span className="font-mono text-[8px] text-white/30 uppercase">{project.access}</span>
           </div>
-          <p className="max-w-xs text-white/40 font-mono text-[10px] uppercase tracking-widest leading-relaxed">
-            Curated artifacts of engineering integrity. Each capture represents a standard of performance.
+          
+          <h3 className="text-5xl md:text-7xl font-display italic text-white group-hover:text-[var(--color-accent)] transition-colors duration-500 leading-tight">
+            {project.title}
+          </h3>
+          
+          <p className="text-lg text-white/50 font-functional leading-relaxed max-w-sm">
+            {project.description}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 auto-rows-[240px]">
-          {projects.map((project, i) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.8 }}
-              className={`group relative glass-panel rounded-3xl overflow-hidden cursor-pointer
-                ${project.size === 'lg' ? 'md:col-span-8 md:row-span-2' : ''}
-                ${project.size === 'md' ? 'md:col-span-4 md:row-span-2' : ''}
-                ${project.size === 'sm' ? 'md:col-span-4 md:row-span-1' : ''}
-              `}
-              style={{ marginTop: project.offset }}
-            >
-              {/* Uncropped Screenshot Container */}
-              <div className="absolute inset-0 p-8 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-all duration-500 aspect-video">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  width={800}
-                  height={450}
-                  loading={i < 2 ? "eager" : "lazy"}
-                  fetchPriority={i === 0 ? "high" : "auto"}
-                  className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-1000 scale-95 group-hover:scale-100"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "https://via.placeholder.com/800x450/000000/FFFFFF?text=Project+Artifact";
-                  }}
-                />
-              </div>
-
-              {/* Mecha HUD Brackets */}
-              <div className="absolute top-4 left-4 w-3 h-3 border-t border-l border-[var(--color-accent)]/20 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
-              <div className="absolute top-4 right-4 w-3 h-3 border-t border-r border-[var(--color-accent)]/20 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
-              <div className="absolute bottom-4 left-4 w-3 h-3 border-b border-l border-[var(--color-accent)]/20 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
-              <div className="absolute bottom-4 right-4 w-3 h-3 border-b border-r border-[var(--color-accent)]/20 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
-
-              {/* Technical Overlay */}
-              <div className="absolute inset-0 border border-white/5 opacity-40 group-hover:opacity-100 transition-opacity pointer-events-none z-10" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10" />
-              
-              {/* Top Meta */}
-              <div className="absolute top-8 left-8 flex items-center gap-4 py-2 px-4 border border-white/10 rounded-full glass-panel opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-y-4 group-hover:translate-y-0 z-30">
-                 <span className="font-mono text-[8px] text-[var(--color-accent)]">Node_0{i+1}</span>
-                 <span className="font-mono text-[8px] text-white uppercase tracking-widest">{project.title}</span>
-              </div>
-
-              {/* Bottom Content */}
-              <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 z-30">
-                <div className="space-y-1">
-                   <h3 className="text-3xl font-display italic text-white group-hover:text-[var(--color-accent)] transition-colors">{project.title}</h3>
-                   <p className="font-mono text-[10px] text-white/50 uppercase tracking-[0.3em]">{project.description}</p>
-                </div>
-                <div className="flex flex-col items-end gap-2">
-                  <div className="flex gap-2">
-                    {project.tags.map(tag => (
-                      <span key={tag} className="font-mono text-[8px] border border-white/10 px-2 py-0.5 rounded-full text-white/30 lowercase italic">#{tag}</span>
-                    ))}
-                  </div>
-                  <span className="font-mono text-[6px] text-white/10 uppercase tracking-widest">Integrity_Secure</span>
-                </div>
-              </div>
-            </motion.div>
+        <div className="flex flex-wrap gap-3">
+          {project.tags.map(tag => (
+            <span key={tag} className="px-4 py-1 rounded-full border border-white/10 text-[10px] font-mono text-white/40 uppercase tracking-widest glass hover:border-[var(--color-accent)]/30 transition-colors">
+              #{tag}
+            </span>
           ))}
-          
-          {/* Aesthetic Filler Block */}
-          <div className="md:col-span-4 md:row-span-1 glass-panel rounded-3xl p-8 flex flex-col justify-center border-dashed border-white/10 opacity-30">
-            <span className="font-mono text-[8px] uppercase tracking-widest text-[var(--color-accent-secondary)]">Warning: Architecture_Active</span>
-            <p className="font-mono text-[9px] uppercase leading-relaxed mt-2 italic">Standardizing high-integrity visual output.</p>
+        </div>
+
+        <div className="pt-8 flex items-center gap-8">
+           <div className="flex flex-col">
+              <span className="font-mono text-[7px] text-white/20 uppercase">System Status</span>
+              <span className="font-mono text-xs text-[var(--color-accent)] uppercase tracking-widest">{project.status}</span>
+           </div>
+           <button className="magnetic-button">
+              <span className="relative z-10">OPEN_ARTIFACT()</span>
+           </button>
+        </div>
+      </div>
+
+      {/* Visual Workspace Column */}
+      <div className="lg:col-span-7 relative h-[400px] md:h-[600px] lg:h-[700px]">
+        {/* Cinematic Workspace Container */}
+        <div className="absolute inset-0 glass-panel rounded-3xl overflow-hidden border-white/10 group-hover:border-[var(--color-accent)]/30 transition-all duration-700">
+          <motion.div style={{ y: imgY }} className="absolute inset-[-10%] z-0">
+             <img 
+               src={project.image} 
+               alt={project.title}
+               className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 scale-105 group-hover:scale-100"
+               onError={(e) => {
+                 const target = e.target as HTMLImageElement;
+                 target.src = "https://via.placeholder.com/1200x800/000000/FFFFFF?text=Classified+Artifact";
+               }}
+             />
+             {/* Scanline Overlay */}
+             <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] pointer-events-none opacity-20" />
+          </motion.div>
+
+          {/* HUD Brackets */}
+          <div className="absolute top-8 left-8 w-6 h-6 border-t-2 border-l-2 border-[var(--color-accent)]/20" />
+          <div className="absolute top-8 right-8 w-6 h-6 border-t-2 border-r-2 border-[var(--color-accent)]/20" />
+          <div className="absolute bottom-8 left-8 w-6 h-6 border-b-2 border-l-2 border-[var(--color-accent)]/20" />
+          <div className="absolute bottom-8 right-8 w-6 h-6 border-b-2 border-r-2 border-[var(--color-accent)]/20" />
+
+          {/* Technical Meta Labels */}
+          <div className="absolute top-12 left-12 flex flex-col font-mono text-[7px] text-white/20 space-y-1">
+             <span>BOUNDING_BOX: [800, 450]</span>
+             <span>GEOMETRY: OPTIMIZED</span>
           </div>
+
+          <div className="absolute bottom-12 right-12 flex items-center gap-4 py-2 px-4 glass rounded-full border border-white/10">
+             <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
+             <span className="font-mono text-[8px] text-white uppercase tracking-widest">Live_Viewport_Active</span>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+export const ProjectCatalog: React.FC = () => {
+  return (
+    <section id="projects" className="relative py-40 px-6 overflow-hidden bg-projects-studio">
+      {/* Anime Theme Motif */}
+      <div 
+        className="anime-motif opacity-[0.04]"
+        style={{ backgroundImage: 'url(/assets/real_anime_hero.png)', backgroundPosition: 'center center', backgroundSize: 'cover' }} 
+      />
+
+      <div className="container mx-auto relative z-30">
+        <header className="mb-40 flex flex-col md:flex-row justify-between items-end gap-12">
+          <div className="space-y-6">
+            <div className="flex items-center gap-4">
+              <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)] py-1 px-4 border border-[var(--color-accent)]/30 rounded-full glass">Catalog_v3.2</span>
+              <div className="h-px w-20 bg-white/10" />
+            </div>
+            <h2 className="text-6xl md:text-9xl font-display italic text-white tracking-tightest leading-[0.8]">
+              Artifact <br /> <span className="text-[var(--color-accent)] opacity-40">Registry.</span>
+            </h2>
+          </div>
+          <div className="max-w-sm space-y-4">
+            <p className="text-white/40 font-mono text-[11px] uppercase tracking-widest leading-relaxed">
+              Detailed technical exhibition of core architectural projects. Each entry represents a benchmark in digital engineering.
+            </p>
+            <div className="h-px w-full bg-gradient-to-r from-white/10 to-transparent" />
+          </div>
+        </header>
+
+        <div className="flex flex-col">
+          {projects.map((project, i) => (
+            <ProjectItem key={project.title} project={project} index={i} />
+          ))}
+        </div>
+
+        {/* Dense Bottom Footer Label */}
+        <div className="mt-40 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 opacity-20">
+           <div className="font-mono text-[8px] uppercase tracking-widest">
+              Security Override: Active // Signature Valid
+           </div>
+           <div className="flex gap-2">
+              {[...Array(12)].map((_, i) => (
+                <div key={i} className={`h-4 w-1 ${i % 3 === 0 ? 'bg-[var(--color-accent)]' : 'bg-white/10'}`} />
+              ))}
+           </div>
         </div>
       </div>
     </section>
