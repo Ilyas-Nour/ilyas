@@ -18,7 +18,7 @@ export const SingularityHero = () => {
   };
 
   return (
-    <section ref={containerRef} className="relative h-screen w-full flex items-center justify-center bg-black overflow-hidden px-6 lg:px-24">
+    <section id="home" ref={containerRef} className="relative h-screen w-full flex items-center justify-center bg-black overflow-hidden px-6 lg:px-24">
       {/* Cinematic Aperture Glows */}
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent/10 rounded-full blur-[160px] pointer-events-none animate-pulse" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/5 rounded-full blur-[140px] pointer-events-none" />
@@ -74,10 +74,16 @@ export const SingularityHero = () => {
             transition={{ delay: 1.2, duration: 1 }}
             className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
           >
-            <button className="magnetic-button group">
+            <button 
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="magnetic-button group"
+            >
               <span className="relative z-10">INITIALIZE_CONNECT()</span>
             </button>
-            <button className="px-8 py-4 glass text-white font-mono text-xs tracking-widest hover:bg-white/5 transition-colors uppercase">
+            <button 
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-4 glass text-white font-mono text-xs tracking-widest hover:bg-white/5 transition-colors uppercase"
+            >
               $ view_archive
             </button>
           </motion.div>

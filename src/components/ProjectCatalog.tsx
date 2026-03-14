@@ -32,7 +32,7 @@ export const ProjectCatalog = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-48 px-6 lg:px-24 bg-black relative overflow-hidden min-h-screen flex flex-col justify-center">
+    <section id="projects" className="py-48 px-6 lg:px-24 bg-black relative overflow-hidden min-h-screen flex flex-col justify-center">
       {/* Global Background Interaction */}
       <div className="absolute inset-0 z-0 transition-colors duration-1000" 
            style={{ backgroundColor: hoveredIndex !== null ? 'rgba(0, 229, 255, 0.02)' : 'transparent' }} 

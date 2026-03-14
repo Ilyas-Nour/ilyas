@@ -23,11 +23,10 @@ export const MassiveFooter = () => {
             <div className="space-y-8">
               <h4 className="text-[10px] font-mono tracking-[0.4em] text-muted uppercase">_navigation</h4>
               <nav className="flex flex-col gap-4">
-                {['Home', 'Catalog', 'Connect', 'Archive'].map(item => (
-                  <a key={item} href="#" className="text-2xl font-display font-light text-white hover:text-accent transition-colors w-fit">
-                    {item}
-                  </a>
-                ))}
+                  <a href="#home" className="text-2xl font-display font-light text-white hover:text-accent transition-colors w-fit">Home</a>
+                  <a href="#projects" className="text-2xl font-display font-light text-white hover:text-accent transition-colors w-fit">Catalog</a>
+                  <a href="#contact" className="text-2xl font-display font-light text-white hover:text-accent transition-colors w-fit">Connect</a>
+                  <a href="#about" className="text-2xl font-display font-light text-white hover:text-accent transition-colors w-fit">About</a>
               </nav>
             </div>
 
@@ -60,11 +59,7 @@ export const MassiveFooter = () => {
           </div>
 
           <div className="border-t border-white/5 pt-12 flex justify-between items-center text-muted font-mono text-[9px] tracking-[0.3em] uppercase">
-            <div>Precision_Design_Systems</div>
-            <div className="flex gap-8">
-              <span>EST_2024</span>
-              <span>IST_BEN_MSIK_AUTH</span>
-            </div>
+            <div>ILYAS NOUR</div>
           </div>
         </div>
       </div>

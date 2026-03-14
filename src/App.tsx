@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CustomCursor } from './components/CustomCursor';
 import { Background } from './components/Background';
 import { SingularityHero } from './components/SingularityHero';
+import { IdentityArchive } from './components/IdentityArchive';
+import { TechStack } from './components/TechStack';
 import { ProjectCatalog } from './components/ProjectCatalog';
 import { MassiveFooter } from './components/MassiveFooter';
 import { InquiryContact } from './components/InquiryContact';
@@ -19,6 +21,10 @@ function App() {
 
       <div className="relative z-10">
         <SingularityHero />
+        
+        <IdentityArchive />
+        
+        <TechStack />
         
         <ProjectCatalog />
         
