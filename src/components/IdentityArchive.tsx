@@ -1,93 +1,85 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 
-export const IdentityArchive = () => {
+const IdentityArchive: React.FC = () => {
   return (
-    <section id="about" className="py-24 md:py-48 px-6 md:px-12 lg:px-24 bg-black relative overflow-hidden h-fit">
-      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
-        
-        {/* Left Col: The Narrative */}
-        <div className="lg:col-span-7 space-y-12">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-
-            <h2 className="text-header-responsive font-black text-white mb-12">
-               About <br />
-               <span className="font-display italic font-light text-white/40">me.</span>
-            </h2>
-            <div className="space-y-8 max-w-3xl">
-              <p className="text-xl sm:text-2xl md:text-3xl font-sans font-light leading-relaxed text-muted">
-                I am a <span className="text-white font-medium">Web Full-Stack Developer</span> focused on building stable, logic-driven systems.
-              </p>
-              <p className="text-base sm:text-lg md:text-xl font-sans font-light leading-relaxed text-white/80">
-                Through projects like <span className="text-accent underline decoration-accent/20">Animy</span>, <span className="text-accent underline decoration-accent/20">PrivaFlow</span>, and <span className="text-accent underline decoration-accent/20">TopNature</span>, I specialize in transforming complex challenges into clean and reliable solutions. I develop with a priority on data integrity and long-term scalability, ensuring every platform I build is functional, efficient, and easy to maintain.
-              </p>
+    <section className="relative py-32 px-6 overflow-hidden">
+      <div className="container mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          {/* Section Marker */}
+          <div className="lg:col-span-2">
+            <div className="sticky top-32">
+              <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)] block mb-4">Archive // 01</span>
+              <h2 className="text-4xl font-display italic text-white/20">The Architect's Ledger</h2>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Core Pillars */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12 pt-12">
-            {[
-              { title: 'Architectural Integrity', desc: 'Building systems that withstand scale through modular, clean, and documented logic.' },
-              { title: 'Visual Excellence', desc: 'Crafting premium interfaces that prioritize typography, spacing, and micro-interactions.' }
-            ].map((pillar, i) => (
-              <motion.div
-                key={pillar.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2, duration: 1 }}
-                className="space-y-4 p-8 glass rounded-2xl border-white/5 w-full"
-              >
-                <h4 className="font-display italic text-accent text-xl">{pillar.title}</h4>
-                <p className="text-sm text-white/80 leading-relaxed font-sans">{pillar.desc}</p>
-              </motion.div>
-            ))}
+          {/* Dense Bio Section */}
+          <div className="lg:col-span-7">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="space-y-12"
+            >
+              <h3 className="text-4xl md:text-6xl font-display leading-tight text-white">
+                Designing systems that <span className="italic text-[var(--color-accent-secondary)]">breathe</span> and code that <span className="opacity-40">endures</span>.
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-white/60 font-functional text-lg leading-relaxed">
+                <p>
+                  As an artisan of the digital realm, I don't just build websites; I engineer interactive narratives. My approach sits at the raw intersection of technical precision and artistic intuition.
+                </p>
+                <p>
+                  Every line of logic is a deliberate stroke, aimed at creating performance-driven environments that feel as good as they look. From monolithic backend structures to fluid frontend dynamics.
+                </p>
+              </div>
+
+              {/* Technical Annotations (Dense Overlay) */}
+              <div className="pt-12 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-6">
+                {[
+                  { label: "Precision", value: "99.9%" },
+                  { label: "Efficiency", value: "Optimized" },
+                  { label: "Design", value: "Avant-Garde" },
+                  { label: "Logic", value: "Rigorous" }
+                ].map((stat, i) => (
+                  <div key={i} className="space-y-1">
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">{stat.label}</span>
+                    <p className="text-sm text-white font-mono uppercase">{stat.value}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Visual Density Side (Mosaic style image/shape) */}
+          <div className="lg:col-span-3 h-[400px] relative">
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              className="absolute inset-0 glass-panel rounded-3xl overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/20 to-transparent" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="font-display text-8xl italic opacity-5 select-none">Studio</span>
+              </div>
+              {/* Abstract Architecture Lines */}
+              <svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 100 100">
+                <line x1="0" y1="0" x2="100" y2="100" stroke="white" strokeWidth="0.5" />
+                <line x1="100" y1="0" x2="0" y2="100" stroke="white" strokeWidth="0.5" />
+                <circle cx="50" cy="50" r="30" fill="none" stroke="white" strokeWidth="0.2" />
+              </svg>
+            </motion.div>
           </div>
         </div>
-
-        {/* Right Col: System Data */}
-        <div className="lg:col-span-5 lg:sticky lg:top-48 w-full">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2 }}
-            className="p-6 md:p-10 glass rounded-3xl border-accent/10 relative group w-full"
-          >
-             <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
-             
-             <div className="space-y-8 md:space-y-10 font-mono text-[10px] md:text-xs tracking-widest uppercase">
-               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end border-b border-white/5 pb-4 gap-2">
-                 <span className="text-white/80">_status</span>
-                 <span className="text-accent underline decoration-accent/20">Web Full-Stack Trainee</span>
-               </div>
-               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end border-b border-white/5 pb-4 gap-2">
-                 <span className="text-white/80">_location</span>
-                 <span className="text-white">Casablanca_MA</span>
-               </div>
-               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end border-b border-white/5 pb-4 gap-2">
-                 <span className="text-white/80">_focus</span>
-                 <span className="text-white">Web & Mobile first Apps</span>
-               </div>
-               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end border-b border-white/5 pb-4 gap-2">
-                 <span className="text-white/80">_experience</span>
-                 <span className="text-white">More than 1 Year Technical Development</span>
-               </div>
-               
-               <div className="pt-10 space-y-4">
-                 <div className="flex items-center gap-4">
-                   <div className="h-1.5 w-1.5 rounded-full bg-accent animate-ping" />
-                   <span className="text-[10px] text-accent">AVAILABLE_FOR_STRATEGIC_COLLABORATION</span>
-                 </div>
-               </div>
-             </div>
-          </motion.div>
+        
+        <div className="mt-24 pt-12 border-t border-white/5 flex gap-12 text-white/20 font-mono text-[9px] uppercase tracking-widest">
+           <span>Status: Active Collaboration</span>
+           <span>Hash: 0x8A2B9C</span>
         </div>
       </div>
     </section>
   );
 };
+
+export default IdentityArchive;

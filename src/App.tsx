@@ -1,42 +1,36 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { CustomCursor } from './components/CustomCursor';
-import { Background } from './components/Background';
-import { SingularityHero } from './components/SingularityHero';
-import { IdentityArchive } from './components/IdentityArchive';
+import { IntroLoader } from './components/IntroLoader';
+import ArtisticHero from './components/ArtisticHero';
+import IdentityArchive from './components/IdentityArchive';
 import { TechStack } from './components/TechStack';
 import { ProjectCatalog } from './components/ProjectCatalog';
 import { MassiveFooter } from './components/MassiveFooter';
 import { InquiryContact } from './components/InquiryContact';
 
 function App() {
+  const [loading, setLoading] = React.useState(true);
+
   return (
-    <main className="relative min-h-screen bg-black font-sans overflow-x-hidden selection:bg-accent selection:text-black">
+    <main className="relative min-h-screen font-sans overflow-x-hidden selection:bg-[var(--color-accent)] selection:text-white">
+      <div className="studio-mesh" />
+      <div className="studio-noise" />
+      
       <CustomCursor />
       
-      {/* Background Layer */}
-      <div className="fixed inset-0 z-0">
-        <Background />
-        <div className="absolute inset-0 bg-black/10 pointer-events-none" />
-      </div>
+      <AnimatePresence>
+        {loading && <IntroLoader onComplete={() => setLoading(false)} />}
+      </AnimatePresence>
 
-      <div className="relative z-10">
-        <SingularityHero />
-        
+      <div className="relative z-10 w-full">
+        <ArtisticHero />
         <IdentityArchive />
-        
         <TechStack />
-        
         <ProjectCatalog />
-        
-        <div className="relative z-20 bg-black shadow-[0_-50px_100px_rgba(0,0,0,1)]">
-          <InquiryContact />
-        </div>
-
+        <InquiryContact />
         <MassiveFooter />
       </div>
-
-      {/* OLED Grit / Texture Overlay */}
-      <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.02] mix-blend-overlay bg-[url('https://res.cloudinary.com/dzv9s1psp/image/upload/v1671536417/noise_btp0vj.png')]" />
     </main>
   );
 }

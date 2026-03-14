@@ -1,24 +1,60 @@
 @import "tailwindcss";
 
-@theme {
-  --color-background: #000000;
-  --color-foreground: #FFFFFF;
-  --color-accent: #00E5FF; /* Electric Blue */
-  --color-muted: #64748B;
-  
-  --font-sans: 'Inter', sans-serif;
-  --font-display: 'Fraunces', serif; /* Elegant Serif */
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+@theme:root {
+  --color-background: #0a0a0c;
+  --color-foreground: #ececec;
+  --color-accent: #3b82f6; /* Cyber Blue */
+  --color-accent-secondary: #f97316; /* Volcanic Orange */
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-border: rgba(255, 255, 255, 0.1);
+  --font-display: "Playfair Display", serif;
+  --font-functional: "Outfit", sans-serif;
+  --font-mono: "Space Mono", monospace;
+  --noise-opacity: 0.15;
 }
 
 @layer base {
-  html {
-    @apply scroll-smooth;
-  }
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    background-color: #000000;
+    @apply bg-[var(--color-background)] text-[var(--color-foreground)] antialiased selection:bg-[var(--color-accent)] selection:text-white;
+    font-family: var(--font-functional);
   }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+.studio-mesh {
+  background-color: var(--color-background);
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(217,100%,20%,0.15) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, hsla(280,100%,20%,0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(20,100%,20%,0.1) 0px, transparent 50%);
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+}
+
+.studio-noise {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: var(--noise-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.glass-panel {
+  @apply bg-[rgba(255,255,255,0.03)] backdrop-blur-md border border-[rgba(255,255,255,0.08)];
+}
+
+.paper-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.04;
+  background-image: url('https://res.cloudinary.com/dzv9s1psp/image/upload/v1671536417/noise_btp0vj.png');
 }
 
 .glass {
@@ -55,4 +91,35 @@
 /* Custom Cursor Refinement */
 .custom-cursor {
   @apply fixed top-0 left-0 w-4 h-4 bg-accent rounded-full pointer-events-none z-[9999] mix-blend-difference;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.tracking-tightest {
+  letter-spacing: -0.05em;
+}
+
+.mask-carousel {
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+@keyframes scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100%); }
+}
+
+.animate-scan {
+  animation: scan 3s linear infinite;
+}
+
+.glass-vault {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.astral-glass {
+  @apply backdrop-blur-xl bg-white/[0.02] border border-white/5;
 }

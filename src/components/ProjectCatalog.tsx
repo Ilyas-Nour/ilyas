@@ -1,122 +1,118 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import React from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const projects = [
   {
-    id: '01',
-    title: 'Animy',
-    stack: ['React', 'Laravel', 'RestAPI'],
-    description: 'High-performance streaming engine with real-time tracking.',
-    link: 'https://animy-frontend.vercel.app/',
-    stats: { build: 'STABLE', latency: '24ms' }
+    title: "Privaflow",
+    description: "Encryption-First Architecture",
+    tags: ["Security", "Encryption", "Architecture"],
+    image: "/projects/privaflow.png",
+    size: "lg",
+    offset: 0
   },
   {
-    id: '02',
-    title: 'PrivaFlow',
-    stack: ['Node.js', 'PostgreSQL', 'Auth'],
-    description: 'Privacy-focused data orchestration platform for secure systems.',
-    link: 'https://vaultnode.vercel.app/en',
-    stats: { build: 'PRODUCTION', latency: '12ms' }
+    title: "Top Nature",
+    description: "Organic Visual Intelligence",
+    tags: ["Motion", "AI", "Design"],
+    image: "/projects/top_nature.png",
+    size: "md",
+    offset: 20
   },
   {
-    id: '03',
-    title: 'TopNature',
-    stack: ['Vite', 'Tailwind', 'Commerce'],
-    description: 'Premium e-commerce architecture for organic scale.',
-    link: '#',
-    stats: { build: 'ARCHIVED', latency: 'N/A' }
+    title: "Core Aggregator",
+    description: "High-Throughput Data Node",
+    tags: ["Backend", "Efficiency", "Scale"],
+    image: "/projects/aggregator.png",
+    size: "md",
+    offset: -20
+  },
+  {
+    title: "Artisan Lab",
+    description: "Avant-Garde Experiments",
+    tags: ["Creative", "WebGL", "UX"],
+    image: "/projects/lab.png",
+    size: "sm",
+    offset: 10
   }
 ];
 
-export const ProjectCatalog = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
+export const ProjectCatalog: React.FC = () => {
+  const { scrollYProgress } = useScroll();
+  
   return (
-    <section id="projects" className="py-24 md:py-48 px-6 md:px-12 lg:px-24 bg-black relative overflow-hidden min-h-screen flex flex-col justify-center">
-      {/* Global Background Interaction */}
-      <div className="absolute inset-0 z-0 transition-colors duration-1000" 
-           style={{ backgroundColor: hoveredIndex !== null ? 'rgba(0, 229, 255, 0.02)' : 'transparent' }} 
-      />
-
-      <div className="relative z-10 w-full">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 md:mb-32 flex flex-col md:flex-row md:items-end justify-between gap-8"
-        >
-          <div>
-            <span className="font-mono text-accent text-xs tracking-[0.4em] uppercase mb-4 block">_catalog_index_v5.0</span>
-            <h2 className="text-header-responsive font-black text-white">
-              S<span className="font-display italic font-light italic text-white/20">el</span>ected <br />
-              W<span className="font-display italic font-light italic text-white/20">or</span>ks.
-            </h2>
+    <section className="relative py-32 px-6 overflow-hidden">
+      <div className="container mx-auto">
+        <div className="mb-24 flex flex-col md:flex-row justify-between items-end gap-8">
+          <div className="space-y-4">
+            <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)] block">Exhibition // v2.0</span>
+            <h2 className="text-6xl md:text-8xl font-display italic text-white leading-[0.8]">The Studio Moodboard</h2>
           </div>
-          <div className="max-w-xs">
-            <p className="text-muted font-mono text-[9px] md:text-[10px] tracking-widest leading-relaxed uppercase opacity-60">
-              A curated collection of digital systems engineered for performance and precision. Each project represents a unique architectural challenge.
-            </p>
-          </div>
-        </motion.div>
+          <p className="max-w-xs text-white/40 font-mono text-[10px] uppercase tracking-widest leading-relaxed">
+            Curated artifacts of engineering integrity. Each capture represents a standard of performance.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 gap-px bg-white/5 border border-white/5 overflow-hidden rounded-3xl">
-          {projects.map((project, index) => (
-            <motion.a
-              key={project.id}
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 auto-rows-[240px]">
+          {projects.map((project, i) => (
+            <motion.div
+              key={project.title}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group relative bg-black p-8 md:p-16 lg:p-20 flex flex-col lg:flex-row lg:items-center justify-between gap-8 md:gap-12 transition-all duration-700 hover:bg-white/[0.02]"
+              transition={{ delay: i * 0.1, duration: 0.8 }}
+              className={`group relative glass-panel rounded-3xl overflow-hidden cursor-pointer
+                ${project.size === 'lg' ? 'md:col-span-8 md:row-span-2' : ''}
+                ${project.size === 'md' ? 'md:col-span-4 md:row-span-2' : ''}
+                ${project.size === 'sm' ? 'md:col-span-4 md:row-span-1' : ''}
+              `}
+              style={{ marginTop: project.offset }}
             >
-              <div className="flex items-start gap-6 md:gap-12">
-                <span className="font-mono text-accent/60 text-lg md:text-xl group-hover:text-accent transition-colors">
-                  {project.id}
-                </span>
-                
-                <div className="space-y-4 md:space-y-6">
-                  <h3 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter group-hover:translate-x-4 transition-transform duration-700">
-                    {project.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    {project.stack.map(s => (
-                      <span key={s} className="text-[10px] font-mono tracking-widest text-white/70 group-hover:text-accent transition-colors border border-white/10 px-3 py-1 rounded-full bg-white/5 group-hover:border-accent/40">
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+              {/* Uncropped Screenshot Container */}
+              <div className="absolute inset-0 p-8 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-all duration-500">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-1000 scale-95 group-hover:scale-100"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+Artifact";
+                  }}
+                />
               </div>
 
-              <div className="lg:max-w-xs text-left lg:text-right space-y-4 md:space-y-6">
-                <p className="text-sm md:text-base text-white/70 font-sans font-light leading-relaxed group-hover:text-white transition-colors">
-                  {project.description}
-                </p>
-                <div className="flex lg:justify-end gap-6 pt-4 grayscale group-hover:grayscale-0 transition-all opacity-20 group-hover:opacity-100">
-                  <div className="space-y-1">
-                    <div className="text-[9px] font-mono text-white/50 uppercase tracking-[0.2em]">Build_State</div>
-                    <div className="text-[10px] font-mono text-accent uppercase tracking-widest">{project.stats.build}</div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-[9px] font-mono text-white/50 uppercase tracking-[0.2em]">Core_Latency</div>
-                    <div className="text-[10px] font-mono text-white uppercase tracking-widest">{project.stats.latency}</div>
-                  </div>
-                </div>
+              {/* Technical Overlay */}
+              <div className="absolute inset-0 border border-white/5 opacity-40 group-hover:opacity-100 transition-opacity pointer-events-none" />
+              
+              {/* Top Meta */}
+              <div className="absolute top-6 left-6 flex items-center gap-4 py-2 px-4 border border-white/10 rounded-full glass-panel opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-y-4 group-hover:translate-y-0">
+                 <span className="font-mono text-[8px] text-[var(--color-accent)]">0{i+1}</span>
+                 <span className="font-mono text-[8px] text-white uppercase tracking-widest">{project.title}</span>
               </div>
 
-              {/* Hover Icon Reveal */}
-              <div className="absolute right-10 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-700 -translate-x-10 group-hover:translate-x-0 hidden lg:block">
-                <span className="text-7xl font-light text-accent/20">→</span>
+              {/* Bottom Content */}
+              <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                <div className="space-y-1">
+                   <h3 className="text-2xl font-display italic text-white">{project.title}</h3>
+                   <p className="font-mono text-[9px] text-white/50 uppercase tracking-widest">{project.description}</p>
+                </div>
+                <div className="flex gap-2">
+                  {project.tags.map(tag => (
+                    <span key={tag} className="font-mono text-[8px] border border-white/10 px-2 py-0.5 rounded-full text-white/30">{tag}</span>
+                  ))}
+                </div>
               </div>
-            </motion.a>
+            </motion.div>
           ))}
+          
+          {/* Aesthetic Filler Block */}
+          <div className="md:col-span-4 md:row-span-1 glass-panel rounded-3xl p-8 flex flex-col justify-center border-dashed border-white/10 opacity-30">
+            <span className="font-mono text-[8px] uppercase tracking-widest text-[var(--color-accent-secondary)]">Warning: Architecture_Active</span>
+            <p className="font-mono text-[9px] uppercase leading-relaxed mt-2 italic">Standardizing high-integrity visual output.</p>
+          </div>
         </div>
       </div>
     </section>
   );
 };
+
+export default ProjectCatalog;
