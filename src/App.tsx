@@ -15,9 +15,9 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   return (
-    <main className="relative min-h-screen font-sans overflow-x-hidden selection:bg-[var(--color-accent)] selection:text-white">
-      <div className="studio-mesh" />
-      <div className="studio-noise" />
+    <main className="relative min-h-screen font-sans overflow-x-hidden selection:bg-[var(--color-accent)] selection:text-white bg-[var(--color-background)]">
+      {/* Universal Grain Texture */}
+      <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.03] bg-[url('https://res.cloudinary.com/dzv9s1psp/image/upload/v1671536417/noise_btp0vj.png')] mix-blend-overlay" />
       
       <CustomCursor />
       

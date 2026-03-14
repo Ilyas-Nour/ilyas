@@ -40,7 +40,12 @@ export const ProjectCatalog: React.FC = () => {
   const { scrollYProgress } = useScroll();
   
   return (
-    <section className="relative py-32 px-6 overflow-hidden">
+    <section id="projects" className="relative py-32 px-6 overflow-hidden bg-projects-studio">
+      {/* Anime Motif Layer */}
+      <div 
+        className="anime-motif opacity-[0.03]"
+        style={{ backgroundImage: 'url(/assets/anime_hero.png)', backgroundSize: 'cover', backgroundPosition: 'center center' }} 
+      />
       <div className="container mx-auto">
         <div className="mb-24 flex flex-col md:flex-row justify-between items-end gap-8">
           <div className="space-y-4">

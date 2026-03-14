@@ -2,26 +2,32 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const skills = [
-  { name: 'React', level: 'Expert', category: 'Frontend', size: 'lg', color: '#61DAFB' },
-  { name: 'TypeScript', level: 'Expert', category: 'Logic', size: 'md', color: '#3178C6' },
-  { name: 'Node.js', level: 'Senior', category: 'Backend', size: 'md', color: '#339933' },
-  { name: 'Next.js', level: 'Expert', category: 'Framework', size: 'lg', color: '#ffffff' },
-  { name: 'Tailwind', level: 'Expert', category: 'Styling', size: 'sm', color: '#06B6D4' },
-  { name: 'PostgreSQL', level: 'Senior', category: 'Data', size: 'md', color: '#4169E1' },
-  { name: 'Framer Motion', level: 'Expert', category: 'Motion', size: 'md', color: '#ff0055' },
-  { name: 'GraphQL', level: 'Senior', category: 'API', size: 'sm', color: '#E10098' },
+  { name: 'React', icon: 'react', level: 'Expert', category: 'Frontend', size: 'lg', color: '#61DAFB' },
+  { name: 'TypeScript', icon: 'typescript', level: 'Expert', category: 'Logic', size: 'md', color: '#3178C6' },
+  { name: 'Node.js', icon: 'node-dot-js', level: 'Senior', category: 'Backend', size: 'md', color: '#339933' },
+  { name: 'Next.js', icon: 'next-dot-js', level: 'Expert', category: 'Framework', size: 'lg', color: '#ffffff' },
+  { name: 'Tailwind CSS', icon: 'tailwindcss', level: 'Expert', category: 'Styling', size: 'sm', color: '#06B6D4' },
+  { name: 'PostgreSQL', icon: 'postgresql', level: 'Senior', category: 'Data', size: 'md', color: '#4169E1' },
+  { name: 'Framer Motion', icon: 'framer', level: 'Expert', category: 'Motion', size: 'md', color: '#ff0055' },
+  { name: 'GraphQL', icon: 'graphql', level: 'Senior', category: 'API', size: 'sm', color: '#E10098' },
 ];
 
 export const TechStack: React.FC = () => {
   return (
-    <section className="relative py-32 px-6 overflow-hidden">
-      <div className="container mx-auto">
+    <section className="relative py-32 px-6 overflow-hidden bg-skills-studio">
+      {/* Anime Motif Layer */}
+      <div 
+        className="anime-motif opacity-[0.06]"
+        style={{ backgroundImage: 'url(/assets/anime_skills.png)', backgroundPosition: 'center center' }} 
+      />
+
+      <div className="container mx-auto relative z-10">
         <div className="mb-16 text-center">
           <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)] block mb-4">Core Infrastructure</span>
           <h2 className="text-5xl md:text-7xl font-display italic text-white leading-tight">Technological Tapestry</h2>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 auto-rows-[120px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 auto-rows-[140px]">
           {skills.map((skill, i) => (
             <motion.div
               key={skill.name}
@@ -42,7 +48,11 @@ export const TechStack: React.FC = () => {
 
               <div className="relative z-10 flex justify-between items-start">
                 <span className="font-mono text-[8px] uppercase tracking-widest text-white/40">{skill.category}</span>
-                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: skill.color }} />
+                <img 
+                  src={`https://cdn.simpleicons.org/${skill.icon}/${skill.color.replace('#', '')}`}
+                  alt={skill.name}
+                  className="w-6 h-6 grayscale group-hover:grayscale-0 transition-all"
+                />
               </div>
 
               <div className="relative z-10">

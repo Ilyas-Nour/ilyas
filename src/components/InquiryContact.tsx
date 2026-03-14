@@ -3,7 +3,11 @@ import { motion } from 'framer-motion';
 
 export const InquiryContact: React.FC = () => {
   return (
-    <section className="relative py-32 px-6 overflow-hidden">
+    <section id="contact" className="relative py-32 px-6 overflow-hidden bg-contact-studio">
+      <div 
+        className="anime-motif opacity-[0.04]"
+        style={{ backgroundImage: 'url(/assets/anime_hero.png)', backgroundPosition: 'left bottom', transform: 'scaleX(-1)' }} 
+      />
       <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Header Panel (Bento) */}

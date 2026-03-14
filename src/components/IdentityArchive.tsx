@@ -3,8 +3,14 @@ import { motion } from 'framer-motion';
 
 const IdentityArchive: React.FC = () => {
   return (
-    <section className="relative py-32 px-6 overflow-hidden">
-      <div className="container mx-auto">
+    <section className="relative py-32 px-6 overflow-hidden bg-about-studio">
+      {/* Anime Motif Layer */}
+      <div 
+        className="anime-motif opacity-[0.05]"
+        style={{ backgroundImage: 'url(/assets/anime_about.png)', backgroundPosition: 'right bottom' }} 
+      />
+
+      <div className="container mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
           {/* Section Marker */}
           <div className="lg:col-span-2">

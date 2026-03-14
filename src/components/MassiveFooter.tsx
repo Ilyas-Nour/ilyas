@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export const MassiveFooter = () => {
   return (
-    <footer className="bg-black pt-48 pb-12 px-6 overflow-hidden border-t border-white/5">
+    <footer className="bg-[#050507] pt-48 pb-12 px-6 overflow-hidden border-t border-white/5 relative">
       <div className="w-full relative">
         {/* Massive Background Brandmark */}
         <motion.div
