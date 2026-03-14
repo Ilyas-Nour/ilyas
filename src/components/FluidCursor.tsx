@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 
 const config = {
-  SIM_RESOLUTION: 128,
-  DYE_RESOLUTION: 1024,
-  CAPTURE_RESOLUTION: 512,
-  DENSITY_DISSIPATION: 1,
-  VELOCITY_DISSIPATION: 0.2,
+  SIM_RESOLUTION: 64, // Optimal performance
+  DYE_RESOLUTION: 512,
+  CAPTURE_RESOLUTION: 256,
+  DENSITY_DISSIPATION: 0.95, // Very fast dissipation
+  VELOCITY_DISSIPATION: 0.8,
   PRESSURE: 0.8,
-  PRESSURE_ITERATIONS: 20,
+  PRESSURE_ITERATIONS: 10, // Faster updates
   CURL: 30,
   SPLAT_RADIUS: 0.25,
   SPLAT_FORCE: 6000,
@@ -313,9 +313,8 @@ export const FluidCursor: React.FC = () => {
       const dy = (y - lastMouseY) * config.SPLAT_FORCE;
 
       const colors = [
-        { r: 0.23, g: 0.51, b: 0.96 }, // Cyber Blue
-        { r: 0.7, g: 0.8, b: 1.0 },    // Ice Blue
-        { r: 1.0, g: 1.0, b: 1.0 },    // Pure White
+        { r: 0.8, g: 0.9, b: 1.0 }, // Ice Blue
+        { r: 1.0, g: 1.0, b: 1.0 }, // Pure White
       ];
       const color = colors[Math.floor(Math.random() * colors.length)];
       
@@ -335,10 +334,11 @@ export const FluidCursor: React.FC = () => {
       gl.viewport(0, 0, config.SIM_RESOLUTION, config.SIM_RESOLUTION);
 
       // Velocity Advection
+      // Velocity Advection
       gl.useProgram(advectionProgram);
       gl.uniform2f(gl.getUniformLocation(advectionProgram, 'texelSize'), 1.0 / config.SIM_RESOLUTION, 1.0 / config.SIM_RESOLUTION);
       gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dt'), 0.016);
-      gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), 0.9); // Higher dissipation for velocity
+      gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), 0.8); // Fades fast
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, velocity.read.texture);
       gl.uniform1i(gl.getUniformLocation(advectionProgram, 'uVelocity'), 0);
@@ -350,7 +350,7 @@ export const FluidCursor: React.FC = () => {
       velocity.swap();
 
       // Density Advection (Smoke)
-      gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), 0.85); // Vaporize faster!
+      gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), 0.92); // Disappears quickly
       gl.activeTexture(gl.TEXTURE1);
       gl.bindTexture(gl.TEXTURE_2D, density.read.texture);
       gl.bindFramebuffer(gl.FRAMEBUFFER, density.write.fbo);
@@ -418,7 +418,7 @@ export const FluidCursor: React.FC = () => {
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed inset-0 w-screen h-screen pointer-events-none z-[9999] opacity-50 mix-blend-screen overflow-hidden" 
+      className="fixed inset-0 w-screen h-screen pointer-events-none z-[9999] opacity-30 mix-blend-screen overflow-hidden" 
     />
   );
 };

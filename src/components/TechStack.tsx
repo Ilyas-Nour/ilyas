@@ -48,7 +48,7 @@ const MarqueeRow: React.FC<{ items: typeof skillsRow1; direction: number }> = ({
           >
             <div className="p-2 rounded bg-white/5 border border-white/5 group-hover:border-[var(--color-accent)]/30 group-hover:shadow-[0_0_15px_rgba(var(--color-accent-rgb),0.2)] transition-all">
               <img
-                src={`https://cdn.simpleicons.org/${skill.icon}/${skill.color.replace('#', '')}`}
+                src={`https://cdn.simpleicons.org/${skill.icon}`}
                 alt={skill.name}
                 className="w-5 h-5 object-contain transition-all duration-500"
                 width={20}
