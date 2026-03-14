@@ -314,8 +314,8 @@ export const FluidCursor: React.FC = () => {
 
       const colors = [
         { r: 0.23, g: 0.51, b: 0.96 }, // Cyber Blue
-        { r: 0.98, g: 0.45, b: 0.09 }, // Volcanic Orange
-        { r: 0.5, g: 0.2, b: 1.0 },    // Indigo
+        { r: 0.7, g: 0.8, b: 1.0 },    // Ice Blue
+        { r: 1.0, g: 1.0, b: 1.0 },    // Pure White
       ];
       const color = colors[Math.floor(Math.random() * colors.length)];
       
@@ -334,10 +334,11 @@ export const FluidCursor: React.FC = () => {
       gl.disable(gl.BLEND);
       gl.viewport(0, 0, config.SIM_RESOLUTION, config.SIM_RESOLUTION);
 
+      // Velocity Advection
       gl.useProgram(advectionProgram);
       gl.uniform2f(gl.getUniformLocation(advectionProgram, 'texelSize'), 1.0 / config.SIM_RESOLUTION, 1.0 / config.SIM_RESOLUTION);
       gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dt'), 0.016);
-      gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), 1.0 - 0.01);
+      gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), 0.9); // Higher dissipation for velocity
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, velocity.read.texture);
       gl.uniform1i(gl.getUniformLocation(advectionProgram, 'uVelocity'), 0);
@@ -348,6 +349,8 @@ export const FluidCursor: React.FC = () => {
       renderQuad();
       velocity.swap();
 
+      // Density Advection (Smoke)
+      gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), 0.85); // Vaporize faster!
       gl.activeTexture(gl.TEXTURE1);
       gl.bindTexture(gl.TEXTURE_2D, density.read.texture);
       gl.bindFramebuffer(gl.FRAMEBUFFER, density.write.fbo);
@@ -415,7 +418,7 @@ export const FluidCursor: React.FC = () => {
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed inset-0 w-screen h-screen pointer-events-none z-[9999] opacity-80 mix-blend-screen overflow-hidden" 
+      className="fixed inset-0 w-screen h-screen pointer-events-none z-[9999] opacity-50 mix-blend-screen overflow-hidden" 
     />
   );
 };

@@ -7,7 +7,7 @@ const projects = [
     id: "ARTIFACT_PX_001",
     description: "High-integrity encryption architecture for secure data flow.",
     tags: ["Rust", "Wasm", "Identity"],
-    image: "/projects/privaflow.png",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200",
     access: "Level_04",
     status: "ENCRYPTED"
   },
@@ -16,7 +16,7 @@ const projects = [
     id: "ARTIFACT_PX_002",
     description: "Bio-organic AI interface for environmental synchronization.",
     tags: ["React", "TensorFlow", "WebGL"],
-    image: "/projects/top_nature.png",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1200",
     access: "Level_02",
     status: "SYNC_ACTIVE"
   },
@@ -25,7 +25,7 @@ const projects = [
     id: "ARTIFACT_PX_003",
     description: "Neural-linked data processing unit for high-throughput nodes.",
     tags: ["Node.js", "Redis", "Kafka"],
-    image: "/projects/aggregator.png",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1200",
     access: "Level_05",
     status: "OPTIMIZED"
   },
@@ -34,7 +34,7 @@ const projects = [
     id: "ARTIFACT_PX_004",
     description: "Experimental workspace for avant-garde UI/UX research.",
     tags: ["Three.js", "Shaders", "Framer"],
-    image: "/projects/lab.png",
+    image: "https://images.unsplash.com/photo-1506318137071-a8e063b4bcc0?auto=format&fit=crop&q=80&w=1200",
     access: "Level_01",
     status: "LAB_STAGE"
   }
@@ -107,10 +107,6 @@ const ProjectItem: React.FC<{ project: typeof projects[0]; index: number }> = ({
                src={project.image} 
                alt={project.title}
                className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 scale-105 group-hover:scale-100"
-               onError={(e) => {
-                 const target = e.target as HTMLImageElement;
-                 target.src = "https://via.placeholder.com/1200x800/000000/FFFFFF?text=Classified+Artifact";
-               }}
              />
              {/* Scanline Overlay */}
              <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] pointer-events-none opacity-20" />

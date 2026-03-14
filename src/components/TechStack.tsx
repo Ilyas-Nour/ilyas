@@ -10,7 +10,7 @@ const skillsRow1 = [
   { name: 'Three.js', icon: 'threedotjs', color: '#ffffff' },
   { name: 'Framer Motion', icon: 'framer', color: '#ff0055' },
   { name: 'PostgreSQL', icon: 'postgresql', color: '#4169E1' },
-  { name: 'AWS', icon: 'amazonwebservices', color: '#FF9900' }, // Corrected slug and vibrant brand color
+  { name: 'AWS', icon: 'amazonaws', color: '#FF9900' }, // Corrected slug: amazonaws
   { name: 'Docker', icon: 'docker', color: '#2496ED' },
   { name: 'Postman', icon: 'postman', color: '#FF6C37' },
 ];
