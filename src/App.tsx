@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Lenis from 'lenis';
 import { FluidCursor } from './components/FluidCursor';
 import { IntroLoader } from './components/IntroLoader';
@@ -59,14 +59,34 @@ function App() {
         </AnimatePresence>
 
         <div className="relative z-10 w-full">
-          <ArtisticHero />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ margin: "-100px" }}
+            transition={{ duration: 1.2, ease: [0.85, 0, 0.15, 1] }}
+          >
+            <ArtisticHero />
+          </motion.div>
           
           <Suspense fallback={<div className="h-screen flex items-center justify-center opacity-5 font-mono text-[8px] uppercase tracking-widest">Loading...</div>}>
-            <IdentityArchive />
-            <TechStack />
-            <ProjectCatalog />
-            <InquiryContact />
-            <MassiveFooter />
+            {[
+              { id: 'about', Component: IdentityArchive },
+              { id: 'skills', Component: TechStack },
+              { id: 'projects', Component: ProjectCatalog },
+              { id: 'contact', Component: InquiryContact },
+              { id: 'footer', Component: MassiveFooter }
+            ].map(({ id, Component }) => (
+              <motion.div
+                key={id}
+                initial={{ opacity: 0, scale: 0.95, y: 50 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ margin: "-10%" }}
+                transition={{ duration: 1, ease: [0.85, 0, 0.15, 1] }}
+                className="will-change-transform"
+              >
+                <Component />
+              </motion.div>
+            ))}
           </Suspense>
         </div>
       </main>

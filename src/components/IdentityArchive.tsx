@@ -23,10 +23,10 @@ export const IdentityArchive: React.FC = () => {
 
               <div className="space-y-8 text-lg md:text-xl text-[var(--color-text-muted)] font-sans font-light leading-relaxed max-w-2xl">
                 <p>
-                  I believe that the best digital products are born at the intersection of rigorous technical logic and intentional design. My work is dedicated to creating high-performance environments that feel as good as they function.
+                  I'm a dedicated trainee at OFPPT, currently refining my craft in full-stack development. I believe that digital excellence is born at the intersection of rigorous logic and intentional, creative design.
                 </p>
                 <p>
-                  With a focus on full-stack development and creative technology, I build scalable systems that endure. From complex backend architectures to fluid, interactive frontends, every step is a deliberate move towards excellence.
+                  As I complete my first year of specialized training, I'm focused on building a portfolio that demonstrates both my technical foundations and my eye for minimalist, high-impact aesthetics. I'm currently seeking my first professional internship to apply my skills in a studio environment.
                 </p>
               </div>
             </motion.div>
@@ -34,10 +34,10 @@ export const IdentityArchive: React.FC = () => {
             {/* Simple Metrics */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-12 pt-16 border-t border-[var(--color-border)]">
                {[
-                 { label: "Performance", value: "Optimized" },
-                 { label: "Architecture", value: "Scalable" },
-                 { label: "Interface", value: "Tactile" },
-                 { label: "Commitment", value: "Excellence" }
+                 { label: "Status", value: "Trainee" },
+                 { label: "Institution", value: "OFPPT" },
+                 { label: "Focus", value: "Full-Stack" },
+                 { label: "Goal", value: "Internship" }
                ].map((stat, i) => (
                  <div key={i} className="space-y-2">
                     <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[var(--color-text-muted)]">{stat.label}</span>
@@ -61,7 +61,7 @@ export const IdentityArchive: React.FC = () => {
                    
                    <div className="space-y-2">
                       <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-[var(--color-accent)]">Experience</span>
-                      <p className="text-2xl font-serif italic text-[var(--color-text)]">5+ Years of Studio Work</p>
+                      <p className="text-2xl font-serif italic text-[var(--color-text)]">OFPPT Trainee | 1 Year+</p>
                    </div>
                 </div>
 

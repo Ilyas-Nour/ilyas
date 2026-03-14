@@ -1,120 +1,72 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0a0a0c;
-  --color-foreground: #ececec;
-  --color-accent: #3b82f6; /* Cyber Blue */
-  --color-accent-secondary: #f97316; /* Volcanic Orange */
-  --color-surface: rgba(255, 255, 255, 0.05);
-  --color-border: rgba(255, 255, 255, 0.1);
   --font-display: "Playfair Display", serif;
   --font-functional: "Outfit", sans-serif;
   --font-mono: "Space Mono", monospace;
-  --noise-opacity: 0.15;
+}
+
+:root {
+  --color-accent: #3b82f6;
+  --transition-speed: 0.5s;
+}
+
+[data-theme='dark'] {
+  --color-bg: #0a0a0c;
+  --color-text: #ececec;
+  --color-text-muted: #a1a1aa;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-accent: #3b82f6;
+}
+
+[data-theme='light'] {
+  --color-bg: #f7f7f7;
+  --color-text: #18181b;
+  --color-text-muted: #71717a;
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-accent: #2563eb;
 }
 
 @layer base {
   body {
-    @apply bg-[var(--color-background)] text-[var(--color-foreground)] antialiased selection:bg-[var(--color-accent)] selection:text-white;
+    @apply bg-[var(--color-bg)] text-[var(--color-text)] antialiased transition-colors duration-500;
     font-family: var(--font-functional);
   }
 
-  h1, h2, h3, .font-display {
+  h1, h2, h3, .font-serif {
     font-family: var(--font-display);
   }
-}
 
-@layer utilities {
-  .bg-hero-studio {
-    background: radial-gradient(circle at 20% 30%, hsla(217,100%,10%,1) 0%, var(--color-background) 70%);
-  }
-  .bg-about-studio {
-    background: radial-gradient(circle at 80% 20%, hsla(280,100%,10%,1) 0%, var(--color-background) 80%);
-  }
-  .bg-skills-studio {
-    background: radial-gradient(circle at 50% 50%, hsla(20,100%,10%,1) 0%, var(--color-background) 80%);
-  }
-  .bg-projects-studio {
-    background: radial-gradient(circle at 30% 70%, hsla(217,100%,10%,1) 0%, var(--color-background) 80%);
-  }
-  .bg-contact-studio {
-    background: radial-gradient(circle at 70% 80%, hsla(220,100%,10%,1) 0%, var(--color-background) 80%);
+  .font-sans {
+    font-family: var(--font-functional);
   }
 
-  .anime-motif {
-    @apply absolute inset-0 pointer-events-none z-0 opacity-[0.07] grayscale mix-blend-screen overflow-hidden;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center bottom;
+  .font-mono {
+    font-family: var(--font-mono);
   }
-}
-
-.glass-panel {
-  @apply bg-[rgba(255,255,255,0.03)] backdrop-blur-md border border-[rgba(255,255,255,0.08)];
 }
 
 .glass {
-  @apply backdrop-blur-xl bg-white/[0.01] border border-white/10;
+  @apply backdrop-blur-xl border border-[var(--color-border)];
+  background-color: var(--color-border);
 }
 
-.text-massive {
-  font-size: clamp(2.5rem, 15vw, 15rem);
-  line-height: 0.8;
-  letter-spacing: -0.05em;
+.section-padding {
+  @apply py-24 md:py-40 px-6 md:px-12 lg:px-24;
 }
 
-.text-header-responsive {
-  font-size: clamp(2.2rem, 12vw, 12rem);
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  white-space: nowrap;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 10px;
 }
 
-.magnetic-button {
-  @apply relative px-4 md:px-8 py-3 md:py-4 bg-transparent border border-[var(--color-accent)] text-[var(--color-accent)] font-mono 
-         overflow-hidden transition-all duration-300 hover:text-[var(--color-background)] z-10 text-[10px] md:text-xs;
-}
-
-.magnetic-button::before {
-  content: '';
-  @apply absolute inset-0 bg-[var(--color-accent)] translate-y-full transition-transform duration-300 -z-10;
-}
-
-.magnetic-button:hover::before {
-  @apply translate-y-0;
-}
-
-.custom-cursor {
-  @apply fixed top-0 left-0 w-4 h-4 bg-[var(--color-accent)] rounded-full pointer-events-none z-[9999] mix-blend-difference;
-}
-
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.tracking-tightest {
-  letter-spacing: -0.05em;
-}
-
-.mask-carousel {
+.mask-marquee {
   mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-}
-
-@keyframes scan {
-  from { transform: translateY(-100%); }
-  to { transform: translateY(100%); }
-}
-
-.animate-scan {
-  animation: scan 3s linear infinite;
-}
-
-.glass-vault {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.astral-glass {
-  @apply backdrop-blur-xl bg-white/[0.02] border border-white/5;
 }
