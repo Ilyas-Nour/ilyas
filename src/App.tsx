@@ -1,28 +1,36 @@
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { CustomCursor } from './components/CustomCursor';
 import { Background } from './components/Background';
 import { SingularityHero } from './components/SingularityHero';
-import { BentoGrid } from './components/BentoGrid';
+import { ProjectCatalog } from './components/ProjectCatalog';
+import { MassiveFooter } from './components/MassiveFooter';
 import { InquiryContact } from './components/InquiryContact';
 
 function App() {
   return (
-    <main className="relative min-h-screen bg-[#050505] font-sans overflow-x-hidden selection:bg-accent selection:text-background">
+    <main className="relative min-h-screen bg-black font-sans overflow-x-hidden selection:bg-accent selection:text-black">
       <CustomCursor />
-      <Background />
       
+      {/* Background Layer */}
+      <div className="fixed inset-0 z-0">
+        <Background />
+        <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+      </div>
+
       <div className="relative z-10">
         <SingularityHero />
         
-        {/* The Bento Section */}
-        <BentoGrid />
+        <ProjectCatalog />
         
-        <InquiryContact />
+        <div className="relative z-20 bg-black shadow-[0_-50px_100px_rgba(0,0,0,1)]">
+          <InquiryContact />
+        </div>
+
+        <MassiveFooter />
       </div>
 
-      {/* Deep Tech Subtle Overlay */}
-      <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.015] bg-[url('https://res.cloudinary.com/dzv9s1psp/image/upload/v1671536417/noise_btp0vj.png')]" />
+      {/* OLED Grit / Texture Overlay */}
+      <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.02] mix-blend-overlay bg-[url('https://res.cloudinary.com/dzv9s1psp/image/upload/v1671536417/noise_btp0vj.png')]" />
     </main>
   );
 }

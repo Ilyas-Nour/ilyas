@@ -1,54 +1,50 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #050505;
-  --color-foreground: #F8FAFC;
-  --color-accent: #10b981;
-  --color-accent-blue: #3b82f6;
-
+  --color-background: #000000;
+  --color-foreground: #FFFFFF;
+  --color-accent: #00E5FF; /* Electric Blue */
+  --color-muted: #64748B;
+  
   --font-sans: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
 @layer base {
+  html {
+    @apply scroll-smooth;
+  }
   body {
-    background-color: #050505;
-    color: #F8FAFC;
-    font-family: 'Inter', sans-serif;
+    @apply bg-background text-foreground font-sans antialiased;
+    background-color: #000000;
   }
 }
 
 .glass {
-  backdrop-filter: blur(12px);
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  @apply backdrop-blur-xl bg-white/[0.01] border border-white/10;
 }
 
-.bento-card {
-  @extend .glass;
-  border-radius: 24px;
-  padding: 32px;
-  transition: all 0.5s ease;
-  overflow: hidden;
-  position: relative;
-}
-
-.bento-card:hover {
-  background-color: rgba(255, 255, 255, 0.04);
-}
-
-.tracking-tightest {
+.text-massive {
+  font-size: clamp(3rem, 10vw, 12rem);
+  line-height: 0.8;
   letter-spacing: -0.05em;
 }
 
-/* Custom Cursor */
+.magnetic-button {
+  @apply relative px-8 py-4 bg-transparent border border-accent text-accent font-mono 
+         overflow-hidden transition-all duration-300 hover:text-background z-10;
+}
+
+.magnetic-button::before {
+  content: '';
+  @apply absolute inset-0 bg-accent translate-y-full transition-transform duration-300 -z-10;
+}
+
+.magnetic-button:hover::before {
+  @apply translate-y-0;
+}
+
+/* Custom Cursor Refinement */
 .custom-cursor {
-  width: 20px;
-  height: 20px;
-  background: var(--color-accent);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: difference;
+  @apply fixed top-0 left-0 w-4 h-4 bg-accent rounded-full pointer-events-none z-[9999] mix-blend-difference;
 }
