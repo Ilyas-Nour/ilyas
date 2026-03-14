@@ -19,9 +19,9 @@ export const MassiveFooter = () => {
 
         <div className="max-w-screen-2xl mx-auto relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-24 mb-32">
-            {/* Site Navigation */}
+             {/* Site Navigation */}
             <div className="space-y-8">
-              <h4 className="text-[10px] font-mono tracking-[0.4em] text-muted uppercase">_navigation</h4>
+              <h4 className="text-[10px] font-mono tracking-[0.4em] text-white/60 uppercase">_navigation</h4>
               <nav className="flex flex-col gap-4">
                   <a href="#home" className="text-2xl font-display font-light text-white hover:text-accent transition-colors w-fit">Home</a>
                   <a href="#projects" className="text-2xl font-display font-light text-white hover:text-accent transition-colors w-fit">Catalog</a>
@@ -32,7 +32,7 @@ export const MassiveFooter = () => {
 
             {/* Social Connection */}
             <div className="space-y-8">
-              <h4 className="text-[10px] font-mono tracking-[0.4em] text-muted uppercase">_connect</h4>
+              <h4 className="text-[10px] font-mono tracking-[0.4em] text-white/60 uppercase">_connect</h4>
               <div className="flex flex-wrap gap-8">
                 {[
                   { name: 'Github', url: 'https://github.com/Ilyas-Nour' },
@@ -49,8 +49,8 @@ export const MassiveFooter = () => {
 
             {/* System Status */}
             <div className="space-y-8 text-right">
-              <h4 className="text-[10px] font-mono tracking-[0.4em] text-muted uppercase text-right">_system_auth</h4>
-              <p className="font-mono text-[10px] text-muted leading-relaxed uppercase tracking-widest">
+              <h4 className="text-[10px] font-mono tracking-[0.4em] text-white/60 uppercase text-right">_system_auth</h4>
+              <p className="font-mono text-[10px] text-white/70 leading-relaxed uppercase tracking-widest">
                 Built with React + Vite<br />
                 Deployed via Vercel Edge<br />
                 © 2026_ESTD_SYSTEMS_ARCH
@@ -58,9 +58,6 @@ export const MassiveFooter = () => {
             </div>
           </div>
 
-          <div className="border-t border-white/5 pt-12 flex justify-between items-center text-muted font-mono text-[9px] tracking-[0.3em] uppercase">
-            <div>ILYAS NOUR</div>
-          </div>
         </div>
       </div>
     </footer>

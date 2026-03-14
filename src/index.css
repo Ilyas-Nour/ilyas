@@ -26,14 +26,21 @@
 }
 
 .text-massive {
-  font-size: clamp(3rem, 10vw, 12rem);
+  font-size: clamp(2.5rem, 15vw, 15rem);
   line-height: 0.8;
   letter-spacing: -0.05em;
 }
 
+.text-header-responsive {
+  font-size: clamp(2.2rem, 12vw, 12rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
 .magnetic-button {
-  @apply relative px-8 py-4 bg-transparent border border-accent text-accent font-mono 
-         overflow-hidden transition-all duration-300 hover:text-background z-10;
+  @apply relative px-4 md:px-8 py-3 md:py-4 bg-transparent border border-accent text-accent font-mono 
+         overflow-hidden transition-all duration-300 hover:text-background z-10 text-[10px] md:text-xs;
 }
 
 .magnetic-button::before {
