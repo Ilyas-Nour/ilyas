@@ -89,25 +89,35 @@ export const ProjectCatalog: React.FC = () => {
                 />
               </div>
 
+              {/* Mecha HUD Brackets */}
+              <div className="absolute top-4 left-4 w-3 h-3 border-t border-l border-[var(--color-accent)]/20 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
+              <div className="absolute top-4 right-4 w-3 h-3 border-t border-r border-[var(--color-accent)]/20 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
+              <div className="absolute bottom-4 left-4 w-3 h-3 border-b border-l border-[var(--color-accent)]/20 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
+              <div className="absolute bottom-4 right-4 w-3 h-3 border-b border-r border-[var(--color-accent)]/20 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
+
               {/* Technical Overlay */}
-              <div className="absolute inset-0 border border-white/5 opacity-40 group-hover:opacity-100 transition-opacity pointer-events-none" />
+              <div className="absolute inset-0 border border-white/5 opacity-40 group-hover:opacity-100 transition-opacity pointer-events-none z-10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10" />
               
               {/* Top Meta */}
-              <div className="absolute top-6 left-6 flex items-center gap-4 py-2 px-4 border border-white/10 rounded-full glass-panel opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-y-4 group-hover:translate-y-0">
-                 <span className="font-mono text-[8px] text-[var(--color-accent)]">0{i+1}</span>
+              <div className="absolute top-8 left-8 flex items-center gap-4 py-2 px-4 border border-white/10 rounded-full glass-panel opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-y-4 group-hover:translate-y-0 z-30">
+                 <span className="font-mono text-[8px] text-[var(--color-accent)]">Node_0{i+1}</span>
                  <span className="font-mono text-[8px] text-white uppercase tracking-widest">{project.title}</span>
               </div>
 
               {/* Bottom Content */}
-              <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+              <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 z-30">
                 <div className="space-y-1">
-                   <h3 className="text-2xl font-display italic text-white">{project.title}</h3>
-                   <p className="font-mono text-[9px] text-white/50 uppercase tracking-widest">{project.description}</p>
+                   <h3 className="text-3xl font-display italic text-white group-hover:text-[var(--color-accent)] transition-colors">{project.title}</h3>
+                   <p className="font-mono text-[10px] text-white/50 uppercase tracking-[0.3em]">{project.description}</p>
                 </div>
-                <div className="flex gap-2">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="font-mono text-[8px] border border-white/10 px-2 py-0.5 rounded-full text-white/30">{tag}</span>
-                  ))}
+                <div className="flex flex-col items-end gap-2">
+                  <div className="flex gap-2">
+                    {project.tags.map(tag => (
+                      <span key={tag} className="font-mono text-[8px] border border-white/10 px-2 py-0.5 rounded-full text-white/30 lowercase italic">#{tag}</span>
+                    ))}
+                  </div>
+                  <span className="font-mono text-[6px] text-white/10 uppercase tracking-widest">Integrity_Secure</span>
                 </div>
               </div>
             </motion.div>

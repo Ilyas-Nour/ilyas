@@ -39,28 +39,40 @@ const ArtisticHero: React.FC = () => {
         style={{ y: y1, opacity }}
         className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-end"
       >
-        <div className="lg:col-span-8 flex flex-col items-start text-left">
+        <div className="lg:col-span-8 flex flex-col items-start text-left relative">
+          {/* Section HUD Corner */}
+          <div className="absolute -top-12 -left-8 w-8 h-8 border-t border-l border-[var(--color-accent)]/20 hidden lg:block" />
+          
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
             className="w-full space-y-4"
           >
+            <div className="flex items-center gap-4 mb-2">
+              <span className="font-mono text-[8px] uppercase tracking-[0.5em] text-[var(--color-accent)]/60">System_Initiated // 0xAF3</span>
+              <div className="h-px w-12 bg-[var(--color-accent)]/20" />
+            </div>
+            
             <h1 className="text-header-responsive font-black text-left flex flex-col items-start gap-0">
               <span className="text-white font-sans uppercase leading-none">ILYAS</span>
               <span className="text-[var(--color-accent)] font-display italic font-light lowercase tracking-tighter leading-none -mt-4">nour.</span>
             </h1>
 
-            <div className="pt-4 md:pt-8 w-full border-t border-white/10">
+            <div className="pt-4 md:pt-8 w-full border-t border-white/10 relative">
               <h2 className="text-2xl sm:text-3xl md:text-5xl font-display italic font-light text-[var(--color-accent)]/80 leading-tight tracking-tight">
                 Full-Stack Developer <br />
                 <span className="text-white font-sans not-italic font-black text-3xl sm:text-4xl md:text-6xl">& Websites Builder.</span>
               </h2>
+              {/* HUD Meta */}
+              <div className="absolute -bottom-6 right-0 font-mono text-[6px] text-white/10 uppercase tracking-widest hidden md:block">
+                Calibration: 0.00ms // Precision: Absolute
+              </div>
             </div>
           </motion.div>
         </div>
 
-        <div className="lg:col-span-4 flex flex-col justify-end items-start gap-8 lg:gap-12 text-left">
+        <div className="lg:col-span-4 flex flex-col justify-end items-start gap-8 lg:gap-12 text-left relative">
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

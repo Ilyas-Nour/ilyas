@@ -21,18 +21,26 @@ const IdentityArchive: React.FC = () => {
           </div>
 
           {/* Dense Bio Section */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 relative">
+            {/* HUD Corner Accents */}
+            <div className="absolute -top-4 -left-4 w-4 h-4 border-t border-l border-[var(--color-accent)]/30 opacity-40" />
+            
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="space-y-12"
             >
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-[8px] text-[var(--color-accent)]/40 uppercase">Archive_Link // 01</span>
+                <div className="h-px w-8 bg-white/5" />
+              </div>
+              
               <h3 className="text-4xl md:text-6xl font-display leading-tight text-white">
                 Designing systems that <span className="italic text-[var(--color-accent-secondary)]">breathe</span> and code that <span className="opacity-40">endures</span>.
               </h3>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-white/60 font-functional text-lg leading-relaxed">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-white/70 font-functional text-lg leading-relaxed">
                 <p>
                   As an artisan of the digital realm, I don't just build websites; I engineer interactive narratives. My approach sits at the raw intersection of technical precision and artistic intuition.
                 </p>
@@ -59,7 +67,10 @@ const IdentityArchive: React.FC = () => {
           </div>
 
           {/* Visual Density Side (Mosaic style image/shape) */}
-          <div className="lg:col-span-3 h-[400px] relative">
+          <div className="lg:col-span-3 h-[400px] relative group">
+            <div className="absolute -top-2 -right-2 w-4 h-4 border-t border-r border-[var(--color-accent)]/20 group-hover:border-[var(--color-accent)]/50 transition-colors" />
+            <div className="absolute -bottom-2 -left-2 w-4 h-4 border-b border-l border-[var(--color-accent)]/20 group-hover:border-[var(--color-accent)]/50 transition-colors" />
+            
             <motion.div 
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
