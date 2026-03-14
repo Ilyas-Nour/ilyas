@@ -69,32 +69,18 @@ const MarqueeRow: React.FC<{ items: typeof skillsRow1; direction: number }> = ({
 export const TechStack: React.FC = () => {
   return (
     <section className="relative py-20 px-6 overflow-hidden bg-[#050507]">
-      {/* HUD Scanline */}
-      <div className="absolute inset-0 pointer-events-none z-20 opacity-5 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
-
       <div className="container mx-auto relative z-30">
         <div className="mb-12">
            <div className="flex items-center gap-4 mb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)] opacity-60">System_Core_Skills</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)] opacity-60">My Expertise</span>
             <div className="h-px flex-1 bg-gradient-to-r from-[var(--color-accent)]/30 to-transparent" />
           </div>
-          <h2 className="text-4xl md:text-6xl font-display italic text-white leading-tight">Technological Spectrum</h2>
+          <h2 className="text-4xl md:text-6xl font-display italic text-white leading-tight">Expertise</h2>
         </div>
 
         <div className="space-y-4">
           <MarqueeRow items={skillsRow1} direction={1} />
           <MarqueeRow items={skillsRow2} direction={-1} />
-        </div>
-
-        {/* Dense Status Annotations */}
-        <div className="mt-12 flex justify-between items-end border-t border-white/5 pt-6 opacity-20 hidden md:flex">
-            <div className="font-mono text-[7px] space-y-1">
-               <p>STATUS: MODULE_LOAD_NOMINAL</p>
-               <p>HASH: 0x94B2E1 // BUFFER: ACTIVE</p>
-            </div>
-            <div className="flex gap-4">
-               {[1,2,3,4,5,6].map(i => <div key={i} className={`w-1 h-4 ${i < 4 ? 'bg-[var(--color-accent)]' : 'bg-white/10'}`} />)}
-            </div>
         </div>
       </div>
     </section>
