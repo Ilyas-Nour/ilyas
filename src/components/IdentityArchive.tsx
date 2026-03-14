@@ -1,98 +1,123 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const IdentityArchive: React.FC = () => {
+export const IdentityArchive: React.FC = () => {
   return (
-    <section className="relative py-32 px-6 overflow-hidden bg-about-studio">
-      {/* Anime Motif Layer */}
+    <section id="about" className="relative py-40 px-6 overflow-hidden bg-about-studio">
+      {/* Anime Theme Motif */}
       <div 
         className="anime-motif opacity-[0.05]"
-        style={{ backgroundImage: 'url(/assets/anime_about.png)', backgroundPosition: 'right bottom' }} 
+        style={{ backgroundImage: 'url(/assets/real_anime_hero.png)', backgroundPosition: 'right bottom', backgroundSize: 'contain' }} 
       />
 
       <div className="container mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* Section Marker */}
-          <div className="lg:col-span-2">
-            <div className="sticky top-32">
-              <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)] block mb-4">Archive // 01</span>
-              <h2 className="text-4xl font-display italic text-white/20">The Architect's Ledger</h2>
+          {/* Metadata Sidebar */}
+          <div className="lg:col-span-3">
+            <div className="sticky top-40 space-y-12">
+               <div className="space-y-4">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)] block">File // Alpha_01</span>
+                  <div className="h-px w-full bg-gradient-to-r from-[var(--color-accent)]/30 to-transparent" />
+               </div>
+
+               <div className="space-y-6">
+                  {[
+                    { label: "Subject", value: "Ilyas Nour" },
+                    { label: "Clearance", value: "Level_05" },
+                    { label: "Sectors", value: "Full-Stack / AI" },
+                    { label: "Hash", value: "0x8A2B9C" }
+                  ].map((meta, i) => (
+                    <div key={i} className="space-y-1 group">
+                       <span className="font-mono text-[8px] uppercase tracking-widest text-white/20 group-hover:text-[var(--color-accent)]/40 transition-colors">{meta.label}</span>
+                       <p className="text-sm text-white font-mono uppercase tracking-tighter">{meta.value}</p>
+                    </div>
+                  ))}
+               </div>
+
+               <div className="pt-8 opacity-20">
+                  <div className="w-16 h-16 border border-white/20 flex items-center justify-center rounded-lg">
+                     <span className="font-mono text-[8px] rotate-90 whitespace-nowrap">CLASSIFIED</span>
+                  </div>
+               </div>
             </div>
           </div>
 
-          {/* Dense Bio Section */}
-          <div className="lg:col-span-7 relative">
-            {/* HUD Corner Accents */}
-            <div className="absolute -top-4 -left-4 w-4 h-4 border-t border-l border-[var(--color-accent)]/30 opacity-40" />
+          {/* Dossier Content */}
+          <div className="lg:col-span-6 relative">
+            {/* Visual Scanline Decor */}
+            <div className="absolute -left-8 inset-y-0 w-px bg-gradient-to-b from-transparent via-[var(--color-accent)]/20 to-transparent" />
             
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="space-y-12"
+              transition={{ duration: 0.8 }}
+              className="space-y-16"
             >
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-[8px] text-[var(--color-accent)]/40 uppercase">Archive_Link // 01</span>
-                <div className="h-px w-8 bg-white/5" />
-              </div>
-              
-              <h3 className="text-4xl md:text-6xl font-display leading-tight text-white">
-                Designing systems that <span className="italic text-[var(--color-accent-secondary)]">breathe</span> and code that <span className="opacity-40">endures</span>.
+              <h3 className="text-5xl md:text-7xl font-display italic leading-[1.1] text-white">
+                Designing systems that <span className="text-[var(--color-accent)] opacity-60">breathe</span> and code that <span className="italic">endures.</span>
               </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-white/70 font-functional text-lg leading-relaxed">
+
+              <div className="space-y-8 text-white/60 font-functional text-lg leading-relaxed">
                 <p>
-                  As an artisan of the digital realm, I don't just build websites; I engineer interactive narratives. My approach sits at the raw intersection of technical precision and artistic intuition.
+                  As an artisan of the digital realm, I don't just build websites; I engineer **interactive narratives**. My approach sits at the raw intersection of technical precision and artistic intuition.
                 </p>
                 <p>
                   Every line of logic is a deliberate stroke, aimed at creating performance-driven environments that feel as good as they look. From monolithic backend structures to fluid frontend dynamics.
                 </p>
               </div>
 
-              {/* Technical Annotations (Dense Overlay) */}
-              <div className="pt-12 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-6">
-                {[
-                  { label: "Precision", value: "99.9%" },
-                  { label: "Efficiency", value: "Optimized" },
-                  { label: "Design", value: "Avant-Garde" },
-                  { label: "Logic", value: "Rigorous" }
-                ].map((stat, i) => (
-                  <div key={i} className="space-y-1">
-                    <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">{stat.label}</span>
-                    <p className="text-sm text-white font-mono uppercase">{stat.value}</p>
-                  </div>
-                ))}
+              {/* Technical Benchmarks */}
+              <div className="pt-16 border-t border-white/5 grid grid-cols-2 gap-8">
+                 {[
+                   { label: "Architecture", value: "Scalable" },
+                   { label: "Interface", value: "Tactile" },
+                   { label: "Logic", value: "Rigorous" },
+                   { label: "Output", value: "Mastery" }
+                 ].map((stat, i) => (
+                   <div key={i} className="space-y-2 group">
+                      <div className="flex justify-between items-end">
+                        <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/30 group-hover:text-[var(--color-accent)] transition-colors">{stat.label}</span>
+                        <span className="font-mono text-[7px] text-white/10 uppercase">Verified</span>
+                      </div>
+                      <div className="h-0.5 w-full bg-white/5 relative overflow-hidden">
+                        <motion.div 
+                          initial={{ x: "-100%" }}
+                          whileInView={{ x: "0%" }}
+                          transition={{ delay: i * 0.1, duration: 1.5 }}
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--color-accent)]/30 to-transparent" 
+                        />
+                      </div>
+                      <p className="font-mono text-xs text-white uppercase tracking-widest">{stat.value}</p>
+                   </div>
+                 ))}
               </div>
             </motion.div>
           </div>
 
-          {/* Visual Density Side (Mosaic style image/shape) */}
-          <div className="lg:col-span-3 h-[400px] relative group">
-            <div className="absolute -top-2 -right-2 w-4 h-4 border-t border-r border-[var(--color-accent)]/20 group-hover:border-[var(--color-accent)]/50 transition-colors" />
-            <div className="absolute -bottom-2 -left-2 w-4 h-4 border-b border-l border-[var(--color-accent)]/20 group-hover:border-[var(--color-accent)]/50 transition-colors" />
-            
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              className="absolute inset-0 glass-panel rounded-3xl overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/20 to-transparent" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="font-display text-8xl italic opacity-5 select-none">Studio</span>
-              </div>
-              {/* Abstract Architecture Lines */}
-              <svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 100 100">
-                <line x1="0" y1="0" x2="100" y2="100" stroke="white" strokeWidth="0.5" />
-                <line x1="100" y1="0" x2="0" y2="100" stroke="white" strokeWidth="0.5" />
-                <circle cx="50" cy="50" r="30" fill="none" stroke="white" strokeWidth="0.2" />
-              </svg>
-            </motion.div>
+          {/* Visual Profile Marker */}
+          <div className="lg:col-span-3 h-[500px] relative group overflow-hidden">
+            <div className="absolute inset-0 glass-panel rounded-3xl border-white/10 group-hover:border-[var(--color-accent)]/50 transition-all duration-700">
+               <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/10 to-transparent" />
+               <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center overflow-hidden">
+                  <span className="text-[20vw] lg:text-[10vw] font-black italic text-white/[0.02] select-none uppercase">Studio</span>
+               </div>
+               
+               {/* Abstract Geometry Lines */}
+               <svg className="absolute inset-0 w-full h-full opacity-[0.03]" viewBox="0 0 100 100">
+                  <line x1="0" y1="50" x2="100" y2="50" stroke="white" strokeWidth="0.1" />
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="white" strokeWidth="0.05" />
+                  <path d="M10,10 L90,90 M90,10 L10,90" stroke="white" strokeWidth="0.05" />
+               </svg>
+
+               <div className="absolute bottom-8 left-8 space-y-2">
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => <div key={i} className="w-1 h-3 bg-[var(--color-accent)]/40" />)}
+                  </div>
+                  <span className="font-mono text-[8px] text-white/20 uppercase tracking-widest leading-none block">Archive_Sync_Status: 100%</span>
+               </div>
+            </div>
           </div>
-        </div>
-        
-        <div className="mt-24 pt-12 border-t border-white/5 flex gap-12 text-white/20 font-mono text-[9px] uppercase tracking-widest">
-           <span>Status: Active Collaboration</span>
-           <span>Hash: 0x8A2B9C</span>
         </div>
       </div>
     </section>

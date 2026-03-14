@@ -12,7 +12,7 @@ export const MassiveFooter = () => {
           className="absolute inset-x-0 -top-24 select-none pointer-events-none z-0"
         >
           <h2 className="text-[25vw] font-black text-center whitespace-nowrap text-white/[0.03] flex justify-center items-center leading-none">
-            <span className="font-display italic">ILYAS</span>
+            <span className="uppercase" style={{ fontFamily: "'Syncopate', sans-serif" }}>ILYAS</span>
             <span className="font-mono tracking-tighter">NOUR</span>
           </h2>
         </motion.div>
