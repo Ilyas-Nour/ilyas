@@ -7,6 +7,7 @@
   --color-muted: #64748B;
   
   --font-sans: 'Inter', sans-serif;
+  --font-display: 'Fraunces', serif; /* Elegant Serif */
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
