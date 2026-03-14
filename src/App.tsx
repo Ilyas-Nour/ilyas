@@ -1,7 +1,7 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Lenis from 'lenis';
-import { CustomCursor } from './components/CustomCursor';
+import { FluidCursor } from './components/FluidCursor';
 import { IntroLoader } from './components/IntroLoader';
 import ArtisticHero from './components/ArtisticHero';
 
@@ -49,7 +49,7 @@ function App() {
         }} 
       />
       
-      <CustomCursor />
+      <FluidCursor />
       
       <AnimatePresence>
         {loading && <IntroLoader onComplete={() => setLoading(false)} />}
