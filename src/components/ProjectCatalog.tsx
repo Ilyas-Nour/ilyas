@@ -1,5 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState, useLayoutEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { KineticButton } from './KineticButton';
 
 const projects = [
   {
@@ -38,99 +39,101 @@ const projects = [
   }
 ];
 
+const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }> = ({ project, index }) => {
+  const targetRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollRange, setScrollRange] = useState(0);
+
+  useLayoutEffect(() => {
+    if (scrollRef.current) {
+      // Calculate how far we need to scroll: Total width - viewport width + some padding for the end spacer
+      setScrollRange(scrollRef.current.scrollWidth - window.innerWidth + 100);
+    }
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
+
+  const x = useTransform(scrollYProgress, [0, 0.9], [0, -scrollRange]);
+
+  return (
+    <section ref={targetRef} className="relative h-[600vh]">
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        <motion.div ref={scrollRef} style={{ x }} className="flex gap-20 px-24 items-center">
+          {/* Project Identity Card */}
+          <div className="flex-shrink-0 w-[80vw] md:w-[60vw] space-y-12">
+            <div className="space-y-6">
+               <h3 className="text-7xl md:text-9xl font-serif italic text-[var(--color-text)] leading-none">{project.title}</h3>
+            </div>
+            
+            <div className="max-w-xl space-y-8">
+              <p className="text-xl md:text-2xl text-[var(--color-text-muted)] font-sans font-light leading-relaxed">
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {project.tags.map(tag => (
+                  <span key={tag} className="px-5 py-2 rounded-full border border-[var(--color-border)] glass font-mono text-[9px] uppercase tracking-widest text-[var(--color-text-muted)]">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              {project.link && (
+                <div className="pt-8 flex">
+                  <KineticButton 
+                    variant="primary"
+                    onClick={() => window.open(project.link, '_blank')}
+                    icon={<span>↗</span>}
+                  >
+                    Enter Atmosphere
+                  </KineticButton>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Screenshot Gallery */}
+          <div className="flex gap-12 items-center">
+            {project.screenshots.map((shot, idx) => (
+              <motion.div 
+                key={idx}
+                className="flex-shrink-0 relative h-[70vh] md:h-[80vh] min-w-[350px] md:min-w-[600px] border border-[var(--color-border)] bg-[var(--color-border)]/5 rounded-[40px] overflow-hidden shadow-2xl shadow-black/5 hover:shadow-black/40 transition-all duration-700"
+              >
+                <img 
+                  src={shot} 
+                  alt={`${project.title} view ${idx + 1}`}
+                  className="w-full h-full object-contain p-6 md:p-12 select-none"
+                />
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
+              </motion.div>
+            ))}
+          </div>
+
+          {/* End of Project Card */}
+          <div className="flex-shrink-0 w-[40vw] flex flex-col items-center justify-center text-center space-y-4">
+             <div className="h-px w-24 bg-[var(--color-border)] mb-4" />
+             <span className="font-mono text-[10px] uppercase tracking-[0.4em] opacity-40 italic">Scroll for Next Project</span>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 export const ProjectCatalog: React.FC = () => {
   return (
-    <section id="projects" className="relative py-40 px-6">
-      <div className="container mx-auto">
-        <header className="mb-32 space-y-6">
-          <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-[var(--color-accent)] font-bold">Project Vault</span>
-          <h2 className="text-6xl md:text-9xl font-serif italic text-[var(--color-text)] leading-[0.8]">
-             Visual Archive <br /> 
-             <span className="opacity-40">of Experience.</span>
-          </h2>
-        </header>
+    <section id="projects" className="relative">
+      <header className="pt-32 px-6 container mx-auto mb-20 text-center">
+        <h2 className="text-6xl md:text-9xl font-serif italic text-[var(--color-text)] leading-tight">
+           Project <br /> 
+           <span className="opacity-30">Chronicles.</span>
+        </h2>
+      </header>
 
-        <div className="space-y-64">
-           {projects.map((project, i) => (
-             <motion.div 
-               key={project.title}
-               initial={{ opacity: 0, y: 50 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true, margin: "-100px" }}
-               transition={{ duration: 1.2, ease: [0.85, 0, 0.15, 1] }}
-               className="space-y-16"
-             >
-                {/* Project Header */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-                   <div className="lg:col-span-7 space-y-6">
-                      <div className="flex items-center gap-4">
-                        <span className="font-mono text-[10px] text-[var(--color-accent)] uppercase tracking-widest">Archive 0{i + 1}</span>
-                        <div className="h-px flex-1 bg-[var(--color-border)]" />
-                      </div>
-                      <h3 className="text-6xl md:text-8xl font-serif italic text-[var(--color-text)] leading-none">{project.title}</h3>
-                   </div>
-                   <div className="lg:col-span-5 space-y-8">
-                      <p className="text-xl text-[var(--color-text-muted)] font-sans font-light leading-relaxed">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-3">
-                         {project.tags.map(tag => (
-                           <span key={tag} className="px-5 py-2 rounded-full border border-[var(--color-border)] glass font-mono text-[9px] uppercase tracking-widest text-[var(--color-text-muted)]">
-                              {tag}
-                           </span>
-                         ))}
-                      </div>
-                      {project.link && (
-                        <motion.a 
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.05, x: 5 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="inline-block px-10 py-4 rounded-full bg-[var(--color-text)] text-[var(--color-bg)] font-mono text-[10px] uppercase tracking-widest transition-all duration-300 shadow-xl shadow-black/10 hover:shadow-black/20"
-                        >
-                           Visit Site ↗
-                        </motion.a>
-                      )}
-                   </div>
-                </div>
-
-                {/* Immersive Gallery Section */}
-                <div className="relative group overflow-hidden">
-                   {/* Horizontal Cinematic Scroll */}
-                   <div className="flex gap-8 overflow-x-auto pb-12 no-scrollbar">
-                      {project.screenshots.map((shot, idx) => (
-                        <motion.div 
-                          key={idx}
-                          initial={{ opacity: 0, scale: 0.95 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          transition={{ 
-                            delay: idx * 0.05,
-                            duration: 0.5,
-                            ease: "easeOut"
-                          }}
-                          whileHover={{ scale: 1.02, y: -5 }}
-                          className="flex-shrink-0 relative h-[60vh] md:h-[75vh] min-w-[300px] border border-[var(--color-border)] bg-[var(--color-border)]/5 rounded-[32px] overflow-hidden shadow-2xl shadow-black/5 hover:shadow-black/20 transition-all duration-500"
-                        >
-                           <img 
-                             src={shot} 
-                             alt={`${project.title} view ${idx + 1}`}
-                             className="w-full h-full object-contain p-4 md:p-8 select-none"
-                           />
-                        </motion.div>
-                      ))}
-                   </div>
-                   
-                   {/* Scroll Indicator Overlay */}
-                   <div className="flex items-center justify-center gap-4 mt-8">
-                      <div className="w-12 h-px bg-[var(--color-border)]" />
-                      <span className="font-mono text-[8px] uppercase tracking-[0.4em] opacity-40">Scroll Archive</span>
-                      <div className="w-12 h-px bg-[var(--color-border)]" />
-                   </div>
-                </div>
-             </motion.div>
-           ))}
-        </div>
+      <div className="relative">
+        {projects.map((project, i) => (
+          <HorizontalProject key={project.title} project={project} index={i} />
+        ))}
       </div>
     </section>
   );

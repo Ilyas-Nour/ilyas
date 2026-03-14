@@ -4,6 +4,7 @@
   --font-display: "Playfair Display", serif;
   --font-functional: "Outfit", sans-serif;
   --font-mono: "Space Mono", monospace;
+  --font-signature: "Pinyon Script", cursive;
 }
 
 :root {
@@ -69,4 +70,46 @@
 
 .mask-marquee {
   mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+/* Kinetic Alchemical Button System */
+.btn-kinetic {
+  @apply relative px-10 py-4 rounded-full overflow-hidden transition-all duration-500 border border-[var(--color-border)] flex items-center justify-center gap-3 select-none;
+  background: transparent;
+}
+
+.btn-kinetic span {
+  @apply relative z-10 font-sans font-medium text-[11px] uppercase tracking-[0.2em] transition-colors duration-500;
+  color: var(--color-text);
+}
+
+.btn-kinetic::before {
+  content: '';
+  @apply absolute inset-0 opacity-0 transition-opacity duration-500 pointer-events-none;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--color-accent) 0%, transparent 70%);
+}
+
+.btn-kinetic:hover {
+  @apply border-[var(--color-accent)] shadow-[0_0_30px_rgba(59,130,246,0.1)];
+  transform: translateY(-2px);
+}
+
+.btn-kinetic:hover span {
+  @apply text-[var(--color-bg)];
+}
+
+.btn-kinetic:hover::before {
+  @apply opacity-100;
+}
+
+.btn-kinetic-primary {
+  @apply bg-[var(--color-text)];
+}
+
+.btn-kinetic-primary span {
+  @apply text-[var(--color-bg)];
+}
+
+.btn-kinetic-primary:hover {
+  @apply bg-[var(--color-accent)] border-[var(--color-accent)];
 }

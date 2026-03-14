@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { KineticButton } from './KineticButton';
 
 export const InquiryContact: React.FC = () => {
   return (
     <section id="contact" className="relative py-40 px-6">
       <div className="container mx-auto">
         <div className="max-w-6xl mx-auto">
-          <header className="mb-24 space-y-6 text-center">
-            <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-[var(--color-accent)]">Collaboration</span>
+          <header className="mb-20 text-center">
             <h2 className="text-6xl md:text-9xl font-serif italic text-[var(--color-text)] leading-[0.8]">
               Let's <br /> 
               <span className="opacity-40">Get in Touch.</span>
@@ -34,22 +34,21 @@ export const InquiryContact: React.FC = () => {
                       <textarea rows={4} placeholder="Tell me about your vision..." className="w-full bg-transparent border-b border-[var(--color-border)] py-4 text-xl font-serif italic text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors placeholder:text-[var(--color-text-muted)]/20 resize-none" />
                    </div>
 
-                   <div className="pt-8">
-                      <motion.button 
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="px-16 py-6 bg-[var(--color-text)] text-[var(--color-bg)] font-mono text-[10px] uppercase tracking-[0.5em] rounded-full shadow-2xl hover:bg-[var(--color-accent)] transition-all duration-500"
+                   <div className="pt-8 flex">
+                      <KineticButton 
+                        variant="primary"
+                        onClick={() => {}}
+                        icon={<span>✉</span>}
                       >
-                         Send Message
-                      </motion.button>
+                         Dispatch Message
+                      </KineticButton>
                    </div>
                 </form>
              </div>
 
              {/* Social Registry */}
-             <div className="lg:col-span-4 space-y-16">
+             <div className="lg:col-span-4 space-y-12">
                 <div className="space-y-8">
-                   <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] block border-b border-[var(--color-border)] pb-4">Social Links</span>
                    <div className="flex flex-col gap-8">
                       {['GitHub', 'LinkedIn', 'Twitter'].map(node => (
                         <a key={node} href="#" className="flex justify-between items-center group">

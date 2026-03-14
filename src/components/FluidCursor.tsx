@@ -4,10 +4,10 @@ const config = {
   SIM_RESOLUTION: 64, // Optimal performance
   DYE_RESOLUTION: 512,
   CAPTURE_RESOLUTION: 256,
-  DENSITY_DISSIPATION: 0.95, // Very fast dissipation
+  DENSITY_DISSIPATION: 0.9, // Faster dissipation for snappier feel
   VELOCITY_DISSIPATION: 0.8,
   PRESSURE: 0.8,
-  PRESSURE_ITERATIONS: 10, // Faster updates
+  PRESSURE_ITERATIONS: 10,
   CURL: 30,
   SPLAT_RADIUS: 0.25,
   SPLAT_FORCE: 6000,
@@ -115,7 +115,7 @@ export const FluidCursor: React.FC = () => {
       void main () {
           vec3 c = ${textureFunc}(uTexture, vUv).rgb;
           float a = max(c.r, max(c.g, c.b));
-          ${fragColor} = vec4(c, a * 0.8);
+          ${fragColor} = vec4(c, a * 0.95); // High opacity trail
       }
     `;
 
@@ -312,13 +312,13 @@ export const FluidCursor: React.FC = () => {
       const dx = (x - lastMouseX) * config.SPLAT_FORCE;
       const dy = (y - lastMouseY) * config.SPLAT_FORCE;
 
-      // Chromatic Color Cycling based on time or motion
-      const time = Date.now() * 0.002;
+      // Chromatic Color Cycling - Faster and more vivid
+      const time = Date.now() * 0.005;
       const r = Math.sin(time) * 0.5 + 0.5;
-      const g = Math.sin(time + 2) * 0.5 + 0.5;
-      const b = Math.sin(time + 4) * 0.5 + 0.5;
+      const g = Math.sin(time + 2.1) * 0.5 + 0.5;
+      const b = Math.sin(time + 4.2) * 0.5 + 0.5;
       
-      const color = { r: r * 0.8 + 0.2, g: g * 0.8 + 0.2, b: b * 0.8 + 0.2 };
+      const color = { r: r * 0.9 + 0.1, g: g * 0.9 + 0.1, b: b * 0.9 + 0.1 };
       
       if (Math.abs(dx) > 0.0001 || Math.abs(dy) > 0.0001) {
         splat(x, y, dx, dy, color);
@@ -420,7 +420,7 @@ export const FluidCursor: React.FC = () => {
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed inset-0 w-screen h-screen pointer-events-none z-[9999] opacity-30 mix-blend-screen overflow-hidden" 
+      className="fixed inset-0 w-screen h-screen pointer-events-none z-[9999] opacity-70 mix-blend-screen overflow-hidden" 
     />
   );
 };

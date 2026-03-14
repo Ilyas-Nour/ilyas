@@ -1,9 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { KineticButton } from './KineticButton';
 
 const ArtisticHero: React.FC = () => {
   return (
     <section id="home" className="relative h-screen min-h-[700px] flex flex-col justify-center px-6 md:px-12 lg:px-24 overflow-hidden bg-[var(--color-bg)] transition-colors duration-500">
+      {/* Alchemical Anime Presence - Ghostly Outline */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none">
+        <motion.img
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 0.05, scale: 1 }}
+          transition={{ duration: 3, ease: "easeOut" }}
+          src="/gojo_outline_alchemical_1773527133132.png"
+          alt="Atmospheric Presence"
+          className="w-full h-full object-cover object-center scale-150 md:scale-100 mix-blend-screen"
+        />
+      </div>
+
       {/* Subtle Background Glow */}
       <div className="absolute top-1/3 left-0 w-[40vw] h-[40vw] bg-[var(--color-accent)] opacity-[0.03] blur-[150px] rounded-full pointer-events-none" />
       
@@ -15,18 +28,9 @@ const ArtisticHero: React.FC = () => {
            className="space-y-12 max-w-4xl"
         >
           <div className="space-y-6">
-             <motion.span 
-               initial={{ opacity: 0 }}
-               animate={{ opacity: 0.5 }}
-               transition={{ delay: 0.5, duration: 1 }}
-               className="font-mono text-[10px] uppercase tracking-[0.6em] block text-[var(--color-text)] opacity-40"
-             >
-               Digital Artisan & Full-Stack Developer
-             </motion.span>
-             
-             <h1 className="text-[14vw] lg:text-[11vw] leading-[0.85] tracking-tighter text-[var(--color-text)]">
-               <span className="font-sans font-bold uppercase block mb-2">Ilyas</span>
-               <span className="font-serif italic font-light lowercase">Nour.</span>
+             <h1 className="text-[14vw] lg:text-[12vw] leading-[0.7] tracking-tight text-[var(--color-text)] relative">
+                <span className="font-serif font-bold uppercase block -mb-4 tracking-[-0.05em]">Ilyas</span>
+                <span className="block ml-[5vw] opacity-80" style={{ fontFamily: 'var(--font-signature)', fontSize: '0.8em' }}>Nour.</span>
              </h1>
           </div>
 
@@ -36,23 +40,20 @@ const ArtisticHero: React.FC = () => {
           </p>
 
           <div className="pt-8 flex flex-col sm:flex-row items-start sm:items-center gap-10">
-             <motion.button 
-               whileHover={{ scale: 1.02 }}
-               whileTap={{ scale: 0.98 }}
+             <KineticButton 
                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-               className="px-12 py-5 rounded-full border border-[var(--color-border)] glass font-mono text-[10px] uppercase tracking-widest text-[var(--color-text)] hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] transition-all duration-500"
              >
-                View Selected Projects
-             </motion.button>
+                Illuminate Projects
+             </KineticButton>
              
-             <motion.button 
-               whileHover={{ x: 10 }}
+             <KineticButton 
+               variant="outline"
                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-               className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors flex items-center gap-4 group"
+               className="group"
+               icon={<span className="text-[var(--color-accent)] group-hover:translate-x-2 transition-transform duration-300">→</span>}
              >
-                Start a Conversation
-                <span className="text-[var(--color-accent)] group-hover:translate-x-2 transition-transform duration-300">→</span>
-             </motion.button>
+                Begin Dialogue
+             </KineticButton>
           </div>
         </motion.div>
       </div>

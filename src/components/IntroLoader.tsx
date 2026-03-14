@@ -11,8 +11,8 @@ export const IntroLoader = ({ onComplete }: IntroLoaderProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsReady(true);
-      setTimeout(onComplete, 1000); 
-    }, 2000);
+      setTimeout(onComplete, 800); 
+    }, 1200);
 
     return () => clearTimeout(timer);
   }, [onComplete]);
@@ -23,39 +23,27 @@ export const IntroLoader = ({ onComplete }: IntroLoaderProps) => {
       <motion.div
         initial={{ y: 0 }}
         animate={isReady ? { y: "-100%" } : { y: 0 }}
-        transition={{ duration: 1, ease: [0.85, 0, 0.15, 1] }}
-        className="absolute top-0 left-0 w-full h-1/2 bg-[var(--color-bg)] z-50 border-b border-[var(--color-border)]"
+        transition={{ duration: 0.8, ease: [0.85, 0, 0.15, 1] }}
+        className="absolute top-0 left-0 w-full h-1/2 bg-[var(--color-bg)] z-50"
       />
       <motion.div
         initial={{ y: 0 }}
         animate={isReady ? { y: "100%" } : { y: 0 }}
-        transition={{ duration: 1, ease: [0.85, 0, 0.15, 1] }}
-        className="absolute bottom-0 left-0 w-full h-1/2 bg-[var(--color-bg)] z-50 border-t border-[var(--color-border)]"
+        transition={{ duration: 0.8, ease: [0.85, 0, 0.15, 1] }}
+        className="absolute bottom-0 left-0 w-full h-1/2 bg-[var(--color-bg)] z-50"
       />
 
       {/* Content Layer */}
       <div className="relative z-[60] flex flex-col items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={isReady ? { opacity: 0, scale: 0.95 } : { opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.85, 0, 0.15, 1] }}
-          className="text-center space-y-6"
+          animate={isReady ? { opacity: 0, scale: 0.9 } : { opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center"
         >
-          <h1 className="text-6xl md:text-8xl flex flex-col items-center leading-[0.9] tracking-tighter text-[var(--color-text)]">
-            <span className="font-sans font-bold uppercase mb-2">Ilyas</span>
-            <span className="font-serif italic font-light lowercase">Nour.</span>
+          <h1 className="text-7xl md:text-9xl text-[var(--color-text)] tracking-tight" style={{ fontFamily: 'var(--font-signature)' }}>
+            Ilyas Nour
           </h1>
-          
-          <div className="flex flex-col items-center gap-4">
-            <motion.div 
-               animate={{ width: [0, 100, 0] }}
-               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-               className="h-px bg-[var(--color-accent)]" 
-            />
-            <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-[var(--color-accent)] opacity-60">
-              Digital Studio
-            </span>
-          </div>
         </motion.div>
       </div>
     </div>

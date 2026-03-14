@@ -3,23 +3,22 @@ import { motion } from 'framer-motion';
 
 export const MassiveFooter = () => {
   return (
-    <footer className="bg-[var(--color-bg)] pt-48 pb-12 px-6 overflow-hidden border-t border-[var(--color-border)] relative transition-colors duration-500">
+    <footer className="bg-[var(--color-bg)] pt-32 pb-6 px-6 overflow-hidden border-t border-[var(--color-border)] relative transition-colors duration-500">
       <div className="w-full relative">
-        {/* Massive Background Brandmark with Premium Font Pairing */}
+        {/* Massive Background Signature - Refined to prevent clipping */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 2 }}
-          className="absolute inset-x-0 -top-24 select-none pointer-events-none z-0"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="absolute inset-x-0 -top-32 select-none pointer-events-none z-0 flex justify-center w-full px-[5vw]"
         >
-          <h2 className="text-[25vw] text-center whitespace-nowrap text-[var(--color-text)] opacity-[0.03] flex justify-center items-center leading-none">
-            <span className="font-sans font-bold uppercase">ILYAS</span>
-            <span className="font-serif italic font-light lowercase px-4">NOUR</span>
+          <h2 className="text-[28vw] md:text-[22vw] text-center whitespace-nowrap text-[var(--color-text)] opacity-[0.05] leading-none py-10" style={{ fontFamily: 'var(--font-signature)' }}>
+            Ilyas Nour
           </h2>
         </motion.div>
 
         <div className="max-w-screen-2xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-24 mb-32">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-24 mb-16">
              {/* Navigation */}
             <div className="space-y-8">
               <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">Index</h4>
@@ -49,15 +48,16 @@ export const MassiveFooter = () => {
             </div>
 
             {/* Credits */}
-            <div className="space-y-8 text-right">
-              <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase text-right">Studio</h4>
+            <div className="space-y-8 md:text-right">
+              <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase md:text-right">Studio</h4>
               <p className="font-mono text-[10px] text-[var(--color-text-muted)] leading-relaxed uppercase tracking-widest">
                 Designed & Developed <br />
                 by Ilyas Nour<br />
-                © 2026 Studio
+                © 2026 Creative Archive
               </p>
             </div>
           </div>
+
         </div>
       </div>
     </footer>
