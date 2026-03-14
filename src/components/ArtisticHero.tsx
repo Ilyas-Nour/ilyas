@@ -9,12 +9,17 @@ const ArtisticHero: React.FC = () => {
 
   return (
     <section id="home" ref={scrollRef} className="relative h-screen w-full flex items-center bg-hero-studio overflow-hidden px-6 md:px-12 lg:px-24">
-      {/* Anime Motif Layer */}
+      {/* Real Anime Motif Layer (Authentic High-Fidelity Art) */}
       <motion.div 
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.1 }}
-        className="anime-motif absolute inset-0 z-0 pointer-events-none"
-        style={{ backgroundImage: 'url(/assets/anime_hero.png)', backgroundPosition: 'center bottom' }}
+        animate={{ opacity: 0.05 }}
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{ 
+          backgroundImage: 'url(/assets/real_anime_hero.png)', 
+          backgroundPosition: 'right bottom',
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat'
+        }}
       />
       
       {/* Cinematic Aperture Glows */}
@@ -55,7 +60,7 @@ const ArtisticHero: React.FC = () => {
             </div>
             
             <h1 className="text-header-responsive font-black text-left flex flex-col items-start gap-0">
-              <span className="text-white font-sans uppercase leading-none">ILYAS</span>
+              <span className="text-white font-bold uppercase leading-none tracking-tighter" style={{ fontFamily: "'Syncopate', sans-serif" }}>ILYAS</span>
               <span className="text-[var(--color-accent)] font-display italic font-light lowercase tracking-tighter leading-none -mt-4">nour.</span>
             </h1>
 
