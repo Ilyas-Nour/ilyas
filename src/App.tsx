@@ -4,6 +4,8 @@ import Lenis from 'lenis';
 import { FluidCursor } from './components/FluidCursor';
 import { IntroLoader } from './components/IntroLoader';
 import ArtisticHero from './components/ArtisticHero';
+import { ThemeProvider } from './context/ThemeContext';
+import { ThemeToggle } from './components/ThemeToggle';
 
 // Lazy loaded components for lightning speed
 const IdentityArchive = lazy(() => import('./components/IdentityArchive'));
@@ -16,10 +18,9 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
-    // Initialize Lenis for smooth momentum scrolling
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
@@ -41,32 +42,35 @@ function App() {
   }, []);
 
   return (
-    <main className="relative min-h-screen font-sans overflow-x-hidden selection:bg-[var(--color-accent)] selection:text-white bg-[var(--color-background)]">
-      {/* Optimized Universal Grain Texture Layer */}
-      <div className="fixed inset-0 pointer-events-none z-[999] opacity-[0.02] mix-blend-overlay pointer-events-none" 
-        style={{ 
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3FfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` 
-        }} 
-      />
-      
-      <FluidCursor />
-      
-      <AnimatePresence>
-        {loading && <IntroLoader onComplete={() => setLoading(false)} />}
-      </AnimatePresence>
-
-      <div className="relative z-10 w-full">
-        <ArtisticHero />
+    <ThemeProvider>
+      <main className="relative min-h-screen selection:bg-[var(--color-accent)] selection:text-white">
+        {/* Subtle Grain Texture */}
+        <div className="fixed inset-0 pointer-events-none z-[999] opacity-[0.015] mix-blend-overlay" 
+          style={{ 
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3FfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` 
+          }} 
+        />
         
-        <Suspense fallback={<div className="h-screen flex items-center justify-center opacity-5 font-mono text-[8px] uppercase tracking-widest">Hydrating_Module...</div>}>
-          <IdentityArchive />
-          <TechStack />
-          <ProjectCatalog />
-          <InquiryContact />
-          <MassiveFooter />
-        </Suspense>
-      </div>
-    </main>
+        <ThemeToggle />
+        <FluidCursor />
+        
+        <AnimatePresence>
+          {loading && <IntroLoader onComplete={() => setLoading(false)} />}
+        </AnimatePresence>
+
+        <div className="relative z-10 w-full">
+          <ArtisticHero />
+          
+          <Suspense fallback={<div className="h-screen flex items-center justify-center opacity-5 font-mono text-[8px] uppercase tracking-widest">Loading...</div>}>
+            <IdentityArchive />
+            <TechStack />
+            <ProjectCatalog />
+            <InquiryContact />
+            <MassiveFooter />
+          </Suspense>
+        </div>
+      </main>
+    </ThemeProvider>
   );
 }
 

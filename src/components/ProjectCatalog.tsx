@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 
 const projects = [
   {
@@ -10,7 +10,7 @@ const projects = [
   },
   {
     title: "Top Nature",
-    description: "An environmental monitoring dashboard using AI to track and visualize ecological data in real-time.",
+    description: "An environmental monitoring dashboard designed to track and visualize ecological data in real-time.",
     tags: ["React", "AI", "WebGL"],
     image: "/projects/top_nature.png",
   },
@@ -19,101 +19,67 @@ const projects = [
     description: "A high-performance animation engine designed for complex web interfaces and cinematic interactions.",
     tags: ["TypeScript", "Motion", "CSS"],
     image: "/projects/animy.png",
-  },
-  {
-    title: "Digital Lab",
-    description: "An experimental space dedicated to exploring new web standards and modern design principles.",
-    tags: ["Future Tech", "Research", "Design"],
-    image: "/projects/image.png",
   }
 ];
 
-const ProjectItem: React.FC<{ project: typeof projects[0]; index: number }> = ({ project, index }) => {
-  const itemRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: itemRef,
-    offset: ["start end", "end start"]
-  });
-
-  const imgY = useTransform(scrollYProgress, [0, 1], [-50, 50]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-
-  return (
-    <motion.div 
-      ref={itemRef}
-      style={{ opacity }}
-      className="grid grid-cols-1 lg:grid-cols-12 gap-12 py-32 border-b border-white/5 relative group"
-    >
-      {/* Content Column */}
-      <div className="lg:col-span-5 flex flex-col justify-center space-y-8 relative z-10">
-        <div className="space-y-4">
-          <div className="flex items-center gap-4">
-            <span className="font-mono text-[10px] text-[var(--color-accent)] uppercase tracking-[0.3em] font-bold">Project 0{index + 1}</span>
-            <div className="h-px w-8 bg-white/10" />
-          </div>
-          
-          <h3 className="text-5xl md:text-7xl font-display italic text-white group-hover:text-[var(--color-accent)] transition-colors duration-500 leading-tight">
-            {project.title}
-          </h3>
-          
-          <p className="text-lg text-white/50 font-functional leading-relaxed max-w-sm">
-            {project.description}
-          </p>
-        </div>
-
-        <div className="flex flex-wrap gap-3">
-          {project.tags.map(tag => (
-            <span key={tag} className="px-4 py-1 rounded-full border border-white/10 text-[10px] font-mono text-white/40 uppercase tracking-widest glass hover:border-[var(--color-accent)]/30 transition-colors">
-              #{tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="pt-8 flex items-center gap-8">
-           <button className="magnetic-button">
-              <span className="relative z-10">View Project</span>
-           </button>
-        </div>
-      </div>
-
-      {/* Visual Workspace Column */}
-      <div className="lg:col-span-7 relative h-[400px] md:h-[600px] lg:h-[700px]">
-        <div className="absolute inset-0 glass-panel rounded-3xl overflow-hidden border-white/10 group-hover:border-[var(--color-accent)]/30 transition-all duration-700">
-          <motion.div style={{ y: imgY }} className="absolute inset-[-10%] z-0">
-             <img 
-               src={project.image} 
-               alt={project.title}
-               className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 scale-105 group-hover:scale-100"
-             />
-          </motion.div>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
 export const ProjectCatalog: React.FC = () => {
   return (
-    <section id="projects" className="relative py-40 px-6 overflow-hidden bg-projects-studio">
-      <div className="container mx-auto relative z-30">
-        <header className="mb-40 flex flex-col md:flex-row justify-between items-end gap-12">
-          <div className="space-y-6">
-            <h2 className="text-6xl md:text-9xl font-display italic text-white tracking-tightest leading-[0.8]">
-              Selected <br /> <span className="text-[var(--color-accent)] opacity-40">Projects.</span>
-            </h2>
-          </div>
-          <div className="max-w-sm space-y-4">
-            <p className="text-white/40 font-mono text-[11px] uppercase tracking-widest leading-relaxed">
-              A collection of architectural web experiences and technical explorations.
-            </p>
-            <div className="h-px w-full bg-gradient-to-r from-white/10 to-transparent" />
-          </div>
+    <section id="projects" className="relative py-40 px-6">
+      <div className="container mx-auto">
+        <header className="mb-32 space-y-6">
+          <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-[var(--color-accent)]">Selected Works</span>
+          <h2 className="text-6xl md:text-9xl font-serif italic text-[var(--color-text)] leading-[0.8]">
+             Digital Artifacts <br /> 
+             <span className="opacity-40">of Excellence.</span>
+          </h2>
         </header>
 
-        <div className="flex flex-col">
-          {projects.map((project, i) => (
-            <ProjectItem key={project.title} project={project} index={i} />
-          ))}
+        <div className="space-y-40">
+           {projects.map((project, i) => (
+             <motion.div 
+               key={project.title}
+               initial={{ opacity: 0, y: 50 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true, margin: "-100px" }}
+               transition={{ duration: 1.2, ease: [0.85, 0, 0.15, 1] }}
+               className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center group"
+             >
+                {/* Visual Column */}
+                <div className="lg:col-span-7 relative aspect-video overflow-hidden rounded-[32px] border border-[var(--color-border)] glass">
+                   <motion.img 
+                     src={project.image} 
+                     alt={project.title}
+                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)]/40 to-transparent pointer-events-none" />
+                </div>
+
+                {/* Content Column */}
+                <div className="lg:col-span-5 space-y-8">
+                   <div className="space-y-4">
+                      <span className="font-mono text-[10px] text-[var(--color-accent)] uppercase tracking-widest">Project 0{i + 1}</span>
+                      <h3 className="text-5xl md:text-7xl font-serif italic text-[var(--color-text)] leading-tight">{project.title}</h3>
+                      <p className="text-lg text-[var(--color-text-muted)] font-sans font-light leading-relaxed">
+                        {project.description}
+                      </p>
+                   </div>
+
+                   <div className="flex flex-wrap gap-3">
+                      {project.tags.map(tag => (
+                        <span key={tag} className="px-5 py-2 rounded-full border border-[var(--color-border)] glass font-mono text-[9px] uppercase tracking-widest text-[var(--color-text-muted)]">
+                           {tag}
+                        </span>
+                      ))}
+                   </div>
+
+                   <div className="pt-6">
+                      <button className="px-10 py-4 rounded-full border border-[var(--color-border)] glass font-mono text-[10px] uppercase tracking-widest hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] transition-all duration-500">
+                         Explore Project
+                      </button>
+                   </div>
+                </div>
+             </motion.div>
+           ))}
         </div>
       </div>
     </section>
