@@ -7,6 +7,8 @@ interface KineticButtonProps {
   className?: string;
   variant?: 'outline' | 'primary';
   icon?: React.ReactNode;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 }
 
 export const KineticButton: React.FC<KineticButtonProps> = ({ 
@@ -14,7 +16,9 @@ export const KineticButton: React.FC<KineticButtonProps> = ({
   onClick, 
   className = '', 
   variant = 'outline',
-  icon
+  icon,
+  type = 'button',
+  disabled = false
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const x = useMotionValue(0);
@@ -51,11 +55,13 @@ export const KineticButton: React.FC<KineticButtonProps> = ({
   return (
     <motion.button
       ref={buttonRef}
+      type={type}
+      disabled={disabled}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
       style={{ x: mouseXSpring, y: mouseYSpring }}
-      className={`btn-kinetic ${variant === 'primary' ? 'btn-kinetic-primary' : ''} ${className}`}
+      className={`btn-kinetic ${variant === 'primary' ? 'btn-kinetic-primary' : ''} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
     >
       <span>{children}</span>
       {icon && <span className="transform group-hover:translate-x-1 transition-transform">{icon}</span>}
