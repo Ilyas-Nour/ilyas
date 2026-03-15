@@ -1,19 +1,39 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { KineticButton } from './KineticButton';
 
 const ArtisticHero: React.FC = () => {
+  const { scrollYProgress } = useScroll();
+  
+  // Transition from masked to unmasked state as we scroll
+  // Reveal starts almost immediately and completes quickly for impact
+  const maskedOpacity = useTransform(scrollYProgress, [0, 0.15], [0.05, 0]);
+  const unmaskedOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 0.15]);
+  const eyeGlowScale = useTransform(scrollYProgress, [0, 0.15], [0.95, 1]);
+
   return (
     <section id="home" className="relative h-screen min-h-[700px] flex flex-col justify-center px-6 md:px-12 lg:px-24 overflow-hidden bg-[var(--color-bg)] transition-colors duration-500">
-      {/* Alchemical Anime Presence - Ghostly Outline */}
+      {/* Alchemical Anime Presence - Layered Reveal */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none">
+        {/* Layer 1: Masked Outline (Base) */}
         <motion.img
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 0.05, scale: 1 }}
+          style={{ opacity: maskedOpacity }}
           transition={{ duration: 3, ease: "easeOut" }}
           src="/gojo_outline_alchemical_1773527133132.png"
           alt="Atmospheric Presence"
-          className="w-full h-full object-cover object-center scale-150 md:scale-100 mix-blend-screen"
+          className="absolute inset-0 w-full h-full object-cover object-right scale-125 md:scale-110 mix-blend-screen"
+        />
+        
+        {/* Layer 2: Unmasked Reveal (Six Eyes) */}
+        <motion.img
+          src="/gojo_unmasked.png"
+          alt="Six Eyes Revealed"
+          style={{ 
+            opacity: unmaskedOpacity,
+            scale: eyeGlowScale
+          }}
+          className="absolute inset-0 w-full h-full object-cover object-right scale-125 md:scale-110 mix-blend-screen filter drop-shadow-[0_0_20px_rgba(0,191,255,0.4)]"
         />
       </div>
 
