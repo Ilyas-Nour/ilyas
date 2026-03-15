@@ -81,7 +81,7 @@ function App() {
                 key={id}
                 initial={{ opacity: 0, scale: 0.95, y: 50 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ margin: "-10%" }}
+                viewport={{ margin: "-5%" }}
                 transition={{ duration: 1, ease: [0.85, 0, 0.15, 1] }}
                 className="will-change-transform"
               >

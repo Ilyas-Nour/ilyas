@@ -23,7 +23,7 @@ const skillsRow2 = [
 
 export const TechStack: React.FC = () => {
   return (
-    <section id="expertise" className="relative py-24 overflow-hidden bg-[var(--color-bg)] transition-colors duration-500">
+    <section id="expertise" className="relative pt-24 pb-12 overflow-hidden bg-[var(--color-bg)] transition-colors duration-500">
       <div className="container mx-auto px-6 mb-12 md:mb-20 text-center">
         <h2 className="text-5xl md:text-9xl font-serif italic text-[var(--color-text)]" style={{ fontSize: 'clamp(2.5rem, 10vw, 8rem)' }}>Expertise.</h2>
       </div>

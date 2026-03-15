@@ -130,7 +130,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
 export const ProjectCatalog: React.FC = () => {
   return (
     <section id="projects" className="relative">
-      <header className="pt-32 px-6 container mx-auto mb-10 md:mb-20 text-center">
+      <header className="pt-16 px-6 container mx-auto mb-10 md:mb-20 text-center">
         <h2 className="text-5xl md:text-9xl font-serif italic text-[var(--color-text)] leading-tight" style={{ fontSize: 'clamp(2.5rem, 10vw, 8rem)' }}>
            Project <br /> 
            <span className="opacity-30">Chronicles.</span>
