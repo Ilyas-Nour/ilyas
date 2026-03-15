@@ -1,6 +1,12 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
+/**
+ * KineticButton Props
+ * @property children React nodes to render inside the button.
+ * @property variant  Visual style: 'primary' (solid) or 'outline'.
+ * @property icon     Optional icon element displayed after the text.
+ */
 interface KineticButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
@@ -11,6 +17,12 @@ interface KineticButtonProps {
   disabled?: boolean;
 }
 
+/**
+ * KineticButton Component
+ * A high-fidelity interactive button with two-layer interaction:
+ * 1. CSS Variable Track: Tracks mouse position for radial gradient effects.
+ * 2. Magnetic Pull: Physcially attracts the button toward the cursor using springs.
+ */
 export const KineticButton: React.FC<KineticButtonProps> = ({ 
   children, 
   onClick, 
@@ -21,23 +33,30 @@ export const KineticButton: React.FC<KineticButtonProps> = ({
   disabled = false
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
+  
+  // Motion values for magnetic pull
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
+  // Springs for smooth physical dampening
   const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
   const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
 
+  /**
+   * Handle Mouse Movement
+   * Updates both the CSS tracker and the magnetic motion state.
+   */
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!buttonRef.current) return;
     const rect = buttonRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
     
-    // Set relative coordinates for the CSS radial gradient
+    // Set relative coordinates for the CSS radial gradient (hover glow)
     buttonRef.current.style.setProperty('--x', `${mouseX}px`);
     buttonRef.current.style.setProperty('--y', `${mouseY}px`);
 
-    // Magnetic pull effect
+    // Magnetic pull effect: Move the button slightly toward the cursor
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     const pullX = (mouseX - centerX) * 0.15;
@@ -47,6 +66,10 @@ export const KineticButton: React.FC<KineticButtonProps> = ({
     y.set(pullY);
   };
 
+  /**
+   * Reset on Mouse Leave
+   * Returns the button to its original position.
+   */
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);

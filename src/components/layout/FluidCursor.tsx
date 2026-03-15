@@ -1,16 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 
+/**
+ * Fluid Dynamics Configuration
+ * Optimized for a balance between visual fidelity and high-framerate performance.
+ */
 const config = {
-  SIM_RESOLUTION: 64, // Optimal performance
-  DYE_RESOLUTION: 512,
+  SIM_RESOLUTION: 64,      // Simulation grid resolution (lower = faster)
+  DYE_RESOLUTION: 512,     // Visual "dye" resolution (higher = crisper trails)
   CAPTURE_RESOLUTION: 256,
-  DENSITY_DISSIPATION: 0.9, // Faster dissipation for snappier feel
-  VELOCITY_DISSIPATION: 0.8,
+  DENSITY_DISSIPATION: 0.9, // How fast the color trails fade (0.9 = snappier)
+  VELOCITY_DISSIPATION: 0.8, // How fast the motion momentum fades
   PRESSURE: 0.8,
-  PRESSURE_ITERATIONS: 10,
-  CURL: 30,
-  SPLAT_RADIUS: 0.25,
-  SPLAT_FORCE: 6000,
+  PRESSURE_ITERATIONS: 10,  // Accuracy of the fluid pressure solver
+  CURL: 30,                 // "Vorticity" - how much the fluid swirls
+  SPLAT_RADIUS: 0.25,       // Size of the mouse interaction
+  SPLAT_FORCE: 6000,        // Strength of the mouse interaction
   SHADING: false,
   COLORFUL: true,
   PAUSED: false,
@@ -19,6 +23,11 @@ const config = {
   SUNRAYS: false,
 };
 
+/**
+ * FluidCursor Component
+ * A high-performance WebGL-based fluid simulation that tracks the mouse cursor.
+ * Implements a GPU-accelerated Navier-Stokes solver for real-time interactivity.
+ */
 export const FluidCursor: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -26,26 +35,26 @@ export const FluidCursor: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    console.log('FluidCursor: Initializing WebGL simulation...');
+    // --- Initialization & Context Management ---
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      console.log(`FluidCursor: Canvas resized to ${canvas.width}x${canvas.height}`);
     };
 
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
+    // Prefer WebGL 2.0 for better floating point texture support
     const gl = canvas.getContext('webgl2', { alpha: true, depth: false, antialias: false }) ||
                canvas.getContext('webgl', { alpha: true, depth: false, antialias: false }) as any;
 
     if (!gl) {
-      console.error('FluidCursor: WebGL not supported.');
+      console.warn('FluidCursor: WebGL context not available. Interaction disabled.');
       return;
     }
 
-    console.log('FluidCursor: WebGL Context achieved.');
+    // --- Shader Compiler Helpers ---
 
     const createShader = (gl: WebGL2RenderingContext, type: number, source: string) => {
       const shader = gl.createShader(type);
@@ -64,21 +73,14 @@ export const FluidCursor: React.FC = () => {
       const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
       const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
       const program = gl.createProgram();
-      if (!program || !vs || !fs) {
-        console.error('FluidCursor Program Creation Failed');
-        return null;
-      }
+      if (!program || !vs || !fs) return null;
       gl.attachShader(program, vs);
       gl.attachShader(program, fs);
       gl.linkProgram(program);
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        console.error('FluidCursor Program Link Error:', gl.getProgramInfoLog(program));
-        return null;
-      }
       return program;
     };
 
-    // Shaders Configuration
+    // Handle cross-version GLSL compatibility
     const isWebGL2 = gl instanceof WebGL2RenderingContext;
     const version = isWebGL2 ? '#version 300 es' : '';
     const vIn = isWebGL2 ? 'in' : 'attribute';
@@ -88,6 +90,9 @@ export const FluidCursor: React.FC = () => {
     const fragColor = isWebGL2 ? 'outColor' : 'gl_FragColor';
     const textureFunc = isWebGL2 ? 'texture' : 'texture2D';
 
+    // --- Shader Pipeline Definitions ---
+
+    // 1. Base Vertex Shader - Maps a quad to the screen
     const baseVertexShader = `${version}
       precision highp float;
       ${isWebGL2 ? 'layout(location = 0)' : ''} ${vIn} vec2 aPosition;
@@ -107,6 +112,7 @@ export const FluidCursor: React.FC = () => {
       }
     `;
 
+    // 2. Display Fragment Shader - Renders the final dye buffer to the screen
     const displayFragmentShader = `${version}
       precision highp float;
       ${fIn} vec2 vUv;
@@ -115,10 +121,11 @@ export const FluidCursor: React.FC = () => {
       void main () {
           vec3 c = ${textureFunc}(uTexture, vUv).rgb;
           float a = max(c.r, max(c.g, c.b));
-          ${fragColor} = vec4(c, a * 0.95); // High opacity trail
+          ${fragColor} = vec4(c, a * 0.95);
       }
     `;
 
+    // 3. Splat Fragment Shader - Injects force/color at mouse coordinates
     const splatFragmentShader = `${version}
       precision highp float;
       ${fIn} vec2 vUv;
@@ -137,6 +144,7 @@ export const FluidCursor: React.FC = () => {
       }
     `;
 
+    // 4. Advection Fragment Shader - Moves the fluid quantities through the velocity field
     const advectionFragmentShader = `${version}
       precision highp float;
       ${fIn} vec2 vUv;
@@ -152,6 +160,7 @@ export const FluidCursor: React.FC = () => {
       }
     `;
 
+    // 5. Divergence Fragment Shader - Calculates the non-zero divergence for the pressure solver
     const divergenceFragmentShader = `${version}
       precision highp float;
       ${fIn} vec2 vUv;
@@ -171,6 +180,7 @@ export const FluidCursor: React.FC = () => {
       }
     `;
 
+    // 6. Pressure Fragment Shader - Iteratively solves for incompressible fluid pressure
     const pressureFragmentShader = `${version}
       precision highp float;
       ${fIn} vec2 vUv;
@@ -192,6 +202,7 @@ export const FluidCursor: React.FC = () => {
       }
     `;
 
+    // 7. Gradient Subtract - Subtracts pressure from velocity to achieve zero-divergence (stablity)
     const gradientSubtractFragmentShader = `${version}
       precision highp float;
       ${fIn} vec2 vUv;
@@ -213,6 +224,7 @@ export const FluidCursor: React.FC = () => {
       }
     `;
 
+    // Create GL programs
     const splashProgram = createProgram(gl, baseVertexShader, splatFragmentShader);
     const advectionProgram = createProgram(gl, baseVertexShader, advectionFragmentShader);
     const divergenceProgram = createProgram(gl, baseVertexShader, divergenceFragmentShader);
@@ -220,10 +232,9 @@ export const FluidCursor: React.FC = () => {
     const gradSubProgram = createProgram(gl, baseVertexShader, gradientSubtractFragmentShader);
     const displayProgram = createProgram(gl, baseVertexShader, displayFragmentShader);
 
-    if (!splashProgram || !advectionProgram || !divergenceProgram || !pressureProgram || !gradSubProgram || !displayProgram) {
-      console.error('FluidCursor: Critical failure during program creation. Simulation aborted.');
-      return;
-    }
+    if (!splashProgram || !advectionProgram || !divergenceProgram || !pressureProgram || !gradSubProgram || !displayProgram) return;
+
+    // --- Framebuffer & Texture Orchestration ---
 
     const createFBO = (w: number, h: number, internalFormat: number, format: number, type: number, param: number) => {
       gl.activeTexture(gl.TEXTURE0);
@@ -238,9 +249,6 @@ export const FluidCursor: React.FC = () => {
       const fbo = gl.createFramebuffer();
       gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
       gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
-      gl.viewport(0, 0, w, h);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-
       return { texture, fbo, width: w, height: h };
     };
 
@@ -259,6 +267,7 @@ export const FluidCursor: React.FC = () => {
     const internalFormat = isWebGL2 ? gl.RGBA16F : gl.RGBA;
     const format = gl.RGBA;
     
+    // Core simulation buffers
     let density = createDoubleFBO(config.SIM_RESOLUTION, config.SIM_RESOLUTION, internalFormat, format, type, gl.LINEAR);
     let velocity = createDoubleFBO(config.SIM_RESOLUTION, config.SIM_RESOLUTION, internalFormat, format, type, gl.LINEAR);
     let divergence = createFBO(config.SIM_RESOLUTION, config.SIM_RESOLUTION, internalFormat, format, type, gl.NEAREST);
@@ -298,14 +307,12 @@ export const FluidCursor: React.FC = () => {
       density.swap();
     };
 
-    // Subdued initial splat for immediate visual confirmation
-    setTimeout(() => {
-      splat(0.5, 0.5, 200, 200, { r: 0.23, g: 0.51, b: 0.96 });
-    }, 1000);
+    // --- Interaction Loop ---
 
-    // Theme Detection & Sensitivity
     let lastMouseX = 0, lastMouseY = 0;
     let isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+    
+    // Watch for theme changes to swap blending modes (multiply vs screen)
     const observer = new MutationObserver(() => {
       isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
       canvas.className = `fixed inset-0 w-screen h-screen pointer-events-none z-[9999] opacity-70 overflow-hidden ${isDarkMode ? 'mix-blend-screen' : 'mix-blend-multiply'}`;
@@ -320,14 +327,12 @@ export const FluidCursor: React.FC = () => {
       const dx = (x - lastMouseX) * config.SPLAT_FORCE;
       const dy = (y - lastMouseY) * config.SPLAT_FORCE;
 
-      // Chromatic Color Cycling - Enhanced for Visibility
+      // Chromatic Evolution Logic
       const time = Date.now() * 0.005;
       const r = Math.sin(time) * 0.5 + 0.5;
       const g = Math.sin(time + 2.1) * 0.5 + 0.5;
       const b = Math.sin(time + 4.2) * 0.5 + 0.5;
       
-      // In light mode, we use darker, more saturated versions for multiply blend
-      // In dark mode, we keep them bright for screen blend
       const saturation = isDarkMode ? 0.9 : 1.2;
       const color = { 
         r: Math.min(1, r * saturation + (isDarkMode ? 0.1 : 0)), 
@@ -345,12 +350,14 @@ export const FluidCursor: React.FC = () => {
     window.addEventListener('mousemove', moveListener);
     window.addEventListener('touchstart', moveListener);
 
+    // --- Main Simulation Loop ---
+
     let animationId: number;
     const update = () => {
       gl.disable(gl.BLEND);
       gl.viewport(0, 0, config.SIM_RESOLUTION, config.SIM_RESOLUTION);
 
-      // Velocity Advection
+      // Advect Velocity
       gl.useProgram(advectionProgram);
       gl.uniform2f(gl.getUniformLocation(advectionProgram, 'texelSize'), 1.0 / config.SIM_RESOLUTION, 1.0 / config.SIM_RESOLUTION);
       gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dt'), 0.016);
@@ -365,7 +372,7 @@ export const FluidCursor: React.FC = () => {
       renderQuad();
       velocity.swap();
 
-      // Density Advection
+      // Advect Density
       gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), isDarkMode ? 0.92 : 0.95);
       gl.activeTexture(gl.TEXTURE1);
       gl.bindTexture(gl.TEXTURE_2D, density.read.texture);
@@ -375,6 +382,7 @@ export const FluidCursor: React.FC = () => {
       renderQuad();
       density.swap();
 
+      // Solve for Pressure/Incompressibility
       gl.useProgram(divergenceProgram);
       gl.uniform2f(gl.getUniformLocation(divergenceProgram, 'texelSize'), 1.0 / config.SIM_RESOLUTION, 1.0 / config.SIM_RESOLUTION);
       gl.activeTexture(gl.TEXTURE0);
@@ -396,6 +404,7 @@ export const FluidCursor: React.FC = () => {
         pressure.swap();
       }
 
+      // Subtract Pressure Gradient from Velocity
       gl.useProgram(gradSubProgram);
       gl.uniform2f(gl.getUniformLocation(gradSubProgram, 'texelSize'), 1.0 / config.SIM_RESOLUTION, 1.0 / config.SIM_RESOLUTION);
       gl.activeTexture(gl.TEXTURE0);
@@ -408,6 +417,7 @@ export const FluidCursor: React.FC = () => {
       renderQuad();
       velocity.swap();
 
+      // Render Dye Buffer to Screen
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.useProgram(displayProgram);
       gl.activeTexture(gl.TEXTURE0);
@@ -423,6 +433,7 @@ export const FluidCursor: React.FC = () => {
 
     update();
 
+    // Clean up all resources effectively
     return () => {
       window.removeEventListener('mousemove', moveListener);
       window.removeEventListener('touchstart', moveListener);

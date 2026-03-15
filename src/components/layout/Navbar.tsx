@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useActiveSection } from '../hooks/useActiveSection';
+import { useActiveSection } from '../../hooks/useActiveSection';
 
+/**
+ * Navbar Component
+ * High-fidelity navigation interface with dynamic theme switching 
+ * and prismatic text reveal effects.
+ */
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
+  
+  // Custom hook to track which section is currently centered in the viewport
   const activeTab = useActiveSection(['home', 'about', 'expertise', 'projects', 'contact']);
+  
+  // State for the theme toggle (syncs with document data-theme attribute)
   const [activeTheme, setActiveTheme] = useState<'light' | 'dark'>('dark');
 
   useEffect(() => {
+    /**
+     * Handle Scroll Events
+     * Triggers the "glass" look when the user scrolls away from the top.
+     */
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
 
+    // Initialize theme from document state or fallback to dark
     const initialTheme = document.documentElement.getAttribute('data-theme') as 'light' | 'dark' || 'dark';
     setActiveTheme(initialTheme);
     window.addEventListener('scroll', handleScroll);
@@ -21,6 +35,10 @@ export const Navbar: React.FC = () => {
     };
   }, []);
 
+  /**
+   * Toggle Global Theme
+   * Updates state, localStorage, and document attributes for persistent dark/light mode.
+   */
   const toggleTheme = () => {
     const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', newTheme);
@@ -38,12 +56,12 @@ export const Navbar: React.FC = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          {/* Brand / Logo */}
+          {/* Brand Identity Block */}
           <a href="#" className="flex flex-col group">
             <span className="font-serif italic text-2xl md:text-3xl text-[var(--color-text)] leading-none transform group-hover:skew-x-2 transition-transform duration-500">Ilyas.</span>
           </a>
 
-          {/* Navigation Links - Desktop Only */}
+          {/* Navigation Links - Prismatic Effect Registry */}
           <div className="hidden md:flex items-center gap-12 font-mono text-[10px] uppercase tracking-widest">
              {[
                { name: 'Home', id: 'home' },
@@ -57,6 +75,7 @@ export const Navbar: React.FC = () => {
                 className={`navbar-link ${activeTab === item.id ? 'active' : ''}`}
               >
                 <span className="prismatic-link">
+                   {/* Characters are mapped individually for sequential animation delay */}
                   {item.name.split('').map((char, i) => (
                     <span 
                       key={i} 
@@ -71,7 +90,7 @@ export const Navbar: React.FC = () => {
              ))}
           </div>
 
-          {/* Action Controls */}
+          {/* Action Interface Block */}
           <div className="flex items-center gap-6">
              <button 
                onClick={toggleTheme}
@@ -91,7 +110,7 @@ export const Navbar: React.FC = () => {
         </div>
       </motion.nav>
 
-      {/* SVG Filters for Liquid Distortion */}
+      {/* SVG Filters for Liquid Prismatic Distortion */}
       <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}>
         <defs>
           <filter id="distort">

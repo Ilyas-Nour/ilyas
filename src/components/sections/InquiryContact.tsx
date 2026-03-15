@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { KineticButton } from './KineticButton';
+import { KineticButton } from '../ui/KineticButton';
 
+/**
+ * InquiryContact Section Component
+ * Handles user inquiries via a secure Formspree integration.
+ * Includes real-time validation feedback and submission state management.
+ */
 export const InquiryContact: React.FC = () => {
+  // state: 'idle' | 'sending' | 'success' | 'error'
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
 
+  /**
+   * Handle Form Submission
+   * Dispatches data to Formspree endpoint and updates UI state accordingly.
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
@@ -17,8 +28,7 @@ export const InquiryContact: React.FC = () => {
     setStatus('sending');
 
     try {
-      // Using the user's email directly. Formspree will create the form 
-      // and send an activation email on the first submission.
+      // Integration with Formspree (mnjgbpyy)
       const response = await fetch('https://formspree.io/f/mnjgbpyy', { 
         method: 'POST',
         headers: {
@@ -43,6 +53,7 @@ export const InquiryContact: React.FC = () => {
     <section id="contact" className="relative py-40 px-6">
       <div className="container mx-auto">
         <div className="max-w-6xl mx-auto">
+          {/* Section Header with Signature Style */}
           <header className="mb-20 text-center">
             <h2 className="text-6xl md:text-9xl font-serif italic text-[var(--color-text)] leading-[0.8]">
               Let's <br /> 
@@ -51,10 +62,11 @@ export const InquiryContact: React.FC = () => {
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-24">
-             {/* Form Interface */}
+             {/* Form Interface Layer */}
              <div className="lg:col-span-8">
                 <form onSubmit={handleSubmit} className="space-y-16">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                        {/* Name Input Block */}
                         <div className="space-y-4">
                            <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold block transition-colors">Your Name</label>
                            <input 
@@ -66,6 +78,7 @@ export const InquiryContact: React.FC = () => {
                              className="w-full bg-transparent border-b border-[var(--color-border)] py-4 text-xl font-serif italic text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors placeholder:text-[var(--color-text-muted)]/30" 
                            />
                         </div>
+                        {/* Email Input Block */}
                         <div className="space-y-4">
                            <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold block transition-colors">Email Address</label>
                            <input 
@@ -79,6 +92,7 @@ export const InquiryContact: React.FC = () => {
                         </div>
                     </div>
 
+                    {/* Message Textarea Block */}
                     <div className="space-y-4">
                        <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold block transition-colors">Your Message</label>
                        <textarea 
@@ -91,6 +105,7 @@ export const InquiryContact: React.FC = () => {
                        />
                     </div>
 
+                    {/* Action & Feedback Layer */}
                     <div className="pt-8 flex items-center gap-8">
                        <KineticButton 
                          type="submit"
@@ -101,6 +116,7 @@ export const InquiryContact: React.FC = () => {
                           {status === 'sending' ? 'Dispatching...' : status === 'success' ? 'Message Sent' : 'Dispatch Message'}
                        </KineticButton>
 
+                       {/* Status Notifications */}
                        <AnimatePresence>
                          {status === 'error' && (
                            <motion.span 
@@ -127,7 +143,7 @@ export const InquiryContact: React.FC = () => {
                  </form>
               </div>
 
-              {/* Social Registry */}
+              {/* Social Registry Block */}
               <div className="lg:col-span-4 space-y-12">
                  <div className="space-y-8">
                     <div className="flex flex-col gap-8">
@@ -146,6 +162,7 @@ export const InquiryContact: React.FC = () => {
                     </div>
                  </div>
 
+                 {/* Operational Context */}
                  <div className="space-y-4 opacity-50 text-center lg:text-left">
                     <p className="font-mono text-[10px] uppercase tracking-widest leading-relaxed">
                        Based Globally. <br />

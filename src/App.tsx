@@ -98,7 +98,7 @@ function App() {
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ margin: "-5%" }} // Trigger animation slightly before entering viewport
                 transition={{ duration: 1, ease: [0.85, 0, 0.15, 1] }}
-                className="will-change-transform"
+                className="will-change-transform" // Hardware acceleration for smoother animations
               >
                 <Component />
               </motion.div>

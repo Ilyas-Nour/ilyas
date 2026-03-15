@@ -1,7 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
+/**
+ * ThemeToggle Component
+ * A persistent UI controller that enables users to switch between 
+ * 'light' and 'dark' visual modes.
+ * Uses Framer Motion for a vertical "slide-and-fade" icon transition.
+ */
 export const ThemeToggle: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
 
@@ -11,8 +17,10 @@ export const ThemeToggle: React.FC = () => {
       className="fixed top-8 right-8 z-[1000] p-4 rounded-full glass flex items-center justify-center overflow-hidden"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
+      aria-label="Toggle visual theme"
     >
       <div className="relative w-6 h-6">
+        {/* Sun Icon - Visible in Dark Mode */}
         <motion.div
           animate={{
             y: theme === 'dark' ? 0 : 30,
@@ -24,6 +32,8 @@ export const ThemeToggle: React.FC = () => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M3 12h2.25m.386-6.364l1.591 1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M18.75 12a6.75 6.75 0 11-13.5 0 6.75 6.75 0 0113.5 0z" />
           </svg>
         </motion.div>
+
+        {/* Moon Icon - Visible in Light Mode */}
         <motion.div
           animate={{
             y: theme === 'light' ? 0 : -30,

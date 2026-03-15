@@ -1,7 +1,11 @@
 import React, { useRef, useState, useLayoutEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { KineticButton } from './KineticButton';
+import { KineticButton } from '../ui/KineticButton';
 
+/**
+ * Project Interface
+ * Defines the schema for digital artifacts displayed in the catalog.
+ */
 const projects = [
   {
     title: "Animy",
@@ -39,6 +43,13 @@ const projects = [
   }
 ];
 
+/**
+ * Screenshot Component
+ * Renders a project image within a responsive device frame.
+ * 
+ * @param src Absolute path to the image asset.
+ * @param project Project title for accessibility (alt tag).
+ */
 const Screenshot = ({ src, project }: { src: string, project: string }) => {
   const isMobile = src.includes('mobile');
   
@@ -47,7 +58,8 @@ const Screenshot = ({ src, project }: { src: string, project: string }) => {
       className="flex-shrink-0 device-wrapper"
       style={{ width: isMobile ? '70vw' : '85vw' }}
     >
-      <div className={isMobile ? 'mobile-frame' : 'laptop-frame'}>
+      {/* Desktop Device Frames - Hidden on Mobile for clean verticality */}
+      <div className={`${isMobile ? 'mobile-frame' : 'laptop-frame'} hidden md:block`}>
         <div className="device-screen">
           <img 
             src={src} 
@@ -57,22 +69,45 @@ const Screenshot = ({ src, project }: { src: string, project: string }) => {
           />
         </div>
       </div>
+      
+      {/* Mobile-only Raw Display Layer */}
+      <div className="md:hidden w-full rounded-xl overflow-hidden border border-[var(--color-border)] shadow-xl">
+        <img 
+          src={src} 
+          alt={`${project} mobile view`}
+          className="w-full h-auto"
+        />
+      </div>
     </motion.div>
   );
 };
 
+/**
+ * HorizontalProject Component
+ * Creates a "Section-within-a-Section" horizontal scroll experience for desktop,
+ * and a traditional vertical stack for mobile devices.
+ */
 const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }> = ({ project, index }) => {
   const targetRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
 
+  // Layout effect to calculate scroll range based on dynamic content width
   useLayoutEffect(() => {
-    if (scrollRef.current) {
-      // Precise range: content width - screen width + small aesthetic buffer
-      setScrollRange(scrollRef.current.scrollWidth - window.innerWidth + (window.innerWidth < 768 ? 100 : 200));
-    }
+    const handleResize = () => {
+      setIsMobileViewport(window.innerWidth < 768);
+      if (scrollRef.current) {
+        // Precise range: content width - screen width + small aesthetic buffer
+        setScrollRange(scrollRef.current.scrollWidth - window.innerWidth + (window.innerWidth < 768 ? 100 : 200));
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Sync horizontal displacement with vertical scroll progress
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end end"]
@@ -80,6 +115,44 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
 
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `calc(-${scrollRange}px)`]);
 
+  // Mobile Fragment - UX optimized for vertical touch interaction
+  if (isMobileViewport) {
+    return (
+      <div className="px-6 py-20 space-y-12">
+        <div className="space-y-6">
+          <h3 className="text-5xl font-serif italic text-[var(--color-text)] leading-none">{project.title}</h3>
+          <p className="text-lg text-[var(--color-text-muted)] font-sans font-light leading-relaxed">
+            {project.description}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {project.tags.map(tag => (
+              <span key={tag} className="px-3 py-1 rounded-full border border-[var(--color-border)] glass font-mono text-[8px] uppercase tracking-widest text-[var(--color-text-muted)]">
+                {tag}
+              </span>
+            ))}
+          </div>
+          {project.link && (
+            <div className="pt-4 flex">
+              <KineticButton 
+                variant="primary"
+                onClick={() => window.open(project.link, '_blank')}
+                icon={<span>↗</span>}
+              >
+                Enter Atmosphere
+              </KineticButton>
+            </div>
+          )}
+        </div>
+        <div className="space-y-8">
+          {project.screenshots.map((shot, idx) => (
+            <Screenshot key={idx} src={shot} project={project.title} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop Component - Experience-driven horizontal gallery
   return (
     <section ref={targetRef} className="relative h-[400vh] md:h-[500vh]">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
@@ -116,7 +189,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
             </div>
           </div>
 
-          {/* Screenshot Gallery */}
+          {/* Screenshot Gallery Array */}
           <div className="flex gap-12 md:gap-16 items-center flex-nowrap pr-[10vw] md:pr-0">
             {project.screenshots.map((shot, idx) => (
               <Screenshot key={idx} src={shot} project={project.title} />
@@ -128,10 +201,15 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
   );
 };
 
+/**
+ * ProjectCatalog Section Component
+ * High-performance exhibition of finished works.
+ * Uses predictive scroll mapping to drive horizontal motion.
+ */
 export const ProjectCatalog: React.FC = () => {
   return (
     <section id="projects" className="relative">
-      <header className="pt-16 px-6 container mx-auto mb-10 md:mb-20 text-center">
+      <header className="pt-4 px-6 container mx-auto mb-10 md:mb-20 text-center">
         <h2 className="text-5xl md:text-9xl font-serif italic text-[var(--color-text)] leading-tight" style={{ fontSize: 'clamp(2.5rem, 10vw, 8rem)' }}>
            Project <br /> 
            <span className="opacity-30">Chronicles.</span>

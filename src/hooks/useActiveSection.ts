@@ -1,7 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 
+/**
+ * useActiveSection Hook
+ * Efficiently tracks the currently "active" section based on scroll position.
+ * 
+ * @param sectionIds Array of element IDs to monitor.
+ * @returns The ID of the section that is currently most prominent in the viewport.
+ * 
+ * Strategy:
+ * Uses IntersectionObserver with a custom rootMargin to create a narrow "detection band".
+ */
 export const useActiveSection = (sectionIds: string[]) => {
   const [activeTab, setActiveTab] = useState(sectionIds[0] || '');
+  
+  // Track visibility state of all sections to handle edge cases where multiple are visible
   const visibilityMap = useRef<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -11,21 +23,24 @@ export const useActiveSection = (sectionIds: string[]) => {
           visibilityMap.current[entry.target.id] = entry.isIntersecting;
         });
 
-        // Determine the best active tab from all visible sections
-        // We pick the one that is currently intersecting the 'active band'
+        /**
+         * Detection Logic:
+         * 1. Filter all sections that are currently 'intersecting' the band.
+         * 2. If multiple sections are caught, pick the latest one (lowest on the page)
+         *    to ensure the navigation reflects progress.
+         */
         const visibleIds = sectionIds.filter(id => visibilityMap.current[id]);
         
         if (visibleIds.length > 0) {
-          // If multiple are visible, pick the one furthest down the page (the latest one)
-          // as we scroll down. For scrolling up, the observer updates will naturally 
-          // remove the lower ones from visibilityMap.
           const latestVisible = visibleIds[visibleIds.length - 1];
           setActiveTab(latestVisible);
         }
       },
       { 
-        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5], 
-        rootMargin: "-25% 0px -25% 0px" // 50% detection band in the center of the viewport
+        threshold: [0, 0.1, 0.2, 0.5], 
+        // rootMargin sets the 'active band'. 
+        // This configuration targets the upper-middle area of the viewport.
+        rootMargin: "-15% 0px -75% 0px" 
       }
     );
 

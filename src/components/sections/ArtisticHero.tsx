@@ -3,48 +3,45 @@ import { motion } from 'framer-motion';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { KineticButton } from './KineticButton';
+import { KineticButton } from '../ui/KineticButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * ArtisticHero Component
- * Implements a high-impact atmospheric reveal using a dual-layered image system.
- * Visual Logic:
- * 1. Base Layer: Masked outline (initial state).
- * 2. Reveal Layer: Full character artwork (triggered by scroll).
- * 
- * Features adaptive blending modes for theme synchronization.
+ * The entry point of the portfolio experience.
+ * Features a high-fidelity "Gojo" reveal effect driven by GSAP ScrollTrigger.
  */
 const ArtisticHero: React.FC = () => {
-  // GSAP ScrollTrigger for precise image transition
+  // Initialize GSAP animations for the layered masked reveal
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: "#home",
         start: "top top",
-        end: "+=1", // Absolute minimum for near-instant swap effect
+        end: "+=1", // Instant swap trigger on first scroll pixel
         scrub: true,
       }
     });
 
-    // Fade out the masked outline and fade in the unmasked detail
+    // Layer 1 fade out (Initial Masked State)
     tl.to("#gojo-masked", {
       opacity: 0,
       ease: "none"
     }, 0);
 
+    // Layer 2 fade in (Revealed Unmasked State)
     tl.to("#gojo-unmasked", {
-      opacity: 0.3,
+      opacity: 0.3, 
       ease: "none"
     }, 0);
   }, []);
 
   return (
     <section id="home" className="relative h-screen min-h-[700px] flex flex-col justify-center px-6 md:px-12 lg:px-24 overflow-hidden bg-[var(--color-bg)] transition-colors duration-500">
-      {/* Alchemical Anime Presence - Layered Dynamic Outline */}
+      {/* Alchemical Anime Presence System - Layered Dynamic Outlines */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none">
-        {/* Layer 1: Masked (Initial State) */}
+        {/* Layer 1: Masked (Initial Presence) - Using adaptive blending for prismatic look */}
         <motion.img
           id="gojo-masked"
           initial={{ opacity: 0.1, scale: 1 }}
@@ -55,7 +52,7 @@ const ArtisticHero: React.FC = () => {
                      dark:mix-blend-screen dark:brightness-100 dark:invert-0
                      [&:not(.dark *)]:invert [&:not(.dark *)]:brightness-[1.2] [&:not(.dark *)]:mix-blend-multiply"
         />
-        {/* Layer 2: Unmasked (Revealed State) */}
+        {/* Layer 2: Unmasked (Revealed Truth) - Higher fidelity adaptive outline */}
         <motion.img
           id="gojo-unmasked"
           initial={{ opacity: 0, scale: 1 }}
@@ -68,26 +65,29 @@ const ArtisticHero: React.FC = () => {
         />
       </div>
 
-      <div className="container mx-auto relative z-10 flex flex-col items-start text-left">
+      <div className="container mx-auto relative z-10 flex flex-col items-center md:items-start text-center md:text-left">
+        {/* Primary Typography Layer */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: [0.85, 0, 0.15, 1] }}
-          className="space-y-12 max-w-4xl"
+          className="space-y-8 md:space-y-12 w-full max-w-4xl flex flex-col items-center md:items-start"
         >
-          <div className="space-y-6">
-            <h1 className="text-[12vw] leading-[0.7] tracking-tight text-[var(--color-text)] relative" style={{ fontSize: 'clamp(3rem, 12vw, 12vw)' }}>
-              <span className="font-serif font-bold uppercase block -mb-2 md:-mb-4 tracking-[-0.05em]">Ilyas</span>
-              <span className="block ml-[10vw] md:ml-[5vw] opacity-80" style={{ fontFamily: 'var(--font-signature)', fontSize: '0.8em' }}>Nour.</span>
+          <div className="space-y-4 md:space-y-6 w-full">
+            <h1 className="text-[12vw] leading-[0.7] tracking-tight text-[var(--color-text)] relative flex flex-col items-center md:items-start w-full" style={{ fontSize: 'clamp(3rem, 12vw, 15vw)' }}>
+              <span className="font-serif font-bold uppercase block -mb-2 md:-mb-4 tracking-[-0.05em] opacity-40 md:opacity-100">Ilyas</span>
+              {/* Signature font used for personal branding contrast */}
+              <span className="block w-full text-center md:text-left md:ml-[5vw]" style={{ fontFamily: 'var(--font-signature)', fontSize: 'clamp(4rem, 25vw, 12rem)', lineHeight: 1 }}>Nour.</span>
             </h1>
           </div>
 
-          <p className="text-base md:text-2xl text-[var(--color-text-muted)] font-sans font-light leading-relaxed max-w-xl md:max-w-2xl px-4 md:px-0">
+          <p className="text-base md:text-2xl text-[var(--color-text-muted)] font-sans font-light leading-relaxed max-w-2xl">
             Engineering elegant digital architecture where <br className="hidden md:block" />
             clean aesthetics meet technical excellence.
           </p>
 
-          <div className="pt-8 flex flex-col sm:flex-row items-start sm:items-center gap-10">
+          {/* CTA Interface */}
+          <div className="pt-4 md:pt-8 flex flex-col sm:flex-row items-center md:items-start gap-6 md:gap-10">
             <KineticButton
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
             >
@@ -106,7 +106,7 @@ const ArtisticHero: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Modern Scroll Indicator - Left Aligned Hook */}
+      {/* Modern Scroll Indicator Interface */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.3 }}
@@ -117,7 +117,7 @@ const ArtisticHero: React.FC = () => {
         <span className="font-mono text-[7px] uppercase tracking-[0.5em]">Explore</span>
       </motion.div>
 
-      {/* Grid Grain Texture Overlay */}
+      {/* Grid Grain Texture Layer - Internal section noise for depth */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] z-0"
         style={{ backgroundImage: 'radial-gradient(var(--color-text) 0.5px, transparent 0)', backgroundSize: '40px 40px' }}
       />
