@@ -4,39 +4,40 @@ import { useActiveSection } from '../hooks/useActiveSection';
 export const MassiveFooter = () => {
   const activeTab = useActiveSection(['home', 'about', 'expertise', 'projects', 'contact']);
   return (
-    <footer className="bg-[var(--color-bg)] pt-32 pb-6 px-6 overflow-hidden border-t border-[var(--color-border)] relative transition-colors duration-500">
+    <footer className="bg-[var(--color-bg)] pt-32 pb-12 px-6 overflow-hidden border-t border-[var(--color-border)] relative transition-colors duration-500">
       <div className="w-full relative">
         {/* Massive Background Signature - Refined to prevent clipping */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="absolute inset-x-0 -top-32 select-none pointer-events-none z-0 flex justify-center w-full px-[5vw]"
+          className="absolute inset-x-0 -bottom-20 select-none pointer-events-none z-0 flex justify-center w-full px-[5vw]"
         >
-          <h2 className="text-[28vw] md:text-[22vw] text-center whitespace-nowrap text-[var(--color-text)] opacity-[0.05] leading-none py-10" style={{ fontFamily: 'var(--font-signature)' }}>
+          <h2 className="text-[28vw] md:text-[22vw] text-center whitespace-nowrap text-[var(--color-text)] opacity-[0.05] leading-none" style={{ fontFamily: 'var(--font-signature)' }}>
             Ilyas Nour
           </h2>
         </motion.div>
 
         <div className="max-w-screen-2xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-24 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-24 mb-0">
              {/* Navigation */}
             <div className="space-y-8">
               <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">Index</h4>
-              <nav className="flex flex-col gap-4">
+              <nav className="flex flex-col gap-3">
                   {[
                     { name: 'Home', id: 'home' },
                     { name: 'About', id: 'about' },
                     { name: 'Expertise', id: 'expertise' },
-                    { name: 'Projects', id: 'projects' },
-                    { name: 'Contact', id: 'contact' }
+                    { name: 'Projects', id: 'projects' }
                   ].map(link => (
                     <a 
                       key={link.id}
                       href={`#${link.id}`} 
-                      className={`text-2xl font-serif italic text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors w-fit footer-link-nav ${activeTab === link.id ? 'active' : ''}`}
+                      className="footer-link-nav w-fit !px-0"
                     >
-                      {link.name}
+                      <span className="artistic-link" data-text={link.name}>
+                        <span className="artistic-link-text text-lg font-serif italic text-[var(--color-text)]">{link.name}</span>
+                      </span>
                     </a>
                   ))}
               </nav>
@@ -61,7 +62,7 @@ export const MassiveFooter = () => {
             </div>
 
             {/* Credits */}
-            <div className="space-y-8 md:text-right">
+            <div className="space-y-8 md:text-right flex flex-col justify-end">
               <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase md:text-right">Studio</h4>
               <p className="font-mono text-[10px] text-[var(--color-text-muted)] leading-relaxed uppercase tracking-widest">
                 Designed & Developed <br />

@@ -39,6 +39,28 @@ const projects = [
   }
 ];
 
+const Screenshot = ({ src, project }: { src: string, project: string }) => {
+  const isMobile = src.includes('mobile');
+  
+  return (
+    <motion.div 
+      className="flex-shrink-0 device-wrapper"
+      style={{ width: isMobile ? 'auto' : '65vw' }}
+    >
+      <div className={isMobile ? 'mobile-frame' : 'laptop-frame'}>
+        <div className="device-screen">
+          <img 
+            src={src} 
+            alt={`${project} view`}
+            className="select-none"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }> = ({ project, index }) => {
   const targetRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -46,8 +68,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
 
   useLayoutEffect(() => {
     if (scrollRef.current) {
-      // Calculate how far we need to scroll: Total width - viewport width + some padding for the end spacer
-      setScrollRange(scrollRef.current.scrollWidth - window.innerWidth + 100);
+      setScrollRange(scrollRef.current.scrollWidth - window.innerWidth + 200);
     }
   }, []);
 
@@ -55,25 +76,25 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 0.9], [0, -scrollRange]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", `calc(-${scrollRange}px)`]);
 
   return (
-    <section ref={targetRef} className="relative h-[600vh]">
+    <section ref={targetRef} className="relative h-[650vh]">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <motion.div ref={scrollRef} style={{ x }} className="flex gap-20 px-24 items-center">
+        <motion.div ref={scrollRef} style={{ x }} className="flex gap-20 md:gap-40 px-6 md:px-24 items-center">
           {/* Project Identity Card */}
-          <div className="flex-shrink-0 w-[80vw] md:w-[60vw] space-y-12">
-            <div className="space-y-6">
-               <h3 className="text-7xl md:text-9xl font-serif italic text-[var(--color-text)] leading-none">{project.title}</h3>
+          <div className="flex-shrink-0 w-[90vw] md:w-[60vw] space-y-6 md:space-y-12">
+            <div className="space-y-4 md:space-y-6">
+               <h3 className="text-5xl md:text-9xl font-serif italic text-[var(--color-text)] leading-none" style={{ fontSize: 'clamp(2.5rem, 8vw, 8rem)' }}>{project.title}</h3>
             </div>
             
-            <div className="max-w-xl space-y-8">
-              <p className="text-xl md:text-2xl text-[var(--color-text-muted)] font-sans font-light leading-relaxed">
+            <div className="max-w-xl space-y-6 md:space-y-8">
+              <p className="text-lg md:text-2xl text-[var(--color-text-muted)] font-sans font-light leading-relaxed">
                 {project.description}
               </p>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2 md:gap-3">
                 {project.tags.map(tag => (
-                  <span key={tag} className="px-5 py-2 rounded-full border border-[var(--color-border)] glass font-mono text-[9px] uppercase tracking-widest text-[var(--color-text-muted)]">
+                  <span key={tag} className="px-3 md:px-5 py-1 md:py-2 rounded-full border border-[var(--color-border)] glass font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-[var(--color-text-muted)]">
                     {tag}
                   </span>
                 ))}
@@ -93,25 +114,10 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
           </div>
 
           {/* Screenshot Gallery */}
-          <div className="flex gap-12 items-center">
+          <div className="flex gap-40 items-center flex-nowrap">
             {project.screenshots.map((shot, idx) => (
-              <motion.div 
-                key={idx}
-                className="flex-shrink-0 relative h-[70vh] md:h-[80vh] min-w-[350px] md:min-w-[600px] border border-[var(--color-border)] bg-[var(--color-border)]/5 rounded-[40px] overflow-hidden transition-all duration-700"
-              >
-                <img 
-                  src={shot} 
-                  alt={`${project.title} view ${idx + 1}`}
-                  className="w-full h-full object-contain p-6 md:p-12 select-none"
-                />
-              </motion.div>
+              <Screenshot key={idx} src={shot} project={project.title} />
             ))}
-          </div>
-
-          {/* End of Project Card */}
-          <div className="flex-shrink-0 w-[40vw] flex flex-col items-center justify-center text-center space-y-4">
-             <div className="h-px w-24 bg-[var(--color-border)] mb-4" />
-             <span className="font-mono text-[10px] uppercase tracking-[0.4em] opacity-40 italic">Scroll for Next Project</span>
           </div>
         </motion.div>
       </div>
@@ -122,8 +128,8 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
 export const ProjectCatalog: React.FC = () => {
   return (
     <section id="projects" className="relative">
-      <header className="pt-32 px-6 container mx-auto mb-20 text-center">
-        <h2 className="text-6xl md:text-9xl font-serif italic text-[var(--color-text)] leading-tight">
+      <header className="pt-32 px-6 container mx-auto mb-10 md:mb-20 text-center">
+        <h2 className="text-5xl md:text-9xl font-serif italic text-[var(--color-text)] leading-tight" style={{ fontSize: 'clamp(2.5rem, 10vw, 8rem)' }}>
            Project <br /> 
            <span className="opacity-30">Chronicles.</span>
         </h2>

@@ -24,22 +24,22 @@ const skillsRow2 = [
 export const TechStack: React.FC = () => {
   return (
     <section id="expertise" className="relative py-24 overflow-hidden bg-[var(--color-bg)] transition-colors duration-500">
-      <div className="container mx-auto px-6 mb-20 text-center">
-        <h2 className="text-6xl md:text-9xl font-serif italic text-[var(--color-text)]">Expertise.</h2>
+      <div className="container mx-auto px-6 mb-12 md:mb-20 text-center">
+        <h2 className="text-5xl md:text-9xl font-serif italic text-[var(--color-text)]" style={{ fontSize: 'clamp(2.5rem, 10vw, 8rem)' }}>Expertise.</h2>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-2 md:space-y-4">
         {/* Row 1: Right to Left */}
-        <div className="flex select-none overflow-hidden gap-10">
-          <div className="flex flex-none gap-20 py-4 animate-marquee-left items-center">
+        <div className="flex select-none overflow-hidden gap-6 md:gap-10">
+          <div className="flex flex-none gap-10 md:gap-20 py-4 animate-marquee-left items-center">
             {Array(4).fill(skillsRow1).flat().map((skill, i) => (
-               <div key={i} className="flex items-center gap-6 group cursor-default">
+               <div key={i} className="flex items-center gap-4 md:gap-6 group cursor-default">
                   <img 
                     src={skill.isIcons8 ? `https://img.icons8.com/color/48/${skill.slug}.png` : `https://cdn.simpleicons.org/${skill.slug}/${skill.color}`} 
                     alt={skill.name}
-                    className="w-10 h-10 transition-all duration-500 transform group-hover:scale-110"
+                    className="w-8 h-8 md:w-10 md:h-10 transition-all duration-500 transform group-hover:scale-110"
                   />
-                  <span className="text-4xl md:text-6xl font-serif italic text-[var(--color-text)]">
+                  <span className="text-3xl md:text-6xl font-serif italic text-[var(--color-text)]">
                      {skill.name}
                   </span>
                </div>
@@ -48,16 +48,16 @@ export const TechStack: React.FC = () => {
         </div>
 
         {/* Row 2: Left to Right */}
-        <div className="flex select-none overflow-hidden gap-10">
-          <div className="flex flex-none gap-20 py-4 animate-marquee-right items-center">
+        <div className="flex select-none overflow-hidden gap-6 md:gap-10">
+          <div className="flex flex-none gap-10 md:gap-20 py-4 animate-marquee-right items-center">
             {Array(4).fill(skillsRow2).flat().map((skill, i) => (
-               <div key={i} className="flex items-center gap-6 group cursor-default">
+               <div key={i} className="flex items-center gap-4 md:gap-6 group cursor-default">
                   <img 
                     src={skill.isIcons8 ? `https://img.icons8.com/color/48/${skill.slug}.png` : `https://cdn.simpleicons.org/${skill.slug}/${skill.color}`} 
                     alt={skill.name}
-                    className="w-10 h-10 transition-all duration-500 transform group-hover:scale-110"
+                    className="w-8 h-8 md:w-10 md:h-10 transition-all duration-500 transform group-hover:scale-110"
                   />
-                  <span className="text-4xl md:text-6xl font-serif italic text-[var(--color-text)]">
+                  <span className="text-3xl md:text-6xl font-serif italic text-[var(--color-text)]">
                      {skill.name}
                   </span>
                </div>

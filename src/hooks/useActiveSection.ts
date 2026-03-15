@@ -13,8 +13,8 @@ export const useActiveSection = (sectionIds: string[]) => {
           if (entry.isIntersecting) setActiveTab(id);
         },
         { 
-          threshold: 0.2, 
-          rootMargin: "-20% 0px -20% 0px" 
+          threshold: 0.4, 
+          rootMargin: "-30% 0px -30% 0px" 
         }
       );
       observer.observe(el);

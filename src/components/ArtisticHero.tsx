@@ -26,9 +26,9 @@ const ArtisticHero: React.FC = () => {
            className="space-y-12 max-w-4xl"
         >
           <div className="space-y-6">
-             <h1 className="text-[14vw] lg:text-[12vw] leading-[0.7] tracking-tight text-[var(--color-text)] relative">
-                <span className="font-serif font-bold uppercase block -mb-4 tracking-[-0.05em]">Ilyas</span>
-                <span className="block ml-[5vw] opacity-80" style={{ fontFamily: 'var(--font-signature)', fontSize: '0.8em' }}>Nour.</span>
+             <h1 className="text-[12vw] leading-[0.7] tracking-tight text-[var(--color-text)] relative" style={{ fontSize: 'clamp(3rem, 12vw, 12vw)' }}>
+                <span className="font-serif font-bold uppercase block -mb-2 md:-mb-4 tracking-[-0.05em]">Ilyas</span>
+                <span className="block ml-[10vw] md:ml-[5vw] opacity-80" style={{ fontFamily: 'var(--font-signature)', fontSize: '0.8em' }}>Nour.</span>
              </h1>
           </div>
 
