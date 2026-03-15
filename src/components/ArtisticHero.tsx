@@ -17,8 +17,6 @@ const ArtisticHero: React.FC = () => {
         />
       </div>
 
-      {/* Subtle Background Glow */}
-      <div className="absolute top-1/3 left-0 w-[40vw] h-[40vw] bg-[var(--color-accent)] opacity-[0.03] blur-[150px] rounded-full pointer-events-none" />
       
       <div className="container mx-auto relative z-10 flex flex-col items-start text-left">
         <motion.div

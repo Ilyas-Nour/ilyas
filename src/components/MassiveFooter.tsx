@@ -1,7 +1,8 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import { useActiveSection } from '../hooks/useActiveSection';
 
 export const MassiveFooter = () => {
+  const activeTab = useActiveSection(['home', 'about', 'expertise', 'projects', 'contact']);
   return (
     <footer className="bg-[var(--color-bg)] pt-32 pb-6 px-6 overflow-hidden border-t border-[var(--color-border)] relative transition-colors duration-500">
       <div className="w-full relative">
@@ -23,10 +24,21 @@ export const MassiveFooter = () => {
             <div className="space-y-8">
               <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">Index</h4>
               <nav className="flex flex-col gap-4">
-                  <a href="#home" className="text-2xl font-serif italic text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors w-fit">Home</a>
-                  <a href="#projects" className="text-2xl font-serif italic text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors w-fit">Projects</a>
-                  <a href="#about" className="text-2xl font-serif italic text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors w-fit">Studio</a>
-                  <a href="#contact" className="text-2xl font-serif italic text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors w-fit">Connect</a>
+                  {[
+                    { name: 'Home', id: 'home' },
+                    { name: 'About', id: 'about' },
+                    { name: 'Expertise', id: 'expertise' },
+                    { name: 'Projects', id: 'projects' },
+                    { name: 'Contact', id: 'contact' }
+                  ].map(link => (
+                    <a 
+                      key={link.id}
+                      href={`#${link.id}`} 
+                      className={`text-2xl font-serif italic text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors w-fit footer-link-nav ${activeTab === link.id ? 'active' : ''}`}
+                    >
+                      {link.name}
+                    </a>
+                  ))}
               </nav>
             </div>
 
@@ -37,7 +49,8 @@ export const MassiveFooter = () => {
                 {[
                   { name: 'Github', url: 'https://github.com/Ilyas-Nour' },
                   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/ilyasnour/' },
-                  { name: 'X', url: 'https://x.com/ilyas__nour' }
+                  { name: 'X', url: 'https://x.com/ilyas__nour' },
+                  { name: 'Instagram', url: '#' }
                 ].map(social => (
                   <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
                     <span className="font-mono text-xs uppercase tracking-widest">{social.name}</span>

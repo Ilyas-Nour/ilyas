@@ -6,7 +6,7 @@ const skillsRow1 = [
   { name: "Node.js", slug: "nodedotjs", color: "339933" },
   { name: "Rust", slug: "rust", color: "000000" },
   { name: "Next.js", slug: "nextdotjs", color: "000000" },
-  { name: "AWS", slug: "amazonwebservices", color: "232F3E" },
+  { name: "AWS", slug: "amazon-web-services", color: "232F3E", isIcons8: true },
   { name: "Tailwind", slug: "tailwindcss", color: "06B6D4" },
 ];
 
@@ -16,14 +16,14 @@ const skillsRow2 = [
   { name: "Framer", slug: "framer", color: "0055FF" },
   { name: "Vercel", slug: "vercel", color: "000000" },
   { name: "Render", slug: "render", color: "46E3B7" },
-  { name: "VS Code", slug: "visualstudiocode", color: "007ACC" },
+  { name: "VS Code", slug: "visual-studio-code-2019", color: "007ACC", isIcons8: true },
   { name: "Git", slug: "git", color: "F05032" },
   { name: "GitHub", slug: "github", color: "181717" },
 ];
 
 export const TechStack: React.FC = () => {
   return (
-    <section className="relative py-24 overflow-hidden bg-[var(--color-bg)] transition-colors duration-500">
+    <section id="expertise" className="relative py-24 overflow-hidden bg-[var(--color-bg)] transition-colors duration-500">
       <div className="container mx-auto px-6 mb-20 text-center">
         <h2 className="text-6xl md:text-9xl font-serif italic text-[var(--color-text)]">Expertise.</h2>
       </div>
@@ -35,14 +35,11 @@ export const TechStack: React.FC = () => {
             {Array(4).fill(skillsRow1).flat().map((skill, i) => (
                <div key={i} className="flex items-center gap-6 group cursor-default">
                   <img 
-                    src={`https://img.icons8.com/color/48/${skill.slug}.png`} 
+                    src={skill.isIcons8 ? `https://img.icons8.com/color/48/${skill.slug}.png` : `https://cdn.simpleicons.org/${skill.slug}/${skill.color}`} 
                     alt={skill.name}
-                    className="w-10 h-10 opacity-30 group-hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = `https://cdn.simpleicons.org/${skill.slug}/${skill.color}`;
-                    }}
+                    className="w-10 h-10 transition-all duration-500 transform group-hover:scale-110"
                   />
-                  <span className="text-4xl md:text-6xl font-serif italic text-[var(--color-text)] opacity-5 group-hover:opacity-100 transition-opacity duration-500">
+                  <span className="text-4xl md:text-6xl font-serif italic text-[var(--color-text)]">
                      {skill.name}
                   </span>
                </div>
@@ -56,14 +53,11 @@ export const TechStack: React.FC = () => {
             {Array(4).fill(skillsRow2).flat().map((skill, i) => (
                <div key={i} className="flex items-center gap-6 group cursor-default">
                   <img 
-                    src={`https://img.icons8.com/color/48/${skill.slug}.png`} 
+                    src={skill.isIcons8 ? `https://img.icons8.com/color/48/${skill.slug}.png` : `https://cdn.simpleicons.org/${skill.slug}/${skill.color}`} 
                     alt={skill.name}
-                    className="w-10 h-10 opacity-30 group-hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = `https://cdn.simpleicons.org/${skill.slug}/${skill.color}`;
-                    }}
+                    className="w-10 h-10 transition-all duration-500 transform group-hover:scale-110"
                   />
-                  <span className="text-4xl md:text-6xl font-serif italic text-[var(--color-text)] opacity-5 group-hover:opacity-100 transition-opacity duration-500">
+                  <span className="text-4xl md:text-6xl font-serif italic text-[var(--color-text)]">
                      {skill.name}
                   </span>
                </div>

@@ -11,12 +11,12 @@ const config = {
   CURL: 30,
   SPLAT_RADIUS: 0.25,
   SPLAT_FORCE: 6000,
-  SHADING: true,
+  SHADING: false,
   COLORFUL: true,
   PAUSED: false,
   BACK_COLOR: { r: 0, g: 0, b: 0 },
-  BLOOM: true,
-  SUNRAYS: true,
+  BLOOM: false,
+  SUNRAYS: false,
 };
 
 export const FluidCursor: React.FC = () => {
@@ -303,7 +303,15 @@ export const FluidCursor: React.FC = () => {
       splat(0.5, 0.5, 200, 200, { r: 0.23, g: 0.51, b: 0.96 });
     }, 1000);
 
+    // Theme Detection & Sensitivity
     let lastMouseX = 0, lastMouseY = 0;
+    let isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+    const observer = new MutationObserver(() => {
+      isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+      canvas.className = `fixed inset-0 w-screen h-screen pointer-events-none z-[9999] opacity-70 overflow-hidden ${isDarkMode ? 'mix-blend-screen' : 'mix-blend-multiply'}`;
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
     const moveListener = (e: MouseEvent | TouchEvent) => {
       const clientX = (e instanceof MouseEvent ? e.clientX : e.touches[0].clientX);
       const clientY = (e instanceof MouseEvent ? e.clientY : e.touches[0].clientY);
@@ -312,13 +320,20 @@ export const FluidCursor: React.FC = () => {
       const dx = (x - lastMouseX) * config.SPLAT_FORCE;
       const dy = (y - lastMouseY) * config.SPLAT_FORCE;
 
-      // Chromatic Color Cycling - Faster and more vivid
+      // Chromatic Color Cycling - Enhanced for Visibility
       const time = Date.now() * 0.005;
       const r = Math.sin(time) * 0.5 + 0.5;
       const g = Math.sin(time + 2.1) * 0.5 + 0.5;
       const b = Math.sin(time + 4.2) * 0.5 + 0.5;
       
-      const color = { r: r * 0.9 + 0.1, g: g * 0.9 + 0.1, b: b * 0.9 + 0.1 };
+      // In light mode, we use darker, more saturated versions for multiply blend
+      // In dark mode, we keep them bright for screen blend
+      const saturation = isDarkMode ? 0.9 : 1.2;
+      const color = { 
+        r: Math.min(1, r * saturation + (isDarkMode ? 0.1 : 0)), 
+        g: Math.min(1, g * saturation + (isDarkMode ? 0.1 : 0)), 
+        b: Math.min(1, b * saturation + (isDarkMode ? 0.1 : 0)) 
+      };
       
       if (Math.abs(dx) > 0.0001 || Math.abs(dy) > 0.0001) {
         splat(x, y, dx, dy, color);
@@ -336,11 +351,10 @@ export const FluidCursor: React.FC = () => {
       gl.viewport(0, 0, config.SIM_RESOLUTION, config.SIM_RESOLUTION);
 
       // Velocity Advection
-      // Velocity Advection
       gl.useProgram(advectionProgram);
       gl.uniform2f(gl.getUniformLocation(advectionProgram, 'texelSize'), 1.0 / config.SIM_RESOLUTION, 1.0 / config.SIM_RESOLUTION);
       gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dt'), 0.016);
-      gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), 0.8); // Fades fast
+      gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), 0.8);
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, velocity.read.texture);
       gl.uniform1i(gl.getUniformLocation(advectionProgram, 'uVelocity'), 0);
@@ -351,8 +365,8 @@ export const FluidCursor: React.FC = () => {
       renderQuad();
       velocity.swap();
 
-      // Density Advection (Smoke)
-      gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), 0.92); // Disappears quickly
+      // Density Advection
+      gl.uniform1f(gl.getUniformLocation(advectionProgram, 'dissipation'), isDarkMode ? 0.92 : 0.95);
       gl.activeTexture(gl.TEXTURE1);
       gl.bindTexture(gl.TEXTURE_2D, density.read.texture);
       gl.bindFramebuffer(gl.FRAMEBUFFER, density.write.fbo);
@@ -413,14 +427,17 @@ export const FluidCursor: React.FC = () => {
       window.removeEventListener('mousemove', moveListener);
       window.removeEventListener('touchstart', moveListener);
       window.removeEventListener('resize', resizeCanvas);
+      observer.disconnect();
       cancelAnimationFrame(animationId);
     };
   }, []);
 
+  const isDarkMode = typeof document !== 'undefined' && document.documentElement.getAttribute('data-theme') === 'dark';
+
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed inset-0 w-screen h-screen pointer-events-none z-[9999] opacity-70 mix-blend-screen overflow-hidden" 
+      className={`fixed inset-0 w-screen h-screen pointer-events-none z-[9999] opacity-70 overflow-hidden ${isDarkMode ? 'mix-blend-screen' : 'mix-blend-multiply'}`} 
     />
   );
 };

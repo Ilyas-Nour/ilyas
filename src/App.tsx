@@ -6,6 +6,7 @@ import { IntroLoader } from './components/IntroLoader';
 import ArtisticHero from './components/ArtisticHero';
 import { ThemeProvider } from './context/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
+import { Navbar } from './components/Navbar';
 
 // Lazy loaded components for lightning speed
 const IdentityArchive = lazy(() => import('./components/IdentityArchive'));
@@ -51,7 +52,7 @@ function App() {
           }} 
         />
         
-        <ThemeToggle />
+        <Navbar />
         <FluidCursor />
         
         <AnimatePresence>

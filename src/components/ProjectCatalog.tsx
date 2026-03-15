@@ -97,14 +97,13 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
             {project.screenshots.map((shot, idx) => (
               <motion.div 
                 key={idx}
-                className="flex-shrink-0 relative h-[70vh] md:h-[80vh] min-w-[350px] md:min-w-[600px] border border-[var(--color-border)] bg-[var(--color-border)]/5 rounded-[40px] overflow-hidden shadow-2xl shadow-black/5 hover:shadow-black/40 transition-all duration-700"
+                className="flex-shrink-0 relative h-[70vh] md:h-[80vh] min-w-[350px] md:min-w-[600px] border border-[var(--color-border)] bg-[var(--color-border)]/5 rounded-[40px] overflow-hidden transition-all duration-700"
               >
                 <img 
                   src={shot} 
                   alt={`${project.title} view ${idx + 1}`}
                   className="w-full h-full object-contain p-6 md:p-12 select-none"
                 />
-                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
               </motion.div>
             ))}
           </div>
