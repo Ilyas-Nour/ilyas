@@ -18,27 +18,28 @@ const ArtisticHero: React.FC = () => {
       </div>
 
       
-      <div className="container mx-auto relative z-10 flex flex-col items-start text-left">
+      <div className="container mx-auto relative z-10 flex flex-col items-center md:items-start text-center md:text-left">
         <motion.div
            initial={{ opacity: 0, x: -50 }}
            animate={{ opacity: 1, x: 0 }}
            transition={{ duration: 1.5, ease: [0.85, 0, 0.15, 1] }}
-           className="space-y-12 max-w-4xl"
+           className="space-y-8 md:space-y-12 max-w-4xl flex flex-col items-center md:items-start"
         >
-          <div className="space-y-6">
-             <h1 className="text-[12vw] leading-[0.7] tracking-tight text-[var(--color-text)] relative" style={{ fontSize: 'clamp(3rem, 12vw, 12vw)' }}>
+          <div className="space-y-4 md:space-y-6">
+             <h1 className="text-[14vw] md:text-[12vw] leading-[0.7] tracking-tight text-[var(--color-text)] relative" style={{ fontSize: 'clamp(3.5rem, 14vw, 12vw)' }}>
                 <span className="font-serif font-bold uppercase block -mb-2 md:-mb-4 tracking-[-0.05em]">Ilyas</span>
-                <span className="block ml-[10vw] md:ml-[5vw] opacity-80" style={{ fontFamily: 'var(--font-signature)', fontSize: '0.8em' }}>Nour.</span>
+                <span className="block ml-0 md:ml-[5vw] opacity-80" style={{ fontFamily: 'var(--font-signature)', fontSize: '0.8em' }}>Nour.</span>
              </h1>
           </div>
 
-          <p className="text-lg md:text-2xl text-[var(--color-text-muted)] font-sans font-light leading-relaxed max-w-2xl">
+          <p className="text-base md:text-2xl text-[var(--color-text-muted)] font-sans font-light leading-relaxed max-w-xl md:max-w-2xl px-4 md:px-0">
             Engineering elegant digital architecture where <br className="hidden md:block" />
             clean aesthetics meet technical excellence.
           </p>
 
-          <div className="pt-8 flex flex-col sm:flex-row items-start sm:items-center gap-10">
+          <div className="pt-4 md:pt-8 flex flex-col sm:flex-row items-center md:items-start gap-4 md:gap-10 w-full md:w-auto">
              <KineticButton 
+               className="w-4/5 sm:w-auto text-[8px] md:text-[10px]"
                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
              >
                 Illuminate Projects
@@ -46,8 +47,8 @@ const ArtisticHero: React.FC = () => {
              
              <KineticButton 
                variant="outline"
+               className="w-4/5 sm:w-auto text-[8px] md:text-[10px] group"
                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-               className="group"
                icon={<span className="text-[var(--color-accent)] group-hover:translate-x-2 transition-transform duration-300">→</span>}
              >
                 Begin Dialogue

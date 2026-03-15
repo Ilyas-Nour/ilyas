@@ -45,7 +45,7 @@ const Screenshot = ({ src, project }: { src: string, project: string }) => {
   return (
     <motion.div 
       className="flex-shrink-0 device-wrapper"
-      style={{ width: isMobile ? 'auto' : '65vw' }}
+      style={{ width: isMobile ? '70vw' : '85vw' }}
     >
       <div className={isMobile ? 'mobile-frame' : 'laptop-frame'}>
         <div className="device-screen">
@@ -69,7 +69,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
   useLayoutEffect(() => {
     if (scrollRef.current) {
       // Precise range: content width - screen width + small aesthetic buffer
-      setScrollRange(scrollRef.current.scrollWidth - window.innerWidth + 200);
+      setScrollRange(scrollRef.current.scrollWidth - window.innerWidth + (window.innerWidth < 768 ? 100 : 200));
     }
   }, []);
 
@@ -81,20 +81,20 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `calc(-${scrollRange}px)`]);
 
   return (
-    <section ref={targetRef} className="relative h-[500vh]">
+    <section ref={targetRef} className="relative h-[400vh] md:h-[500vh]">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <motion.div ref={scrollRef} style={{ x }} className="flex gap-16 md:gap-24 px-6 md:px-24 items-center">
+        <motion.div ref={scrollRef} style={{ x }} className="flex gap-12 md:gap-24 px-6 md:px-24 items-center">
           {/* Project Identity Card */}
-          <div className="flex-shrink-0 w-[90vw] md:w-[60vw] space-y-6 md:space-y-12">
+          <div className="flex-shrink-0 w-[85vw] md:w-[60vw] space-y-6 md:space-y-12 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="space-y-4 md:space-y-6">
                <h3 className="text-5xl md:text-9xl font-serif italic text-[var(--color-text)] leading-none" style={{ fontSize: 'clamp(2.5rem, 8vw, 8rem)' }}>{project.title}</h3>
             </div>
             
-            <div className="max-w-xl space-y-6 md:space-y-8">
-              <p className="text-lg md:text-2xl text-[var(--color-text-muted)] font-sans font-light leading-relaxed">
+            <div className="max-w-xl space-y-6 md:space-y-8 flex flex-col items-center md:items-start">
+              <p className="text-base md:text-2xl text-[var(--color-text-muted)] font-sans font-light leading-relaxed">
                 {project.description}
               </p>
-              <div className="flex flex-wrap gap-2 md:gap-3">
+              <div className="flex flex-wrap justify-center md:justify-start gap-2 md:gap-3">
                 {project.tags.map(tag => (
                   <span key={tag} className="px-3 md:px-5 py-1 md:py-2 rounded-full border border-[var(--color-border)] glass font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-[var(--color-text-muted)]">
                     {tag}
@@ -102,9 +102,10 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
                 ))}
               </div>
               {project.link && (
-                <div className="pt-8 flex">
+                <div className="pt-4 md:pt-8 flex">
                   <KineticButton 
                     variant="primary"
+                    className="text-[8px] md:text-[10px]"
                     onClick={() => window.open(project.link, '_blank')}
                     icon={<span>↗</span>}
                   >
@@ -116,7 +117,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
           </div>
 
           {/* Screenshot Gallery */}
-          <div className="flex gap-16 items-center flex-nowrap">
+          <div className="flex gap-12 md:gap-16 items-center flex-nowrap pr-[10vw] md:pr-0">
             {project.screenshots.map((shot, idx) => (
               <Screenshot key={idx} src={shot} project={project.title} />
             ))}

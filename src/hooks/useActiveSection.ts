@@ -24,8 +24,8 @@ export const useActiveSection = (sectionIds: string[]) => {
         }
       },
       { 
-        threshold: [0, 0.1, 0.2, 0.5], 
-        rootMargin: "-15% 0px -75% 0px" // 10% detection band starting at 15% from top
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5], 
+        rootMargin: "-25% 0px -25% 0px" // 50% detection band in the center of the viewport
       }
     );
 

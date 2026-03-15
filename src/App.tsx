@@ -14,6 +14,7 @@ const TechStack = lazy(() => import('./components/TechStack'));
 const ProjectCatalog = lazy(() => import('./components/ProjectCatalog'));
 const InquiryContact = lazy(() => import('./components/InquiryContact'));
 const MassiveFooter = lazy(() => import('./components/MassiveFooter'));
+const MobileNavbar = lazy(() => import('./components/MobileNavbar'));
 
 function App() {
   const [loading, setLoading] = React.useState(true);
@@ -54,6 +55,9 @@ function App() {
         
         <Navbar />
         <FluidCursor />
+        <Suspense fallback={null}>
+          <MobileNavbar />
+        </Suspense>
         
         <AnimatePresence>
           {loading && <IntroLoader onComplete={() => setLoading(false)} />}
