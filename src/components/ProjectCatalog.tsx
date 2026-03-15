@@ -68,20 +68,22 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
 
   useLayoutEffect(() => {
     if (scrollRef.current) {
-      setScrollRange(scrollRef.current.scrollWidth - window.innerWidth + 200);
+      // Significantly increase range to allow final screenshots to be seen fully
+      setScrollRange(scrollRef.current.scrollWidth - window.innerWidth + window.innerHeight);
     }
   }, []);
 
   const { scrollYProgress } = useScroll({
     target: targetRef,
+    offset: ["start start", "end end"]
   });
 
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `calc(-${scrollRange}px)`]);
 
   return (
-    <section ref={targetRef} className="relative h-[650vh]">
+    <section ref={targetRef} className="relative h-[800vh]">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <motion.div ref={scrollRef} style={{ x }} className="flex gap-20 md:gap-40 px-6 md:px-24 items-center">
+        <motion.div ref={scrollRef} style={{ x }} className="flex gap-20 md:gap-60 px-6 md:px-24 items-center">
           {/* Project Identity Card */}
           <div className="flex-shrink-0 w-[90vw] md:w-[60vw] space-y-6 md:space-y-12">
             <div className="space-y-4 md:space-y-6">
@@ -114,7 +116,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
           </div>
 
           {/* Screenshot Gallery */}
-          <div className="flex gap-40 items-center flex-nowrap">
+          <div className="flex gap-40 items-center flex-nowrap pr-[20vw]">
             {project.screenshots.map((shot, idx) => (
               <Screenshot key={idx} src={shot} project={project.title} />
             ))}

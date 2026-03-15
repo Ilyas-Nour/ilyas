@@ -56,8 +56,16 @@ export const Navbar: React.FC = () => {
                 href={`#${item.id}`} 
                 className={`navbar-link ${activeTab === item.id ? 'active' : ''}`}
               >
-                <span className="artistic-link" data-text={item.name}>
-                  <span className="artistic-link-text">{item.name}</span>
+                <span className="prismatic-link">
+                  {item.name.split('').map((char, i) => (
+                    <span 
+                      key={i} 
+                      className="prismatic-char"
+                      style={{ transitionDelay: `${i * 30}ms` }}
+                    >
+                      {char}
+                    </span>
+                  ))}
                 </span>
               </a>
              ))}
@@ -83,6 +91,15 @@ export const Navbar: React.FC = () => {
         </div>
       </motion.nav>
 
+      {/* SVG Filters for Liquid Distortion */}
+      <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}>
+        <defs>
+          <filter id="distort">
+            <feTurbulence type="fractalNoise" baseFrequency="0.01 0.05" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" />
+          </filter>
+        </defs>
+      </svg>
     </>
   );
 };

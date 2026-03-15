@@ -9,12 +9,16 @@ export const useActiveSection = (sectionIds: string[]) => {
       if (!el) return null;
       
       const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveTab(id);
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+              setActiveTab(entry.target.id);
+            }
+          });
         },
         { 
-          threshold: 0.4, 
-          rootMargin: "-30% 0px -30% 0px" 
+          threshold: [0.1, 0.2, 0.3, 0.5], 
+          rootMargin: "-10% 0px -70% 0px" // Prioritize the top of the section
         }
       );
       observer.observe(el);
