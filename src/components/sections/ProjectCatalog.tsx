@@ -1,6 +1,7 @@
 import React, { useRef, useState, useLayoutEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { KineticButton } from '../ui/KineticButton';
+import { useProjectScroll } from '../../context/ProjectScrollContext';
 
 /**
  * Project Interface
@@ -92,6 +93,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const { projectProgress } = useProjectScroll();
 
   // Layout effect to calculate scroll range based on dynamic content width
   useLayoutEffect(() => {
@@ -111,6 +113,18 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end end"]
+  });
+
+  // Sync project progress to the global context ONLY when this section is active
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    // We only update if the progress is between 0 and 1, 
+    // and since each section has its own target, it naturally resets.
+    if (latest > 0 && latest <= 1) {
+      projectProgress.set(latest);
+    } else if (latest <= 0) {
+      // If we scroll back up past the start, we might want to clear it 
+      // but usually the next/prev project will take over.
+    }
   });
 
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `calc(-${scrollRange}px)`]);

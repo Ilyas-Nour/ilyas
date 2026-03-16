@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useActiveSection } from '../../hooks/useActiveSection';
+import { useProjectScroll } from '../../context/ProjectScrollContext';
 
 /**
  * Navbar Component
@@ -13,6 +14,8 @@ export const Navbar: React.FC = () => {
   // Custom hook to track which section is currently centered in the viewport
   const activeTab = useActiveSection(['home', 'about', 'expertise', 'projects', 'contact']);
   
+  const { projectProgress } = useProjectScroll();
+
   // State for the theme toggle (syncs with document data-theme attribute)
   const [activeTheme, setActiveTheme] = useState<'light' | 'dark'>('dark');
 
@@ -108,6 +111,19 @@ export const Navbar: React.FC = () => {
              </a>
           </div>
         </div>
+
+        {/* Project Progress Bar - Only visible when in the projects section */}
+        <AnimatePresence>
+          {activeTab === 'projects' && (
+            <motion.div 
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute bottom-0 left-0 w-full h-[1px] bg-[var(--color-accent)] origin-left shadow-[0_0_8px_var(--color-accent)]"
+              style={{ scaleX: projectProgress }}
+            />
+          )}
+        </AnimatePresence>
       </motion.nav>
 
       {/* SVG Filters for Liquid Prismatic Distortion */}
