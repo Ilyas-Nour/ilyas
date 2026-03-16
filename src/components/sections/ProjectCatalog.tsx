@@ -208,12 +208,18 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
  */
 export const ProjectCatalog: React.FC = () => {
   return (
-    <section id="projects" className="relative">
-      <header className="pt-4 px-6 container mx-auto mb-10 md:mb-20 text-center">
-        <h2 className="text-5xl md:text-9xl font-serif italic text-[var(--color-text)] leading-tight" style={{ fontSize: 'clamp(2.5rem, 10vw, 8rem)' }}>
-           Project <br /> 
-           <span className="opacity-30">Chronicles.</span>
-        </h2>
+    <section id="projects" className="relative section-padding border-t border-[var(--color-border)]">
+      <header className="container mx-auto mb-16 md:mb-32">
+        <h2 className="text-sm font-mono uppercase tracking-[0.5em] text-[var(--color-accent)] mb-6">Portfolio</h2>
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
+          <h3 className="text-4xl md:text-7xl font-sans font-extrabold tracking-tighter text-[var(--color-text)] leading-[0.9]">
+            Project <br /> 
+            <span className="italic font-serif font-normal opacity-50">Chronicles.</span>
+          </h3>
+          <p className="max-w-md text-[var(--color-text-muted)] font-sans font-light text-lg leading-relaxed">
+            A curated selection of digital artifacts, ranging from privacy-first tools to social aggregators.
+          </p>
+        </div>
       </header>
 
       <div className="relative">

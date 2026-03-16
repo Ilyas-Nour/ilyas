@@ -5,13 +5,13 @@ import { FluidCursor } from './components/layout/FluidCursor';
 import { IntroLoader } from './components/ui/IntroLoader';
 import ArtisticHero from './components/sections/ArtisticHero';
 import { ThemeProvider } from './context/ThemeContext';
-import { ThemeToggle } from './components/ui/ThemeToggle';
 import { Navbar } from './components/layout/Navbar';
 import { useConsoleIdentity } from './hooks/useConsoleIdentity';
+import ModernHero from './components/sections/ModernHero';
 
 // Lazy loaded components for lightning speed and optimized initial bundle size
-const IdentityArchive = lazy(() => import('./components/sections/IdentityArchive'));
-const TechStack = lazy(() => import('./components/sections/TechStack'));
+const BentoAbout = lazy(() => import('./components/sections/BentoAbout'));
+const ExpertiseWeb = lazy(() => import('./components/sections/ExpertiseWeb'));
 const ProjectCatalog = lazy(() => import('./components/sections/ProjectCatalog'));
 const InquiryContact = lazy(() => import('./components/sections/InquiryContact'));
 const MassiveFooter = lazy(() => import('./components/layout/MassiveFooter'));
@@ -56,7 +56,7 @@ function App() {
 
   return (
     <ThemeProvider>
-      <main className="relative min-h-screen selection:bg-[var(--color-accent)] selection:text-white">
+      <main className="relative min-h-screen selection:bg-[var(--color-accent)] selection:text-white transition-colors duration-500">
         {/* Subtle Grain Texture - Global Overlay for Prismatic Aesthetic */}
         <div className="fixed inset-0 pointer-events-none z-[999] opacity-[0.015] mix-blend-overlay"
           style={{
@@ -68,37 +68,29 @@ function App() {
         <FluidCursor />
 
         {/* Shutter Entry Sequence */}
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {loading && <IntroLoader onComplete={() => setLoading(false)} />}
         </AnimatePresence>
 
         <div className="relative z-10 w-full">
-          {/* Hero Section Container */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ margin: "-100px" }}
-            transition={{ duration: 1.2, ease: [0.85, 0, 0.15, 1] }}
-          >
-            <ArtisticHero />
-          </motion.div>
+          <ModernHero />
 
           {/* Sequential Section Rendering with Suspense */}
-          <Suspense fallback={<div className="h-screen flex items-center justify-center opacity-5 font-mono text-[8px] uppercase tracking-widest">Loading Digital Architecture...</div>}>
+          <Suspense fallback={<div className="h-screen flex items-center justify-center opacity-5 font-mono text-[8px] uppercase tracking-widest">Hydrating Identity...</div>}>
             {[
-              { id: 'about', Component: IdentityArchive },
-              { id: 'skills', Component: TechStack },
+              { id: 'about', Component: BentoAbout },
+              { id: 'skills', Component: ExpertiseWeb },
               { id: 'projects', Component: ProjectCatalog },
               { id: 'contact', Component: InquiryContact },
               { id: 'footer', Component: MassiveFooter }
             ].map(({ id, Component }) => (
               <motion.div
                 key={id}
-                initial={{ opacity: 0, scale: 0.95, y: 50 }}
+                initial={{ opacity: 0, scale: 0.98, y: 30 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ margin: "-5%" }} // Trigger animation slightly before entering viewport
-                transition={{ duration: 1, ease: [0.85, 0, 0.15, 1] }}
-                className="will-change-transform" // Hardware acceleration for smoother animations
+                viewport={{ margin: "-10%", once: true }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="will-change-transform"
               >
                 <Component />
               </motion.div>

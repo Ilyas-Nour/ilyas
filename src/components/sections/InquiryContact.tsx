@@ -54,11 +54,17 @@ export const InquiryContact: React.FC = () => {
       <div className="container mx-auto">
         <div className="max-w-6xl mx-auto">
           {/* Section Header with Signature Style */}
-          <header className="mb-20 text-center">
-            <h2 className="text-6xl md:text-9xl font-serif italic text-[var(--color-text)] leading-[0.8]">
-              Let's <br /> 
-              <span className="opacity-40">Get in Touch.</span>
-            </h2>
+          <header className="mb-20 md:mb-32">
+            <h2 className="text-sm font-mono uppercase tracking-[0.5em] text-[var(--color-accent)] mb-6">Contact</h2>
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
+              <h3 className="text-4xl md:text-7xl font-sans font-extrabold tracking-tighter text-[var(--color-text)] leading-[0.9]">
+                Let's <br /> 
+                <span className="italic font-serif font-normal opacity-50">Connect.</span>
+              </h3>
+              <p className="max-w-sm text-[var(--color-text-muted)] font-sans font-light text-lg leading-relaxed text-center lg:text-left">
+                Have a vision? Let's build it together. I am always open to discussing new projects and technical challenges.
+              </p>
+            </div>
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-24">
