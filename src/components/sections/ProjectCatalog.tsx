@@ -263,18 +263,11 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
  */
 export const ProjectCatalog: React.FC = () => {
   return (
-    <section id="projects" className="relative min-h-screen flex flex-col justify-start bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-12 md:pt-16">
-      <header className="container mx-auto mb-4 md:mb-6 px-6">
-        <h2 className="text-sm font-mono uppercase tracking-[0.5em] text-[var(--color-accent)] mb-4">Works</h2>
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-          <h3 className="text-3xl md:text-6xl font-sans font-extrabold tracking-tighter text-[var(--color-text)] leading-[0.9]">
-            My Best <br /> 
-            <span className="italic font-serif font-normal opacity-50 text-4xl md:text-7xl">Work.</span>
-          </h3>
-          <p className="max-w-md text-[var(--color-text-muted)] font-sans font-light text-base leading-relaxed">
-            Here are some the projects I have worked on.
-          </p>
-        </div>
+    <section id="projects" className="relative min-h-screen flex flex-col justify-start bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-8 md:pt-12">
+      <header className="container mx-auto mb-2 md:mb-4 px-6">
+        <h3 className="text-4xl md:text-7xl font-sans font-black tracking-tighter text-[var(--color-text)] uppercase leading-none">
+          My Work.
+        </h3>
       </header>
 
       <div className="relative">
