@@ -210,7 +210,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
   // Desktop Component - Experience-driven horizontal gallery
   return (
     <section ref={targetRef} className="relative h-[400vh] md:h-[500vh]">
-      <div className={`sticky top-0 flex h-screen overflow-hidden z-30 ${index === 0 ? 'items-start pt-[25vh] md:pt-[30vh]' : 'items-center'}`}>
+      <div className={`sticky top-0 flex h-screen overflow-hidden z-30 ${index === 0 ? 'items-start pt-12 md:pt-20' : 'items-center'}`}>
         <motion.div ref={scrollRef} style={{ x }} className="flex gap-12 md:gap-24 px-6 md:px-24 items-center">
           {/* Project Identity Card */}
           <div className="flex-shrink-0 w-[85vw] md:w-[60vw] space-y-6 md:space-y-12 flex flex-col items-center md:items-start text-center md:text-left">
