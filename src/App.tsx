@@ -28,6 +28,9 @@ const MassiveFooter = lazy(() => import('./components/layout/MassiveFooter'));
  */
 function App() {
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    offset: ["start start", "100vh start"] // Track the first 100vh of scroll
+  });
   // Initialize console branding effect
   useConsoleIdentity();
   
@@ -84,8 +87,26 @@ function App() {
             {loading && <IntroLoader onComplete={() => setLoading(false)} />}
           </AnimatePresence>
 
-          {/* The "Modern Hero" - Now a standard section to ensure background continuity */}
-          <ModernHero />
+          {/* The "Adaptive Prismatic" Hero Scroll Scene - Defining the Sticky Boundary */}
+          <div className="relative h-[100vh] z-20 pointer-events-none md:pointer-events-auto">
+            <motion.div 
+              style={{ 
+                clipPath: useTransform(
+                  scrollYProgress, 
+                  [0, 1.0], 
+                  [
+                    "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+                    "polygon(0% 100%, 100% 0%, 100% 0%, 0% 100%)"
+                  ]
+                ),
+                pointerEvents: useTransform(scrollYProgress, [0, 0.9, 1], ["auto", "auto", "none"]) as any,
+                opacity: useTransform(scrollYProgress, [0.95, 1], [1, 0])
+              }}
+              className="sticky top-0 w-full will-change-transform"
+            >
+              <ModernHero />
+            </motion.div>
+          </div>
 
           <div className="relative z-10 w-full overflow-x-clip bg-[var(--color-bg)] transition-colors duration-500">
               <Suspense fallback={<div className="h-screen flex items-center justify-center opacity-5 font-mono text-[8px] uppercase tracking-widest">Hydrating Identity...</div>}>
