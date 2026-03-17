@@ -69,7 +69,6 @@ const SkillNode = ({ name, color, hubPosition, index, total }: { name: string, c
       <Text
         fontSize={0.4}
         color="white"
-        font="/fonts/Inter-Bold.ttf" // Fallback to default if not found
         anchorX="center"
         anchorY="middle"
         outlineWidth={0.02}
@@ -101,7 +100,6 @@ const CategoryHub = ({ category, position }: { category: typeof skillCategories[
           anchorX="center"
           maxWidth={5}
           textAlign="center"
-          font="/fonts/Inter-Black.ttf"
         >
           {category.name.toUpperCase()}
         </Text>
