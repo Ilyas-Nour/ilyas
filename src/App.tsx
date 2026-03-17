@@ -15,8 +15,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 // Lazy loaded components for lightning speed and optimized initial bundle size
-const IdentityArchive = lazy(() => import('./components/sections/IdentityArchive'));
-const NeuralMatrix = lazy(() => import('./components/sections/NeuralMatrix'));
+const MorphingBio = lazy(() => import('./components/sections/MorphingBio'));
+const DataStorm = lazy(() => import('./components/sections/DataStorm'));
 const ProjectCatalog = lazy(() => import('./components/sections/ProjectCatalog'));
 const InquiryContact = lazy(() => import('./components/sections/InquiryContact'));
 const MassiveFooter = lazy(() => import('./components/layout/MassiveFooter'));
@@ -111,8 +111,8 @@ function App() {
           <div className="relative z-10 w-full overflow-x-clip bg-[var(--color-bg)] transition-colors duration-500">
               <Suspense fallback={<div className="h-screen flex items-center justify-center opacity-5 font-mono text-[8px] uppercase tracking-widest">Hydrating Identity...</div>}>
               {[
-                { id: 'about', Component: IdentityArchive, animate: true },
-                { id: 'skills', Component: NeuralMatrix, animate: true },
+                { id: 'about', Component: MorphingBio, animate: true },
+                { id: 'skills', Component: DataStorm, animate: true },
                 { id: 'projects', Component: ProjectCatalog, animate: false },
                 { id: 'contact', Component: InquiryContact, animate: true },
                 { id: 'footer', Component: MassiveFooter, animate: true }
