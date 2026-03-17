@@ -88,7 +88,7 @@ function App() {
           </AnimatePresence>
 
           {/* The "Adaptive Prismatic" Hero Scroll Scene - Defining the Sticky Boundary */}
-          <div className="relative h-[100vh] z-20 pointer-events-none md:pointer-events-auto bg-[#cbd5e1] dark:bg-[#020617] transition-colors duration-500">
+          <div className="relative h-[100vh] z-20 pointer-events-none md:pointer-events-auto">
             <motion.div 
               style={{ 
                 clipPath: useTransform(
