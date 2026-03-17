@@ -55,7 +55,7 @@ export const KineticBlueprint: React.FC = () => {
           <div className="relative select-none mb-24">
             <motion.h2 
               style={{ x: xLeft, opacity, filter: `blur(${blur}px)` }}
-              className="text-[12vw] leading-[0.8] font-sans font-black uppercase tracking-tighter text-[var(--color-text)]"
+              className="text-[12vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
             >
               About
             </motion.h2>

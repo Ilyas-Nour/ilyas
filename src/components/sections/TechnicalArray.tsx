@@ -35,8 +35,8 @@ export const TechnicalArray: React.FC = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="mb-24">
-          <h2 className="text-5xl md:text-8xl font-black text-[var(--color-text)] tracking-tighter uppercase leading-[0.8]">
-             My <br /> <span className="opacity-20 italic font-serif font-normal" style={{ fontFamily: 'var(--font-signature)' }}>Skills.</span>
+          <h2 className="text-5xl md:text-8xl font-black font-heading text-[var(--color-text)] tracking-tighter uppercase leading-[0.8]">
+             My <br /> <span className="opacity-20 font-signature font-normal" style={{ fontFamily: 'var(--font-signature)' }}>Skills.</span>
           </h2>
         </div>
 

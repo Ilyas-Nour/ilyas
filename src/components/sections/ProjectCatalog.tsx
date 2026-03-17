@@ -265,8 +265,8 @@ export const ProjectCatalog: React.FC = () => {
   return (
     <section id="projects" className="relative min-h-screen flex flex-col justify-start bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-8 md:pt-12">
       <header className="container mx-auto mb-8 md:mb-12 px-6">
-        <h3 className="text-5xl md:text-8xl font-sans font-black tracking-tighter text-[var(--color-text)] uppercase leading-[0.8]">
-          My <br /> <span className="opacity-20 italic font-serif font-normal" style={{ fontFamily: 'var(--font-signature)' }}>Work.</span>
+        <h3 className="text-5xl md:text-8xl font-heading font-black tracking-tighter text-[var(--color-text)] uppercase leading-[0.8]">
+          My <br /> <span className="opacity-20 font-signature font-normal" style={{ fontFamily: 'var(--font-signature)' }}>Work.</span>
         </h3>
       </header>
 
