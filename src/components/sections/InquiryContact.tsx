@@ -57,7 +57,6 @@ export const InquiryContact: React.FC = () => {
           <header className="mb-12 md:mb-16">
             <div className="flex items-center gap-4 mb-8">
                <div className="w-10 h-[2px] bg-[var(--color-accent)]" />
-               <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)]">Signal // Transmission</span>
             </div>
             <h3 className="text-5xl md:text-8xl font-sans font-black tracking-tighter text-[var(--color-text)] uppercase leading-[0.8]">
               Get in <br /> <span className="opacity-20 italic font-serif font-normal" style={{ fontFamily: 'var(--font-signature)' }}>Touch.</span>
