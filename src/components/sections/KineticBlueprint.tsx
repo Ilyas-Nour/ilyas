@@ -72,9 +72,6 @@ export const KineticBlueprint: React.FC = () => {
                style={{ opacity }}
                className="lg:col-span-12"
              >
-                <div className="flex items-center gap-6 mb-8 group">
-                   <div className="w-12 h-[1px] bg-[var(--color-accent)] transition-all duration-500 group-hover:w-20" />
-                </div>
                 <h3 className="text-4xl md:text-7xl font-sans font-extrabold text-[var(--color-text)] leading-[1.1] tracking-tighter mb-12">
                    I engineer <span className="italic font-serif font-normal text-[var(--color-accent)]">high-stakes</span> digital architecture for the modern web.
                 </h3>
