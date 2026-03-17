@@ -210,7 +210,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
   // Desktop Component - Experience-driven horizontal gallery
   return (
     <section ref={targetRef} className="relative h-[400vh] md:h-[500vh]">
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden z-30">
+      <div className={`sticky top-0 flex h-screen overflow-hidden z-30 ${index === 0 ? 'items-start pt-[25vh] md:pt-[30vh]' : 'items-center'}`}>
         <motion.div ref={scrollRef} style={{ x }} className="flex gap-12 md:gap-24 px-6 md:px-24 items-center">
           {/* Project Identity Card */}
           <div className="flex-shrink-0 w-[85vw] md:w-[60vw] space-y-6 md:space-y-12 flex flex-col items-center md:items-start text-center md:text-left">
@@ -263,7 +263,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
  */
 export const ProjectCatalog: React.FC = () => {
   return (
-    <section id="projects" className="relative min-h-screen flex flex-col justify-center bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-12 md:pt-16">
+    <section id="projects" className="relative min-h-screen flex flex-col justify-start bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-12 md:pt-16">
       <header className="container mx-auto mb-4 md:mb-6 px-6">
         <h2 className="text-sm font-mono uppercase tracking-[0.5em] text-[var(--color-accent)] mb-4">Works</h2>
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
