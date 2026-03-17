@@ -17,6 +17,7 @@ const fragmentShader = `
   uniform vec3 uColor1;
   uniform vec3 uColor2;
   uniform float uOpacity;
+  uniform float uWarp;
   varying vec2 vUv;
 
   // Faster, indestructible noise for maximum hardware compatibility
@@ -37,8 +38,8 @@ const fragmentShader = `
     uv += (uv - uMouse) * exp(-dist * 8.0) * 0.1;
 
     // Layered Noise for "Prismatic Silk" motion (Normalized)
-    float n = noise(uv * 3.0 + uTime * 0.1);
-    n += 0.5 * noise(uv * 6.0 - uTime * 0.2);
+    float n = noise(uv * (3.0 + uWarp) + uTime * 0.1);
+    n += 0.5 * noise(uv * (6.0 + uWarp * 2.0) - uTime * 0.2);
     n = n / 1.5; 
     
     // Vibrant Color Blending (Electric Indigo & Teal)
@@ -56,7 +57,7 @@ const fragmentShader = `
   }
 `;
 
-const ShaderPlane = ({ color1, color2, opacity }: { color1: string, color2: string, opacity: number }) => {
+const ShaderPlane = ({ color1, color2, opacity, warp = 0 }: { color1: string, color2: string, opacity: number, warp?: number }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { viewport, size, mouse } = useThree();
@@ -67,7 +68,8 @@ const ShaderPlane = ({ color1, color2, opacity }: { color1: string, color2: stri
     uMouse: { value: new THREE.Vector2(0.5, 0.5) },
     uColor1: { value: new THREE.Color(color1) },
     uColor2: { value: new THREE.Color(color2) },
-    uOpacity: { value: opacity }
+    uOpacity: { value: opacity },
+    uWarp: { value: warp }
   }), []); // Only initialize once
 
   // Reactive updates for uniforms
@@ -76,8 +78,9 @@ const ShaderPlane = ({ color1, color2, opacity }: { color1: string, color2: stri
       materialRef.current.uniforms.uColor1.value.set(color1);
       materialRef.current.uniforms.uColor2.value.set(color2);
       materialRef.current.uniforms.uOpacity.value = opacity;
+      materialRef.current.uniforms.uWarp.value = warp;
     }
-  }, [color1, color2, opacity]);
+  }, [color1, color2, opacity, warp]);
 
   useFrame((state) => {
     if (materialRef.current) {
@@ -104,7 +107,7 @@ const ShaderPlane = ({ color1, color2, opacity }: { color1: string, color2: stri
   );
 };
 
-export const LiquidBackground: React.FC<{ theme: 'light' | 'dark' }> = ({ theme }) => {
+export const LiquidBackground: React.FC<{ theme: 'light' | 'dark', warp?: number }> = ({ theme, warp = 0 }) => {
   const color1 = theme === 'dark' ? '#020617' : '#94a3b8'; // Obsidian vs Steel Blue-Grey
   const color2 = theme === 'dark' ? '#1e3a8a' : '#475569'; // Cobalt vs Graphite
   const opacity = theme === 'dark' ? 1.0 : 0.4; 
@@ -116,7 +119,7 @@ export const LiquidBackground: React.FC<{ theme: 'light' | 'dark' }> = ({ theme 
         style={{ width: '100%', height: '100%', pointerEvents: 'none' }}
         dpr={[1, 2]}
       >
-        <ShaderPlane color1={color1} color2={color2} opacity={opacity} />
+        <ShaderPlane color1={color1} color2={color2} opacity={opacity} warp={warp} />
       </Canvas>
     </div>
   );

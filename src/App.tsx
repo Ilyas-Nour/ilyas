@@ -87,20 +87,23 @@ function App() {
             {loading && <IntroLoader onComplete={() => setLoading(false)} />}
           </AnimatePresence>
 
-          {/* The "Adaptive Prismatic" Hero Scroll Scene - Defining the Sticky Boundary */}
-          <div className="relative h-[100vh] z-20 pointer-events-none md:pointer-events-auto">
+          {/* The "Hyper-Jump" Cinematic Transition - Defining the Zoom Scene */}
+          <div className="relative h-[100vh] z-20 pointer-events-none md:pointer-events-auto overflow-hidden">
             <motion.div 
               style={{ 
+                scale: useTransform(scrollYProgress, [0, 1], [1, 4]),
+                filter: useTransform(scrollYProgress, [0, 0.5, 1], ["blur(0px)", "blur(10px)", "blur(20px)"]),
+                opacity: useTransform(scrollYProgress, [0.8, 1], [1, 0]),
                 clipPath: useTransform(
                   scrollYProgress, 
-                  [0, 1.0], 
+                  [0, 0.8, 1], 
                   [
-                    "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-                    "polygon(0% 100%, 100% 0%, 100% 0%, 0% 100%)"
+                    "circle(100% at 50% 50%)",
+                    "circle(100% at 50% 50%)",
+                    "circle(0% at 50% 50%)"
                   ]
                 ),
                 pointerEvents: useTransform(scrollYProgress, [0, 0.9, 1], ["auto", "auto", "none"]) as any,
-                opacity: useTransform(scrollYProgress, [0.95, 1], [1, 0])
               }}
               className="sticky top-0 w-full will-change-transform"
             >
