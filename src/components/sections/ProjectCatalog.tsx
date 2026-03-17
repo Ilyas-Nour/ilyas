@@ -263,8 +263,8 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
  */
 export const ProjectCatalog: React.FC = () => {
   return (
-    <section id="projects" className="relative min-h-screen flex flex-col justify-center bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-20">
-      <header className="container mx-auto mb-12 md:mb-20 px-6">
+    <section id="projects" className="relative min-h-screen flex flex-col justify-center bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-12 md:pt-16">
+      <header className="container mx-auto mb-4 md:mb-6 px-6">
         <h2 className="text-sm font-mono uppercase tracking-[0.5em] text-[var(--color-accent)] mb-4">Works</h2>
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           <h3 className="text-3xl md:text-6xl font-sans font-extrabold tracking-tighter text-[var(--color-text)] leading-[0.9]">
