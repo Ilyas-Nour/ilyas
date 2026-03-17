@@ -55,16 +55,13 @@ export const InquiryContact: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <header className="mb-12 md:mb-16">
-            <h2 className="text-sm font-mono uppercase tracking-[0.5em] text-[var(--color-accent)] mb-4">Contact</h2>
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-              <h3 className="text-3xl md:text-6xl font-sans font-extrabold tracking-tighter text-[var(--color-text)] leading-[0.9]">
-                Get in <br /> 
-                <span className="italic font-serif font-normal opacity-50 text-4xl md:text-7xl">Touch.</span>
-              </h3>
-              <p className="max-w-sm text-[var(--color-text-muted)] font-sans font-light text-base leading-relaxed text-center lg:text-left">
-                Have an idea? Let's work together. I am always happy to talk about new projects.
-              </p>
+            <div className="flex items-center gap-4 mb-8">
+               <div className="w-10 h-[2px] bg-[var(--color-accent)]" />
+               <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)]">Signal // Transmission</span>
             </div>
+            <h3 className="text-5xl md:text-8xl font-sans font-black tracking-tighter text-[var(--color-text)] uppercase leading-[0.8]">
+              Get in <br /> <span className="opacity-20 italic font-serif font-normal" style={{ fontFamily: 'var(--font-signature)' }}>Touch.</span>
+            </h3>
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-24">

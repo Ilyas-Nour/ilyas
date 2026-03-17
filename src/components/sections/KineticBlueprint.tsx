@@ -52,19 +52,18 @@ export const KineticBlueprint: React.FC = () => {
       <div className="container mx-auto px-6 md:px-24 relative z-10">
         <div className="max-w-7xl mx-auto space-y-40">
           
-          {/* Header Block: Parallel with Hero Typography */}
-          <div className="relative select-none">
+          <div className="relative select-none mb-24">
             <motion.h2 
               style={{ x: xLeft, opacity, filter: `blur(${blur}px)` }}
-              className="text-[12vw] leading-[0.8] font-serif font-bold uppercase tracking-tighter text-[var(--color-text)] opacity-10"
+              className="text-[12vw] leading-[0.8] font-sans font-black uppercase tracking-tighter text-[var(--color-text)]"
             >
-              System
+              About
             </motion.h2>
             <motion.h2 
-              style={{ x: xRight, opacity, filter: `blur(${blur}px)` }}
-              className="text-[15vw] leading-[0.8] -mt-[4vw] font-black uppercase tracking-tighter text-[var(--color-text)] mix-blend-difference"
+              style={{ x: xRight, opacity, filter: `blur(${blur}px)`, fontFamily: 'var(--font-signature)' }}
+              className="text-[15vw] leading-[0.8] -mt-[4vw] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
             >
-              Identity.
+              Me.
             </motion.h2>
           </div>
 

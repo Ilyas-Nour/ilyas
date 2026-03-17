@@ -34,14 +34,13 @@ export const TechnicalArray: React.FC = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header: Cohesive with ModernHero */}
         <div className="mb-24">
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-4 mb-8">
              <div className="w-10 h-[2px] bg-[var(--color-accent)]" />
              <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[var(--color-accent)]">Weaponry // Mastery</span>
           </div>
           <h2 className="text-5xl md:text-8xl font-black text-[var(--color-text)] tracking-tighter uppercase leading-[0.8]">
-             Technical <br /> <span className="opacity-20 italic font-serif font-normal">Array.</span>
+             My <br /> <span className="opacity-20 italic font-serif font-normal" style={{ fontFamily: 'var(--font-signature)' }}>Skills.</span>
           </h2>
         </div>
 
