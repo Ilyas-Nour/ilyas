@@ -9,14 +9,14 @@ import { motion } from 'framer-motion';
 export const ExpertiseWeb: React.FC = () => {
   const categories = [
     {
-      title: "The Frontend",
+      title: "Design & UX",
       skills: ["React", "Next.js", "TypeScript", "TailwindCSS", "Framer Motion", "Three.js"],
-      description: "Crafting fluid, high-fidelity interfaces with mathematical precision."
+      description: "I make websites that look and feel good."
     },
     {
-      title: "The Backend",
+      title: "Inside the Code",
       skills: ["Node.js", "Express", "PostgreSQL", "MongoDB", "NoSQL", "REST APIs"],
-      description: "Architecting scalable, resilient data layers and efficient server logic."
+      description: "I build the parts that handle your data and keep things running."
     },
     {
       title: "The Toolbox",
@@ -26,24 +26,24 @@ export const ExpertiseWeb: React.FC = () => {
   ];
 
   return (
-    <section id="skills" className="section-padding bg-[var(--color-bg)] border-t border-[var(--color-border)]">
-      <div className="container mx-auto">
+    <section id="skills" className="min-h-screen py-32 flex flex-col justify-center bg-[var(--color-bg)] border-t border-[var(--color-border)]">
+      <div className="container mx-auto px-6">
         {/* Header */}
-        <div className="mb-20 md:mb-32">
-          <h2 className="text-sm font-mono uppercase tracking-[0.5em] text-[var(--color-accent)] mb-6">Expertise</h2>
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
-            <h3 className="text-4xl md:text-7xl font-sans font-extrabold tracking-tighter text-[var(--color-text)] leading-[0.9]">
-              Structural <br /> 
-              <span className="italic font-serif font-normal opacity-50">Discovery.</span>
+        <div className="flex-none mb-8 md:mb-12">
+          <h2 className="text-sm font-mono uppercase tracking-[0.5em] text-[var(--color-accent)] mb-2">Skills</h2>
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <h3 className="text-3xl md:text-5xl font-sans font-extrabold tracking-tighter text-[var(--color-text)] leading-[0.9]">
+              What I <br /> 
+              <span className="italic font-serif font-normal opacity-50 text-3xl md:text-6xl">Can Do.</span>
             </h3>
-            <p className="max-w-md text-[var(--color-text-muted)] font-sans font-light text-lg leading-relaxed">
-              My technical foundation is built on modern frameworks and architectural patterns, ensuring speed and reliability at scale.
+            <p className="max-w-md text-[var(--color-text-muted)] font-sans font-light text-sm leading-relaxed">
+              I use modern tools to build websites that are fast and easy to use.
             </p>
           </div>
         </div>
 
-        {/* Categories Grid */}
-        <div className="space-y-12 md:space-y-24">
+        {/* Categories Grid - Viewport Tightened */}
+        <div className="flex-1 min-h-0 space-y-4 md:space-y-6 overflow-hidden">
           {categories.map((cat, i) => (
             <motion.div
               key={cat.title}
@@ -51,17 +51,17 @@ export const ExpertiseWeb: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.2, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="group border-b border-[var(--color-border)] pb-12 md:pb-20 last:border-0"
+              className="group border-b border-[var(--color-border)] pb-6 md:pb-10 last:border-0"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
                 {/* Title and Index */}
                 <div className="lg:col-span-4 flex items-baseline gap-6">
                   <span className="font-mono text-xs opacity-30">0{i + 1}</span>
                   <div>
-                    <h4 className="text-3xl md:text-5xl font-serif italic text-[var(--color-text)] mb-4 transition-colors duration-500 group-hover:text-[var(--color-accent)]">
+                    <h4 className="text-xl md:text-3xl font-serif italic text-[var(--color-text)] mb-1 md:mb-2 transition-colors duration-500 group-hover:text-[var(--color-accent)]">
                       {cat.title}
                     </h4>
-                    <p className="text-[var(--color-text-muted)] font-sans font-light max-w-sm">
+                    <p className="text-[var(--color-text-muted)] font-sans font-light text-xs max-w-sm">
                       {cat.description}
                     </p>
                   </div>

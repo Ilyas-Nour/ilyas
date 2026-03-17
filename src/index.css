@@ -2,6 +2,7 @@
 
 @theme {
   --font-display: "Playfair Display", serif;
+  --font-heading: "Syne", sans-serif;
   --font-functional: "Outfit", sans-serif;
   --font-mono: "Space Mono", monospace;
   --font-signature: "Pinyon Script", cursive;
@@ -20,10 +21,9 @@
   --color-text-muted: #a1a1aa;
   --color-border: rgba(255, 255, 255, 0.1);
   --color-accent: #3b82f6;
-  --color-device-frame: #ffffff;
-  --color-device-bezel: #f0f0f0;
-  --color-device-inner: #000000;
-  --color-device-shadow: rgba(255, 255, 255, 0.1);
+  --color-device-bg: #ececec;
+  --color-device-border: #ffffff;
+  --color-device-accent: #d1d1d1;
 }
 
 [data-theme='light'] {
@@ -33,16 +33,16 @@
   --color-text-muted: #71717a;
   --color-border: rgba(0, 0, 0, 0.1);
   --color-accent: #2563eb;
-  --color-device-frame: #111111;
-  --color-device-bezel: #222222;
-  --color-device-inner: #000000;
-  --color-device-shadow: rgba(0, 0, 0, 0.5);
+  --color-device-bg: #111111;
+  --color-device-border: #222222;
+  --color-device-accent: #333333;
 }
 
 @layer base {
   body, html, main, #root {
     @apply bg-[var(--color-bg)] text-[var(--color-text)] antialiased transition-colors duration-500;
     font-family: var(--font-functional);
+    cursor: none !important;
     box-shadow: none !important;
     outline: none !important;
     
@@ -141,7 +141,7 @@ section[id] {
 
 /* Premium Link Interaction System */
 .navbar-link, .footer-link-nav {
-  @apply relative transition-all duration-500 text-[var(--color-text-muted)] hover:text-[var(--color-text)] py-2 px-3 flex items-center;
+  @apply relative transition-all duration-500 text-[var(--color-text-muted)] hover:text-[var(--color-text)] py-4 px-2 flex items-center h-full;
 }
 
 /* Floating Alchemical Active State */
@@ -149,26 +149,27 @@ section[id] {
   @apply text-[var(--color-text)];
 }
 
-.navbar-link.active::before {
-  content: '';
-  @apply absolute -inset-1 -z-10 opacity-20 border border-[var(--color-accent)] rounded-lg;
-  background: radial-gradient(circle at center, var(--color-accent) 0%, transparent 100%);
-  filter: blur(8px);
-  animation: aura-breathe 3s ease-in-out infinite;
+/* Minimalist Active State Indicator */
+.navbar-link.active {
+  @apply text-[var(--color-text)];
 }
 
-@keyframes aura-breathe {
-  0%, 100% { transform: scale(0.95); opacity: 0.1; }
-  50% { transform: scale(1.15); opacity: 0.3; }
+.navbar-link::before {
+  content: '';
+  @apply absolute top-1/2 -left-2 w-1 h-1 bg-[var(--color-accent)] rounded-full opacity-0 -translate-y-1/2 transition-all duration-500;
+}
+
+.navbar-link.active::before {
+  @apply opacity-100;
 }
 
 .navbar-link::after {
   content: '';
-  @apply absolute bottom-0 left-0 w-0 h-[1px] bg-[var(--color-accent)] transition-all duration-700;
+  @apply absolute bottom-0 left-0 w-0 h-[1.5px] bg-[var(--color-accent)] transition-all duration-700 ease-[0.16,1,0.3,1];
 }
 
 .navbar-link.active::after {
-  @apply w-full opacity-100;
+  @apply w-full;
 }
 
 /* Device Mockup System */
@@ -184,11 +185,12 @@ section[id] {
 .mobile-frame {
   width: 280px;
   height: 580px;
-  background: var(--color-device-inner);
+  background: var(--color-device-bg);
   border-radius: 40px;
-  border: 12px solid var(--color-device-bezel);
+  border: 12px solid var(--color-device-border);
   position: relative;
-  box-shadow: 0 50px 100px -20px var(--color-device-shadow);
+  box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5);
+  transition: background 0.5s ease, border-color 0.5s ease;
   overflow: hidden;
   outline: 2px solid var(--color-device-frame);
 }
@@ -201,7 +203,7 @@ section[id] {
   transform: translateX(-50%);
   width: 120px;
   height: 25px;
-  background: var(--color-device-bezel);
+  background: var(--color-device-border);
   z-index: 10;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -211,14 +213,13 @@ section[id] {
   width: 80%;
   max-width: 900px;
   aspect-ratio: 16/10;
-  background: var(--color-device-inner);
+  background: var(--color-device-bg);
   border-radius: 12px;
-  border: 15px solid var(--color-device-bezel);
+  border: 15px solid var(--color-device-border);
   position: relative;
   box-shadow: 0 100px 150px -50px var(--color-device-shadow);
   transform: rotateX(5deg);
-  transition: transform 0.5s ease;
-  outline: 2px solid var(--color-device-frame);
+  transition: transform 0.5s ease, background 0.5s ease, border-color 0.5s ease;
 }
 
 .laptop-frame:hover {
@@ -232,7 +233,7 @@ section[id] {
   left: -5%;
   width: 110%;
   height: 15px;
-  background: var(--color-device-bezel);
+  background: var(--color-device-accent);
   border-radius: 0 0 20px 20px;
 }
 

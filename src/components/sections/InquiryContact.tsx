@@ -50,19 +50,19 @@ export const InquiryContact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="relative py-40 px-6">
+    <section id="contact" className="min-h-screen py-32 flex flex-col justify-center bg-[var(--color-bg)] px-6">
       <div className="container mx-auto">
         <div className="max-w-6xl mx-auto">
-          {/* Section Header with Signature Style */}
-          <header className="mb-20 md:mb-32">
-            <h2 className="text-sm font-mono uppercase tracking-[0.5em] text-[var(--color-accent)] mb-6">Contact</h2>
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
-              <h3 className="text-4xl md:text-7xl font-sans font-extrabold tracking-tighter text-[var(--color-text)] leading-[0.9]">
-                Let's <br /> 
-                <span className="italic font-serif font-normal opacity-50">Connect.</span>
+          {/* Section Header */}
+          <header className="mb-12 md:mb-16">
+            <h2 className="text-sm font-mono uppercase tracking-[0.5em] text-[var(--color-accent)] mb-4">Contact</h2>
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+              <h3 className="text-3xl md:text-6xl font-sans font-extrabold tracking-tighter text-[var(--color-text)] leading-[0.9]">
+                Get in <br /> 
+                <span className="italic font-serif font-normal opacity-50 text-4xl md:text-7xl">Touch.</span>
               </h3>
-              <p className="max-w-sm text-[var(--color-text-muted)] font-sans font-light text-lg leading-relaxed text-center lg:text-left">
-                Have a vision? Let's build it together. I am always open to discussing new projects and technical challenges.
+              <p className="max-w-sm text-[var(--color-text-muted)] font-sans font-light text-base leading-relaxed text-center lg:text-left">
+                Have an idea? Let's work together. I am always happy to talk about new projects.
               </p>
             </div>
           </header>
@@ -119,7 +119,7 @@ export const InquiryContact: React.FC = () => {
                          disabled={status === 'sending' || status === 'success'}
                          icon={<span className={status === 'sending' ? 'animate-pulse' : ''}>{status === 'success' ? '✓' : '✉'}</span>}
                        >
-                          {status === 'sending' ? 'Dispatching...' : status === 'success' ? 'Message Sent' : 'Dispatch Message'}
+                          {status === 'sending' ? 'Sending...' : status === 'success' ? 'Sent' : 'Send Message'}
                        </KineticButton>
 
                        {/* Status Notifications */}
@@ -141,7 +141,7 @@ export const InquiryContact: React.FC = () => {
                              exit={{ opacity: 0 }}
                              className="text-[var(--color-accent)] font-mono text-[10px] uppercase tracking-widest"
                            >
-                             Received. Talk soon.
+                             Received. Thanks.
                            </motion.span>
                          )}
                        </AnimatePresence>
