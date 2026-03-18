@@ -169,17 +169,17 @@ export const TechnicalArray: React.FC = () => {
           
           <ParticleCore activeId={activeCategory} pulse={pulse} />
           
-          {CATEGORIES.map((cat, i) => (
-            <SkillLabel 
-              key={cat.id} 
-              cat={cat} 
-              index={i} 
-              onSelect={handleSelect}
-              isActive={activeCategory === cat.id}
-            />
-          ))}
-
-          <Environment preset="night" />
+          <React.Suspense fallback={null}>
+            {CATEGORIES.map((cat, i) => (
+              <SkillLabel 
+                key={cat.id} 
+                cat={cat} 
+                index={i} 
+                onSelect={handleSelect}
+                isActive={activeCategory === cat.id}
+              />
+            ))}
+          </React.Suspense>
         </Canvas>
       </div>
 
