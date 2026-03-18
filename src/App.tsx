@@ -92,7 +92,6 @@ function App() {
             <motion.div 
               style={{ 
                 scale: useTransform(scrollYProgress, [0, 1], [1, 4]),
-                filter: useTransform(scrollYProgress, [0, 0.5, 1], ["blur(0px)", "blur(10px)", "blur(20px)"]),
                 opacity: useTransform(scrollYProgress, [0.8, 1], [1, 0]),
                 clipPath: useTransform(
                   scrollYProgress, 
@@ -107,7 +106,7 @@ function App() {
               }}
               className="sticky top-0 w-full will-change-transform"
             >
-              <ModernHero />
+              <ModernHero warp={useTransform(scrollYProgress, [0, 0.5, 1], [0, 4, 0])} />
             </motion.div>
           </div>
 

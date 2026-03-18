@@ -60,13 +60,13 @@ export const KineticBlueprint: React.FC = () => {
           
           <div className="relative select-none mb-24">
             <motion.h2 
-              style={{ x: xLeft, opacity, filter: `blur(${blur}px)` }}
+              style={{ x: xLeft, opacity }}
               className="text-[12vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
             >
               About
             </motion.h2>
             <motion.h2 
-              style={{ x: xRight, opacity, filter: `blur(${blur}px)`, fontFamily: 'var(--font-signature)' }}
+              style={{ x: xRight, opacity, fontFamily: 'var(--font-signature)' }}
               className="text-[15vw] leading-[0.8] -mt-[4vw] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
             >
               Me.

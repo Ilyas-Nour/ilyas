@@ -10,7 +10,7 @@ import { useTheme } from '../../context/ThemeContext';
  * Typography occupies ~80% of width for a monolithic feel.
  * No background layers or slices - pure 3D background.
  */
-export const ModernHero: React.FC = () => {
+export const ModernHero: React.FC<{ warp?: any }> = ({ warp }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
   
@@ -36,8 +36,8 @@ export const ModernHero: React.FC = () => {
       ref={containerRef}
       className="relative min-h-screen flex flex-col justify-center items-center px-6 md:px-12 lg:px-24 overflow-hidden transition-colors duration-500 pt-32 md:pt-40"
     >
-      {/* Background Kinetic Shader Layer */}
-      <LiquidBackground theme={theme} />
+      {/* Background Kinetic Shader Layer with Warp prop */}
+      <LiquidBackground theme={theme} warp={warp} />
 
       <div className="container mx-auto relative z-10 flex flex-col items-center">
         {/* Massive Motion Typography - Precision Positioned with Smart Contrast */}

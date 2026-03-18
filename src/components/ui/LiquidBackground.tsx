@@ -57,7 +57,7 @@ const fragmentShader = `
   }
 `;
 
-const ShaderPlane = ({ color1, color2, opacity, warp = 0 }: { color1: string, color2: string, opacity: number, warp?: number }) => {
+const ShaderPlane = ({ color1, color2, opacity, warp }: { color1: string, color2: string, opacity: number, warp?: any }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { viewport, size, mouse } = useThree();
@@ -69,22 +69,29 @@ const ShaderPlane = ({ color1, color2, opacity, warp = 0 }: { color1: string, co
     uColor1: { value: new THREE.Color(color1) },
     uColor2: { value: new THREE.Color(color2) },
     uOpacity: { value: opacity },
-    uWarp: { value: warp }
+    uWarp: { value: 0 }
   }), []); // Only initialize once
 
-  // Reactive updates for uniforms
+  // Reactive updates for static uniforms
   useEffect(() => {
     if (materialRef.current) {
       materialRef.current.uniforms.uColor1.value.set(color1);
       materialRef.current.uniforms.uColor2.value.set(color2);
       materialRef.current.uniforms.uOpacity.value = opacity;
-      materialRef.current.uniforms.uWarp.value = warp;
     }
-  }, [color1, color2, opacity, warp]);
+  }, [color1, color2, opacity]);
 
   useFrame((state) => {
     if (materialRef.current) {
       materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
+      
+      // Update uWarp directly from warp prop (which could be a MotionValue or number)
+      if (warp && typeof warp.get === 'function') {
+        materialRef.current.uniforms.uWarp.value = warp.get();
+      } else if (typeof warp === 'number') {
+        materialRef.current.uniforms.uWarp.value = warp;
+      }
+
       const targetX = (mouse.x + 1) / 2;
       const targetY = (mouse.y + 1) / 2;
       materialRef.current.uniforms.uMouse.value.x += (targetX - materialRef.current.uniforms.uMouse.value.x) * 0.1;
@@ -107,7 +114,7 @@ const ShaderPlane = ({ color1, color2, opacity, warp = 0 }: { color1: string, co
   );
 };
 
-export const LiquidBackground: React.FC<{ theme: 'light' | 'dark', warp?: number }> = ({ theme, warp = 0 }) => {
+export const LiquidBackground: React.FC<{ theme: 'light' | 'dark', warp?: any }> = ({ theme, warp }) => {
   const color1 = theme === 'dark' ? '#020617' : '#94a3b8'; // Obsidian vs Steel Blue-Grey
   const color2 = theme === 'dark' ? '#1e3a8a' : '#475569'; // Cobalt vs Graphite
   const opacity = theme === 'dark' ? 1.0 : 0.4; 
