@@ -31,6 +31,7 @@
   --color-device-border: #ffffff;
   --color-device-accent: #d1d1d1;
   --color-hero-bg: #020617;
+  --color-nav-active: var(--color-hero-bg);
 }
 
 [data-theme='light'] {
@@ -44,6 +45,7 @@
   --color-device-border: #222222;
   --color-device-accent: #333333;
   --color-hero-bg: #cbd5e1;
+  --color-nav-active: #0f172a; /* High-contrast Deep Slate for Light Mode */
 }
 
 @layer base {
@@ -164,7 +166,7 @@ section[id] {
 
 .navbar-link::before {
   content: '';
-  @apply absolute top-1/2 -left-2 w-1.5 h-1.5 bg-[var(--color-hero-bg)] rounded-full opacity-0 -translate-y-1/2 transition-all duration-500 shadow-[0_0_10px_rgba(255,255,255,0.8)];
+  @apply absolute top-1/2 -left-2 w-1.5 h-1.5 bg-[var(--color-nav-active)] rounded-full opacity-0 -translate-y-1/2 transition-all duration-500 shadow-[0_0_10px_rgba(var(--color-nav-active),0.4)];
 }
 
 .navbar-link.active::before {
@@ -174,7 +176,8 @@ section[id] {
 
 .navbar-link::after {
   content: '';
-  @apply absolute bottom-0 left-0 w-0 h-[1.5px] bg-[var(--color-hero-bg)] transition-all duration-700 ease-[0.16,1,0.3,1] shadow-[0_0_5px_rgba(255,255,255,0.4)];
+  @apply absolute bottom-0 left-0 w-0 h-[1.5px] bg-[var(--color-nav-active)] transition-all duration-700 ease-[0.16,1,0.3,1];
+  box-shadow: 0 0 5px rgba(var(--color-nav-active), 0.2);
 }
 
 .navbar-link.active::after {
@@ -334,13 +337,21 @@ section[id] {
   @apply shadow-[0_25px_50px_rgba(59,130,246,0.3)];
 }
 
-/* Footer & Nav Links - Premium Hover */
-.footer-link {
-  @apply relative transition-all duration-500 text-[var(--color-text-muted)] hover:text-[var(--color-text)];
+/* Artistic Footer Navigation */
+.artistic-nav-link {
+  @apply relative block w-fit h-[40px] overflow-hidden;
 }
 
-.footer-link::after {
+.artistic-nav-inner {
+  will-change: transform;
+}
+
+.artistic-nav-link::after {
   content: '';
-  @apply absolute -bottom-1 left-0 w-0 h-[1px] bg-[var(--color-accent)] transition-all duration-500;
+  @apply absolute bottom-0 left-0 w-0 h-[1px] bg-[var(--color-accent)] transition-all duration-700 ease-[0.16,1,0.3,1];
+}
+
+.artistic-nav-link:hover::after {
+  @apply w-full;
 }
 

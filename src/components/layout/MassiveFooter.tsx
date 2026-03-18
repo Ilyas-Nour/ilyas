@@ -42,12 +42,16 @@ export const MassiveFooter = React.memo(() => {
                     <a 
                       key={link.id}
                       href={`#${link.id}`} 
-                      className="footer-link-nav w-fit !px-0"
+                      className="artistic-nav-link group overflow-hidden"
                     >
-                      {/* Artistic Link Effect - Uses dataset for text duplication in CSS if needed */}
-                      <span className="artistic-link" data-text={link.name}>
-                        <span className="artistic-link-text text-lg font-serif italic text-[var(--color-text)]">{link.name}</span>
-                      </span>
+                      <div className="artistic-nav-inner relative flex flex-col transition-transform duration-700 ease-[0.16,1,0.3,1] group-hover:-translate-y-1/2">
+                        <span className="text-2xl font-serif italic text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors duration-500 py-1">
+                          {link.name}
+                        </span>
+                        <span className="text-2xl font-serif italic text-[var(--color-accent)] py-1">
+                          {link.name}
+                        </span>
+                      </div>
                     </a>
                   ))}
               </nav>
@@ -72,12 +76,11 @@ export const MassiveFooter = React.memo(() => {
             </div>
 
             {/* Studio Credits Section */}
-            <div className="space-y-8 md:text-right flex flex-col justify-end">
-              <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase md:text-right">Studio</h4>
+            <div className="space-y-4 md:text-right flex flex-col justify-end h-full">
               <p className="font-mono text-[10px] text-[var(--color-text-muted)] leading-relaxed uppercase tracking-widest">
                 Designed & Developed <br />
                 by Ilyas Nour<br />
-                © 2026 Creative Archive
+                © 2026 all rights reserved
               </p>
             </div>
           </div>

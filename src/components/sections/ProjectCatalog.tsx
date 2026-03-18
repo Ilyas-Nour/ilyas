@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { KineticButton } from '../ui/KineticButton';
+import { ProjectButton } from '../ui/ProjectButton';
 import { useScrollProgress } from '../../context/ScrollProgressContext';
 
 /**
@@ -10,7 +11,7 @@ import { useScrollProgress } from '../../context/ScrollProgressContext';
 const projects = [
   {
     title: "Animy",
-    description: "A fast site to track your favorite anime. You can chat with others and get news about new episodes.",
+    description: "Animy is a social-first anime and manga discovery platform designed to connect fans through real-time interaction and personalized tracking. It shifts the focus from simple content browsing to building a community around shared interests, allowing users to curate their journeys and share them with friends.",
     tags: ["NestJS", "Redis", "Socket.io", "PostgreSQL", "Next.js"],
     link: "https://animy-frontend.vercel.app",
     screenshots: [
@@ -51,7 +52,7 @@ const projects = [
  * @param src Absolute path to the image asset.
  * @param project Project title for accessibility (alt tag).
  */
-const Screenshot = ({ src, project }: { src: string, project: string }) => {
+const Screenshot = React.memo(({ src, project }: { src: string, project: string }) => {
   const isMobile = src.includes('mobile');
   
   return (
@@ -81,7 +82,7 @@ const Screenshot = ({ src, project }: { src: string, project: string }) => {
       </div>
     </motion.div>
   );
-};
+});
 
 /**
  * HorizontalProject Component
@@ -175,7 +176,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
     return (
       <div className="px-6 py-20 space-y-12">
         <div className="space-y-6">
-          <h3 className="text-5xl font-serif italic text-[var(--color-text)] leading-none">{project.title}</h3>
+          <h3 className="text-5xl font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-none">{project.title}</h3>
           <p className="text-lg text-[var(--color-text-muted)] font-sans font-light leading-relaxed">
             {project.description}
           </p>
@@ -188,13 +189,10 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
           </div>
           {project.link && (
             <div className="pt-4 flex">
-              <KineticButton 
-                variant="primary"
-                onClick={() => window.open(project.link, '_blank')}
-                icon={<span>↗</span>}
-              >
-                Visit Site
-              </KineticButton>
+              <ProjectButton 
+                link={project.link}
+                title={project.title}
+              />
             </div>
           )}
         </div>
@@ -215,7 +213,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
           {/* Project Identity Card */}
           <div className="flex-shrink-0 w-[85vw] md:w-[60vw] space-y-6 md:space-y-12 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="space-y-4 md:space-y-6">
-               <h3 className="text-5xl md:text-9xl font-serif italic text-[var(--color-text)] leading-none" style={{ fontSize: 'clamp(2.5rem, 8vw, 8rem)' }}>{project.title}</h3>
+               <h3 className="text-5xl md:text-9xl font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-none" style={{ fontSize: 'clamp(2.5rem, 8vw, 8rem)' }}>{project.title}</h3>
             </div>
             
             <div className="max-w-xl space-y-6 md:space-y-8 flex flex-col items-center md:items-start">
@@ -231,14 +229,10 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
               </div>
               {project.link && (
                 <div className="pt-4 md:pt-8 flex">
-                  <KineticButton 
-                    variant="primary"
-                    className="text-[8px] md:text-[10px]"
-                    onClick={() => window.open(project.link, '_blank')}
-                    icon={<span>↗</span>}
-                  >
-                    Visit Site
-                  </KineticButton>
+                  <ProjectButton 
+                    link={project.link}
+                    title={project.title}
+                  />
                 </div>
               )}
             </div>
@@ -268,12 +262,12 @@ export const ProjectCatalog: React.FC = () => {
     offset: ["start end", "end start"]
   });
 
-  const xLeft = useTransform(scrollYProgress, [0, 0.4], [-100, 0]);
-  const xRight = useTransform(scrollYProgress, [0, 0.4], [100, 0]);
+  const xLeft = useTransform(scrollYProgress, [0, 0.3], [-100, 0]);
+  const xRight = useTransform(scrollYProgress, [0, 0.15], [80, 0]);
 
   return (
     <section id="projects" ref={sectionRef} className="relative min-h-screen flex flex-col justify-start bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-8 md:pt-12">
-      <header className="container mx-auto mb-8 md:mb-12 px-6">
+      <header className="container mx-auto mb-2 md:mb-4 px-6">
         <div className="relative select-none">
           <motion.h2 
             style={{ x: xLeft }}
@@ -283,7 +277,7 @@ export const ProjectCatalog: React.FC = () => {
           </motion.h2>
           <motion.h2 
             style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
-            className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+            className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
           >
             Work.
           </motion.h2>

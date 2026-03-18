@@ -55,8 +55,8 @@ export const InquiryContact: React.FC = () => {
     offset: ["start end", "end start"]
   });
 
-  const xLeft = useTransform(scrollYProgress, [0, 0.4], [-100, 0]);
-  const xRight = useTransform(scrollYProgress, [0, 0.4], [100, 0]);
+  const xLeft = useTransform(scrollYProgress, [0, 0.25], [-100, 0]);
+  const xRight = useTransform(scrollYProgress, [0, 0.25], [100, 0]);
 
   return (
     <section id="contact" ref={sectionRef} className="min-h-screen py-32 flex flex-col justify-center bg-[var(--color-bg)] px-6 relative">
@@ -73,7 +73,7 @@ export const InquiryContact: React.FC = () => {
               </motion.h2>
               <motion.h2 
                 style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
-                className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+                className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
               >
                 Touch.
               </motion.h2>

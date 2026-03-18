@@ -97,8 +97,8 @@ export const TechnicalArray: React.FC = () => {
     offset: ["start end", "end start"]
   });
 
-  const xLeft = useTransform(scrollYProgress, [0, 0.4], [-100, 0]);
-  const xRight = useTransform(scrollYProgress, [0, 0.4], [100, 0]);
+  const xLeft = useTransform(scrollYProgress, [0, 0.25], [-100, 0]);
+  const xRight = useTransform(scrollYProgress, [0, 0.25], [100, 0]);
 
   return (
     <section id="skills" ref={sectionRef} className="min-h-screen py-20 md:py-32 flex flex-col justify-center bg-[var(--color-bg)] transition-colors duration-500 overflow-hidden relative">
@@ -123,7 +123,7 @@ export const TechnicalArray: React.FC = () => {
             </motion.h2>
             <motion.h2 
               style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
-              className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+              className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
             >
               protocols.
             </motion.h2>

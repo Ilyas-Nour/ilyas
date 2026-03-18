@@ -57,7 +57,7 @@ const fragmentShader = `
   }
 `;
 
-const ShaderPlane = ({ color1, color2, opacity, warp }: { color1: string, color2: string, opacity: number, warp?: any }) => {
+const ShaderPlane = ({ color1, color2, opacity, warp, isVisible }: { color1: string, color2: string, opacity: number, warp?: any, isVisible: boolean }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { viewport, size, mouse } = useThree();
@@ -79,10 +79,10 @@ const ShaderPlane = ({ color1, color2, opacity, warp }: { color1: string, color2
       materialRef.current.uniforms.uColor2.value.set(color2);
       materialRef.current.uniforms.uOpacity.value = opacity;
     }
-  }, [color1, color2, opacity]);
+  }, [color1, color2, opacity, isVisible]);
 
   useFrame((state) => {
-    if (materialRef.current) {
+    if (isVisible && materialRef.current) {
       // Use performance.now() to avoid THREE.Clock deprecation warnings in newer Three.js versions
       materialRef.current.uniforms.uTime.value = performance.now() * 0.001;
       
@@ -102,7 +102,7 @@ const ShaderPlane = ({ color1, color2, opacity, warp }: { color1: string, color2
   });
 
   return (
-    <mesh ref={meshRef} scale={[viewport.width * 1.5, viewport.height * 1.5, 1]}>
+    <mesh ref={meshRef} scale={[viewport.width * 1.5, viewport.height * 1.5, 1]} visible={isVisible}>
       <planeGeometry args={[1, 1]} />
       <shaderMaterial
         ref={materialRef}
@@ -116,18 +116,39 @@ const ShaderPlane = ({ color1, color2, opacity, warp }: { color1: string, color2
 };
 
 export const LiquidBackground: React.FC<{ theme: 'light' | 'dark', warp?: any }> = ({ theme, warp }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = React.useState(true); // Default to true to allow initial render
+
   const color1 = theme === 'dark' ? '#020617' : '#94a3b8'; // Obsidian vs Steel Blue-Grey
   const color2 = theme === 'dark' ? '#1e3a8a' : '#475569'; // Cobalt vs Graphite
   const opacity = theme === 'dark' ? 1.0 : 0.4; 
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className={`fixed inset-0 z-[-1] overflow-hidden transition-colors duration-700 ${theme === 'dark' ? 'bg-[#020617]' : 'bg-[#cbd5e1]'}`}>
+    <div 
+      ref={containerRef}
+      className={`fixed inset-0 z-[-1] overflow-hidden transition-colors duration-700 ${theme === 'dark' ? 'bg-[#020617]' : 'bg-[#cbd5e1]'}`}
+    >
       <Canvas
         camera={{ position: [0, 0, 1] }}
         style={{ width: '100%', height: '100%', pointerEvents: 'none' }}
         dpr={[1, 2]}
       >
-        <ShaderPlane color1={color1} color2={color2} opacity={opacity} warp={warp} />
+        <ShaderPlane color1={color1} color2={color2} opacity={opacity} warp={warp} isVisible={isVisible} />
       </Canvas>
     </div>
   );
