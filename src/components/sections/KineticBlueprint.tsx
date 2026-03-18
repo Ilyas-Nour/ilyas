@@ -121,15 +121,6 @@ export const KineticBlueprint: React.FC = () => {
                      I am a second-year digital development student at OFPPT, passionate about crafting seamless user experiences. My focus is on combining high-performance logic with aesthetic precision to build tools that feel like the future.
                   </p>
                </div>
-               <div className="pt-8 border-t border-[var(--color-border)] opacity-20 group-hover:opacity-100 transition-opacity duration-500 mt-auto">
-                  <div className="flex justify-between text-[8px] font-mono">
-                     <span>CRAFTING QUALITY</span>
-                     <span>100%</span>
-                  </div>
-                  <div className="h-1 w-full bg-[var(--color-border)] mt-2">
-                     <div className="h-full w-[100%] bg-[var(--color-accent)]" />
-                  </div>
-               </div>
             </motion.div>
 
             {/* Animy/VaultNode Tiles */}
