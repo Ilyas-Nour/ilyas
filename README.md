@@ -1,7 +1,7 @@
-# [PROJECT_NAME] // [TAG_MASTERWORK_V4]
+# Ilyas Nour | Full-Stack Developer & UI Architect
 
 <p align="center">
-  <img src="public/projects/animy1.png" width="800" alt="Portfolio Preview" style="border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);" />
+  <img src="public/projects/hero_preview.png" width="800" alt="Portfolio Preview" style="border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);" />
 </p>
 
 ## THE PHILOSOPHY
