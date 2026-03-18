@@ -6,15 +6,17 @@ import { useTheme } from '../../context/ThemeContext';
 /**
  * Word Component for the Reading Effect
  */
-const Word = ({ children, progress, range }: { children: string, progress: any, range: [number, number] }) => {
-  const opacity = useTransform(progress, range, [0.15, 1]);
-  const color = useTransform(progress, range, ["var(--color-text-muted)", "var(--color-text)"]);
+const Word = ({ children, progress, range, isHighlighted }: { children: string, progress: any, range: [number, number], isHighlighted: boolean }) => {
+  const baseOpacity = isHighlighted ? 0.3 : 0.15;
+  const opacity = useTransform(progress, range, [baseOpacity, 1]);
+  const baseColor = isHighlighted ? "var(--color-accent)" : "var(--color-text-muted)";
+  const color = useTransform(progress, range, [baseColor, isHighlighted ? "var(--color-accent)" : "var(--color-text)"]);
   const scale = useTransform(progress, range, [0.98, 1]);
   
   return (
     <motion.span 
       style={{ opacity, color, scale }} 
-      className="inline-block mr-[0.25em] transition-colors duration-300"
+      className={`inline-block mr-[0.25em] transition-colors duration-300 ${isHighlighted ? 'italic font-serif font-normal' : ''}`}
     >
       {children}
     </motion.span>
@@ -38,6 +40,8 @@ export const KineticBlueprint: React.FC = () => {
 
   const bioText = "I am Ilyas Nour, a digital architect from Morocco and a student at OFPPT. My work is defined by the fusion of high-performance logic and aesthetic precision. Through projects like Animy and VaultNode, I bridge the gap between complex data and elegant design. Every line of code is a step toward the 'Masterwork' standard—merging speed, stability, and artistic soul.";
   const words = bioText.split(" ");
+  
+  const importantWords = ["Ilyas", "Nour", "Morocco", "OFPPT", "Animy", "VaultNode", "Masterwork"];
 
   // Title Transforms (Restored from old version)
   const titleOpacity = 1;
@@ -95,8 +99,12 @@ export const KineticBlueprint: React.FC = () => {
               {words.map((word, i) => {
                 const start = i / words.length;
                 const end = start + (1 / words.length);
+                const isHighlighted = importantWords.some(important => 
+                  word.replace(/[.,'']/g, "").includes(important)
+                );
+                
                 return (
-                  <Word key={i} progress={smoothProgress} range={[start, end]}>
+                  <Word key={i} progress={smoothProgress} range={[start, end]} isHighlighted={isHighlighted}>
                     {word}
                   </Word>
                 );
