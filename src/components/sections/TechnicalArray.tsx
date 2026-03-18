@@ -27,7 +27,7 @@ export const TechnicalArray: React.FC = () => {
   ];
 
   return (
-    <section id="skills" className="min-h-screen py-40 flex flex-col justify-center bg-transparent border-t border-[var(--color-border)] relative overflow-hidden">
+    <section id="skills" className="min-h-screen py-40 flex flex-col justify-center bg-[var(--color-bg)] border-t border-[var(--color-border)] relative overflow-hidden">
       {/* Background Decor: Massive Registry Numbers */}
       <div className="absolute left-10 top-20 opacity-[0.02] select-none pointer-events-none">
         <span className="text-[30vw] font-black leading-none">00</span>
