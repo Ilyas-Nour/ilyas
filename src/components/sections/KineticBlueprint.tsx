@@ -36,12 +36,17 @@ export const KineticBlueprint: React.FC = () => {
     restDelta: 0.001
   });
 
-  const bioText = "I am Ilyas Nour, a second-year digital development student at OFPPT, based in the vibrant heart of Morocco. My journey in technology is driven by a profound obsession with combining high-performance logic with aesthetic precision. I don't just build websites; I architect digital experiences that feel like the future. Specializing in high-fidelity motion and distributed systems, I created Animy and VaultNode as proof that data and design can live in perfect harmony. Every line of code I write is a commitment to speed, stability, and visual excellence. I believe that a truly great web application should be as beautiful to look at as it is powerful to use. My mission is to push the boundaries of what's possible on the web, creating tools that are not only instant but also leave a lasting artistic impression. From crafting complex shaders to engineering scalable backends, I am constantly refining my craft to reach the 'Masterwork' standard.";
+  const bioText = "I am Ilyas Nour, a digital architect from Morocco and a student at OFPPT. My work is defined by the fusion of high-performance logic and aesthetic precision. Through projects like Animy and VaultNode, I bridge the gap between complex data and elegant design. Every line of code is a step toward the 'Masterwork' standard—merging speed, stability, and artistic soul.";
   const words = bioText.split(" ");
+
+  // Title Transforms (Restored from old version)
+  const titleOpacity = useTransform(smoothProgress, [0, 0.1, 0.2], [0.3, 1, 0]);
+  const xLeft = useTransform(smoothProgress, [0, 0.2], [-150, 0]);
+  const xRight = useTransform(smoothProgress, [0, 0.2], [150, 0]);
 
   // Parallax Background Transitions
   const warp = useTransform(smoothProgress, [0, 0.5, 1], [0, 2, 0]);
-  const bgOpacity = useTransform(smoothProgress, [0, 0.1, 0.9, 1], [0.3, 1, 1, 0.3]);
+  const bgOpacity = useTransform(smoothProgress, [0, 0.1, 0.9, 1], [0.3, 0.8, 0.8, 0.3]);
 
   return (
     <section 
@@ -53,20 +58,36 @@ export const KineticBlueprint: React.FC = () => {
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         
         {/* Background Continuity with Warp Distortion */}
-        <motion.div style={{ opacity: bgOpacity }} className="absolute inset-0 z-0">
-          <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <motion.div style={{ opacity: bgOpacity }} className="absolute inset-0 z-0 text-[var(--color-text)]">
+          <div className="absolute inset-0 opacity-10 pointer-events-none">
             <LiquidBackground theme={theme} warp={warp as any} />
           </div>
           {/* Blueprint Grid Overlay */}
-          <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.02]"
+          <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.015]"
             style={{ 
-              backgroundImage: `linear-gradient(var(--color-text) 1px, transparent 1px), linear-gradient(90deg, var(--color-text) 1px, transparent 1px)`, 
+              backgroundImage: `linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)`, 
               backgroundSize: '100px 100px' 
             }}
           />
         </motion.div>
 
-        <div className="container mx-auto px-6 md:px-24 relative z-10">
+        {/* Floating About Me Title (Restored Old Layout) */}
+        <div className="absolute top-20 left-24 pointer-events-none select-none z-20">
+          <motion.h2 
+            style={{ x: xLeft, opacity: titleOpacity }}
+            className="text-[12vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
+          >
+            About
+          </motion.h2>
+          <motion.h2 
+            style={{ x: xRight, opacity: titleOpacity, fontFamily: 'var(--font-signature)' }}
+            className="text-[15vw] leading-[0.8] -mt-[4vw] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+          >
+            Me.
+          </motion.h2>
+        </div>
+
+        <div className="container mx-auto px-6 md:px-24 relative z-10 mt-20">
           <div className="max-w-6xl mx-auto">
             
             {/* The Big Narrative Box */}
@@ -74,10 +95,10 @@ export const KineticBlueprint: React.FC = () => {
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="relative p-12 md:p-24 border border-[var(--color-border)] bg-[var(--color-text)]/[0.02] backdrop-blur-sm group overflow-hidden"
+              className="relative p-12 md:p-24 border border-[var(--color-border)] bg-[var(--color-text)]/[0.01] backdrop-blur-md group overflow-hidden"
             >
               <div className="relative z-10">
-                <span className="font-mono text-[10px] text-[var(--color-accent)] mb-12 block uppercase tracking-[0.5em] opacity-50">
+                <span className="font-mono text-[10px] text-[var(--color-accent)] mb-12 block uppercase tracking-[0.5em] opacity-40">
                    Identity // The Narrative Archive
                 </span>
                 
@@ -116,19 +137,6 @@ export const KineticBlueprint: React.FC = () => {
 
           </div>
         </div>
-
-        {/* Floating About Me Title (Fades as we read) */}
-        <motion.div 
-          style={{ 
-            opacity: useTransform(smoothProgress, [0, 0.15], [0.3, 0]),
-            y: useTransform(smoothProgress, [0, 0.15], [0, -50])
-          }}
-          className="absolute top-20 left-24 pointer-events-none select-none"
-        >
-           <h2 className="text-[10vw] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-none italic opacity-10">
-              About
-           </h2>
-        </motion.div>
 
       </div>
 
