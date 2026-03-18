@@ -122,7 +122,7 @@ export const InquiryContact: React.FC = () => {
                              initial={{ opacity: 0, x: -10 }}
                              animate={{ opacity: 1, x: 0 }}
                              exit={{ opacity: 0 }}
-                             className="text-red-500 font-mono text-[10px] uppercase tracking-widest"
+                             className="text-zinc-400 font-mono text-[10px] uppercase tracking-widest"
                            >
                              Submission Failed. Try again?
                            </motion.span>
