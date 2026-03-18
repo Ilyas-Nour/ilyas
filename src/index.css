@@ -30,6 +30,7 @@
   --color-device-bg: #ececec;
   --color-device-border: #ffffff;
   --color-device-accent: #d1d1d1;
+  --color-hero-bg: #020617;
 }
 
 [data-theme='light'] {
@@ -42,6 +43,7 @@
   --color-device-bg: #111111;
   --color-device-border: #222222;
   --color-device-accent: #333333;
+  --color-hero-bg: #cbd5e1;
 }
 
 @layer base {
@@ -162,7 +164,7 @@ section[id] {
 
 .navbar-link::before {
   content: '';
-  @apply absolute top-1/2 -left-2 w-1.5 h-1.5 bg-[var(--color-accent)] rounded-full opacity-0 -translate-y-1/2 transition-all duration-500 shadow-[0_0_10px_rgba(255,255,255,0.8)];
+  @apply absolute top-1/2 -left-2 w-1.5 h-1.5 bg-[var(--color-hero-bg)] rounded-full opacity-0 -translate-y-1/2 transition-all duration-500 shadow-[0_0_10px_rgba(255,255,255,0.8)];
 }
 
 .navbar-link.active::before {
@@ -172,12 +174,12 @@ section[id] {
 
 .navbar-link::after {
   content: '';
-  @apply absolute bottom-0 left-0 w-0 h-[1.5px] bg-[var(--color-accent)] transition-all duration-700 ease-[0.16,1,0.3,1] shadow-[0_0_5px_rgba(255,255,255,0.4)];
+  @apply absolute bottom-0 left-0 w-0 h-[1.5px] bg-[var(--color-hero-bg)] transition-all duration-700 ease-[0.16,1,0.3,1] shadow-[0_0_5px_rgba(255,255,255,0.4)];
 }
 
 .navbar-link.active::after {
   @apply w-full;
-  background: linear-gradient(90deg, var(--color-accent), #ffffff, var(--color-accent));
+  background: linear-gradient(90deg, var(--color-hero-bg), #ffffff, var(--color-hero-bg));
   background-size: 200% 100%;
   animation: metallic-shine 3s linear infinite;
 }

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { KineticButton } from '../ui/KineticButton';
 import { useScrollProgress } from '../../context/ScrollProgressContext';
 
@@ -262,12 +262,32 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
  * Uses predictive scroll mapping to drive horizontal motion.
  */
 export const ProjectCatalog: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const xLeft = useTransform(scrollYProgress, [0, 0.4], [-100, 0]);
+  const xRight = useTransform(scrollYProgress, [0, 0.4], [100, 0]);
+
   return (
-    <section id="projects" className="relative min-h-screen flex flex-col justify-start bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-8 md:pt-12">
+    <section id="projects" ref={sectionRef} className="relative min-h-screen flex flex-col justify-start bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-8 md:pt-12">
       <header className="container mx-auto mb-8 md:mb-12 px-6">
-        <h3 className="text-5xl md:text-8xl font-heading font-black tracking-tighter text-[var(--color-text)] uppercase leading-[0.8]">
-          My <br /> <span className="opacity-20 font-signature font-normal" style={{ fontFamily: 'var(--font-signature)' }}>Work.</span>
-        </h3>
+        <div className="relative select-none">
+          <motion.h2 
+            style={{ x: xLeft }}
+            className="text-[clamp(3rem,16vw,11vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
+          >
+            My
+          </motion.h2>
+          <motion.h2 
+            style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
+            className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+          >
+            Work.
+          </motion.h2>
+        </div>
       </header>
 
       <div className="relative">

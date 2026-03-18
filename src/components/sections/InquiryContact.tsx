@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { KineticButton } from '../ui/KineticButton';
 
 /**
@@ -49,15 +49,35 @@ export const InquiryContact: React.FC = () => {
     }
   };
 
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const xLeft = useTransform(scrollYProgress, [0, 0.4], [-100, 0]);
+  const xRight = useTransform(scrollYProgress, [0, 0.4], [100, 0]);
+
   return (
-    <section id="contact" className="min-h-screen py-32 flex flex-col justify-center bg-[var(--color-bg)] px-6 relative">
+    <section id="contact" ref={sectionRef} className="min-h-screen py-32 flex flex-col justify-center bg-[var(--color-bg)] px-6 relative">
       <div className="container mx-auto">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <header className="mb-12 md:mb-16">
-            <h3 className="text-5xl md:text-8xl font-heading font-black tracking-tighter text-[var(--color-text)] uppercase leading-[0.8]">
-              Get in <br /> <span className="opacity-20 font-signature font-normal" style={{ fontFamily: 'var(--font-signature)' }}>Touch.</span>
-            </h3>
+            <div className="relative select-none">
+              <motion.h2 
+                style={{ x: xLeft }}
+                className="text-[clamp(3rem,16vw,11vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
+              >
+                Get in
+              </motion.h2>
+              <motion.h2 
+                style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
+                className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+              >
+                Touch.
+              </motion.h2>
+            </div>
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-24">

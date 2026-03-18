@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, 
   SiThreedotjs, SiFramer, SiNodedotjs, SiPostgresql, 
@@ -42,7 +42,7 @@ const MarqueeItem = React.memo(({ skill }: { skill: Skill }) => {
   return (
     <motion.div 
       whileHover={{ scale: 1.1, zIndex: 10 }}
-      className="flex items-center gap-6 px-12 py-8 group cursor-pointer transition-all duration-500"
+      className="flex items-center gap-4 md:gap-6 px-6 md:px-12 py-4 md:py-8 group cursor-pointer transition-all duration-500"
     >
       <div className="relative">
         {/* Brand Glow Effect */}
@@ -51,12 +51,12 @@ const MarqueeItem = React.memo(({ skill }: { skill: Skill }) => {
           style={{ backgroundColor: skill.color }}
         />
         <Icon 
-          className="text-5xl md:text-8xl transition-all duration-700 relative z-10"
+          className="text-4xl md:text-5xl lg:text-6xl transition-all duration-700 relative z-10"
           style={{ color: skill.color }}
         />
       </div>
       <div className="flex flex-col">
-        <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-[var(--color-text)] transition-colors duration-500 group-hover:text-[var(--color-text)]">
+        <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[var(--color-text)] transition-colors duration-500 group-hover:text-[var(--color-text)]">
           {skill.name}
         </h3>
       </div>
@@ -91,25 +91,42 @@ const RollingRow = ({ skills, reverse = false }: { skills: Skill[], reverse?: bo
 };
 
 export const TechnicalArray: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const xLeft = useTransform(scrollYProgress, [0, 0.4], [-100, 0]);
+  const xRight = useTransform(scrollYProgress, [0, 0.4], [100, 0]);
+
   return (
-    <section id="skills" className="min-h-screen py-32 flex flex-col justify-center bg-[var(--color-bg)] transition-colors duration-500 overflow-hidden relative">
+    <section id="skills" ref={sectionRef} className="min-h-screen py-20 md:py-32 flex flex-col justify-center bg-[var(--color-bg)] transition-colors duration-500 overflow-hidden relative">
       
-      {/* Background Decor: Architectural Markings */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 overflow-hidden">
-        <div className="absolute left-10 top-20 text-[20vw] font-black uppercase tracking-widest leading-none rotate-90 origin-left">
+        <div className="absolute left-10 top-20 text-[15vw] font-black uppercase tracking-widest leading-none rotate-90 origin-left">
           Kinetic
         </div>
-        <div className="absolute right-10 bottom-20 text-[15vw] font-black uppercase tracking-widest leading-none -rotate-90 origin-right">
+        <div className="absolute right-10 bottom-20 text-[10vw] font-black uppercase tracking-widest leading-none -rotate-90 origin-right">
           Archive
         </div>
       </div>
 
-      <div className="container mx-auto px-6 mb-24 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
-          <div className="space-y-4">
-            <h2 className="text-6xl md:text-9xl font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]">
-              Rolling <br /> <span className="opacity-20 italic font-signature font-normal lowercase" style={{ fontFamily: 'var(--font-signature)' }}>protocols.</span>
-            </h2>
+      <div className="container mx-auto px-6 mb-12 md:mb-24 relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-10 md:mb-20">
+          <div className="relative select-none">
+            <motion.h2 
+              style={{ x: xLeft }}
+              className="text-[clamp(3rem,16vw,11vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
+            >
+              Rolling
+            </motion.h2>
+            <motion.h2 
+              style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
+              className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+            >
+              protocols.
+            </motion.h2>
           </div>
           
           <p className="max-w-xs font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)] leading-relaxed pb-2 border-b border-[var(--color-border)]">
