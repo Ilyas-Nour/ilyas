@@ -20,8 +20,8 @@ export const ModernHero: React.FC<{ warp?: any }> = ({ warp }) => {
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: 400,
+    damping: 50,
     restDelta: 0.001
   });
 
@@ -36,9 +36,6 @@ export const ModernHero: React.FC<{ warp?: any }> = ({ warp }) => {
       ref={containerRef}
       className="relative min-h-screen flex flex-col justify-center items-center px-6 md:px-12 lg:px-24 overflow-hidden transition-colors duration-500 pt-32 md:pt-40"
     >
-      {/* Background Kinetic Shader Layer with Warp prop */}
-      <LiquidBackground theme={theme} warp={warp} />
-
       <div className="container mx-auto relative z-10 flex flex-col items-center">
         {/* Massive Motion Typography - Precision Positioned with Smart Contrast */}
         <div className="relative mb-6 md:mb-10 select-none text-center">

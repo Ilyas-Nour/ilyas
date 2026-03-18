@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useEffect } from 'react';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import Lenis from 'lenis';
+import { useScroll, useTransform, useSpring, motion, AnimatePresence } from 'framer-motion';
 import { RibbonTrail } from './components/layout/RibbonTrail';
 import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/layout/Navbar';
@@ -8,6 +8,8 @@ import { IntroLoader } from './components/ui/IntroLoader';
 import { useConsoleIdentity } from './hooks/useConsoleIdentity';
 import ModernHero from './components/sections/ModernHero';
 import { ScrollProgressProvider } from './context/ScrollProgressContext';
+import { LiquidBackground } from './components/ui/LiquidBackground';
+import { useTheme } from './context/ThemeContext';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -22,6 +24,16 @@ const InquiryContact = lazy(() => import('./components/sections/InquiryContact')
 const MassiveFooter = lazy(() => import('./components/layout/MassiveFooter'));
 
 /**
+ * GlobalBackground Component
+ * Bridges the ThemeContext and the LiquidBackground to ensure
+ * a single source of truth for the site-wide 3D engine.
+ */
+const GlobalBackground = ({ warp }: { warp: any }) => {
+  const { theme } = useTheme();
+  return <LiquidBackground theme={theme} warp={warp} />;
+};
+
+/**
  * Main Application Component
  * Orchestrates the global layout, smooth scrolling (Lenis), 
  * and handled the entrance sequences of the portfolio.
@@ -31,6 +43,16 @@ function App() {
   const { scrollYProgress } = useScroll({
     offset: ["start start", "100vh start"] // Track the first 100vh of scroll
   });
+  
+  // High-frequency spring for buttery transitions without input lag
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 400,
+    damping: 50,
+    restDelta: 0.001
+  });
+
+  const warpValue = useTransform(smoothProgress, [0, 0.5, 1], [0, 4, 0]);
+
   // Initialize console branding effect
   useConsoleIdentity();
   
@@ -68,6 +90,9 @@ function App() {
     <ThemeProvider>
       <ScrollProgressProvider>
         <main ref={containerRef} className="relative min-h-screen selection:bg-[var(--color-accent)] selection:text-white transition-colors duration-500 bg-[var(--color-bg)]">
+          {/* SINGLE Global 3D Background - The Site's Engine */}
+          <GlobalBackground warp={warpValue} />
+
           {/* Subtle Grain Texture - Global Overlay for Prismatic Aesthetic */}
           <div className="fixed inset-0 pointer-events-none z-[999] opacity-[0.015] mix-blend-overlay"
             style={{
@@ -91,10 +116,10 @@ function App() {
           <div className="relative h-[100vh] z-20 pointer-events-none md:pointer-events-auto overflow-hidden">
             <motion.div 
               style={{ 
-                scale: useTransform(scrollYProgress, [0, 1], [1, 1.3]),
-                opacity: useTransform(scrollYProgress, [0.8, 1], [1, 0]),
+                scale: useTransform(smoothProgress, [0, 1], [1, 1.3]),
+                opacity: useTransform(smoothProgress, [0.8, 1], [1, 0]),
                 clipPath: useTransform(
-                  scrollYProgress, 
+                  smoothProgress, 
                   [0, 0.85, 1], 
                   [
                     "circle(100% at 50% 50%)",
@@ -102,11 +127,11 @@ function App() {
                     "circle(0% at 50% 50%)"
                   ]
                 ),
-                pointerEvents: useTransform(scrollYProgress, [0, 0.9, 1], ["auto", "auto", "none"]) as any,
+                pointerEvents: useTransform(smoothProgress, [0, 0.9, 1], ["auto", "auto", "none"]) as any,
               }}
               className="sticky top-0 w-full will-change-[transform,opacity,clip-path]"
             >
-              <ModernHero warp={useTransform(scrollYProgress, [0, 0.5, 1], [0, 4, 0])} />
+              <ModernHero warp={warpValue} />
             </motion.div>
           </div>
 
