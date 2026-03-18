@@ -95,7 +95,7 @@ export const Atmospheric3D: React.FC = () => {
         <ambientLight intensity={0.5} />
         <pointLight position={[20, 20, 20]} intensity={2} color="#3b82f6" />
         <pointLight position={[-20, -20, -20]} intensity={2} color="#efbf04" />
-        <spotLight position={[0, 10, 10]} intensity={1.5} color="#ffffff" angle={0.5} penumbra={1} />
+        <spotLight position={[0, 10, 10]} intensity={1.5} color="#f2f2f2" angle={0.5} penumbra={1} />
         
         <ParticleField />
         <VibrantBackgroundMesh />

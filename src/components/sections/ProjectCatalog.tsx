@@ -24,7 +24,7 @@ const projects = [
   },
   {
     title: "VaultNode",
-    description: "A safe tool to edit your files. It works entirely on your computer so your data stays private.",
+    description: "VaultNode is a cutting-edge, privacy-focused productivity suite designed for high-performance file manipulation. Leveraging WebAssembly and local-only AI, it empowers users to process media, edit PDFs, and transform data entirely within the browser, ensuring absolute privacy without compromising on speed.",
     tags: ["FFmpeg WASM", "Next.js 16", "React 19", "PDF-Lib", "AI"],
     link: "https://vaultnode.vercel.app",
     screenshots: [

@@ -35,8 +35,8 @@
 }
 
 [data-theme='light'] {
-  --color-bg: #f7f7f7;
-  --color-bg-rgb: 247, 247, 247;
+  --color-bg: #f2f2f2;
+  --color-bg-rgb: 242, 242, 242;
   --color-text: #18181b;
   --color-text-muted: #71717a;
   --color-border: rgba(0, 0, 0, 0.1);

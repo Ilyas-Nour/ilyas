@@ -89,7 +89,7 @@ export const MorphingBio: React.FC = () => {
         <Canvas>
           <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} />
           <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} color={theme === 'dark' ? '#3b82f6' : '#ffffff'} />
+          <pointLight position={[10, 10, 10]} intensity={1} color={theme === 'dark' ? '#3b82f6' : '#f2f2f2'} />
           <MorphingGeometry scrollProgress={smoothProgress} theme={theme} />
         </Canvas>
       </div>
