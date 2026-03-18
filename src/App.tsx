@@ -87,15 +87,15 @@ function App() {
             {loading && <IntroLoader onComplete={() => setLoading(false)} />}
           </AnimatePresence>
 
-          {/* The "Hyper-Jump" Cinematic Transition - Defining the Zoom Scene */}
+          {/* The "Hyper-Jump" 2.0 - Optimized Cinematic Transition */}
           <div className="relative h-[100vh] z-20 pointer-events-none md:pointer-events-auto overflow-hidden">
             <motion.div 
               style={{ 
-                scale: useTransform(scrollYProgress, [0, 1], [1, 4]),
+                scale: useTransform(scrollYProgress, [0, 1], [1, 1.3]),
                 opacity: useTransform(scrollYProgress, [0.8, 1], [1, 0]),
                 clipPath: useTransform(
                   scrollYProgress, 
-                  [0, 0.8, 1], 
+                  [0, 0.85, 1], 
                   [
                     "circle(100% at 50% 50%)",
                     "circle(100% at 50% 50%)",
@@ -104,7 +104,7 @@ function App() {
                 ),
                 pointerEvents: useTransform(scrollYProgress, [0, 0.9, 1], ["auto", "auto", "none"]) as any,
               }}
-              className="sticky top-0 w-full will-change-transform"
+              className="sticky top-0 w-full will-change-[transform,opacity,clip-path]"
             >
               <ModernHero warp={useTransform(scrollYProgress, [0, 0.5, 1], [0, 4, 0])} />
             </motion.div>
