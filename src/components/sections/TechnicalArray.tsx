@@ -133,7 +133,6 @@ const SkillLabel = ({ cat, index, onSelect, isActive }: { cat: any, index: numbe
         <Text
           fontSize={0.6}
           color={isActive ? "#FF3B30" : "#ffffff"}
-          font="/fonts/Inter-Black.woff" // Assuming Inter Black exists or fallback
           anchorX="center"
           anchorY="middle"
           outlineWidth={0.02}
