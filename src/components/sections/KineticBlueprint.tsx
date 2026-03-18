@@ -53,17 +53,17 @@ export const KineticBlueprint: React.FC = () => {
   const entranceScale = useTransform(smoothProgress, [0, 0.2], [1.05, 1]);
   const warp = useTransform(smoothProgress, [0, 0.1, 0.2], [2, 1, 0]);
 
-  const xLeft = useTransform(smoothProgress, [0, 0.2], [-200, 0]);
-  const xRight = useTransform(smoothProgress, [0, 0.2], [200, 0]);
-  const titleOpacity = useTransform(smoothProgress, [0, 0.1, 0.2, 0.35], [0, 1, 1, 0]);
+  const xLeft = useTransform(smoothProgress, [0, 0.2], [-100, 0]);
+  const xRight = useTransform(smoothProgress, [0, 0.2], [100, 0]);
+  const titleOpacity = useTransform(smoothProgress, [0, 0.1, 0.2, 0.9], [0, 1, 1, 1]);
 
   // Narrative Progress (scrolling through the text)
-  const revealProgress = useTransform(smoothProgress, [0.3, 0.7], [0, 1]);
-  const revealOpacity = useTransform(smoothProgress, [0.25, 0.35, 0.7, 0.8], [0, 1, 1, 0]);
+  const revealProgress = useTransform(smoothProgress, [0.2, 0.6], [0, 1]);
+  const revealOpacity = useTransform(smoothProgress, [0.15, 0.25, 0.65, 0.75], [0, 1, 1, 0]);
 
   // Glass Boxes Transitions
-  const glassY = useTransform(smoothProgress, [0.7, 0.9], [100, 0]);
-  const glassOpacity = useTransform(smoothProgress, [0.7, 0.8], [0, 1]);
+  const glassY = useTransform(smoothProgress, [0.65, 0.85], [100, 0]);
+  const glassOpacity = useTransform(smoothProgress, [0.65, 0.75], [0, 1]);
 
   const bioText = "I build simple and fast web apps. I'm a second year student at OFPPT learning how to build better websites. I love making things that look great and run perfectly.";
 
@@ -71,7 +71,7 @@ export const KineticBlueprint: React.FC = () => {
     <section 
       id="about" 
       ref={containerRef}
-      className="min-h-[400vh] relative flex flex-col items-center overflow-visible"
+      className="min-h-[300vh] relative flex flex-col items-center overflow-visible"
     >
       {/* Background Continuity */}
       <motion.div style={{ scale: entranceScale }} className="absolute inset-0 z-0">
@@ -82,35 +82,35 @@ export const KineticBlueprint: React.FC = () => {
 
       <div className="container mx-auto px-6 md:px-24 relative z-10 w-full mb-40">
         
-        {/* Sticky Header */}
-        <div className="sticky top-40 h-screen flex flex-col items-center justify-center pointer-events-none">
-          <div className="relative select-none mb-20">
+        {/* Sticky Header - Left Aligned */}
+        <div className="sticky top-40 h-screen flex flex-col items-start justify-start pointer-events-none">
+          <div className="relative select-none">
             <motion.h2 
               style={{ x: xLeft, opacity: titleOpacity }}
-              className="text-[12vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
+              className="text-[10vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
             >
               About
             </motion.h2>
             <motion.h2 
               style={{ x: xRight, opacity: titleOpacity, fontFamily: 'var(--font-signature)' }}
-              className="text-[15vw] leading-[0.8] -mt-[4vw] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+              className="text-[12vw] leading-[0.8] -mt-[3vw] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
             >
               Me.
             </motion.h2>
           </div>
         </div>
 
-        {/* Narrative Section */}
-        <div className="relative h-[200vh] flex items-center justify-center -mt-[50vh]">
+        {/* Narrative Section - Brought Up and Tightened */}
+        <div className="relative h-[100vh] flex items-center justify-center -mt-[60vh]">
           <motion.div style={{ opacity: revealOpacity }} className="sticky top-1/2 -translate-y-1/2 w-full">
             <TextReveal text={bioText} progress={revealProgress} />
           </motion.div>
         </div>
 
-        {/* Glass Detail Boxes */}
+        {/* Glass Detail Boxes - Gap Closed */}
         <motion.div 
           style={{ y: glassY, opacity: glassOpacity }}
-          className="relative max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mt-40"
+          className="relative max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 -mt-20"
         >
           {/* Box 1: Status */}
           <div className="p-8 backdrop-blur-xl bg-[var(--color-text)]/[0.03] border border-[var(--color-text)]/[0.1] rounded-2xl group hover:border-[var(--color-accent)]/30 transition-colors">
