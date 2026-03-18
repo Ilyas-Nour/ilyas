@@ -9,14 +9,23 @@ import { useTheme } from '../../context/ThemeContext';
  */
 const TextReveal: React.FC<{ text: string; progress: any }> = ({ text, progress }) => {
   const words = text.split(' ');
+  const keywords = ["simple", "fast", "better", "great", "perfectly", "second", "OFPPT"];
+  
   return (
-    <p className="flex flex-wrap text-4xl md:text-7xl font-sans font-black uppercase leading-[0.9] tracking-tighter text-center max-w-5xl mx-auto">
+    <p className="flex flex-wrap text-2xl md:text-5xl font-sans font-medium leading-[1.1] tracking-tight text-center max-w-4xl mx-auto text-[var(--color-text)]">
       {words.map((word, i) => {
+        const cleanWord = word.replace(/[.,]/g, "");
+        const isHighlight = keywords.includes(cleanWord);
         const start = i / words.length;
         const end = (i + 1) / words.length;
         const opacity = useTransform(progress, [start, end], [0.1, 1]);
+        
         return (
-          <motion.span key={i} style={{ opacity }} className="mr-[0.2em] mb-[0.2em]">
+          <motion.span 
+            key={i} 
+            style={{ opacity }} 
+            className={`mr-[0.3em] mb-[0.2em] ${isHighlight ? 'font-serif italic text-[var(--color-accent)] opacity-90' : ''}`}
+          >
             {word}
           </motion.span>
         );
@@ -46,15 +55,15 @@ export const KineticBlueprint: React.FC = () => {
 
   const xLeft = useTransform(smoothProgress, [0, 0.2], [-200, 0]);
   const xRight = useTransform(smoothProgress, [0, 0.2], [200, 0]);
-  const titleOpacity = useTransform(smoothProgress, [0, 0.1, 0.2, 0.4], [0, 1, 1, 0]);
+  const titleOpacity = useTransform(smoothProgress, [0, 0.1, 0.2, 0.35], [0, 1, 1, 0]);
 
   // Narrative Progress (scrolling through the text)
-  const revealProgress = useTransform(smoothProgress, [0.2, 0.6], [0, 1]);
-  const revealOpacity = useTransform(smoothProgress, [0.1, 0.2, 0.6, 0.7], [0, 1, 1, 0]);
+  const revealProgress = useTransform(smoothProgress, [0.3, 0.7], [0, 1]);
+  const revealOpacity = useTransform(smoothProgress, [0.25, 0.35, 0.7, 0.8], [0, 1, 1, 0]);
 
   // Glass Boxes Transitions
-  const glassY = useTransform(smoothProgress, [0.6, 0.9], [100, 0]);
-  const glassOpacity = useTransform(smoothProgress, [0.6, 0.7], [0, 1]);
+  const glassY = useTransform(smoothProgress, [0.7, 0.9], [100, 0]);
+  const glassOpacity = useTransform(smoothProgress, [0.7, 0.8], [0, 1]);
 
   const bioText = "I build simple and fast web apps. I'm a second year student at OFPPT learning how to build better websites. I love making things that look great and run perfectly.";
 
