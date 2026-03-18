@@ -9,7 +9,7 @@
 }
 
 :root {
-  --color-accent: #F8FAFC;
+  --color-accent: #FF3B30;
   --transition-speed: 0.5s;
   --header-height: clamp(80px, 10vh, 120px);
 }
@@ -20,7 +20,7 @@
   --color-text: #ececec;
   --color-text-muted: #a1a1aa;
   --color-border: rgba(255, 255, 255, 0.1);
-  --color-accent: #F8FAFC;
+  --color-accent: #FF3B30;
   --color-device-bg: #ececec;
   --color-device-border: #ffffff;
   --color-device-accent: #d1d1d1;
@@ -32,7 +32,7 @@
   --color-text: #18181b;
   --color-text-muted: #71717a;
   --color-border: rgba(0, 0, 0, 0.1);
-  --color-accent: #020617;
+  --color-accent: #1E293B;
   --color-device-bg: #111111;
   --color-device-border: #222222;
   --color-device-accent: #333333;
