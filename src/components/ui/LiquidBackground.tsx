@@ -83,7 +83,8 @@ const ShaderPlane = ({ color1, color2, opacity, warp }: { color1: string, color2
 
   useFrame((state) => {
     if (materialRef.current) {
-      materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
+      // Use performance.now() to avoid THREE.Clock deprecation warnings in newer Three.js versions
+      materialRef.current.uniforms.uTime.value = performance.now() * 0.001;
       
       // Update uWarp directly from warp prop (which could be a MotionValue or number)
       if (warp && typeof warp.get === 'function') {

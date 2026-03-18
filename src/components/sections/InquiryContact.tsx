@@ -50,7 +50,7 @@ export const InquiryContact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="min-h-screen py-32 flex flex-col justify-center bg-[var(--color-bg)] px-6">
+    <section id="contact" className="min-h-screen py-32 flex flex-col justify-center bg-[var(--color-bg)] px-6 relative">
       <div className="container mx-auto">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}

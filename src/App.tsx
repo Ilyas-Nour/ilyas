@@ -131,7 +131,7 @@ function App() {
                     whileInView={{ opacity: 1, scale: 1, y: 0 }}
                     viewport={{ margin: "-10%", once: true }}
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="will-change-transform"
+                    className="relative will-change-transform"
                   >
                     <Component />
                   </motion.div>
