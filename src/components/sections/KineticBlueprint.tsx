@@ -40,7 +40,7 @@ export const KineticBlueprint: React.FC = () => {
   const words = bioText.split(" ");
 
   // Title Transforms (Restored from old version)
-  const titleOpacity = useTransform(smoothProgress, [0, 0.1, 0.2], [0.3, 1, 0]);
+  const titleOpacity = useTransform(smoothProgress, [0, 0.1, 0.9, 1], [0.3, 1, 1, 0]);
   const xLeft = useTransform(smoothProgress, [0, 0.2], [-150, 0]);
   const xRight = useTransform(smoothProgress, [0, 0.2], [150, 0]);
 
