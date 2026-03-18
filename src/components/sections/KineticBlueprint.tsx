@@ -81,7 +81,7 @@ export const KineticBlueprint: React.FC = () => {
           {/* Bento Grid Masterwork */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(180px,auto)]">
             
-            {/* Main Narrative Tile */}
+            {/* Main Identity Tile */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -90,12 +90,12 @@ export const KineticBlueprint: React.FC = () => {
               className="md:col-span-8 md:row-span-2 relative p-12 border border-[var(--color-border)] bg-[var(--color-text)]/[0.02] overflow-hidden group"
             >
               <div className="relative z-10">
-                <span className="font-mono text-[10px] text-[var(--color-accent)] mb-8 block uppercase tracking-[0.3em]">Identity // Manifest</span>
-                <h3 className="text-4xl md:text-7xl font-sans font-black text-[var(--color-text)] leading-[0.9] tracking-tighter uppercase mb-10">
-                   Engineering <br /> <span className="italic font-serif font-normal text-[var(--color-accent)] opacity-80">High-Stakes</span> <br /> Architecture.
+                <span className="font-mono text-[10px] text-[var(--color-accent)] mb-8 block uppercase tracking-[0.3em]">Identity // Ilyas Nour</span>
+                <h3 className="text-4xl md:text-8xl font-sans font-black text-[var(--color-text)] leading-[0.9] tracking-tighter uppercase mb-10">
+                   I build <br /> <span className="italic font-serif font-normal text-[var(--color-accent)] opacity-80">Simple & Fast</span> <br /> Web Apps.
                 </h3>
                 <p className="text-[var(--color-text-muted)] text-sm leading-relaxed font-light uppercase tracking-widest max-w-2xl">
-                   Bridging the gap between artistic vision and alchemical code. Every line of code is a commitment to performance, accessibility, and visual dominance.
+                   I'm a 2nd year student at OFPPT learning how to build better websites. I love making things that look great and run perfectly.
                 </p>
               </div>
               {/* Decorative Scanline */}
@@ -106,7 +106,7 @@ export const KineticBlueprint: React.FC = () => {
               />
             </motion.div>
 
-            {/* Animy Spec Tile */}
+            {/* Philosophy Tile */}
             <motion.div 
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -115,24 +115,19 @@ export const KineticBlueprint: React.FC = () => {
               className="md:col-span-4 md:row-span-2 p-10 border border-[var(--color-border)] bg-[var(--color-text)]/[0.03] flex flex-col justify-between group hover:border-[var(--color-accent)]/30 transition-colors duration-500"
             >
                <div>
-                  <span className="font-mono text-[8px] text-[var(--color-accent)] mb-4 block">MOD_01 // CORE</span>
-                  <h4 className="text-2xl font-black uppercase text-[var(--color-text)] mb-4 tracking-tight">Animy Protocol</h4>
-                  <p className="text-[var(--color-text-muted)] text-[10px] leading-relaxed font-light uppercase tracking-[0.2em] mb-6">
-                     Real-time distributed systems. NestJS, Redis, Socket.io. Built for global scale.
+                  <span className="font-mono text-[8px] text-[var(--color-accent)] mb-4 block uppercase tracking-widest">Philosophy // Goal</span>
+                  <h4 className="text-3xl font-black uppercase text-[var(--color-text)] mb-6 tracking-tight leading-none italic font-serif">Art meets <br /> perfect <br /> code.</h4>
+                  <p className="text-[var(--color-text-muted)] text-[10px] leading-relaxed font-light uppercase tracking-[0.2em]">
+                     I believe every website should be a mix of beautiful design and clean, fast code.
                   </p>
                </div>
-               <div className="pt-6 border-t border-[var(--color-border)] opacity-20 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="flex justify-between text-[8px] font-mono">
-                     <span>STABILITY</span>
-                     <span>99.99%</span>
-                  </div>
-                  <div className="h-1 w-full bg-[var(--color-border)] mt-2">
-                     <div className="h-full w-[99.99%] bg-[var(--color-accent)]" />
-                  </div>
+               <div className="pt-6 border-t border-[var(--color-border)] flex items-center gap-4">
+                  <div className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse" />
+                  <span className="font-mono text-[8px] text-[var(--color-text-muted)] uppercase tracking-widest">Always Learning</span>
                </div>
             </motion.div>
 
-            {/* VaultNode Spec Tile */}
+            {/* Animy/VaultNode Tiles */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -140,30 +135,32 @@ export const KineticBlueprint: React.FC = () => {
               transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="md:col-span-6 p-10 border border-[var(--color-border)] bg-[var(--color-text)]/[0.01] flex flex-col justify-center relative overflow-hidden group"
             >
-               <span className="font-mono text-[8px] text-[var(--color-accent)] mb-2 block tracking-widest">MOD_02 // EDGE</span>
-               <h4 className="text-xl font-black uppercase text-[var(--color-text)] tracking-tight">VaultNode WASM Engine</h4>
-               <div className="absolute right-6 top-6 opacity-5 group-hover:opacity-20 transition-opacity">
-                  <svg width="60" height="60" viewBox="0 0 100 100" className="stroke-[var(--color-text)] fill-none">
-                     <circle cx="50" cy="50" r="40" strokeWidth="1" strokeDasharray="5 5" />
-                     <path d="M50 10V90M10 50H90" strokeWidth="0.5" />
-                  </svg>
-               </div>
+               <span className="font-mono text-[8px] text-[var(--color-accent)] mb-2 block tracking-widest uppercase">Projects // Fast Data</span>
+               <h4 className="text-xl font-black uppercase text-[var(--color-text)] tracking-tight">Animy & VaultNode</h4>
+               <p className="text-[var(--color-text-muted)] text-[10px] leading-relaxed font-light uppercase tracking-widest mt-2">
+                  Building tools that handle data fast and apps that feel instant. No more waiting.
+               </p>
             </motion.div>
 
-            {/* Morocco Global Tile */}
+            {/* Status & Location Tile */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="md:col-span-6 p-10 border border-[var(--color-border)] bg-[var(--color-accent)]/[0.03] flex items-center gap-8 group"
+              className="md:col-span-6 p-10 border border-[var(--color-border)] bg-[var(--color-accent)]/[0.03] flex items-center justify-between group"
             >
-               <div className="w-12 h-12 rounded-full border border-[var(--color-accent)]/30 flex items-center justify-center font-mono text-[10px] text-[var(--color-accent)]">
-                  MA
+               <div className="flex items-center gap-6">
+                  <div className="w-12 h-12 rounded-full border border-[var(--color-accent)]/30 flex items-center justify-center font-mono text-[10px] text-[var(--color-accent)]">
+                     2Y
+                  </div>
+                  <div>
+                     <h4 className="text-xl font-black uppercase text-[var(--color-text)] tracking-tight">OFPPT Trainee</h4>
+                     <p className="font-mono text-[8px] text-[var(--color-text-muted)] uppercase tracking-widest mt-1">Status: Second Year // Location: Morocco</p>
+                  </div>
                </div>
-               <div>
-                  <h4 className="text-xl font-black uppercase text-[var(--color-text)] tracking-tight">Global Execution</h4>
-                  <p className="font-mono text-[8px] text-[var(--color-text-muted)] uppercase tracking-widest mt-1">Based in Morocco // Executing Globally</p>
+               <div className="hidden md:block opacity-20 text-[8px] font-mono tracking-tighter">
+                  31.7917° N <br /> 7.0926° W
                </div>
             </motion.div>
 
