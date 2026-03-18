@@ -64,8 +64,7 @@ export const MassiveFooter = React.memo(() => {
                 {[
                   { name: 'Github', url: 'https://github.com/Ilyas-Nour' },
                   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/ilyasnour/' },
-                  { name: 'X', url: 'https://x.com/ilyas__nour' },
-                  { name: 'Instagram', url: '#' }
+                  { name: 'X', url: 'https://x.com/ilyas__nour' }
                 ].map(social => (
                   <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
                     <span className="font-mono text-xs uppercase tracking-widest">{social.name}</span>
