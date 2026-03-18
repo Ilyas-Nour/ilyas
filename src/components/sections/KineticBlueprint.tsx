@@ -75,27 +75,27 @@ export const KineticBlueprint: React.FC = () => {
           />
         </motion.div>
 
-        <div className="container mx-auto px-6 md:px-24 relative z-10 flex flex-col justify-start pt-[var(--header-height)] pb-12 min-h-screen overflow-hidden">
-          <div className="max-w-6xl mx-auto w-full flex flex-col gap-[1.5vh] md:gap-[3vh]">
+        <div className="container mx-auto px-6 md:px-24 relative z-10 flex flex-col justify-start pt-[180px] md:pt-[220px] pb-12 min-h-screen">
+          <div className="max-w-6xl mx-auto w-full flex flex-col gap-[3vh]">
             
             {/* Restored Old Title Layout - Now in Flow */}
             <div className="relative select-none">
               <motion.h2 
                 style={{ x: xLeft, opacity: titleOpacity }}
-                className="text-[clamp(2.5rem,14vw,10vh)] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
+                className="text-[clamp(2.5rem,14vw,8vh)] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
               >
                 About
               </motion.h2>
               <motion.h2 
                 style={{ x: xRight, opacity: titleOpacity, fontFamily: 'var(--font-signature)' }}
-                className="text-[clamp(3.5rem,18vw,13vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+                className="text-[clamp(3.5rem,18vw,11vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
               >
                 Me.
               </motion.h2>
             </div>
 
             {/* The Raw Narrative Paragraph */}
-            <div className="flex flex-wrap text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-sans font-medium leading-[1.2] md:leading-[1.3] tracking-tight max-w-full">
+            <div className="flex flex-wrap text-[clamp(1.1rem,4vw,3.5vh)] font-sans font-medium leading-[1.2] md:leading-[1.3] tracking-tight max-w-full">
               {words.map((word, i) => {
                 const start = i / words.length;
                 const end = start + (1 / words.length);
