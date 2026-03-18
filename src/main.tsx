@@ -10,7 +10,10 @@ import './index.css'
  */
 const originalWarn = console.warn;
 console.warn = (...args) => {
-  if (typeof args[0] === 'string' && args[0].includes('THREE.Clock: This module has been deprecated')) return;
+  if (typeof args[0] === 'string') {
+    if (args[0].includes('THREE.Clock: This module has been deprecated')) return;
+    if (args[0].includes('Please ensure that the container has a non-static position')) return;
+  }
   originalWarn(...args);
 };
 
