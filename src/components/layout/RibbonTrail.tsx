@@ -33,7 +33,7 @@ export const RibbonTrail: React.FC = () => {
     resize();
 
     // Physics constants for the "Stealth Jet Vapor Trail"
-    const numPoints = 80; // Extended for more "Aero" presence
+    const numPoints = 20; // Tightened for snappier presence
     const points = Array.from({ length: numPoints }, () => ({ x: 0, y: 0 }));
     let mouseX = 0;
     let mouseY = 0;
@@ -59,9 +59,9 @@ export const RibbonTrail: React.FC = () => {
       for (let i = 1; i < numPoints; i++) {
         const p = points[i];
         const prev = points[i - 1];
-        // Lower easing factor for that "heavy" aerodynamic drag look
-        p.x += (prev.x - p.x) * 0.12; 
-        p.y += (prev.y - p.y) * 0.12;
+        // Increased easing factor for faster follow and snappier decay
+        p.x += (prev.x - p.x) * 0.25; 
+        p.y += (prev.y - p.y) * 0.25;
       }
 
       // 3. Perfect Sync: Lock Jet SVG to the first point
