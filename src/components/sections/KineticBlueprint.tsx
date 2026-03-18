@@ -4,176 +4,143 @@ import { LiquidBackground } from '../ui/LiquidBackground';
 import { useTheme } from '../../context/ThemeContext';
 
 /**
- * KineticBlueprint Component
- * A high-density Bento Grid redesign of the About section.
- * Features project-specific "Spec Tiles" with a premium technical aesthetic.
+ * Word Component for the Reading Effect
  */
+const Word = ({ children, progress, range }: { children: string, progress: any, range: [number, number] }) => {
+  const opacity = useTransform(progress, range, [0.15, 1]);
+  const color = useTransform(progress, range, ["var(--color-text-muted)", "var(--color-text)"]);
+  const scale = useTransform(progress, range, [0.98, 1]);
+  
+  return (
+    <motion.span 
+      style={{ opacity, color, scale }} 
+      className="inline-block mr-[0.25em] transition-colors duration-300"
+    >
+      {children}
+    </motion.span>
+  );
+};
+
 export const KineticBlueprint: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
+    offset: ["start start", "end end"]
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 400,
-    damping: 50,
+    stiffness: 100,
+    damping: 30,
     restDelta: 0.001
   });
 
-  // Parallax Header Transitions
-  const entranceScale = useTransform(smoothProgress, [0, 0.2], [1.05, 1]);
-  const warp = useTransform(smoothProgress, [0, 0.1, 0.2], [2, 1, 0]);
+  const bioText = "I am Ilyas Nour, a second-year digital development student at OFPPT, based in the vibrant heart of Morocco. My journey in technology is driven by a profound obsession with combining high-performance logic with aesthetic precision. I don't just build websites; I architect digital experiences that feel like the future. Specializing in high-fidelity motion and distributed systems, I created Animy and VaultNode as proof that data and design can live in perfect harmony. Every line of code I write is a commitment to speed, stability, and visual excellence. I believe that a truly great web application should be as beautiful to look at as it is powerful to use. My mission is to push the boundaries of what's possible on the web, creating tools that are not only instant but also leave a lasting artistic impression. From crafting complex shaders to engineering scalable backends, I am constantly refining my craft to reach the 'Masterwork' standard.";
+  const words = bioText.split(" ");
 
-  const xLeft = useTransform(smoothProgress, [0, 0.4], [-200, 0]);
-  const xRight = useTransform(smoothProgress, [0, 0.4], [200, 0]);
-  const opacity = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-
-  // Dossier Spec Node Parallax
-  const nodeY1 = useTransform(smoothProgress, [0.1, 0.4], [300, 0]);
-  const nodeY2 = useTransform(smoothProgress, [0.3, 0.6], [400, 0]);
-  const nodeY3 = useTransform(smoothProgress, [0.5, 0.8], [500, 0]);
-  const nodeX1 = useTransform(smoothProgress, [0.1, 0.4], [-50, 0]);
-  const nodeX2 = useTransform(smoothProgress, [0.3, 0.6], [50, 0]);
-  const nodeX3 = useTransform(smoothProgress, [0.5, 0.8], [-80, 0]);
+  // Parallax Background Transitions
+  const warp = useTransform(smoothProgress, [0, 0.5, 1], [0, 2, 0]);
+  const bgOpacity = useTransform(smoothProgress, [0, 0.1, 0.9, 1], [0.3, 1, 1, 0.3]);
 
   return (
     <section 
       id="about" 
       ref={containerRef}
-      className="min-h-[150vh] relative flex flex-col items-center py-40 overflow-hidden"
+      className="h-[400vh] relative bg-[var(--color-bg)]"
     >
-      {/* Background Continuity with Warp Distortion */}
-      <motion.div style={{ scale: entranceScale }} className="absolute inset-0 z-0">
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <LiquidBackground theme={theme} warp={warp as any} />
-        </div>
-
-        {/* Grid Overlay - The Blueprint Aesthetic */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
-          style={{ 
-            backgroundImage: `linear-gradient(var(--color-text) 1px, transparent 1px), linear-gradient(90deg, var(--color-text) 1px, transparent 1px)`, 
-            backgroundSize: '80px 80px' 
-          }}
-        />
-      </motion.div>
-
-      <div className="container mx-auto px-6 md:px-24 relative z-10 w-full">
-        <div className="max-w-7xl mx-auto">
-          
-          <div className="relative select-none mb-24">
-            <motion.h2 
-              style={{ x: xLeft, opacity }}
-              className="text-[12vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
-            >
-              About
-            </motion.h2>
-            <motion.h2 
-              style={{ x: xRight, opacity, fontFamily: 'var(--font-signature)' }}
-              className="text-[15vw] leading-[0.8] -mt-[4vw] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
-            >
-              Me.
-            </motion.h2>
+      {/* Sticky Content Wrapper */}
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        
+        {/* Background Continuity with Warp Distortion */}
+        <motion.div style={{ opacity: bgOpacity }} className="absolute inset-0 z-0">
+          <div className="absolute inset-0 opacity-20 pointer-events-none">
+            <LiquidBackground theme={theme} warp={warp as any} />
           </div>
+          {/* Blueprint Grid Overlay */}
+          <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.02]"
+            style={{ 
+              backgroundImage: `linear-gradient(var(--color-text) 1px, transparent 1px), linear-gradient(90deg, var(--color-text) 1px, transparent 1px)`, 
+              backgroundSize: '100px 100px' 
+            }}
+          />
+        </motion.div>
 
-          {/* Bento Grid Masterwork */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 auto-rows-[minmax(220px,auto)]">
+        <div className="container mx-auto px-6 md:px-24 relative z-10">
+          <div className="max-w-6xl mx-auto">
             
-            {/* Main Identity Tile */}
+            {/* The Big Narrative Box */}
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="md:col-span-8 md:row-span-2 relative p-12 border border-[var(--color-border)] bg-[var(--color-text)]/[0.02] overflow-hidden group"
+              className="relative p-12 md:p-24 border border-[var(--color-border)] bg-[var(--color-text)]/[0.02] backdrop-blur-sm group overflow-hidden"
             >
               <div className="relative z-10">
-                <span className="font-mono text-[10px] text-[var(--color-accent)] mb-8 block uppercase tracking-[0.3em]">Identity // Ilyas Nour</span>
-                <h3 className="text-4xl md:text-8xl font-sans font-black text-[var(--color-text)] leading-[0.9] tracking-tighter uppercase mb-10">
-                   I build <br /> <span className="italic font-serif font-normal text-[var(--color-accent)] opacity-80">Simple & Fast</span> <br /> Web Apps.
+                <span className="font-mono text-[10px] text-[var(--color-accent)] mb-12 block uppercase tracking-[0.5em] opacity-50">
+                   Identity // The Narrative Archive
+                </span>
+                
+                <h3 className="text-4xl md:text-6xl font-sans font-black text-[var(--color-text)] leading-[1.1] tracking-tighter uppercase mb-16 border-l-4 border-[var(--color-accent)] pl-8">
+                   Digital <br /> Architect.
                 </h3>
-                <p className="text-[var(--color-text-muted)] text-lg md:text-2xl leading-relaxed font-sans font-medium tracking-tight max-w-3xl">
-                   I'm a <span className="italic font-serif font-normal text-[var(--color-text)]">2nd year student</span> at OFPPT learning how to build better websites. I love making things that <span className="text-[var(--color-text)]">look great</span> and run perfectly.
-                </p>
+                
+                <div className="flex flex-wrap text-2xl md:text-5xl font-sans font-medium leading-[1.3] tracking-tight">
+                  {words.map((word, i) => {
+                    const start = i / words.length;
+                    const end = start + (1 / words.length);
+                    return (
+                      <Word key={i} progress={smoothProgress} range={[start, end]}>
+                        {word}
+                      </Word>
+                    );
+                  })}
+                </div>
               </div>
-              {/* Decorative Scanline */}
+
+              {/* Decorative HUD Elements */}
+              <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none hidden md:block">
+                 <div className="font-mono text-[8px] uppercase tracking-widest text-right space-y-1">
+                    <p>Status: Pinned_Active</p>
+                    <p>Mode: Sequential_Reveal</p>
+                    <p>Buffer: 100%</p>
+                 </div>
+              </div>
+
+              {/* Dynamic Progress Bar */}
               <motion.div 
-                animate={{ y: ["-100%", "100%"] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--color-accent)]/5 to-transparent h-20 w-full opacity-20 pointer-events-none"
+                style={{ scaleX: smoothProgress }}
+                className="absolute bottom-0 left-0 h-1 w-full bg-[var(--color-accent)] origin-left"
               />
             </motion.div>
- 
-            {/* Personal Journey Tile */}
-            <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="md:col-span-4 md:row-span-2 p-10 border border-[var(--color-border)] bg-[var(--color-text)]/[0.03] flex flex-col group hover:border-[var(--color-accent)]/30 transition-colors duration-500"
-            >
-               <div className="flex flex-col flex-grow">
-                  <span className="font-mono text-[8px] text-[var(--color-accent)] mb-4 block uppercase tracking-widest">My Path // Growth</span>
-                  <h4 className="text-3xl font-black uppercase text-[var(--color-text)] mb-6 tracking-tight">Digital Architect</h4>
-                  <p className="text-[var(--color-text-muted)] text-base md:text-xl leading-relaxed font-sans font-medium tracking-tight flex-grow">
-                     I am a <span className="italic font-serif font-normal text-[var(--color-text)]">second-year</span> digital development student at <span className="text-[var(--color-text)]">OFPPT</span>, passionate about crafting seamless user experiences. My focus is on combining <span className="italic font-serif font-normal text-[var(--color-text)]">high-performance</span> logic with aesthetic precision.
-                  </p>
-               </div>
-            </motion.div>
- 
-            {/* Animy/VaultNode Tiles */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="md:col-span-6 p-10 border border-[var(--color-border)] bg-[var(--color-text)]/[0.01] flex flex-col justify-center relative overflow-hidden group"
-            >
-               <span className="font-mono text-[8px] text-[var(--color-accent)] mb-2 block tracking-widest uppercase">Projects // Fast Data</span>
-               <h4 className="text-2xl font-black uppercase text-[var(--color-text)] tracking-tight">Animy & VaultNode</h4>
-               <p className="text-[var(--color-text-muted)] text-sm md:text-lg leading-relaxed font-sans font-medium tracking-tight mt-3">
-                  Building tools that handle <span className="italic font-serif font-normal text-[var(--color-text)]">data fast</span> and apps that feel instant. <span className="text-[var(--color-text)]">No more waiting.</span>
-               </p>
-            </motion.div>
- 
-            {/* Status & Location Tile */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="md:col-span-6 p-10 border border-[var(--color-border)] bg-[var(--color-accent)]/[0.03] flex items-center justify-between group"
-            >
-               <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-full border border-[var(--color-accent)]/30 flex items-center justify-center font-mono text-sm text-[var(--color-accent)]">
-                     2Y
-                  </div>
-                  <div>
-                     <h4 className="text-2xl font-black uppercase text-[var(--color-text)] tracking-tight">OFPPT Trainee</h4>
-                     <p className="font-mono text-[10px] text-[var(--color-text-muted)] uppercase tracking-widest mt-1">Status: <span className="text-[var(--color-accent)]">Second Year</span> // Location: <span className="text-[var(--color-text)]">Morocco</span></p>
-                  </div>
-               </div>
-               <div className="hidden md:block opacity-20 text-[10px] font-mono tracking-tighter">
-                  31.7917° N <br /> 7.0926° W
-               </div>
-            </motion.div>
-
 
           </div>
-
         </div>
+
+        {/* Floating About Me Title (Fades as we read) */}
+        <motion.div 
+          style={{ 
+            opacity: useTransform(smoothProgress, [0, 0.15], [0.3, 0]),
+            y: useTransform(smoothProgress, [0, 0.15], [0, -50])
+          }}
+          className="absolute top-20 left-24 pointer-events-none select-none"
+        >
+           <h2 className="text-[10vw] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-none italic opacity-10">
+              About
+           </h2>
+        </motion.div>
+
       </div>
 
       {/* Decorative Technical HUD */}
-      <div className="absolute inset-x-0 bottom-10 flex justify-between px-12 md:px-24 opacity-[0.05] font-mono text-[8px] pointer-events-none uppercase tracking-[0.5em]">
+      <div className="absolute inset-x-0 bottom-10 flex justify-between px-12 md:px-24 opacity-[0.05] font-mono text-[8px] pointer-events-none uppercase tracking-[0.5em] z-20">
          <span>System Stability: Optimized</span>
-         <span>Latency: 0ms</span>
-         <span>Status: Masterwork_V3</span>
+         <span>Narrative State: Synchronized</span>
+         <span>Status: Masterwork_V4</span>
       </div>
     </section>
   );
 };
 
 export default KineticBlueprint;
+
