@@ -111,7 +111,7 @@ function App() {
             </motion.div>
           </div>
 
-          <div className="relative z-10 w-full overflow-x-clip bg-[var(--color-bg)] transition-colors duration-500">
+          <div className="relative z-10 w-full overflow-x-clip bg-[var(--color-bg)] transition-colors duration-500 -mt-40">
               <Suspense fallback={<div className="h-screen flex items-center justify-center opacity-5 font-mono text-[8px] uppercase tracking-widest">Hydrating Identity...</div>}>
               {[
                 { id: 'about', Component: KineticBlueprint, animate: true },
@@ -138,6 +138,9 @@ function App() {
                 )
               ))}
             </Suspense>
+            
+            {/* Background Parity Layer - Fills any microscopic gaps during elastic overscroll */}
+            <div className="absolute inset-x-0 -top-40 h-40 bg-[var(--color-bg)] z-[-1]" />
           </div>
       </main>
       </ScrollProgressProvider>
