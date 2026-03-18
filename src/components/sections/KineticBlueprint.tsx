@@ -5,9 +5,8 @@ import { useTheme } from '../../context/ThemeContext';
 
 /**
  * KineticBlueprint Component
- * A theme-cohesive re-imagining of the "About" section.
- * Uses the same design language as the Hero: monolithic fonts, liquid backgrounds,
- * and high-contrast technical aesthetics.
+ * A high-density Bento Grid redesign of the About section.
+ * Features project-specific "Spec Tiles" with a premium technical aesthetic.
  */
 export const KineticBlueprint: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -44,7 +43,7 @@ export const KineticBlueprint: React.FC = () => {
     <section 
       id="about" 
       ref={containerRef}
-      className="min-h-[300vh] relative flex flex-col items-center py-40 overflow-visible will-change-[transform,opacity]"
+      className="min-h-[150vh] relative flex flex-col items-center py-40 overflow-hidden"
     >
       {/* Background Continuity with Warp Distortion */}
       <motion.div style={{ scale: entranceScale }} className="absolute inset-0 z-0">
@@ -62,9 +61,9 @@ export const KineticBlueprint: React.FC = () => {
       </motion.div>
 
       <div className="container mx-auto px-6 md:px-24 relative z-10 w-full">
-        <div className="max-w-7xl mx-auto flex flex-col items-center">
+        <div className="max-w-7xl mx-auto">
           
-          <div className="relative select-none mb-40 sticky top-40">
+          <div className="relative select-none mb-24">
             <motion.h2 
               style={{ x: xLeft, opacity }}
               className="text-[12vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
@@ -79,73 +78,105 @@ export const KineticBlueprint: React.FC = () => {
             </motion.h2>
           </div>
 
-          {/* Dossier Monolithic Bio */}
-          <motion.div 
-            style={{ opacity }}
-            className="w-full max-w-5xl mb-96"
-          >
-            <h3 className="text-5xl md:text-9xl font-sans font-black text-[var(--color-text)] leading-[0.85] tracking-tighter uppercase mb-20 text-center md:text-left">
-               I engineer <span className="italic font-serif font-normal text-[var(--color-accent)]">high-stakes</span> <br /> digital architecture for <br /> the modern web.
-            </h3>
+          {/* Bento Grid Masterwork */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(180px,auto)]">
             
-            <div className="flex flex-col md:flex-row gap-8 items-start opacity-40 font-mono text-[9px] uppercase tracking-widest border-l border-[var(--color-border)] pl-8 ml-4">
-               <div>[ STATUS: ARCHITECT_ACTIVE ]</div>
-               <div>[ BASE: MOROCCO_NORTH_AFRICA ]</div>
-               <div>[ REACH: GLOBAL_FRONTIER ]</div>
-            </div>
-          </motion.div>
+            {/* Main Narrative Tile */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="md:col-span-8 md:row-span-2 relative p-12 border border-[var(--color-border)] bg-[var(--color-text)]/[0.02] overflow-hidden group"
+            >
+              <div className="relative z-10">
+                <span className="font-mono text-[10px] text-[var(--color-accent)] mb-8 block uppercase tracking-[0.3em]">Identity // Manifest</span>
+                <h3 className="text-4xl md:text-7xl font-sans font-black text-[var(--color-text)] leading-[0.9] tracking-tighter uppercase mb-10">
+                   Engineering <br /> <span className="italic font-serif font-normal text-[var(--color-accent)] opacity-80">High-Stakes</span> <br /> Architecture.
+                </h3>
+                <p className="text-[var(--color-text-muted)] text-sm leading-relaxed font-light uppercase tracking-widest max-w-2xl">
+                   Bridging the gap between artistic vision and alchemical code. Every line of code is a commitment to performance, accessibility, and visual dominance.
+                </p>
+              </div>
+              {/* Decorative Scanline */}
+              <motion.div 
+                animate={{ y: ["-100%", "100%"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--color-accent)]/5 to-transparent h-20 w-full opacity-20 pointer-events-none"
+              />
+            </motion.div>
 
-          {/* Dossier Spread Node: Animy */}
-          <motion.div 
-            style={{ y: nodeY1, x: nodeX1, opacity }}
-            className="self-start max-w-md p-10 border border-[var(--color-border)] bg-[var(--color-text)]/[0.01] backdrop-blur-sm mb-64"
-          >
-             <span className="font-mono text-[8px] text-[var(--color-accent)] mb-4 block">NODE_CORE // SCALABLE ARCHITECT</span>
-             <h4 className="text-2xl font-black uppercase text-[var(--color-text)] mb-6 tracking-tight">Animy Protocol</h4>
-             <p className="text-[var(--color-text-muted)] text-sm leading-relaxed font-light uppercase tracking-widest text-justify">
-                Built for high-performance synchronization. Mastered real-time distributed systems using NestJS, Redis, and Socket.io to achieve global reliability.
-             </p>
-          </motion.div>
+            {/* Animy Spec Tile */}
+            <motion.div 
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="md:col-span-4 md:row-span-2 p-10 border border-[var(--color-border)] bg-[var(--color-text)]/[0.03] flex flex-col justify-between group hover:border-[var(--color-accent)]/30 transition-colors duration-500"
+            >
+               <div>
+                  <span className="font-mono text-[8px] text-[var(--color-accent)] mb-4 block">MOD_01 // CORE</span>
+                  <h4 className="text-2xl font-black uppercase text-[var(--color-text)] mb-4 tracking-tight">Animy Protocol</h4>
+                  <p className="text-[var(--color-text-muted)] text-[10px] leading-relaxed font-light uppercase tracking-[0.2em] mb-6">
+                     Real-time distributed systems. NestJS, Redis, Socket.io. Built for global scale.
+                  </p>
+               </div>
+               <div className="pt-6 border-t border-[var(--color-border)] opacity-20 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="flex justify-between text-[8px] font-mono">
+                     <span>STABILITY</span>
+                     <span>99.99%</span>
+                  </div>
+                  <div className="h-1 w-full bg-[var(--color-border)] mt-2">
+                     <div className="h-full w-[99.99%] bg-[var(--color-accent)]" />
+                  </div>
+               </div>
+            </motion.div>
 
-          {/* Dossier Spread Node: VaultNode */}
-          <motion.div 
-            style={{ y: nodeY2, x: nodeX2, opacity }}
-            className="self-end max-w-md p-10 border border-[var(--color-border)] bg-[var(--color-text)]/[0.01] backdrop-blur-sm mb-64"
-          >
-             <span className="font-mono text-[8px] text-[var(--color-accent)] mb-4 block">NODE_EDGE // WASM PERFORMANCE</span>
-             <h4 className="text-2xl font-black uppercase text-[var(--color-text)] mb-6 tracking-tight">VaultNode Edge</h4>
-             <p className="text-[var(--color-text-muted)] text-sm leading-relaxed font-light uppercase tracking-widest text-justify">
-                Pushed the limits of client-side execution. From WASM-based file processing to Top Nature's fluid commerce, precision engineering at $0 latency.
-             </p>
-          </motion.div>
+            {/* VaultNode Spec Tile */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="md:col-span-6 p-10 border border-[var(--color-border)] bg-[var(--color-text)]/[0.01] flex flex-col justify-center relative overflow-hidden group"
+            >
+               <span className="font-mono text-[8px] text-[var(--color-accent)] mb-2 block tracking-widest">MOD_02 // EDGE</span>
+               <h4 className="text-xl font-black uppercase text-[var(--color-text)] tracking-tight">VaultNode WASM Engine</h4>
+               <div className="absolute right-6 top-6 opacity-5 group-hover:opacity-20 transition-opacity">
+                  <svg width="60" height="60" viewBox="0 0 100 100" className="stroke-[var(--color-text)] fill-none">
+                     <circle cx="50" cy="50" r="40" strokeWidth="1" strokeDasharray="5 5" />
+                     <path d="M50 10V90M10 50H90" strokeWidth="0.5" />
+                  </svg>
+               </div>
+            </motion.div>
 
-          {/* Dossier Spread Node: The Philosophy */}
-          <motion.div 
-            style={{ y: nodeY3, x: nodeX3, opacity }}
-            className="self-center max-w-lg p-12 border-t border-[var(--color-border)] bg-gradient-to-b from-[var(--color-text)]/[0.02] to-transparent mb-40 text-center"
-          >
-             <span className="font-mono text-[10px] text-[var(--color-accent)] mb-8 block font-bold">SYSTEM_LOG // FINAL_REPORT</span>
-             <h4 className="text-4xl font-black uppercase text-[var(--color-text)] mb-8 tracking-tighter italic font-serif">Aesthetic Chaos <br /><span className="opacity-30">vs Mathematical</span><br /> Perfection.</h4>
-             <p className="text-[var(--color-text-muted)] text-xs leading-relaxed font-light uppercase tracking-[0.2em]">
-                Bridging the gap between artistic vision and alchemical code. Every line of code is a commitment to performance, accessibility, and visual dominance.
-             </p>
-          </motion.div>
+            {/* Morocco Global Tile */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="md:col-span-6 p-10 border border-[var(--color-border)] bg-[var(--color-accent)]/[0.03] flex items-center gap-8 group"
+            >
+               <div className="w-12 h-12 rounded-full border border-[var(--color-accent)]/30 flex items-center justify-center font-mono text-[10px] text-[var(--color-accent)]">
+                  MA
+               </div>
+               <div>
+                  <h4 className="text-xl font-black uppercase text-[var(--color-text)] tracking-tight">Global Execution</h4>
+                  <p className="font-mono text-[8px] text-[var(--color-text-muted)] uppercase tracking-widest mt-1">Based in Morocco // Executing Globally</p>
+               </div>
+            </motion.div>
+
+          </div>
 
         </div>
       </div>
 
-      {/* Diagnostic HUD Decorative Layer */}
-      <div className="absolute inset-x-0 bottom-20 flex justify-between px-12 md:px-24 opacity-[0.05] font-mono text-[10px] pointer-events-none">
-         <div className="space-y-4">
-            <div>POS: 31.7917° N, 7.0926° W</div>
-            <div>ALT: FE_CORE_OVERLAY</div>
-            <div>SIG: ENCRYPTED_STABLE</div>
-         </div>
-         <div className="space-y-4 text-right">
-            <div>MEM: STABLE_V9.2</div>
-            <div>VER: REL_ARCH_07</div>
-            <div>HUD: DIAG_ACTIVE</div>
-         </div>
+      {/* Decorative Technical HUD */}
+      <div className="absolute inset-x-0 bottom-10 flex justify-between px-12 md:px-24 opacity-[0.05] font-mono text-[8px] pointer-events-none uppercase tracking-[0.5em]">
+         <span>System Stability: Optimized</span>
+         <span>Latency: 0ms</span>
+         <span>Status: Masterwork_V3</span>
       </div>
     </section>
   );
