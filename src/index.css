@@ -9,7 +9,7 @@
 }
 
 :root {
-  --color-accent: #3b82f6;
+  --color-accent: #00d1ff;
   --transition-speed: 0.5s;
   --header-height: clamp(80px, 10vh, 120px);
 }
@@ -32,7 +32,7 @@
   --color-text: #18181b;
   --color-text-muted: #71717a;
   --color-border: rgba(0, 0, 0, 0.1);
-  --color-accent: #2563eb;
+  --color-accent: #0055ff;
   --color-device-bg: #111111;
   --color-device-border: #222222;
   --color-device-accent: #333333;
