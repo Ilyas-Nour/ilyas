@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { KineticButton } from '../ui/KineticButton';
+import { InsaneContactButton } from '../ui/InsaneContactButton';
 
 /**
  * InquiryContact Section Component
@@ -126,14 +126,12 @@ export const InquiryContact: React.FC = () => {
 
                     {/* Action & Feedback Layer */}
                     <div className="pt-8 flex items-center gap-8">
-                       <KineticButton 
-                         type="submit"
-                         variant="primary"
+                       <InsaneContactButton 
+                         status={status}
                          disabled={status === 'sending' || status === 'success'}
-                         icon={<span className={status === 'sending' ? 'animate-pulse' : ''}>{status === 'success' ? '✓' : '✉'}</span>}
                        >
                           {status === 'sending' ? 'Sending...' : status === 'success' ? 'Sent' : 'Send Message'}
-                       </KineticButton>
+                       </InsaneContactButton>
 
                        {/* Status Notifications */}
                        <AnimatePresence>

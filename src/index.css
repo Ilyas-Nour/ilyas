@@ -27,6 +27,7 @@
   --color-text-muted: #a1a1aa;
   --color-border: rgba(255, 255, 255, 0.1);
   --color-accent: #F8FAFC;
+  --color-accent-rgb: 248, 250, 252;
   --color-device-bg: #ececec;
   --color-device-border: #ffffff;
   --color-device-accent: #d1d1d1;
@@ -41,6 +42,7 @@
   --color-text-muted: #71717a;
   --color-border: rgba(0, 0, 0, 0.1);
   --color-accent: #475569; /* Polished Steel for Light Mode */
+  --color-accent-rgb: 71, 85, 105;
   --color-device-bg: #111111;
   --color-device-border: #222222;
   --color-device-accent: #333333;
