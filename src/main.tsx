@@ -17,6 +17,11 @@ console.warn = (...args) => {
   originalWarn(...args);
 };
 
+// Global scroll override to ensure Hero section entry on refresh
+if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
