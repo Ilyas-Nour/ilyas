@@ -18,14 +18,19 @@ export const KineticBlueprint: React.FC = () => {
     offset: ["start end", "end start"]
   });
 
-  // Parallax Header Transitions
-  // Landing scale and warp distortion
-  const entranceScale = useTransform(scrollYProgress, [0, 0.2], [1.1, 1]);
-  const warp = useTransform(scrollYProgress, [0, 0.1, 0.2], [4, 2, 0]);
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 400,
+    damping: 50,
+    restDelta: 0.001
+  });
 
-  const xLeft = useTransform(scrollYProgress, [0, 0.5], [-200, 0]);
-  const xRight = useTransform(scrollYProgress, [0, 0.5], [200, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  // Parallax Header Transitions
+  const entranceScale = useTransform(smoothProgress, [0, 0.2], [1.05, 1]);
+  const warp = useTransform(smoothProgress, [0, 0.1, 0.2], [2, 1, 0]);
+
+  const xLeft = useTransform(smoothProgress, [0, 0.5], [-150, 0]);
+  const xRight = useTransform(smoothProgress, [0, 0.5], [150, 0]);
+  const opacity = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
     <section 

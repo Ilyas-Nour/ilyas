@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect } from 'react';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import Lenis from 'lenis';
 import { RibbonTrail } from './components/layout/RibbonTrail';
 import { ThemeProvider } from './context/ThemeContext';
@@ -31,6 +31,16 @@ function App() {
   const { scrollYProgress } = useScroll({
     offset: ["start start", "100vh start"] // Track the first 100vh of scroll
   });
+  
+  // High-frequency spring for buttery transitions without input lag
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 400,
+    damping: 50,
+    restDelta: 0.001
+  });
+
+  const warpValue = useTransform(smoothProgress, [0, 0.5, 1], [0, 4, 0]);
+
   // Initialize console branding effect
   useConsoleIdentity();
   
@@ -87,26 +97,17 @@ function App() {
             {loading && <IntroLoader onComplete={() => setLoading(false)} />}
           </AnimatePresence>
 
-          {/* The "Hyper-Jump" 2.0 - Optimized Cinematic Transition */}
+          {/* "Light" Cinematic Parallax Transition - High Performance Slide */}
           <div className="relative h-[100vh] z-20 pointer-events-none md:pointer-events-auto overflow-hidden">
             <motion.div 
               style={{ 
-                scale: useTransform(scrollYProgress, [0, 1], [1, 1.3]),
-                opacity: useTransform(scrollYProgress, [0.8, 1], [1, 0]),
-                clipPath: useTransform(
-                  scrollYProgress, 
-                  [0, 0.85, 1], 
-                  [
-                    "circle(100% at 50% 50%)",
-                    "circle(100% at 50% 50%)",
-                    "circle(0% at 50% 50%)"
-                  ]
-                ),
-                pointerEvents: useTransform(scrollYProgress, [0, 0.9, 1], ["auto", "auto", "none"]) as any,
+                y: useTransform(smoothProgress, [0, 1], [0, -150]),
+                opacity: useTransform(smoothProgress, [0.7, 1], [1, 0]),
+                pointerEvents: useTransform(smoothProgress, [0, 0.9, 1], ["auto", "auto", "none"]) as any,
               }}
-              className="sticky top-0 w-full will-change-[transform,opacity,clip-path]"
+              className="sticky top-0 w-full will-change-transform"
             >
-              <ModernHero warp={useTransform(scrollYProgress, [0, 0.5, 1], [0, 4, 0])} />
+              <ModernHero warp={warpValue} />
             </motion.div>
           </div>
 
