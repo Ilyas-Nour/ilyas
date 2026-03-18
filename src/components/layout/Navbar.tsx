@@ -38,6 +38,7 @@ export const Navbar: React.FC = () => {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
+        style={{ position: 'fixed' }}
         className={`fixed top-0 left-0 w-full z-[10000] transition-all duration-700 px-6 md:px-12 py-6 ${
           scrolled ? 'glass py-4' : 'bg-transparent'
         }`}
@@ -184,17 +185,19 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Scroll Progress Bar for Projects */}
-        <AnimatePresence>
-          {isVisible && (
-            <motion.div
-              initial={{ scaleX: 0, opacity: 0 }}
-              animate={{ scaleX: progress, opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute bottom-0 left-0 w-full h-[2px] bg-[var(--color-accent)] origin-left z-50"
-              style={{ scaleX: progress }}
-            />
-          )}
-        </AnimatePresence>
+        <div className="absolute bottom-0 left-0 w-full h-[2px] pointer-events-none overflow-hidden">
+          <AnimatePresence>
+            {isVisible && (
+              <motion.div
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: progress, opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-[var(--color-accent)] origin-left z-50"
+                style={{ scaleX: progress }}
+              />
+            )}
+          </AnimatePresence>
+        </div>
       </motion.nav>
 
       {/* SVG Filters for Liquid Prismatic Distortion */}

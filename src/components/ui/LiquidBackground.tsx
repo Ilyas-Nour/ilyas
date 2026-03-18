@@ -121,7 +121,7 @@ export const LiquidBackground: React.FC<{ theme: 'light' | 'dark', warp?: any }>
   const opacity = theme === 'dark' ? 1.0 : 0.4; 
 
   return (
-    <div className={`absolute inset-0 z-[-1] overflow-hidden transition-colors duration-700 ${theme === 'dark' ? 'bg-[#020617]' : 'bg-[#cbd5e1]'}`}>
+    <div className={`fixed inset-0 z-[-1] overflow-hidden transition-colors duration-700 ${theme === 'dark' ? 'bg-[#020617]' : 'bg-[#cbd5e1]'}`}>
       <Canvas
         camera={{ position: [0, 0, 1] }}
         style={{ width: '100%', height: '100%', pointerEvents: 'none' }}
