@@ -112,16 +112,16 @@ export const KineticBlueprint: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="md:col-span-4 md:row-span-2 p-10 border border-[var(--color-border)] bg-[var(--color-text)]/[0.03] flex flex-col justify-between group hover:border-[var(--color-accent)]/30 transition-colors duration-500"
+              className="md:col-span-4 md:row-span-2 p-10 border border-[var(--color-border)] bg-[var(--color-text)]/[0.03] flex flex-col group hover:border-[var(--color-accent)]/30 transition-colors duration-500"
             >
-               <div>
+               <div className="flex flex-col flex-grow">
                   <span className="font-mono text-[8px] text-[var(--color-accent)] mb-4 block uppercase tracking-widest">My Path // Growth</span>
-                  <h4 className="text-2xl font-black uppercase text-[var(--color-text)] mb-4 tracking-tight">Digital Architect</h4>
-                  <p className="text-[var(--color-text-muted)] text-[10px] leading-relaxed font-light uppercase tracking-[0.2em] mb-6">
+                  <h4 className="text-2xl font-black uppercase text-[var(--color-text)] mb-6 tracking-tight">Digital Architect</h4>
+                  <p className="text-[var(--color-text-muted)] text-base md:text-xl leading-relaxed font-sans font-medium tracking-tight flex-grow">
                      I am a second-year digital development student at OFPPT, passionate about crafting seamless user experiences. My focus is on combining high-performance logic with aesthetic precision to build tools that feel like the future.
                   </p>
                </div>
-               <div className="pt-6 border-t border-[var(--color-border)] opacity-20 group-hover:opacity-100 transition-opacity duration-500">
+               <div className="pt-8 border-t border-[var(--color-border)] opacity-20 group-hover:opacity-100 transition-opacity duration-500 mt-auto">
                   <div className="flex justify-between text-[8px] font-mono">
                      <span>CRAFTING QUALITY</span>
                      <span>100%</span>
