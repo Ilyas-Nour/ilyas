@@ -8,16 +8,16 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  define: {
+    'process.env': {}
+  },
   build: {
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('three')) return 'three-vendor';
-            if (id.includes('framer-motion')) return 'motion-vendor';
-            if (id.includes('react')) return 'react-vendor';
-            if (id.includes('react-icons')) return 'icons-vendor';
-            if (id.includes('gsap')) return 'gsap-vendor';
+            if (id.includes('three') || id.includes('@react-three')) return 'three-vendor';
+            if (id.includes('framer-motion') || id.includes('gsap')) return 'animation-vendor';
             return 'vendor';
           }
         },
