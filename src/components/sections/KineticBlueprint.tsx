@@ -16,7 +16,7 @@ const Word = ({ children, progress, range, isHighlighted }: { children: string, 
   return (
     <motion.span 
       style={{ opacity, color, scale }} 
-      className={`inline-block mr-[0.25em] transition-colors duration-300 ${isHighlighted ? 'italic font-serif font-normal' : ''}`}
+      className={`inline-block mr-[0.25em] transition-colors duration-300 ${isHighlighted ? 'italic font-serif font-normal break-keep' : 'break-words'}`}
     >
       {children}
     </motion.span>
@@ -79,23 +79,23 @@ export const KineticBlueprint: React.FC = () => {
           <div className="max-w-6xl mx-auto w-full">
             
             {/* Restored Old Title Layout - Now in Flow */}
-            <div className="relative select-none mb-[25px]">
+            <div className="relative select-none mb-[15px] md:mb-[25px]">
               <motion.h2 
                 style={{ x: xLeft, opacity: titleOpacity }}
-                className="text-[12vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
+                className="text-[18vw] sm:text-[14vw] md:text-[12vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
               >
                 About
               </motion.h2>
               <motion.h2 
                 style={{ x: xRight, opacity: titleOpacity, fontFamily: 'var(--font-signature)' }}
-                className="text-[15vw] leading-[0.8] -mt-[4vw] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+                className="text-[22vw] sm:text-[18vw] md:text-[15vw] leading-[0.8] -mt-[6vw] sm:-mt-[5vw] md:-mt-[4vw] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
               >
                 Me.
               </motion.h2>
             </div>
 
             {/* The Raw Narrative Paragraph */}
-            <div className="flex flex-wrap text-2xl md:text-5xl font-sans font-medium leading-[1.3] tracking-tight mb-[25px]">
+            <div className="flex flex-wrap text-xl sm:text-2xl md:text-4xl lg:text-5xl font-sans font-medium leading-[1.2] md:leading-[1.3] tracking-tight mb-[25px] max-w-full">
               {words.map((word, i) => {
                 const start = i / words.length;
                 const end = start + (1 / words.length);
