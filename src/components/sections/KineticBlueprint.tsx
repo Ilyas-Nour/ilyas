@@ -83,9 +83,9 @@ export const KineticBlueprint: React.FC = () => {
 
              {/* Pillar Blocks */}
              {[
-               { title: "Technical Core", desc: "Specializing in React, Three.js, and high-performance motion systems. I build for scale and dominance." },
-               { title: "Aeronautical UX", desc: "My interfaces are designed with the precision of a cockpit—focused, technical, and undeniably elite." },
-               { title: "Global Reach", desc: "Based in Morocco, executing projects for clients across the global digital frontier." }
+               { title: "Scalable Architect", desc: "Driven by the success of Animy (a high-performance aggregator), I specialize in building real-time distributed systems using NestJS, Redis, and Socket.io for global scale." },
+               { title: "Edge Engineering", desc: "From VaultNode's WASM-based processing to Top Nature's fluid commerce, I push the limits of client-side performance and React 19 precision." },
+               { title: "Global Execution", desc: "Operating from the digital frontier of Morocco, I provide elite engineering for a global audience, bridging the gap between artistic vision and code." }
              ].map((pillar, i) => (
                 <motion.div 
                   key={pillar.title}
