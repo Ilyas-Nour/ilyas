@@ -47,6 +47,12 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
+    // Reset scroll to top on refresh and prevent browser auto-scroll restoration
+    window.scrollTo(0, 0);
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
     // Highly-optimized smooth scroll initialization
     const lenis = new Lenis({
       duration: 1.2,
