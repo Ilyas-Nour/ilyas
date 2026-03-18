@@ -75,27 +75,27 @@ export const KineticBlueprint: React.FC = () => {
           />
         </motion.div>
 
-        <div className="container mx-auto px-6 md:px-24 relative z-10 flex flex-col justify-center min-h-screen">
-          <div className="max-w-6xl mx-auto w-full">
+        <div className="container mx-auto px-6 md:px-24 relative z-10 flex flex-col justify-start pt-[var(--header-height)] pb-12 min-h-screen overflow-hidden">
+          <div className="max-w-6xl mx-auto w-full flex flex-col gap-[2vh] md:gap-[4vh]">
             
             {/* Restored Old Title Layout - Now in Flow */}
-            <div className="relative select-none mb-[15px] md:mb-[25px]">
+            <div className="relative select-none">
               <motion.h2 
                 style={{ x: xLeft, opacity: titleOpacity }}
-                className="text-[18vw] sm:text-[14vw] md:text-[12vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
+                className="text-[clamp(3rem,14vw,12vh)] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
               >
                 About
               </motion.h2>
               <motion.h2 
                 style={{ x: xRight, opacity: titleOpacity, fontFamily: 'var(--font-signature)' }}
-                className="text-[22vw] sm:text-[18vw] md:text-[15vw] leading-[0.8] -mt-[6vw] sm:-mt-[5vw] md:-mt-[4vw] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+                className="text-[clamp(4rem,18vw,15vh)] leading-[0.8] -mt-[4vh] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
               >
                 Me.
               </motion.h2>
             </div>
 
             {/* The Raw Narrative Paragraph */}
-            <div className="flex flex-wrap text-xl sm:text-2xl md:text-4xl lg:text-5xl font-sans font-medium leading-[1.2] md:leading-[1.3] tracking-tight mb-[25px] max-w-full">
+            <div className="flex flex-wrap text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-sans font-medium leading-[1.2] md:leading-[1.3] tracking-tight max-w-full">
               {words.map((word, i) => {
                 const start = i / words.length;
                 const end = start + (1 / words.length);
@@ -110,7 +110,6 @@ export const KineticBlueprint: React.FC = () => {
                 );
               })}
             </div>
-
           </div>
         </div>
 
