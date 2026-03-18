@@ -132,6 +132,7 @@ function App() {
                     viewport={{ margin: "-10%", once: true }}
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                     className="relative will-change-transform"
+                    style={{ willChange: 'transform, opacity' }}
                   >
                     <Component />
                   </motion.div>

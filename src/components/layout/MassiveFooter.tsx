@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useActiveSection } from '../../hooks/useActiveSection';
 
@@ -7,8 +8,8 @@ import { useActiveSection } from '../../hooks/useActiveSection';
  * definitive psychological closure to the site experience.
  * Features massive signature branding and artistic link arrays.
  */
-export const MassiveFooter = () => {
-  const activeTab = useActiveSection(['home', 'about', 'expertise', 'projects', 'contact']);
+export const MassiveFooter = React.memo(() => {
+  const activeTab = useActiveSection(['home', 'about', 'skills', 'projects', 'contact']);
   
   return (
     <footer className="bg-[var(--color-bg)] pt-32 pb-12 px-6 overflow-hidden border-t border-[var(--color-border)] relative transition-colors duration-500">
@@ -17,6 +18,7 @@ export const MassiveFooter = () => {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="absolute inset-x-0 -bottom-20 select-none pointer-events-none z-0 flex justify-center w-full px-[5vw]"
         >
@@ -34,7 +36,7 @@ export const MassiveFooter = () => {
                   {[
                     { name: 'Home', id: 'home' },
                     { name: 'About', id: 'about' },
-                    { name: 'Expertise', id: 'expertise' },
+                    { name: 'Skills', id: 'skills' },
                     { name: 'Projects', id: 'projects' }
                   ].map(link => (
                     <a 
@@ -84,6 +86,6 @@ export const MassiveFooter = () => {
       </div>
     </footer>
   );
-};
+});
 
 export default MassiveFooter;

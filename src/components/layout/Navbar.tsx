@@ -9,6 +9,71 @@ import { useTheme } from '../../context/ThemeContext';
  * High-fidelity navigation interface with dynamic theme switching 
  * and prismatic text reveal effects.
  */
+const NavLinks = React.memo(({ activeTab }: { activeTab: string }) => {
+  return (
+    <div className="hidden md:flex items-center gap-10 font-heading font-medium text-[11px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+       {[
+         { name: 'Home', id: 'home' },
+         { name: 'About', id: 'about' },
+         { name: 'Skills', id: 'skills' },
+         { name: 'Projects', id: 'projects' }
+       ].map(item => (
+        <motion.a 
+          key={item.id} 
+          href={`#${item.id}`} 
+          className={`navbar-link group/link ${activeTab === item.id ? 'active' : ''}`}
+          initial="initial"
+          whileHover="hover"
+        >
+          <div className="relative overflow-hidden flex items-center">
+             {/* Primary Layer */}
+             <div className="flex">
+              {item.name.split('').map((char, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    initial: { y: 0 },
+                    hover: { y: '-120%' }
+                  }}
+                  transition={{
+                    duration: 0.5,
+                    ease: [0.33, 1, 0.68, 1],
+                    delay: i * 0.02
+                  }}
+                  className="inline-block"
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </motion.span>
+              ))}
+            </div>
+
+            {/* Secondary Hover Layer */}
+            <div className="absolute inset-0 flex">
+              {item.name.split('').map((char, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    initial: { y: '120%' },
+                    hover: { y: 0 }
+                  }}
+                  transition={{
+                    duration: 0.5,
+                    ease: [0.33, 1, 0.68, 1],
+                    delay: i * 0.02
+                  }}
+                  className="inline-block text-[var(--color-text)]"
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </motion.span>
+              ))}
+            </div>
+          </div>
+        </motion.a>
+       ))}
+    </div>
+  );
+});
+
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const { progress, isVisible } = useScrollProgress();
@@ -50,66 +115,7 @@ export const Navbar: React.FC = () => {
           </a>
 
           {/* Navigation Links - Refined Registry */}
-          <div className="hidden md:flex items-center gap-10 font-heading font-medium text-[11px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
-             {[
-               { name: 'Home', id: 'home' },
-               { name: 'About', id: 'about' },
-               { name: 'Skills', id: 'skills' },
-               { name: 'Projects', id: 'projects' }
-             ].map(item => (
-              <motion.a 
-                key={item.id} 
-                href={`#${item.id}`} 
-                className={`navbar-link group/link ${activeTab === item.id ? 'active' : ''}`}
-                initial="initial"
-                whileHover="hover"
-              >
-                <div className="relative overflow-hidden flex items-center">
-                   {/* Primary Layer */}
-                   <div className="flex">
-                    {item.name.split('').map((char, i) => (
-                      <motion.span
-                        key={i}
-                        variants={{
-                          initial: { y: 0 },
-                          hover: { y: '-120%' }
-                        }}
-                        transition={{
-                          duration: 0.5,
-                          ease: [0.33, 1, 0.68, 1],
-                          delay: i * 0.02
-                        }}
-                        className="inline-block"
-                      >
-                        {char === ' ' ? '\u00A0' : char}
-                      </motion.span>
-                    ))}
-                  </div>
-
-                  {/* Secondary Hover Layer */}
-                  <div className="absolute inset-0 flex">
-                    {item.name.split('').map((char, i) => (
-                      <motion.span
-                        key={i}
-                        variants={{
-                          initial: { y: '120%' },
-                          hover: { y: 0 }
-                        }}
-                        transition={{
-                          duration: 0.5,
-                          ease: [0.33, 1, 0.68, 1],
-                          delay: i * 0.02
-                        }}
-                        className="inline-block text-[var(--color-text)]"
-                      >
-                        {char === ' ' ? '\u00A0' : char}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
-              </motion.a>
-             ))}
-          </div>
+          <NavLinks activeTab={activeTab} />
 
           {/* Action Interface Block */}
           <div className="flex items-center gap-8">
