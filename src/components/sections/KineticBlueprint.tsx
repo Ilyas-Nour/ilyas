@@ -79,7 +79,7 @@ export const KineticBlueprint: React.FC = () => {
           </div>
 
           {/* Bento Grid Masterwork */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(180px,auto)]">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 auto-rows-[minmax(220px,auto)]">
             
             {/* Main Identity Tile */}
             <motion.div 
@@ -94,8 +94,8 @@ export const KineticBlueprint: React.FC = () => {
                 <h3 className="text-4xl md:text-8xl font-sans font-black text-[var(--color-text)] leading-[0.9] tracking-tighter uppercase mb-10">
                    I build <br /> <span className="italic font-serif font-normal text-[var(--color-accent)] opacity-80">Simple & Fast</span> <br /> Web Apps.
                 </h3>
-                <p className="text-[var(--color-text-muted)] text-sm leading-relaxed font-light uppercase tracking-widest max-w-2xl">
-                   I'm a 2nd year student at OFPPT learning how to build better websites. I love making things that look great and run perfectly.
+                <p className="text-[var(--color-text-muted)] text-lg md:text-2xl leading-relaxed font-sans font-medium tracking-tight max-w-3xl">
+                   I'm a <span className="italic font-serif font-normal text-[var(--color-text)]">2nd year student</span> at OFPPT learning how to build better websites. I love making things that <span className="text-[var(--color-text)]">look great</span> and run perfectly.
                 </p>
               </div>
               {/* Decorative Scanline */}
@@ -105,7 +105,7 @@ export const KineticBlueprint: React.FC = () => {
                 className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--color-accent)]/5 to-transparent h-20 w-full opacity-20 pointer-events-none"
               />
             </motion.div>
-
+ 
             {/* Personal Journey Tile */}
             <motion.div 
               initial={{ opacity: 0, x: 30 }}
@@ -116,13 +116,13 @@ export const KineticBlueprint: React.FC = () => {
             >
                <div className="flex flex-col flex-grow">
                   <span className="font-mono text-[8px] text-[var(--color-accent)] mb-4 block uppercase tracking-widest">My Path // Growth</span>
-                  <h4 className="text-2xl font-black uppercase text-[var(--color-text)] mb-6 tracking-tight">Digital Architect</h4>
+                  <h4 className="text-3xl font-black uppercase text-[var(--color-text)] mb-6 tracking-tight">Digital Architect</h4>
                   <p className="text-[var(--color-text-muted)] text-base md:text-xl leading-relaxed font-sans font-medium tracking-tight flex-grow">
-                     I am a second-year digital development student at OFPPT, passionate about crafting seamless user experiences. My focus is on combining high-performance logic with aesthetic precision to build tools that feel like the future.
+                     I am a <span className="italic font-serif font-normal text-[var(--color-text)]">second-year</span> digital development student at <span className="text-[var(--color-text)]">OFPPT</span>, passionate about crafting seamless user experiences. My focus is on combining <span className="italic font-serif font-normal text-[var(--color-text)]">high-performance</span> logic with aesthetic precision.
                   </p>
                </div>
             </motion.div>
-
+ 
             {/* Animy/VaultNode Tiles */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -132,12 +132,12 @@ export const KineticBlueprint: React.FC = () => {
               className="md:col-span-6 p-10 border border-[var(--color-border)] bg-[var(--color-text)]/[0.01] flex flex-col justify-center relative overflow-hidden group"
             >
                <span className="font-mono text-[8px] text-[var(--color-accent)] mb-2 block tracking-widest uppercase">Projects // Fast Data</span>
-               <h4 className="text-xl font-black uppercase text-[var(--color-text)] tracking-tight">Animy & VaultNode</h4>
-               <p className="text-[var(--color-text-muted)] text-[10px] leading-relaxed font-light uppercase tracking-widest mt-2">
-                  Building tools that handle data fast and apps that feel instant. No more waiting.
+               <h4 className="text-2xl font-black uppercase text-[var(--color-text)] tracking-tight">Animy & VaultNode</h4>
+               <p className="text-[var(--color-text-muted)] text-sm md:text-lg leading-relaxed font-sans font-medium tracking-tight mt-3">
+                  Building tools that handle <span className="italic font-serif font-normal text-[var(--color-text)]">data fast</span> and apps that feel instant. <span className="text-[var(--color-text)]">No more waiting.</span>
                </p>
             </motion.div>
-
+ 
             {/* Status & Location Tile */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -147,18 +147,19 @@ export const KineticBlueprint: React.FC = () => {
               className="md:col-span-6 p-10 border border-[var(--color-border)] bg-[var(--color-accent)]/[0.03] flex items-center justify-between group"
             >
                <div className="flex items-center gap-6">
-                  <div className="w-12 h-12 rounded-full border border-[var(--color-accent)]/30 flex items-center justify-center font-mono text-[10px] text-[var(--color-accent)]">
+                  <div className="w-16 h-16 rounded-full border border-[var(--color-accent)]/30 flex items-center justify-center font-mono text-sm text-[var(--color-accent)]">
                      2Y
                   </div>
                   <div>
-                     <h4 className="text-xl font-black uppercase text-[var(--color-text)] tracking-tight">OFPPT Trainee</h4>
-                     <p className="font-mono text-[8px] text-[var(--color-text-muted)] uppercase tracking-widest mt-1">Status: Second Year // Location: Morocco</p>
+                     <h4 className="text-2xl font-black uppercase text-[var(--color-text)] tracking-tight">OFPPT Trainee</h4>
+                     <p className="font-mono text-[10px] text-[var(--color-text-muted)] uppercase tracking-widest mt-1">Status: <span className="text-[var(--color-accent)]">Second Year</span> // Location: <span className="text-[var(--color-text)]">Morocco</span></p>
                   </div>
                </div>
-               <div className="hidden md:block opacity-20 text-[8px] font-mono tracking-tighter">
+               <div className="hidden md:block opacity-20 text-[10px] font-mono tracking-tighter">
                   31.7917° N <br /> 7.0926° W
                </div>
             </motion.div>
+
 
           </div>
 
