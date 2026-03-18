@@ -59,7 +59,7 @@ export const InquiryContact: React.FC = () => {
   const xRight = useTransform(scrollYProgress, [0, 0.25], [100, 0]);
 
   return (
-    <section id="contact" ref={sectionRef} className="min-h-screen py-32 flex flex-col justify-center bg-[var(--color-bg)] px-6 relative">
+    <section id="contact" ref={sectionRef} className="min-h-screen py-20 md:py-32 flex flex-col justify-center bg-[var(--color-bg)] px-6 relative">
       <div className="container mx-auto">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
@@ -67,13 +67,13 @@ export const InquiryContact: React.FC = () => {
             <div className="relative select-none">
               <motion.h2 
                 style={{ x: xLeft }}
-                className="text-[clamp(3rem,16vw,11vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
+                className="text-[clamp(3.5rem,15vw,12vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
               >
                 Get in
               </motion.h2>
               <motion.h2 
                 style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
-                className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
+                className="text-[clamp(4.5rem,18vw,14vh)] leading-[0.8] -mt-[2vh] md:-mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
               >
                 Touch.
               </motion.h2>

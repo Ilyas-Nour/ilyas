@@ -104,10 +104,10 @@ export const TechnicalArray: React.FC = () => {
     <section id="skills" ref={sectionRef} className="min-h-screen py-20 md:py-32 flex flex-col justify-center bg-[var(--color-bg)] transition-colors duration-500 overflow-hidden relative">
       
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 overflow-hidden">
-        <div className="absolute left-10 top-20 text-[15vw] font-black uppercase tracking-widest leading-none rotate-90 origin-left">
+        <div className="absolute left-6 top-20 text-[25vw] md:text-[15vw] font-black uppercase tracking-widest leading-none rotate-90 origin-left">
           Kinetic
         </div>
-        <div className="absolute right-10 bottom-20 text-[10vw] font-black uppercase tracking-widest leading-none -rotate-90 origin-right">
+        <div className="absolute right-6 bottom-20 text-[20vw] md:text-[10vw] font-black uppercase tracking-widest leading-none -rotate-90 origin-right">
           Archive
         </div>
       </div>
@@ -117,13 +117,13 @@ export const TechnicalArray: React.FC = () => {
           <div className="relative select-none">
             <motion.h2 
               style={{ x: xLeft }}
-              className="text-[clamp(3rem,16vw,11vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
+              className="text-[clamp(3.5rem,15vw,12vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
             >
               Rolling
             </motion.h2>
             <motion.h2 
               style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
-              className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
+              className="text-[clamp(4.5rem,18vw,14vh)] leading-[0.8] -mt-[2vh] md:-mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
             >
               protocols.
             </motion.h2>

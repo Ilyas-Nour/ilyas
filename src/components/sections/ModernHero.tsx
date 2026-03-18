@@ -44,13 +44,13 @@ export const ModernHero: React.FC<{ warp?: any }> = ({ warp }) => {
         <div className="relative mb-6 md:mb-10 select-none text-center">
           <motion.h1 
             style={{ y: yIlyas, opacity }}
-            className="text-[14vw] leading-[0.7] font-serif font-bold uppercase tracking-tighter text-[var(--color-text)] mix-blend-difference drop-shadow-[0_10px_30px_rgba(0,0,0,0.3)]"
+            className="text-[clamp(4.5rem,14vw,12vw)] leading-[0.7] font-serif font-bold uppercase tracking-tighter text-[var(--color-text)] mix-blend-difference drop-shadow-[0_10px_30px_rgba(0,0,0,0.3)]"
           >
             Ilyas
           </motion.h1>
           <motion.h1 
             style={{ y: yNour, opacity, fontFamily: 'var(--font-signature)' }}
-            className="text-[20vw] leading-[0.7] -mt-[3vw] text-[#E2E8F0] mix-blend-difference drop-shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+            className="text-[clamp(6rem,20vw,18vw)] leading-[0.7] -mt-[4vw] text-[#E2E8F0] mix-blend-difference drop-shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
           >
             Nour.
           </motion.h1>

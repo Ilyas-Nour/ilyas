@@ -22,7 +22,7 @@ export const MassiveFooter = React.memo(() => {
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="absolute inset-x-0 -bottom-20 select-none pointer-events-none z-0 flex justify-center w-full px-[5vw]"
         >
-          <h2 className="text-[28vw] md:text-[22vw] text-center whitespace-nowrap text-[var(--color-text)] opacity-[0.05] leading-none" style={{ fontFamily: 'var(--font-signature)' }}>
+          <h2 className="text-[clamp(12rem,40vw,22vw)] text-center whitespace-nowrap text-[var(--color-text)] opacity-[0.05] leading-none" style={{ fontFamily: 'var(--font-signature)' }}>
              Ilyas Nour
           </h2>
         </motion.div>
@@ -45,10 +45,10 @@ export const MassiveFooter = React.memo(() => {
                       className="artistic-nav-link group overflow-hidden"
                     >
                       <div className="artistic-nav-inner relative flex flex-col transition-transform duration-700 ease-[0.16,1,0.3,1] group-hover:-translate-y-1/2">
-                        <span className="text-2xl font-serif italic text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors duration-500 py-1">
+                        <span className="text-2xl md:text-3xl font-serif italic text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors duration-500 py-2 md:py-1">
                           {link.name}
                         </span>
-                        <span className="text-2xl font-serif italic text-[var(--color-accent)] py-1">
+                        <span className="text-2xl md:text-3xl font-serif italic text-[var(--color-accent)] py-2 md:py-1">
                           {link.name}
                         </span>
                       </div>

@@ -146,7 +146,7 @@ export const LiquidBackground: React.FC<{ theme: 'light' | 'dark', warp?: any }>
       <Canvas
         camera={{ position: [0, 0, 1] }}
         style={{ width: '100%', height: '100%', pointerEvents: 'none' }}
-        dpr={[1, 2]}
+        dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : [1, 2]}
       >
         <ShaderPlane color1={color1} color2={color2} opacity={opacity} warp={warp} isVisible={isVisible} />
       </Canvas>

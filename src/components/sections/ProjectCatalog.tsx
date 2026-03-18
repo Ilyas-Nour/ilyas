@@ -36,7 +36,7 @@ const projects = [
   },
   {
     title: "Top Nature",
-    description: "An online store for buying plants. It is fast, easy to use, and has a very smooth design.",
+    description: "Top Nature is an immersive e-commerce sanctuary for plant enthusiasts, blending minimalist aesthetics with a high-performance shopping experience. It features fluid transitions, a curated botanical catalog, and a seamless checkout flow designed to mirror the tranquility of a real-world garden.",
     tags: ["Next.js 16", "React 19", "E-commerce", "Stripe", "Prisma"],
     screenshots: [
       "/projects/topnature1.png", "/projects/topnature2.png", 
@@ -172,38 +172,49 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `calc(-${scrollRange}px)`]);
 
   // Mobile Fragment - UX optimized for vertical touch interaction
-  if (isMobileViewport) {
-    return (
-      <div className="px-6 py-20 space-y-12">
-        <div className="space-y-6">
-          <h3 className="text-5xl font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-none">{project.title}</h3>
-          <p className="text-lg text-[var(--color-text-muted)] font-sans font-light leading-relaxed">
-            {project.description}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {project.tags.map(tag => (
-              <span key={tag} className="px-3 py-1 rounded-full border border-[var(--color-border)] glass font-mono text-[8px] uppercase tracking-widest text-[var(--color-text-muted)]">
-                {tag}
-              </span>
-            ))}
+    // Mobile-First Layout (Vertical Stack with Optimized Media)
+    if (isMobileViewport) {
+      return (
+        <section className="px-6 py-24 space-y-16 flex flex-col items-center text-center">
+          <div className="space-y-8 max-w-lg">
+             <div className="space-y-4">
+                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[var(--color-accent)] opacity-60">Artifact // {String(projects.indexOf(project) + 1).padStart(2, '0')}</span>
+                <h3 className="text-[clamp(2.8rem,14vw,6rem)] font-display italic text-[var(--color-text)] leading-[0.9] tracking-tight" style={{ fontWeight: 400 }}>{project.title}</h3>
+             </div>
+             
+             <p className="text-base text-[var(--color-text-muted)] font-sans font-light leading-relaxed px-4">
+               {project.description}
+             </p>
+
+             {/* Dynamic Tag Matrix */}
+             <div className="flex flex-wrap justify-center gap-2 px-2">
+                {project.tags.map(tag => (
+                  <span key={tag} className="px-3 py-1 bg-[var(--color-text)]/5 border border-[var(--color-border)]/10 text-[9px] font-mono uppercase tracking-widest text-[var(--color-text)] rounded-full">
+                    {tag}
+                  </span>
+                ))}
+             </div>
+
+             <div className="flex justify-center pt-4">
+               <ProjectButton link={project.link || "#"} title={project.title} />
+             </div>
           </div>
-          {project.link && (
-            <div className="pt-4 flex">
-              <ProjectButton 
-                link={project.link}
-                title={project.title}
-              />
-            </div>
-          )}
-        </div>
-        <div className="space-y-8">
-          {project.screenshots.map((shot, idx) => (
-            <Screenshot key={idx} src={shot} project={project.title} />
-          ))}
-        </div>
-      </div>
-    );
-  }
+
+          {/* Primary Visual Showcase (Mobile Optimized) */}
+          <div className="w-full space-y-6">
+             <div className="relative group">
+                <Screenshot src={project.screenshots[0]} project={project.title} />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-transparent to-transparent opacity-40" />
+             </div>
+             {project.screenshots[1] && (
+               <div className="px-8 scale-[0.95] opacity-80">
+                  <Screenshot src={project.screenshots[1]} project={project.title} />
+               </div>
+             )}
+          </div>
+        </section>
+      );
+    }
 
   // Desktop Component - Experience-driven horizontal gallery
   return (
@@ -213,7 +224,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
           {/* Project Identity Card */}
           <div className="flex-shrink-0 w-[85vw] md:w-[60vw] space-y-6 md:space-y-12 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="space-y-4 md:space-y-6">
-               <h3 className="text-5xl md:text-9xl font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-none" style={{ fontSize: 'clamp(2.5rem, 8vw, 8rem)' }}>{project.title}</h3>
+               <h3 className="text-[clamp(3.5rem,15vw,9rem)] md:text-9xl font-display italic text-[var(--color-text)] leading-[0.85] tracking-tight" style={{ fontWeight: 400 }}>{project.title}</h3>
             </div>
             
             <div className="max-w-xl space-y-6 md:space-y-8 flex flex-col items-center md:items-start">
