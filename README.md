@@ -39,7 +39,7 @@ A reading-focus narrative engine that synchronize text opacity and scale with sc
 
 ### 4. Insane Feedback Flow
 - **Synthetic Audio**: Real-time "Success" chime generation using the **Web Audio API** (AudioContext), providing immediate confirmation without asset overhead.
-- **Masterwork Registry**: A secure transmission system integrated with Formspree for reliable global communication.
+- **Secure Transmission Registry**: A secure transmission system integrated with Formspree for reliable global communication.
 
 ---
 
@@ -65,7 +65,7 @@ npm run dev
 # Optimize for the web
 npm run build
 
-# Preview the masterwork
+# Preview the build
 npm run preview
 ```
 
@@ -73,9 +73,9 @@ npm run preview
 
 ## LICENSE
 **© 2026 Ilyas Nour. All rights reserved.**
-Designed and developed with relentless pursuit of the Masterwork standard.
+Designed and developed by Ilyas Nour.
 
 <p align="center">
   <br />
-  <img src="https://readme-typing-svg.herokuapp.com?font=Space+Mono&size=14&duration=3000&pause=1000&color=F8FAFC&center=true&vCenter=true&width=435&lines=ARCHIVING+IDENTITY...;SYNCHRONIZING+LOGIC...;LAUNCHING+MASTERWORK_V4..." alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Space+Mono&size=14&duration=3000&pause=1000&color=F8FAFC&center=true&vCenter=true&width=435&lines=ARCHIVING+IDENTITY...;SYNCHRONIZING+LOGIC...;BY+ILYAS+NOUR" alt="Typing SVG" />
 </p>
