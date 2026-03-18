@@ -37,7 +37,7 @@ const SHIFT_2: Skill[] = [
   { name: "Linux", Icon: SiLinux, color: "#FCC624" }
 ];
 
-const MarqueeItem = ({ skill }: { skill: Skill }) => {
+const MarqueeItem = React.memo(({ skill }: { skill: Skill }) => {
   const { Icon } = skill;
   return (
     <motion.div 
@@ -63,7 +63,7 @@ const MarqueeItem = ({ skill }: { skill: Skill }) => {
       </div>
     </motion.div>
   );
-};
+});
 
 const RollingRow = ({ skills, reverse = false }: { skills: Skill[], reverse?: boolean }) => {
   // Triple the skills to ensure seamless looping without gaps

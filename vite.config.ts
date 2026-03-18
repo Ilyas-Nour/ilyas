@@ -16,8 +16,9 @@ export default defineConfig({
             if (id.includes('three')) return 'three-vendor';
             if (id.includes('framer-motion')) return 'motion-vendor';
             if (id.includes('react')) return 'react-vendor';
-            if (id.includes('lucide')) return 'icons-vendor';
-            return 'vendor'; // all other package dependencies
+            if (id.includes('react-icons')) return 'icons-vendor';
+            if (id.includes('gsap')) return 'gsap-vendor';
+            return 'vendor';
           }
         },
       },
