@@ -1,6 +1,7 @@
 import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { MotionValue } from 'framer-motion';
 
 const vertexShader = `
   varying vec2 vUv;
@@ -57,7 +58,7 @@ const fragmentShader = `
   }
 `;
 
-const ShaderPlane = ({ color1, color2, opacity, warp, isVisible }: { color1: string, color2: string, opacity: number, warp?: any, isVisible: boolean }) => {
+const ShaderPlane = ({ color1, color2, opacity, warp, isVisible }: { color1: string, color2: string, opacity: number, warp?: MotionValue<number> | number, isVisible: boolean }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { viewport, size, mouse } = useThree();
@@ -87,7 +88,7 @@ const ShaderPlane = ({ color1, color2, opacity, warp, isVisible }: { color1: str
       materialRef.current.uniforms.uTime.value = performance.now() * 0.001;
       
       // Update uWarp directly from warp prop (which could be a MotionValue or number)
-      if (warp && typeof warp.get === 'function') {
+      if (warp && typeof warp !== 'number' && 'get' in warp) {
         materialRef.current.uniforms.uWarp.value = warp.get();
       } else if (typeof warp === 'number') {
         materialRef.current.uniforms.uWarp.value = warp;
@@ -115,7 +116,7 @@ const ShaderPlane = ({ color1, color2, opacity, warp, isVisible }: { color1: str
   );
 };
 
-export const LiquidBackground: React.FC<{ theme: 'light' | 'dark', warp?: any }> = ({ theme, warp }) => {
+export const LiquidBackground: React.FC<{ theme: 'light' | 'dark', warp?: MotionValue<number> | number }> = ({ theme, warp }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = React.useState(true); // Default to true to allow initial render
 

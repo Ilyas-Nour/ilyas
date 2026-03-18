@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-motion';
 import { KineticButton } from '../ui/KineticButton';
 import { LiquidBackground } from '../ui/LiquidBackground';
 import { useTheme } from '../../context/ThemeContext';
@@ -10,7 +10,7 @@ import { useTheme } from '../../context/ThemeContext';
  * Typography occupies ~80% of width for a monolithic feel.
  * No background layers or slices - pure 3D background.
  */
-export const ModernHero: React.FC<{ warp?: any }> = ({ warp }) => {
+export const ModernHero: React.FC<{ warp?: MotionValue<number> | number }> = ({ warp }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
   

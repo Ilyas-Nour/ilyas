@@ -76,6 +76,7 @@ const NavLinks = React.memo(({ activeTab }: { activeTab: string }) => {
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { progress, isVisible } = useScrollProgress();
   const { theme, toggleTheme } = useTheme();
   
@@ -114,11 +115,11 @@ export const Navbar: React.FC = () => {
             <span className="font-serif italic text-2xl md:text-3xl text-[var(--color-text)] leading-none transform group-hover:skew-x-2 transition-transform duration-500">Ilyas.</span>
           </a>
 
-          {/* Navigation Links - Refined Registry */}
+          {/* Navigation Links - Desktop Only */}
           <NavLinks activeTab={activeTab} />
 
           {/* Action Interface Block */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 md:gap-8">
              <button 
                onClick={toggleTheme}
                className="relative w-10 h-10 flex items-center justify-center group"
@@ -132,9 +133,27 @@ export const Navbar: React.FC = () => {
                </span>
              </button>
              
+             <button 
+               onClick={() => setIsMenuOpen(!isMenuOpen)}
+               className="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 z-[10001]"
+             >
+               <motion.span 
+                 animate={isMenuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+                 className="w-6 h-0.5 bg-[var(--color-text)] block transition-transform duration-500"
+               />
+               <motion.span 
+                 animate={isMenuOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
+                 className="w-6 h-0.5 bg-[var(--color-text)] block transition-all duration-500"
+               />
+               <motion.span 
+                 animate={isMenuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+                 className="w-6 h-0.5 bg-[var(--color-text)] block transition-transform duration-500"
+               />
+             </button>
+
              <motion.a 
                href="#contact" 
-               className="group relative px-10 py-3.5 flex items-center justify-center"
+               className="hidden sm:flex group relative px-10 py-3.5 items-center justify-center"
                whileHover="hover"
                initial="initial"
              >
@@ -189,6 +208,44 @@ export const Navbar: React.FC = () => {
              </motion.a>
           </div>
         </div>
+
+        {/* Mobile Menu Overlay */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute top-0 left-0 w-full h-screen bg-[var(--color-bg)] z-[10000] flex flex-col items-center justify-center gap-12 pt-20"
+            >
+              {[
+                { name: 'Home', id: 'home' },
+                { name: 'About', id: 'about' },
+                { name: 'Skills', id: 'skills' },
+                { name: 'Projects', id: 'projects' },
+                { name: 'Contact', id: 'contact' }
+              ].map((item, i) => (
+                <motion.a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={() => setIsMenuOpen(false)}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-5xl font-serif italic text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
+                >
+                  {item.name}
+                </motion.a>
+              ))}
+              
+              <div className="absolute bottom-12 flex gap-8 opacity-40">
+                 <span className="font-mono text-[9px] uppercase tracking-widest">ilyasnour.com</span>
+                 <span className="font-mono text-[9px] uppercase tracking-widest">© 2026</span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Scroll Progress Bar for Projects */}
         <div className="absolute bottom-0 left-0 w-full h-[2px] pointer-events-none overflow-hidden">

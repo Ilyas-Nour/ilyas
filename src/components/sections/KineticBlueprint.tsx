@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-motion';
 import { LiquidBackground } from '../ui/LiquidBackground';
 import { useTheme } from '../../context/ThemeContext';
 
 /**
  * Word Component for the Reading Effect
  */
-const Word = ({ children, progress, range, isHighlighted }: { children: string, progress: any, range: [number, number], isHighlighted: boolean }) => {
+const Word = ({ children, progress, range, isHighlighted }: { children: string, progress: MotionValue<number>, range: [number, number], isHighlighted: boolean }) => {
   const baseOpacity = isHighlighted ? 0.3 : 0.15;
   const opacity = useTransform(progress, range, [baseOpacity, 1]);
   const baseColor = isHighlighted ? "var(--color-accent)" : "var(--color-text-muted)";
