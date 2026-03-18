@@ -71,69 +71,37 @@ export const KineticBlueprint: React.FC = () => {
           />
         </motion.div>
 
-        {/* Floating About Me Title (Restored Old Layout) */}
-        <div className="absolute top-20 left-24 pointer-events-none select-none z-20">
-          <motion.h2 
-            style={{ x: xLeft, opacity: titleOpacity }}
-            className="text-[12vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
-          >
-            About
-          </motion.h2>
-          <motion.h2 
-            style={{ x: xRight, opacity: titleOpacity, fontFamily: 'var(--font-signature)' }}
-            className="text-[15vw] leading-[0.8] -mt-[4vw] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
-          >
-            Me.
-          </motion.h2>
-        </div>
-
-        <div className="container mx-auto px-6 md:px-24 relative z-10 mt-20">
-          <div className="max-w-6xl mx-auto">
+        <div className="container mx-auto px-6 md:px-24 relative z-10 flex flex-col justify-center min-h-screen">
+          <div className="max-w-6xl mx-auto w-full">
             
-            {/* The Big Narrative Box */}
-            <motion.div 
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative p-12 md:p-24 border border-[var(--color-border)] bg-[var(--color-text)]/[0.01] backdrop-blur-md group overflow-hidden"
-            >
-              <div className="relative z-10">
-                <span className="font-mono text-[10px] text-[var(--color-accent)] mb-12 block uppercase tracking-[0.5em] opacity-40">
-                   Identity // The Narrative Archive
-                </span>
-                
-                <h3 className="text-4xl md:text-6xl font-sans font-black text-[var(--color-text)] leading-[1.1] tracking-tighter uppercase mb-16 border-l-4 border-[var(--color-accent)] pl-8">
-                   Digital <br /> Architect.
-                </h3>
-                
-                <div className="flex flex-wrap text-2xl md:text-5xl font-sans font-medium leading-[1.3] tracking-tight">
-                  {words.map((word, i) => {
-                    const start = i / words.length;
-                    const end = start + (1 / words.length);
-                    return (
-                      <Word key={i} progress={smoothProgress} range={[start, end]}>
-                        {word}
-                      </Word>
-                    );
-                  })}
-                </div>
-              </div>
+            {/* Restored Old Title Layout - Now in Flow */}
+            <div className="relative select-none mb-[25px]">
+              <motion.h2 
+                style={{ x: xLeft, opacity: titleOpacity }}
+                className="text-[12vw] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
+              >
+                About
+              </motion.h2>
+              <motion.h2 
+                style={{ x: xRight, opacity: titleOpacity, fontFamily: 'var(--font-signature)' }}
+                className="text-[15vw] leading-[0.8] -mt-[4vw] font-normal text-[var(--color-text)] opacity-30 mix-blend-difference"
+              >
+                Me.
+              </motion.h2>
+            </div>
 
-              {/* Decorative HUD Elements */}
-              <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none hidden md:block">
-                 <div className="font-mono text-[8px] uppercase tracking-widest text-right space-y-1">
-                    <p>Status: Pinned_Active</p>
-                    <p>Mode: Sequential_Reveal</p>
-                    <p>Buffer: 100%</p>
-                 </div>
-              </div>
-
-              {/* Dynamic Progress Bar */}
-              <motion.div 
-                style={{ scaleX: smoothProgress }}
-                className="absolute bottom-0 left-0 h-1 w-full bg-[var(--color-accent)] origin-left"
-              />
-            </motion.div>
+            {/* The Raw Narrative Paragraph */}
+            <div className="flex flex-wrap text-2xl md:text-5xl font-sans font-medium leading-[1.3] tracking-tight mb-[25px]">
+              {words.map((word, i) => {
+                const start = i / words.length;
+                const end = start + (1 / words.length);
+                return (
+                  <Word key={i} progress={smoothProgress} range={[start, end]}>
+                    {word}
+                  </Word>
+                );
+              })}
+            </div>
 
           </div>
         </div>
