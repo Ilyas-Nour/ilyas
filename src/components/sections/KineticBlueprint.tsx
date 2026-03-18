@@ -46,7 +46,7 @@ export const KineticBlueprint: React.FC = () => {
 
   const xLeft = useTransform(smoothProgress, [0, 0.2], [-200, 0]);
   const xRight = useTransform(smoothProgress, [0, 0.2], [200, 0]);
-  const titleOpacity = useTransform(smoothProgress, [0, 0.1, 0.2], [0, 1, 1]);
+  const titleOpacity = useTransform(smoothProgress, [0, 0.1, 0.2, 0.4], [0, 1, 1, 0]);
 
   // Narrative Progress (scrolling through the text)
   const revealProgress = useTransform(smoothProgress, [0.2, 0.6], [0, 1]);
