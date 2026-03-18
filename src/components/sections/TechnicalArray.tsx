@@ -56,7 +56,6 @@ const MarqueeItem = React.memo(({ skill }: { skill: Skill }) => {
         />
       </div>
       <div className="flex flex-col">
-        <span className="font-mono text-[10px] text-[var(--color-accent)] opacity-40 uppercase tracking-widest mb-1">Skill_Node</span>
         <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-[var(--color-text)] transition-colors duration-500 group-hover:text-[var(--color-text)]">
           {skill.name}
         </h3>
@@ -108,10 +107,6 @@ export const TechnicalArray: React.FC = () => {
       <div className="container mx-auto px-6 mb-24 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
           <div className="space-y-4">
-            <div className="flex items-center gap-4">
-              <span className="font-mono text-[10px] text-[var(--color-accent)] uppercase tracking-[0.5em]">The Technical Array</span>
-              <div className="h-[1px] w-20 bg-[var(--color-accent)] opacity-40" />
-            </div>
             <h2 className="text-6xl md:text-9xl font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]">
               Rolling <br /> <span className="opacity-20 italic font-signature font-normal lowercase" style={{ fontFamily: 'var(--font-signature)' }}>protocols.</span>
             </h2>
@@ -127,18 +122,6 @@ export const TechnicalArray: React.FC = () => {
       <div className="space-y-4 relative z-10">
         <RollingRow skills={SHIFT_1} />
         <RollingRow skills={SHIFT_2} reverse />
-      </div>
-
-      {/* HUD Footer */}
-      <div className="container mx-auto px-6 mt-32 relative z-10">
-        <div className="flex justify-between items-center opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
-          <div className="flex gap-8">
-            {["SYSTEM_INIT", "CORE_SYNCED", "H_FIDELITY"].map(tag => (
-              <span key={tag} className="font-mono text-[8px] border border-[var(--color-text)] px-3 py-1 uppercase tracking-widest">{tag}</span>
-            ))}
-          </div>
-          <span className="font-mono text-[10px] uppercase tracking-widest">© 2024 ARCHIVE</span>
-        </div>
       </div>
 
     </section>
