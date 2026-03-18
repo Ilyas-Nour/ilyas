@@ -55,23 +55,23 @@ export const KineticBlueprint: React.FC = () => {
 
   const xLeft = useTransform(smoothProgress, [0, 0.2], [-100, 0]);
   const xRight = useTransform(smoothProgress, [0, 0.2], [100, 0]);
-  const titleOpacity = useTransform(smoothProgress, [0, 0.1, 0.2, 0.9], [0, 1, 1, 1]);
+  const titleOpacity = useTransform(smoothProgress, [0, 0.1, 0.15, 0.25], [0, 1, 1, 0]);
 
   // Narrative Progress (scrolling through the text)
-  const revealProgress = useTransform(smoothProgress, [0.2, 0.6], [0, 1]);
-  const revealOpacity = useTransform(smoothProgress, [0.15, 0.25, 0.65, 0.75], [0, 1, 1, 0]);
+  const revealProgress = useTransform(smoothProgress, [0.2, 0.7], [0, 1]);
+  const revealOpacity = useTransform(smoothProgress, [0.15, 0.25, 0.75, 0.85], [0, 1, 1, 0]);
 
   // Glass Boxes Transitions
-  const glassY = useTransform(smoothProgress, [0.65, 0.85], [100, 0]);
-  const glassOpacity = useTransform(smoothProgress, [0.65, 0.75], [0, 1]);
+  const glassY = useTransform(smoothProgress, [0.75, 0.95], [100, 0]);
+  const glassOpacity = useTransform(smoothProgress, [0.75, 0.85], [0, 1]);
 
-  const bioText = "I build simple and fast web apps. I'm a second year student at OFPPT learning how to build better websites. I love making things that look great and run perfectly.";
+  const bioText = "I build simple and fast web apps that work perfectly on every screen. Currently, I'm a second year student at OFPPT where I study digital development and better ways to code. I love mixing beautiful designs with high-speed performance to make tools that people actually enjoy using. My goal is to keep learning and building things that feel instant and look amazing.";
 
   return (
     <section 
       id="about" 
       ref={containerRef}
-      className="min-h-[300vh] relative flex flex-col items-center overflow-visible"
+      className="min-h-[400vh] relative flex flex-col items-center overflow-visible z-50"
     >
       {/* Background Continuity */}
       <motion.div style={{ scale: entranceScale }} className="absolute inset-0 z-0">
