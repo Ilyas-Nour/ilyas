@@ -13,9 +13,10 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 interface ProjectButtonProps {
   link?: string;
   title: string;
+  isSource?: boolean;
 }
 
-export const ProjectButton: React.FC<ProjectButtonProps> = ({ link, title }) => {
+export const ProjectButton: React.FC<ProjectButtonProps> = ({ link, title, isSource = false }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   
   // Motion values for magnetic physics
@@ -51,6 +52,9 @@ export const ProjectButton: React.FC<ProjectButtonProps> = ({ link, title }) => 
     y.set(0);
   };
 
+  const primaryLabel = isSource ? "Source Code" : "Visit Site";
+  const secondaryLabel = isSource ? "View Repo" : `Explore ${title}`;
+
   return (
     <div className="relative isolate">
       <motion.button
@@ -59,26 +63,26 @@ export const ProjectButton: React.FC<ProjectButtonProps> = ({ link, title }) => 
         onMouseLeave={handleMouseLeave}
         onClick={() => link && window.open(link, '_blank')}
         style={{ x: springX, y: springY }}
-        className="group relative flex items-center justify-center"
+        className="group relative flex items-center justify-center translate-z-0"
       >
         {/* The Core Content Layer */}
-        <div className="h-12 md:h-14 px-10 md:px-12 rounded-full relative overflow-hidden bg-[var(--color-text)] text-[var(--color-bg)] transition-all duration-700 ease-[0.16,1,0.3,1] flex items-center gap-4 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)]">
+        <div className={`h-11 md:h-14 ${isSource ? 'px-6 md:px-8' : 'px-8 md:px-12'} rounded-full relative overflow-hidden ${isSource ? 'bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)]' : 'bg-[var(--color-text)] text-[var(--color-bg)]'} transition-all duration-700 ease-[0.16,1,0.3,1] flex items-center gap-3 md:gap-4 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)]`}>
           {/* Animated "Prismatic" Backdrop - Subtle Glow on Hover */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
           
           {/* Vertical Text Reveal Stack */}
-          <div className="relative h-6 md:h-7 overflow-hidden flex flex-col items-start min-w-[100px]">
-             <span className="text-[10px] md:text-[11px] font-heading font-black uppercase tracking-[0.3em] transition-transform duration-700 ease-[0.16,1,0.3,1] group-hover:-translate-y-full py-2">
-               Visit Site
+          <div className={`relative h-5 md:h-7 overflow-hidden flex flex-col items-start ${isSource ? 'min-w-[80px] md:min-w-[90px]' : 'min-w-[80px] md:min-w-[100px]'}`}>
+             <span className="text-[9px] md:text-[11px] font-heading font-black uppercase tracking-[0.2em] md:tracking-[0.3em] transition-transform duration-700 ease-[0.16,1,0.3,1] group-hover:-translate-y-full py-2">
+               {primaryLabel}
              </span>
-             <span className="absolute top-full text-[10px] md:text-[11px] font-heading font-black uppercase tracking-[0.3em] text-[var(--color-accent)] transition-transform duration-700 ease-[0.16,1,0.3,1] group-hover:-translate-y-full py-2 whitespace-nowrap">
-               Explore {title}
+             <span className="absolute top-full text-[9px] md:text-[11px] font-heading font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[var(--color-accent)] transition-transform duration-700 ease-[0.16,1,0.3,1] group-hover:-translate-y-full py-2 whitespace-nowrap">
+               {secondaryLabel}
              </span>
           </div>
 
           {/* Kinetic Icon Interaction */}
-          <span className="text-base md:text-lg transform transition-all duration-700 ease-[0.16,1,0.3,1] group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:scale-110">
-            ↗
+          <span className="text-sm md:text-lg transform transition-all duration-700 ease-[0.16,1,0.3,1] group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:scale-110">
+            {isSource ? 'ᛤ' : '↗'}
           </span>
         </div>
 

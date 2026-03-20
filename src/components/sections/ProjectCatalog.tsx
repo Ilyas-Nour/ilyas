@@ -14,6 +14,7 @@ const projects = [
     description: "Animy is a social-first anime and manga discovery platform designed to connect fans through real-time interaction and personalized tracking. It shifts the focus from simple content browsing to building a community around shared interests, allowing users to curate their journeys and share them with friends.",
     tags: ["NestJS", "Redis", "Socket.io", "PostgreSQL", "Next.js"],
     link: "https://animy-frontend.vercel.app",
+    github: "https://github.com/Ilyas-Nour/animy-frontend",
     screenshots: [
       "/projects/animy1.png", "/projects/animy2.png", "/projects/animy3.png", 
       "/projects/animy4.png", "/projects/animy5.png", "/projects/animy6.png",
@@ -23,10 +24,11 @@ const projects = [
     ],
   },
   {
-    title: "VaultNode",
-    description: "VaultNode is a cutting-edge, privacy-focused productivity suite designed for high-performance file manipulation. Leveraging WebAssembly and local-only AI, it empowers users to process media, edit PDFs, and transform data entirely within the browser, ensuring absolute privacy without compromising on speed.",
+    title: "PrivaFlow",
+    description: "PrivaFlow is a cutting-edge, privacy-focused productivity suite designed for high-performance file manipulation. Leveraging WebAssembly and local-only AI, it empowers users to process media, edit PDFs, and transform data entirely within the browser, ensuring absolute privacy without compromising on speed.",
     tags: ["FFmpeg WASM", "Next.js 16", "React 19", "PDF-Lib", "AI"],
     link: "https://vaultnode.vercel.app",
+    github: "https://github.com/Ilyas-Nour/VaultNode",
     screenshots: [
       "/projects/privaflow_hero.png", "/projects/privaflow1.png", "/projects/privaflow2.png",
       "/projects/privaflow3.png", "/projects/privaflow4.png", "/projects/privaflow5.png",
@@ -38,6 +40,7 @@ const projects = [
     title: "Top Nature",
     description: "Top Nature is an immersive e-commerce sanctuary for plant enthusiasts, blending minimalist aesthetics with a high-performance shopping experience. It features fluid transitions, a curated botanical catalog, and a seamless checkout flow designed to mirror the tranquility of a real-world garden.",
     tags: ["Next.js 16", "React 19", "E-commerce", "Stripe", "Prisma"],
+    github: "https://github.com/Ilyas-Nour/TopNature",
     screenshots: [
       "/projects/topnature1.png", "/projects/topnature2.png", 
       "/projects/topnature3.png", "/projects/topnature4.png"
@@ -195,8 +198,9 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
                 ))}
              </div>
 
-             <div className="flex justify-center pt-4">
-               <ProjectButton link={project.link || "#"} title={project.title} />
+             <div className="flex flex-wrap justify-center gap-4 pt-4">
+               {project.link && <ProjectButton link={project.link} title={project.title} />}
+               {project.github && <ProjectButton link={project.github} title={project.title} isSource />}
              </div>
           </div>
 
@@ -238,14 +242,21 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
                   </span>
                 ))}
               </div>
-              {project.link && (
-                <div className="pt-4 md:pt-8 flex">
+              <div className="pt-4 md:pt-8 flex flex-wrap gap-4">
+                {project.link && (
                   <ProjectButton 
                     link={project.link}
                     title={project.title}
                   />
-                </div>
-              )}
+                )}
+                {project.github && (
+                  <ProjectButton 
+                    link={project.github}
+                    title={project.title}
+                    isSource
+                  />
+                )}
+              </div>
             </div>
           </div>
 
