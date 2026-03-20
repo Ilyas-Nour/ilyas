@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-
 import { KineticButton } from '../ui/KineticButton';
 import { LiquidBackground } from '../ui/LiquidBackground';
 import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 /**
  * ModernHero Component
@@ -13,6 +14,7 @@ import { useTheme } from '../../context/ThemeContext';
 export const ModernHero: React.FC<{ warp?: MotionValue<number> | number }> = ({ warp }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
+  const { t } = useLanguage();
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -67,12 +69,16 @@ export const ModernHero: React.FC<{ warp?: MotionValue<number> | number }> = ({ 
           <div className="flex flex-col items-center space-y-6 max-w-2xl">
             <div className="space-y-4">
               <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 mix-blend-difference">
-                <span className="text-2xl md:text-6xl font-serif italic text-[var(--color-text)]">Web</span>
-                <span className="text-2xl md:text-6xl font-black font-sans uppercase tracking-tighter text-[var(--color-text)]">Developer.</span>
+                <span className="text-2xl md:text-6xl font-serif italic text-[var(--color-text)]">
+                  {t('hero.title').split(' ')[0]}
+                </span>
+                <span className="text-2xl md:text-6xl font-black font-sans uppercase tracking-tighter text-[var(--color-text)]">
+                  {t('hero.title').split(' ')[1]}
+                </span>
               </div>
             </div>
             <p className="text-base md:text-2xl font-light text-[var(--color-text)] mix-blend-difference leading-relaxed max-w-lg mx-auto">
-              I build <span className="font-mono uppercase tracking-tighter text-[#E2E8F0] font-bold">Fast</span> and <span className="font-mono uppercase tracking-tighter text-[#E2E8F0] font-bold">Beautiful</span> digital experiences.
+              {t('hero.subtitle')}
             </p>
           </div>
 
@@ -84,7 +90,7 @@ export const ModernHero: React.FC<{ warp?: MotionValue<number> | number }> = ({ 
             >
               <div className="absolute inset-0 bg-[var(--color-bg)] -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
               <span className="relative z-10 font-heading font-black text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[var(--color-bg)] group-hover:text-[var(--color-text)] transition-colors duration-500">
-                See My Work //
+                {t('hero.work')}
               </span>
             </button>
 
@@ -94,7 +100,7 @@ export const ModernHero: React.FC<{ warp?: MotionValue<number> | number }> = ({ 
             >
               <div className="absolute inset-0 bg-[var(--color-text)] translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
               <span className="relative z-10 font-heading font-black text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[var(--color-text)] group-hover:text-[var(--color-bg)] transition-colors duration-500">
-                Contact Me.
+                {t('hero.contact')}
               </span>
             </button>
           </div>

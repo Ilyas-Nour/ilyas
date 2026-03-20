@@ -3,50 +3,13 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { KineticButton } from '../ui/KineticButton';
 import { ProjectButton } from '../ui/ProjectButton';
 import { useScrollProgress } from '../../context/ScrollProgressContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 /**
  * Project Interface
  * Defines the schema for digital artifacts displayed in the catalog.
  */
-const projects = [
-  {
-    title: "Animy",
-    description: "Animy is a social-first anime and manga discovery platform designed to connect fans through real-time interaction and personalized tracking. It shifts the focus from simple content browsing to building a community around shared interests, allowing users to curate their journeys and share them with friends.",
-    tags: ["NestJS", "Redis", "Socket.io", "PostgreSQL", "Next.js"],
-    link: "https://animy-frontend.vercel.app",
-    github: "https://github.com/Ilyas-Nour/animy-frontend",
-    screenshots: [
-      "/projects/animy1.png", "/projects/animy2.png", "/projects/animy3.png", 
-      "/projects/animy4.png", "/projects/animy5.png", "/projects/animy6.png",
-      "/projects/animy7.png", "/projects/animy8.png", "/projects/animy9.png",
-      "/projects/animy10.png", "/projects/animy11.png", "/projects/animy12.png",
-      "/projects/animy-mobile1.png", "/projects/animy-mobile2.png"
-    ],
-  },
-  {
-    title: "PrivaFlow",
-    description: "PrivaFlow is a cutting-edge, privacy-focused productivity suite designed for high-performance file manipulation. Leveraging WebAssembly and local-only AI, it empowers users to process media, edit PDFs, and transform data entirely within the browser, ensuring absolute privacy without compromising on speed.",
-    tags: ["FFmpeg WASM", "Next.js 16", "React 19", "PDF-Lib", "AI"],
-    link: "https://vaultnode.vercel.app",
-    github: "https://github.com/Ilyas-Nour/VaultNode",
-    screenshots: [
-      "/projects/privaflow_hero.png", "/projects/privaflow1.png", "/projects/privaflow2.png",
-      "/projects/privaflow3.png", "/projects/privaflow4.png", "/projects/privaflow5.png",
-      "/projects/privaflow6.png", "/projects/privaflow7.png", "/projects/privaflow8.png",
-      "/projects/priva-mobile1.png", "/projects/priva-mobile2.png", "/projects/priva-mobile3.png"
-    ],
-  },
-  {
-    title: "Top Nature",
-    description: "Top Nature is an immersive e-commerce sanctuary for plant enthusiasts, blending minimalist aesthetics with a high-performance shopping experience. It features fluid transitions, a curated botanical catalog, and a seamless checkout flow designed to mirror the tranquility of a real-world garden.",
-    tags: ["Next.js 16", "React 19", "E-commerce", "Stripe", "Prisma"],
-    github: "https://github.com/Ilyas-Nour/TopNature",
-    screenshots: [
-      "/projects/topnature1.png", "/projects/topnature2.png", 
-      "/projects/topnature3.png", "/projects/topnature4.png"
-    ],
-  }
-];
+// Project data is now managed within the component to support live translation
 
 /**
  * Screenshot Component
@@ -92,7 +55,8 @@ const Screenshot = React.memo(({ src, project }: { src: string, project: string 
  * Creates a "Section-within-a-Section" horizontal scroll experience for desktop,
  * and a traditional vertical stack for mobile devices.
  */
-const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }> = ({ project, index }) => {
+const HorizontalProject: React.FC<{ project: any, index: number }> = ({ project, index }) => {
+  const { t } = useLanguage();
   const targetRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
@@ -144,7 +108,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
 
   // Update global progress bar
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on('change', (latest) => {
+    const unsubscribe = scrollYProgress.on('change', (latest: number) => {
       // Only set visible if within bounds
       if (latest > 0 && latest < 1) {
         setIsVisible(true);
@@ -181,7 +145,9 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
         <section className="px-6 py-24 space-y-16 flex flex-col items-center text-center">
           <div className="space-y-8 max-w-lg">
              <div className="space-y-4">
-                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[var(--color-accent)] opacity-60">Artifact // {String(projects.indexOf(project) + 1).padStart(2, '0')}</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[var(--color-accent)] opacity-60">
+                  {t('projects.artifact')} // {String(index + 1).padStart(2, '0')}
+                </span>
                 <h3 className="text-[clamp(2.8rem,14vw,6rem)] font-display italic text-[var(--color-text)] leading-[0.9] tracking-tight" style={{ fontWeight: 400 }}>{project.title}</h3>
              </div>
              
@@ -191,7 +157,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
 
              {/* Dynamic Tag Matrix */}
              <div className="flex flex-wrap justify-center gap-2 px-2">
-                {project.tags.map(tag => (
+                {project.tags.map((tag: string) => (
                   <span key={tag} className="px-3 py-1 bg-[var(--color-text)]/5 border border-[var(--color-border)]/10 text-[9px] font-mono uppercase tracking-widest text-[var(--color-text)] rounded-full">
                     {tag}
                   </span>
@@ -236,7 +202,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
                 {project.description}
               </p>
               <div className="flex flex-wrap justify-center md:justify-start gap-2 md:gap-3">
-                {project.tags.map(tag => (
+                {project.tags.map((tag: string) => (
                   <span key={tag} className="px-3 md:px-5 py-1 md:py-2 rounded-full border border-[var(--color-border)] glass font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-[var(--color-text-muted)]">
                     {tag}
                   </span>
@@ -262,7 +228,7 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
 
           {/* Screenshot Gallery Array */}
           <div className="flex gap-12 md:gap-16 items-center flex-nowrap pr-[10vw] md:pr-0">
-            {project.screenshots.map((shot, idx) => (
+            {project.screenshots.map((shot: string, idx: number) => (
               <Screenshot key={idx} src={shot} project={project.title} />
             ))}
           </div>
@@ -279,6 +245,48 @@ const HorizontalProject: React.FC<{ project: typeof projects[0], index: number }
  */
 export const ProjectCatalog: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
+
+  const projects = [
+    {
+      title: "Animy",
+      description: t('projects.animy.desc'),
+      tags: ["NestJS", "Redis", "Socket.io", "PostgreSQL", "Next.js"],
+      link: "https://animy-frontend.vercel.app",
+      github: "https://github.com/Ilyas-Nour/animy-frontend",
+      screenshots: [
+        "/projects/animy1.png", "/projects/animy2.png", "/projects/animy3.png", 
+        "/projects/animy4.png", "/projects/animy5.png", "/projects/animy6.png",
+        "/projects/animy7.png", "/projects/animy8.png", "/projects/animy9.png",
+        "/projects/animy10.png", "/projects/animy11.png", "/projects/animy12.png",
+        "/projects/animy-mobile1.png", "/projects/animy-mobile2.png"
+      ],
+    },
+    {
+      title: "PrivaFlow",
+      description: t('projects.privaflow.desc'),
+      tags: ["FFmpeg WASM", "Next.js 16", "React 19", "PDF-Lib", "AI"],
+      link: "https://vaultnode.vercel.app",
+      github: "https://github.com/Ilyas-Nour/VaultNode",
+      screenshots: [
+        "/projects/privaflow_hero.png", "/projects/privaflow1.png", "/projects/privaflow2.png",
+        "/projects/privaflow3.png", "/projects/privaflow4.png", "/projects/privaflow5.png",
+        "/projects/privaflow6.png", "/projects/privaflow7.png", "/projects/privaflow8.png",
+        "/projects/priva-mobile1.png", "/projects/priva-mobile2.png", "/projects/priva-mobile3.png"
+      ],
+    },
+    {
+      title: "Top Nature",
+      description: t('projects.topnature.desc'),
+      tags: ["Next.js 16", "React 19", "E-commerce", "Stripe", "Prisma"],
+      github: "https://github.com/Ilyas-Nour/TopNature",
+      screenshots: [
+        "/projects/topnature1.png", "/projects/topnature2.png", 
+        "/projects/topnature3.png", "/projects/topnature4.png"
+      ],
+    }
+  ];
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -295,13 +303,13 @@ export const ProjectCatalog: React.FC = () => {
             style={{ x: xLeft }}
             className="text-[clamp(3rem,16vw,11vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
           >
-            My
+            {t('projects.my_work')}
           </motion.h2>
           <motion.h2 
             style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
             className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
           >
-            Work.
+            {t('projects.work_suffix')}
           </motion.h2>
         </div>
       </header>

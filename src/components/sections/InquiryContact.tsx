@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { InsaneContactButton } from '../ui/InsaneContactButton';
+import { useLanguage } from '../../context/LanguageContext';
 
 /**
  * InquiryContact Section Component
@@ -8,6 +9,7 @@ import { InsaneContactButton } from '../ui/InsaneContactButton';
  * Includes real-time validation feedback and submission state management.
  */
 export const InquiryContact: React.FC = () => {
+  const { t } = useLanguage();
   // state: 'idle' | 'sending' | 'success' | 'error'
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   
@@ -69,13 +71,13 @@ export const InquiryContact: React.FC = () => {
                 style={{ x: xLeft }}
                 className="text-[clamp(3.5rem,15vw,12vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
               >
-                Get in
+                {t('contact.title1')}
               </motion.h2>
               <motion.h2 
                 style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
                 className="text-[clamp(4.5rem,18vw,14vh)] leading-[0.8] -mt-[2vh] md:-mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
               >
-                Touch.
+                {t('contact.title2')}
               </motion.h2>
             </div>
           </header>
@@ -87,11 +89,11 @@ export const InquiryContact: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                         {/* Name Input Block */}
                         <div className="space-y-4">
-                           <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold block transition-colors">Your Name</label>
+                           <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold block transition-colors">{t('contact.name_label')}</label>
                            <input 
                              required
                              type="text" 
-                             placeholder="Ilyas Nour" 
+                             placeholder={t('contact.name_placeholder')} 
                              value={formData.name}
                              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                              className="w-full bg-transparent border-b border-[var(--color-border)] py-4 text-xl font-serif italic text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors placeholder:text-[var(--color-text-muted)]/30" 
@@ -99,11 +101,11 @@ export const InquiryContact: React.FC = () => {
                         </div>
                         {/* Email Input Block */}
                         <div className="space-y-4">
-                           <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold block transition-colors">Email Address</label>
+                           <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold block transition-colors">{t('contact.email_label')}</label>
                            <input 
                              required
                              type="email" 
-                             placeholder="hello@studio.com" 
+                             placeholder={t('contact.email_placeholder')} 
                              value={formData.email}
                              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                              className="w-full bg-transparent border-b border-[var(--color-border)] py-4 text-xl font-serif italic text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors placeholder:text-[var(--color-text-muted)]/30" 
@@ -113,11 +115,11 @@ export const InquiryContact: React.FC = () => {
 
                     {/* Message Textarea Block */}
                     <div className="space-y-4">
-                       <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold block transition-colors">Your Message</label>
+                       <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold block transition-colors">{t('contact.message_label')}</label>
                        <textarea 
                          required
                          rows={4} 
-                         placeholder="Tell me about your vision..." 
+                         placeholder={t('contact.message_placeholder')} 
                          value={formData.message}
                          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                          className="w-full bg-transparent border-b border-[var(--color-border)] py-4 text-xl font-serif italic text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors placeholder:text-[var(--color-text-muted)]/30 resize-none" 
@@ -130,7 +132,7 @@ export const InquiryContact: React.FC = () => {
                          status={status}
                          disabled={status === 'sending' || status === 'success'}
                        >
-                          {status === 'sending' ? 'Sending...' : status === 'success' ? 'Sent' : 'Send Message'}
+                          {status === 'sending' ? t('contact.sending_btn') : status === 'success' ? t('contact.sent_btn') : t('contact.send_btn')}
                        </InsaneContactButton>
 
                        {/* Status Notifications */}
@@ -142,7 +144,7 @@ export const InquiryContact: React.FC = () => {
                              exit={{ opacity: 0 }}
                              className="text-zinc-400 font-mono text-[10px] uppercase tracking-widest"
                            >
-                             Submission Failed. Try again?
+                             {t('contact.failed')}
                            </motion.span>
                          )}
                          {status === 'success' && (
@@ -152,7 +154,7 @@ export const InquiryContact: React.FC = () => {
                              exit={{ opacity: 0 }}
                              className="text-[var(--color-accent)] font-mono text-[10px] uppercase tracking-widest"
                            >
-                             Received. Thanks.
+                             {t('contact.thanks')}
                            </motion.span>
                          )}
                        </AnimatePresence>
@@ -182,8 +184,8 @@ export const InquiryContact: React.FC = () => {
                  {/* Operational Context */}
                  <div className="space-y-4 opacity-50 text-center lg:text-left">
                     <p className="font-mono text-[10px] uppercase tracking-widest leading-relaxed">
-                       Based Globally. <br />
-                       Working Remotely.
+                       {t('contact.location')} <br />
+                       {t('contact.working')}
                     </p>
                  </div>
               </div>

@@ -5,6 +5,7 @@ import {
   SiThreedotjs, SiFramer, SiNodedotjs, SiPostgresql, 
   SiMongodb, SiDocker, SiFigma, SiVite, SiLinux, SiGreensock 
 } from 'react-icons/si';
+import { useLanguage } from '../../context/LanguageContext';
 
 import { IconType } from 'react-icons';
 
@@ -92,6 +93,7 @@ const RollingRow = ({ skills, reverse = false }: { skills: Skill[], reverse?: bo
 
 export const TechnicalArray: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -105,10 +107,10 @@ export const TechnicalArray: React.FC = () => {
       
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 overflow-hidden">
         <div className="absolute left-6 top-20 text-[25vw] md:text-[15vw] font-black uppercase tracking-widest leading-none rotate-90 origin-left">
-          Kinetic
+          {t('skills.bg1')}
         </div>
         <div className="absolute right-6 bottom-20 text-[20vw] md:text-[10vw] font-black uppercase tracking-widest leading-none -rotate-90 origin-right">
-          Archive
+          {t('skills.bg2')}
         </div>
       </div>
 
@@ -119,18 +121,18 @@ export const TechnicalArray: React.FC = () => {
               style={{ x: xLeft }}
               className="text-[clamp(3.5rem,15vw,12vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
             >
-              Rolling
+              {t('skills.title1')}
             </motion.h2>
             <motion.h2 
               style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
               className="text-[clamp(4.5rem,18vw,14vh)] leading-[0.8] -mt-[2vh] md:-mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
             >
-              protocols.
+              {t('skills.title2')}
             </motion.h2>
           </div>
           
           <p className="max-w-xs font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)] leading-relaxed pb-2 border-b border-[var(--color-border)]">
-             High-performance tech stack deployment. Verified across full-stack architectures.
+             {t('skills.subtitle')}
           </p>
         </div>
       </div>

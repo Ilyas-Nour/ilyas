@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useActiveSection } from '../../hooks/useActiveSection';
+import { useLanguage } from '../../context/LanguageContext';
 
 /**
  * MassiveFooter Component
@@ -10,6 +11,7 @@ import { useActiveSection } from '../../hooks/useActiveSection';
  */
 export const MassiveFooter = React.memo(() => {
   const activeTab = useActiveSection(['home', 'about', 'skills', 'projects', 'contact']);
+  const { t } = useLanguage();
   
   return (
     <footer className="bg-[var(--color-bg)] pt-32 pb-12 px-6 overflow-hidden border-t border-[var(--color-border)] relative transition-colors duration-500">
@@ -31,13 +33,13 @@ export const MassiveFooter = React.memo(() => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-24 mb-0">
              {/* Navigation Section (Index) */}
             <div className="space-y-8">
-              <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">Index</h4>
+              <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">{t('footer.index')}</h4>
               <nav className="flex flex-col gap-3">
                   {[
-                    { name: 'Home', id: 'home' },
-                    { name: 'About', id: 'about' },
-                    { name: 'Skills', id: 'skills' },
-                    { name: 'Projects', id: 'projects' }
+                    { name: t('nav.home'), id: 'home' },
+                    { name: t('nav.about'), id: 'about' },
+                    { name: t('nav.skills'), id: 'skills' },
+                    { name: t('nav.projects'), id: 'projects' }
                   ].map(link => (
                     <a 
                       key={link.id}
@@ -59,7 +61,7 @@ export const MassiveFooter = React.memo(() => {
 
             {/* Social Connection Section */}
             <div className="space-y-8">
-              <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">Social</h4>
+              <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">{t('footer.social')}</h4>
               <div className="flex flex-wrap gap-8">
                 {[
                   { name: 'Github', url: 'https://github.com/Ilyas-Nour' },
@@ -77,9 +79,9 @@ export const MassiveFooter = React.memo(() => {
             {/* Studio Credits Section */}
             <div className="space-y-4 md:text-right flex flex-col justify-end h-full">
               <p className="font-mono text-[10px] text-[var(--color-text-muted)] leading-relaxed uppercase tracking-widest">
-                Designed & Developed <br />
-                by Ilyas Nour<br />
-                © 2026 all rights reserved
+                {t('footer.designed')} <br />
+                {t('footer.by')} Ilyas Nour<br />
+                © 2026 {t('footer.copy')}
               </p>
             </div>
           </div>

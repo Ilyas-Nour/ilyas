@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { useScrollProgress } from '../../context/ScrollProgressContext';
 import { useTheme } from '../../context/ThemeContext';
+import { useLanguage, Language } from '../../context/LanguageContext';
 
 /**
  * Navbar Component
@@ -10,14 +11,18 @@ import { useTheme } from '../../context/ThemeContext';
  * and prismatic text reveal effects.
  */
 const NavLinks = React.memo(({ activeTab }: { activeTab: string }) => {
+  const { t } = useLanguage();
+  
+  const links = [
+    { name: t('nav.home'), id: 'home' },
+    { name: t('nav.about'), id: 'about' },
+    { name: t('nav.skills'), id: 'skills' },
+    { name: t('nav.projects'), id: 'projects' }
+  ];
+
   return (
     <div className="hidden md:flex items-center gap-10 font-heading font-medium text-[11px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
-       {[
-         { name: 'Home', id: 'home' },
-         { name: 'About', id: 'about' },
-         { name: 'Skills', id: 'skills' },
-         { name: 'Projects', id: 'projects' }
-       ].map(item => (
+       {links.map(item => (
         <motion.a 
           key={item.id} 
           href={`#${item.id}`} 
@@ -82,6 +87,7 @@ export const Navbar: React.FC = () => {
   
   // Custom hook to track which section is currently centered in the viewport
   const activeTab = useActiveSection(['home', 'about', 'skills', 'projects', 'contact']);
+  const { language, setLanguage, t } = useLanguage();
   
   useEffect(() => {
     /**
@@ -120,6 +126,23 @@ export const Navbar: React.FC = () => {
 
           {/* Action Interface Block */}
           <div className="flex items-center gap-4 md:gap-8">
+             {/* Language Switcher Interface */}
+             <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 border border-[var(--color-border)] rounded-sm bg-[var(--color-bg)]/50 backdrop-blur-sm">
+                {(['en', 'fr', 'es'] as Language[]).map((lang) => (
+                  <button
+                    key={lang}
+                    onClick={() => setLanguage(lang)}
+                    className={`text-[9px] font-mono font-bold w-6 h-6 flex items-center justify-center transition-all duration-500 rounded-sm ${
+                      language === lang 
+                        ? 'bg-[var(--color-text)] text-[var(--color-bg)]' 
+                        : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
+                    }`}
+                  >
+                    {lang.toUpperCase()}
+                  </button>
+                ))}
+             </div>
+
              <button 
                onClick={toggleTheme}
                className="relative w-10 h-10 flex items-center justify-center group"
@@ -203,7 +226,7 @@ export const Navbar: React.FC = () => {
                </div>
 
                <span className="relative z-10 font-heading font-black text-[10px] uppercase tracking-[0.4em] text-[var(--color-text)] group-hover:text-[var(--color-bg)] transition-colors duration-500 pointer-events-none">
-                 Contact
+                 {t('nav.contact')}
                </span>
              </motion.a>
           </div>
@@ -220,11 +243,11 @@ export const Navbar: React.FC = () => {
               className="absolute top-0 left-0 w-full h-screen bg-[var(--color-bg)] z-[10000] flex flex-col items-center justify-center gap-12 pt-20"
             >
               {[
-                { name: 'Home', id: 'home' },
-                { name: 'About', id: 'about' },
-                { name: 'Skills', id: 'skills' },
-                { name: 'Projects', id: 'projects' },
-                { name: 'Contact', id: 'contact' }
+                { name: t('nav.home'), id: 'home' },
+                { name: t('nav.about'), id: 'about' },
+                { name: t('nav.skills'), id: 'skills' },
+                { name: t('nav.projects'), id: 'projects' },
+                { name: t('nav.contact'), id: 'contact' }
               ].map((item, i) => (
                 <motion.a
                   key={item.id}
@@ -238,6 +261,22 @@ export const Navbar: React.FC = () => {
                   {item.name}
                 </motion.a>
               ))}
+              
+              <div className="flex gap-4 mt-8">
+                {(['en', 'fr', 'es'] as Language[]).map((lang) => (
+                  <button
+                    key={lang}
+                    onClick={() => setLanguage(lang)}
+                    className={`px-4 py-2 text-xs font-mono border rounded-full transition-all ${
+                      language === lang 
+                        ? 'bg-[var(--color-text)] text-[var(--color-bg)] border-transparent' 
+                        : 'text-[var(--color-text-muted)] border-[var(--color-border)]'
+                    }`}
+                  >
+                    {lang.toUpperCase()}
+                  </button>
+                ))}
+              </div>
               
               <div className="absolute bottom-12 flex gap-8 opacity-40">
                  <span className="font-mono text-[9px] uppercase tracking-widest">ilyasnour.com</span>
