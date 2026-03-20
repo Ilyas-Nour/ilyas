@@ -136,7 +136,6 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
-  flags: Record<Language, string>;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -167,14 +166,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return translations[key]?.[language] || key;
   };
 
-  const flags: Record<Language, string> = {
-    en: '🇺🇸',
-    fr: '🇫🇷',
-    es: '🇪🇸'
-  };
-
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, flags }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

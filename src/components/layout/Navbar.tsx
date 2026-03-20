@@ -87,7 +87,7 @@ export const Navbar: React.FC = () => {
   
   // Custom hook to track which section is currently centered in the viewport
   const activeTab = useActiveSection(['home', 'about', 'skills', 'projects', 'contact']);
-  const { language, setLanguage, t, flags } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const [isLangOpen, setIsLangOpen] = useState(false);
   
   // Close language dropdown when clicking outside
@@ -143,9 +143,6 @@ export const Navbar: React.FC = () => {
                   }}
                   className="flex items-center gap-2 group"
                 >
-                  <span className="text-[12px] grayscale group-hover:grayscale-0 transition-all duration-500">
-                    {flags[language]}
-                  </span>
                   <span className="text-[10px] font-mono font-bold text-[var(--color-text)] uppercase tracking-widest">
                     {language}
                   </span>
@@ -166,11 +163,10 @@ export const Navbar: React.FC = () => {
                         <button
                           key={lang}
                           onClick={() => setLanguage(lang)}
-                          className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] transition-all duration-300 ${
+                          className={`w-full flex items-center px-4 py-3 text-left hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] transition-all duration-300 ${
                             language === lang ? 'bg-[var(--color-text)]/5 opacity-40' : ''
                           }`}
                         >
-                          <span className="text-sm">{flags[lang]}</span>
                           <span className="text-[9px] font-mono font-bold uppercase tracking-[0.2em]">
                             {lang === 'en' ? 'English' : lang === 'fr' ? 'Français' : 'Español'}
                           </span>
@@ -305,13 +301,12 @@ export const Navbar: React.FC = () => {
                   <button
                     key={lang}
                     onClick={() => setLanguage(lang)}
-                    className={`px-6 py-3 flex items-center gap-3 text-xs font-mono border rounded-sm transition-all ${
+                    className={`px-6 py-3 flex items-center text-xs font-mono border rounded-sm transition-all ${
                       language === lang 
                         ? 'bg-[var(--color-text)] text-[var(--color-bg)] border-transparent' 
                         : 'text-[var(--color-text-muted)] border-[var(--color-border)] bg-transparent'
                     }`}
                   >
-                    <span className="text-base">{flags[lang]}</span>
                     <span>{lang.toUpperCase()}</span>
                   </button>
                 ))}
