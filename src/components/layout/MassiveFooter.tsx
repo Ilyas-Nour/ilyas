@@ -68,7 +68,14 @@ export const MassiveFooter = React.memo(() => {
                   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/ilyasnour/' },
                   { name: 'X', url: 'https://x.com/ilyas__nour' }
                 ].map(social => (
-                  <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
+                  <a 
+                    key={social.name} 
+                    href={social.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    aria-label={`${t('footer.social')} - ${social.name}`}
+                    className="group flex items-center gap-2 text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+                  >
                     <span className="font-mono text-xs uppercase tracking-widest">{social.name}</span>
                     <span className="text-[var(--color-accent)] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300">↗</span>
                   </a>

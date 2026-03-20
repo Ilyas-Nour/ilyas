@@ -44,18 +44,21 @@ export const ModernHero: React.FC<{ warp?: MotionValue<number> | number }> = ({ 
       <div className="container mx-auto relative z-10 flex flex-col items-center">
         {/* Massive Motion Typography - Precision Positioned with Smart Contrast */}
         <div className="relative mb-6 md:mb-10 select-none text-center">
-          <motion.h1 
-            style={{ y: yIlyas, opacity }}
-            className="text-[clamp(5.5rem,14vw,12vw)] leading-[0.7] font-serif font-bold uppercase tracking-tighter text-[var(--color-text)] mix-blend-difference drop-shadow-[0_10px_30px_rgba(0,0,0,0.3)]"
-          >
-            Ilyas
-          </motion.h1>
-          <motion.h1 
-            style={{ y: yNour, opacity, fontFamily: 'var(--font-signature)' }}
-            className="text-[clamp(7.5rem,20vw,18vw)] leading-[0.7] -mt-[4vw] text-[#E2E8F0] mix-blend-difference drop-shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
-          >
-            Nour.
-          </motion.h1>
+          <h1 className="sr-only">Ilyas Nour | Full-Stack Developer & Creative Technologist</h1>
+          <div aria-hidden="true" className="relative">
+            <motion.div 
+              style={{ y: yIlyas, opacity }}
+              className="text-[clamp(5.5rem,14vw,12vw)] leading-[0.7] font-serif font-bold uppercase tracking-tighter text-[var(--color-text)] mix-blend-difference drop-shadow-[0_10px_30px_rgba(0,0,0,0.3)]"
+            >
+              Ilyas
+            </motion.div>
+            <motion.div 
+              style={{ y: yNour, opacity, fontFamily: 'var(--font-signature)' }}
+              className="text-[clamp(7.5rem,20vw,18vw)] leading-[0.7] -mt-[4vw] text-[#E2E8F0] mix-blend-difference drop-shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+            >
+              Nour.
+            </motion.div>
+          </div>
         </div>
 
         {/* Hero Bio & Strategic Intent - Centered Elite Registry Layout */}

@@ -130,6 +130,18 @@ const translations: Translations = {
   'about.hud1': { en: 'System Stability: Optimized', fr: 'Stabilité Système : Optimisée', es: 'Estabilidad del Sistema: Optimizada' },
   'about.hud2': { en: 'Narrative State: Synchronized', fr: 'État Narratif : Synchronisé', es: 'Estado Narrativo: Sincronizado' },
   'about.hud3': { en: 'Status: Masterwork_V4', fr: 'Statut : Masterwork_V4', es: 'Estado: Masterwork_V4' },
+
+  // SEO
+  'seo.title': { 
+    en: 'Ilyas Nour | Full-Stack Developer & Creative Technologist', 
+    fr: 'Ilyas Nour | Développeur Full-Stack & Technologue Créatif', 
+    es: 'Ilyas Nour | Desarrollador Full-Stack y Tecnólogo Creativo' 
+  },
+  'seo.description': { 
+    en: 'Ilyas Nour is a Full-Stack Web Developer specializing in high-performance digital architectures and artistic WebGL experiences.', 
+    fr: 'Ilyas Nour est un développeur web Full-Stack spécialisé dans les architectures numériques haute performance et les expériences WebGL artistiques.', 
+    es: 'Ilyas Nour es un desarrollador web Full-Stack especializado en arquitecturas digitales de alto rendimiento y experiencias WebGL artísticas.' 
+  },
 };
 
 interface LanguageContextType {
@@ -160,6 +172,12 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   useEffect(() => {
     document.documentElement.setAttribute('lang', language);
+    // Update SEO meta tags
+    document.title = t('seo.title');
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', t('seo.description'));
+    }
   }, [language]);
 
   const t = (key: string): string => {

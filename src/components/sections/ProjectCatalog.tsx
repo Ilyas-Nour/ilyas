@@ -17,8 +17,9 @@ import { useLanguage } from '../../context/LanguageContext';
  * 
  * @param src Absolute path to the image asset.
  * @param project Project title for accessibility (alt tag).
+ * @param description Detailed description of what the screenshot shows.
  */
-const Screenshot = React.memo(({ src, project }: { src: string, project: string }) => {
+const Screenshot = React.memo(({ src, project, description = "interface showcase" }: { src: string, project: string, description?: string }) => {
   const isMobile = src.includes('mobile');
   
   return (
@@ -31,7 +32,7 @@ const Screenshot = React.memo(({ src, project }: { src: string, project: string 
         <div className="device-screen">
           <img 
             src={src} 
-            alt={`${project} view`}
+            alt={`${project} - ${description}`}
             className="select-none"
             loading="lazy"
           />
@@ -42,7 +43,7 @@ const Screenshot = React.memo(({ src, project }: { src: string, project: string 
       <div className="md:hidden w-full rounded-xl overflow-hidden border border-[var(--color-border)] shadow-xl">
         <img 
           src={src} 
-          alt={`${project} mobile view`}
+          alt={`${project} - ${description} mobile`}
           className="w-full h-auto"
         />
       </div>
@@ -173,12 +174,12 @@ const HorizontalProject: React.FC<{ project: any, index: number }> = ({ project,
           {/* Primary Visual Showcase (Mobile Optimized) */}
           <div className="w-full space-y-6">
              <div className="relative group">
-                <Screenshot src={project.screenshots[0]} project={project.title} />
+                <Screenshot src={project.screenshots[0]} project={project.title} description="Mobile Dashboard" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-transparent to-transparent opacity-40" />
              </div>
              {project.screenshots[1] && (
                <div className="px-8 scale-[0.95] opacity-80">
-                  <Screenshot src={project.screenshots[1]} project={project.title} />
+                  <Screenshot src={project.screenshots[1]} project={project.title} description="Sub-interface View" />
                </div>
              )}
           </div>
@@ -229,7 +230,7 @@ const HorizontalProject: React.FC<{ project: any, index: number }> = ({ project,
           {/* Screenshot Gallery Array */}
           <div className="flex gap-12 md:gap-16 items-center flex-nowrap pr-[10vw] md:pr-0">
             {project.screenshots.map((shot: string, idx: number) => (
-              <Screenshot key={idx} src={shot} project={project.title} />
+              <Screenshot key={idx} src={shot} project={project.title} description={`Module View ${idx + 1}`} />
             ))}
           </div>
         </motion.div>
@@ -299,18 +300,21 @@ export const ProjectCatalog: React.FC = () => {
     <section id="projects" ref={sectionRef} className="relative min-h-screen flex flex-col justify-start bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-8 md:pt-12">
       <header className="container mx-auto mb-2 md:mb-4 px-6">
         <div className="relative select-none">
-          <motion.h2 
-            style={{ x: xLeft }}
-            className="text-[clamp(3rem,16vw,11vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
-          >
-            {t('projects.my_work')}
-          </motion.h2>
-          <motion.h2 
-            style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
-            className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
-          >
-            {t('projects.work_suffix')}
-          </motion.h2>
+          <h2 className="sr-only">Exploration of Published Projects and Digital Artifacts</h2>
+          <div aria-hidden="true">
+            <motion.div 
+              style={{ x: xLeft }}
+              className="text-[clamp(3rem,16vw,11vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
+            >
+              {t('projects.my_work')}
+            </motion.div>
+            <motion.div 
+              style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
+              className="text-[clamp(4.5rem,20vw,14vh)] leading-[0.8] -mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
+            >
+              {t('projects.work_suffix')}
+            </motion.div>
+          </div>
         </div>
       </header>
 
