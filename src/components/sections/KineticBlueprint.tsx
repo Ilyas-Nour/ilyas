@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-motion';
 import { LiquidBackground } from '../ui/LiquidBackground';
 import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 /**
  * Word Component for the Reading Effect
@@ -26,6 +27,7 @@ const Word = ({ children, progress, range, isHighlighted }: { children: string, 
 export const KineticBlueprint: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
+  const { t } = useLanguage();
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -38,10 +40,10 @@ export const KineticBlueprint: React.FC = () => {
     restDelta: 0.001
   });
 
-  const bioText = "I am Ilyas Nour, a digital architect from Morocco and a student at OFPPT. My work is defined by the fusion of high-performance logic and aesthetic precision. Through projects like Animy and VaultNode, I bridge the gap between complex data and elegant design. Every line of code is a step toward the 'Masterwork' standard—merging speed, stability, and artistic soul.";
+  const bioText = t('about.bio');
   const words = bioText.split(" ");
   
-  const importantWords = ["Ilyas", "Nour", "Morocco", "OFPPT", "Animy", "VaultNode", "Masterwork"];
+  const importantWords = t('about.important').split(",");
 
   // Title Transforms (Restored from old version)
   const titleOpacity = 1;
@@ -84,13 +86,13 @@ export const KineticBlueprint: React.FC = () => {
                 style={{ x: xLeft, opacity: titleOpacity }}
                 className="text-[clamp(3.50rem,15vw,12vh)] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
               >
-                About
+                {t('about.title1')}
               </motion.h2>
               <motion.h2 
                 style={{ x: xRight, opacity: titleOpacity, fontFamily: 'var(--font-signature)' }}
                 className="text-[clamp(4.5rem,18vw,14vh)] leading-[0.8] -mt-[2vh] md:-mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
               >
-                Me.
+                {t('about.title2')}
               </motion.h2>
             </div>
 
@@ -117,9 +119,9 @@ export const KineticBlueprint: React.FC = () => {
 
       {/* Decorative Technical HUD */}
       <div className="absolute inset-x-0 bottom-10 flex justify-between px-12 md:px-24 opacity-[0.05] font-mono text-[8px] pointer-events-none uppercase tracking-[0.5em] z-20">
-         <span>System Stability: Optimized</span>
-         <span>Narrative State: Synchronized</span>
-         <span>Status: Masterwork_V4</span>
+         <span>{t('about.hud1')}</span>
+         <span>{t('about.hud2')}</span>
+         <span>{t('about.hud3')}</span>
       </div>
     </section>
   );

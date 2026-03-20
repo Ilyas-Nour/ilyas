@@ -87,7 +87,15 @@ export const Navbar: React.FC = () => {
   
   // Custom hook to track which section is currently centered in the viewport
   const activeTab = useActiveSection(['home', 'about', 'skills', 'projects', 'contact']);
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage, t, flags } = useLanguage();
+  const [isLangOpen, setIsLangOpen] = useState(false);
+  
+  // Close language dropdown when clicking outside
+  useEffect(() => {
+    const handleClick = () => setIsLangOpen(false);
+    window.addEventListener('click', handleClick);
+    return () => window.removeEventListener('click', handleClick);
+  }, []);
   
   useEffect(() => {
     /**
@@ -126,21 +134,51 @@ export const Navbar: React.FC = () => {
 
           {/* Action Interface Block */}
           <div className="flex items-center gap-4 md:gap-8">
-             {/* Language Switcher Interface */}
-             <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 border border-[var(--color-border)] rounded-sm bg-[var(--color-bg)]/50 backdrop-blur-sm">
-                {(['en', 'fr', 'es'] as Language[]).map((lang) => (
-                  <button
-                    key={lang}
-                    onClick={() => setLanguage(lang)}
-                    className={`text-[9px] font-mono font-bold w-6 h-6 flex items-center justify-center transition-all duration-500 rounded-sm ${
-                      language === lang 
-                        ? 'bg-[var(--color-text)] text-[var(--color-bg)]' 
-                        : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
-                    }`}
-                  >
-                    {lang.toUpperCase()}
-                  </button>
-                ))}
+             {/* Language Switcher Interface - Upgraded with Flags & Dropdown */}
+             <div className="hidden sm:block relative px-3 py-1.5 border border-[var(--color-border)] rounded-sm bg-[var(--color-bg)]/50 backdrop-blur-sm z-50">
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsLangOpen(!isLangOpen);
+                  }}
+                  className="flex items-center gap-2 group"
+                >
+                  <span className="text-[12px] grayscale group-hover:grayscale-0 transition-all duration-500">
+                    {flags[language]}
+                  </span>
+                  <span className="text-[10px] font-mono font-bold text-[var(--color-text)] uppercase tracking-widest">
+                    {language}
+                  </span>
+                  <span className={`text-[8px] transition-transform duration-500 ${isLangOpen ? 'rotate-180' : ''}`}>
+                    ▼
+                  </span>
+                </button>
+
+                <AnimatePresence>
+                  {isLangOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      className="absolute top-full mt-2 left-0 w-full min-w-[100px] border border-[var(--color-border)] bg-[var(--color-bg)] shadow-2xl overflow-hidden rounded-sm"
+                    >
+                      {(['en', 'fr', 'es'] as Language[]).map((lang) => (
+                        <button
+                          key={lang}
+                          onClick={() => setLanguage(lang)}
+                          className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] transition-all duration-300 ${
+                            language === lang ? 'bg-[var(--color-text)]/5 opacity-40' : ''
+                          }`}
+                        >
+                          <span className="text-sm">{flags[lang]}</span>
+                          <span className="text-[9px] font-mono font-bold uppercase tracking-[0.2em]">
+                            {lang === 'en' ? 'English' : lang === 'fr' ? 'Français' : 'Español'}
+                          </span>
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
              </div>
 
              <button 
@@ -267,13 +305,14 @@ export const Navbar: React.FC = () => {
                   <button
                     key={lang}
                     onClick={() => setLanguage(lang)}
-                    className={`px-4 py-2 text-xs font-mono border rounded-full transition-all ${
+                    className={`px-6 py-3 flex items-center gap-3 text-xs font-mono border rounded-sm transition-all ${
                       language === lang 
                         ? 'bg-[var(--color-text)] text-[var(--color-bg)] border-transparent' 
-                        : 'text-[var(--color-text-muted)] border-[var(--color-border)]'
+                        : 'text-[var(--color-text-muted)] border-[var(--color-border)] bg-transparent'
                     }`}
                   >
-                    {lang.toUpperCase()}
+                    <span className="text-base">{flags[lang]}</span>
+                    <span>{lang.toUpperCase()}</span>
                   </button>
                 ))}
               </div>

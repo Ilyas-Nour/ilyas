@@ -113,25 +113,49 @@ const translations: Translations = {
   'footer.index': { en: 'Index', fr: 'Index', es: 'Índice' },
   'footer.designed': { en: 'Designed & Developed', fr: 'Conçu et Développé', es: 'Diseñado y Desarrollado' },
   'footer.by': { en: 'by', fr: 'par', es: 'por' },
+
+  // Added for About Section (KineticBlueprint)
+  'about.title1': { en: 'About', fr: 'À Propos', es: 'Sobre' },
+  'about.title2': { en: 'Me.', fr: 'de Moi.', es: 'Mí.' },
+  'about.bio': { 
+    en: "I am Ilyas Nour, a digital architect from Morocco and a student at OFPPT. My work is defined by the fusion of high-performance logic and aesthetic precision. Through projects like Animy and PrivaFlow, I bridge the gap between complex data and elegant design. Every line of code is a step toward the 'Masterwork' standard—merging speed, stability, and artistic soul.", 
+    fr: "Je suis Ilyas Nour, un architecte numérique du Maroc et étudiant à l'OFPPT. Mon travail est défini par la fusion de la logique haute performance et de la précision esthétique. À travers des projets comme Animy et PrivaFlow, je comble le fossé entre les données complexes et le design élégant. Chaque ligne de code est une étape vers le standard 'Masterwork'—fusionnant vitesse, stabilité et âme artistique.", 
+    es: "Soy Ilyas Nour, un arquitecto digital de Marruecos y estudiante de OFPPT. Mi trabajo se define por la fusión de la lógica de alto rendimiento y la precisión estética. A través de proyectos como Animy y PrivaFlow, cierro la brecha entre los datos complejos y el diseño elegante. Cada línea de código es un paso hacia el estándar 'Masterwork', fusionando velocidad, estabilidad y alma artística." 
+  },
+  'about.important': {
+    en: "Ilyas,Nour,Morocco,OFPPT,Animy,PrivaFlow,Masterwork",
+    fr: "Ilyas,Nour,Maroc,OFPPT,Animy,PrivaFlow,Masterwork",
+    es: "Ilyas,Nour,Marruecos,OFPPT,Animy,PrivaFlow,Masterwork"
+  },
+  'about.hud1': { en: 'System Stability: Optimized', fr: 'Stabilité Système : Optimisée', es: 'Estabilidad del Sistema: Optimizada' },
+  'about.hud2': { en: 'Narrative State: Synchronized', fr: 'État Narratif : Synchronisé', es: 'Estado Narrativo: Sincronizado' },
+  'about.hud3': { en: 'Status: Masterwork_V4', fr: 'Statut : Masterwork_V4', es: 'Estado: Masterwork_V4' },
 };
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  flags: Record<Language, string>;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem('portfolio-language');
-    return (saved as Language) || 'en';
+    const saved = localStorage.getItem('app-language') as Language;
+    if (saved && ['en', 'fr', 'es'].includes(saved)) return saved;
+    
+    // Automatic detection
+    const browserLang = navigator.language.split('-')[0];
+    if (['en', 'fr', 'es'].includes(browserLang)) return browserLang as Language;
+    
+    return 'en';
   });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('portfolio-language', lang);
+    localStorage.setItem('app-language', lang);
     document.documentElement.setAttribute('lang', lang);
   };
 
@@ -143,8 +167,14 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return translations[key]?.[language] || key;
   };
 
+  const flags: Record<Language, string> = {
+    en: '🇺🇸',
+    fr: '🇫🇷',
+    es: '🇪🇸'
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, flags }}>
       {children}
     </LanguageContext.Provider>
   );
