@@ -54,7 +54,11 @@
   body, html, main, #root {
     @apply bg-[var(--color-bg)] text-[var(--color-text)] antialiased transition-colors duration-500;
     font-family: var(--font-functional);
-    cursor: none !important;
+    
+    @media (hover: hover) {
+      cursor: none !important;
+    }
+
     box-shadow: none !important;
     outline: none !important;
     

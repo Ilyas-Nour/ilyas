@@ -3,8 +3,19 @@ import { motion, useSpring, useMotionValue } from 'framer-motion';
 
 export const CustomCursor = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [supportsHover, setSupportsHover] = useState(true);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
+
+  useEffect(() => {
+    // Initial check and subsequent listeners
+    const hoverQuery = window.matchMedia('(hover: hover)');
+    setSupportsHover(hoverQuery.matches);
+
+    const handler = (e: MediaQueryListEvent) => setSupportsHover(e.matches);
+    hoverQuery.addEventListener('change', handler);
+    return () => hoverQuery.removeEventListener('change', handler);
+  }, []);
 
   // High-inertia spring config for "expensive" feel
   const springConfig = { damping: 40, stiffness: 300, mass: 0.5 };
@@ -54,6 +65,8 @@ export const CustomCursor = () => {
       window.removeEventListener('mouseover', handleHover);
     };
   }, [mouseX, mouseY]);
+
+  if (!supportsHover) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[999999]">
