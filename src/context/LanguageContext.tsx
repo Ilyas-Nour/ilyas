@@ -79,7 +79,7 @@ const translations: Translations = {
   // Footer
   'footer.links': { en: 'Links', fr: 'Liens', es: 'Enlaces' },
   'footer.social': { en: 'Social', fr: 'Réseaux', es: 'Social' },
-  'footer.copy': { en: 'All rights reserved.', fr: 'Tous droits réservés.', es: 'Todos los derechos reservados.' },
+  'footer.copy': { en: 'All rights reserved', fr: 'Tous droits réservés', es: 'Todos los derechos reservados' },
 
   // Added for Skills
   'skills.title1': { en: 'Rolling', fr: 'Protocoles', es: 'Protocolos' },
