@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export type Language = 'en' | 'fr' | 'es';
 
@@ -153,7 +154,13 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [language, setLanguageState] = useState<Language>(() => {
+    // Initial determination from URL if possible
+    const pathLang = location.pathname.split('/')[1] as Language;
+    if (pathLang && ['en', 'fr', 'es'].includes(pathLang)) return pathLang;
+
     const saved = localStorage.getItem('app-language') as Language;
     if (saved && ['en', 'fr', 'es'].includes(saved)) return saved;
     
@@ -168,16 +175,33 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLanguageState(lang);
     localStorage.setItem('app-language', lang);
     document.documentElement.setAttribute('lang', lang);
+    // Sync URL subpath
+    const newPath = `/${lang}${location.pathname.replace(/^\/(en|fr|es)/, '')}`;
+    if (location.pathname !== newPath) {
+      navigate(newPath, { replace: true });
+    }
   };
 
   useEffect(() => {
-    document.documentElement.setAttribute('lang', language);
-    // Update SEO meta tags
-    document.title = t('seo.title');
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', t('seo.description'));
+    // Sync local state if URL changes externally (e.g., user types or crawler hits /fr)
+    const pathLang = location.pathname.split('/')[1] as Language;
+    if (pathLang && ['en', 'fr', 'es'].includes(pathLang) && pathLang !== language) {
+       setLanguageState(pathLang);
+       localStorage.setItem('app-language', pathLang);
+       document.documentElement.setAttribute('lang', pathLang);
     }
+    
+    // Fallback if at root for SEO (redirect to default language or stay at / but set lang)
+    if (location.pathname === '/' || location.pathname === '') {
+       // Optional: Redirect to /{language}
+       navigate(`/${language}`, { replace: true });
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('lang', language);
+    // Update SEO title
+    document.title = t('seo.title');
   }, [language]);
 
   const t = (key: string): string => {

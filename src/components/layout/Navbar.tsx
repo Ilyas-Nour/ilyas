@@ -29,6 +29,7 @@ const NavLinks = React.memo(({ activeTab }: { activeTab: string }) => {
           className={`navbar-link group/link ${activeTab === item.id ? 'active' : ''}`}
           initial="initial"
           whileHover="hover"
+          aria-label={item.name}
         >
           <div className="relative overflow-hidden flex items-center">
              {/* Primary Layer */}
@@ -181,6 +182,7 @@ export const Navbar: React.FC = () => {
                onClick={toggleTheme}
                className="relative w-10 h-10 flex items-center justify-center group"
                title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+               aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
              >
                <motion.div 
                  className="absolute inset-0 border border-[var(--color-border)] rounded-sm group-hover:rotate-90 transition-all duration-700"
@@ -193,6 +195,8 @@ export const Navbar: React.FC = () => {
              <button 
                onClick={() => setIsMenuOpen(!isMenuOpen)}
                className="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 z-[10001]"
+               aria-label="Toggle Navigation Menu"
+               aria-expanded={isMenuOpen}
              >
                <motion.span 
                  animate={isMenuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}

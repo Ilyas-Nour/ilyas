@@ -166,31 +166,58 @@ export const InquiryContact: React.FC = () => {
               <div className="lg:col-span-4 space-y-12">
                  <div className="space-y-8">
                     <div className="flex flex-col gap-8">
-                       {[
-                         { name: 'GitHub', url: 'https://github.com/Ilyas-Nour' },
-                         { name: 'LinkedIn', url: 'https://linkedin.com/in/ilyas-nour' },
-                         { name: 'Email', url: 'mailto:ilyasnourelislam@gmail.com' }
-                       ].map(node => (
-                         <a key={node.name} href={node.url} target="_blank" rel="noopener noreferrer" className="flex justify-between items-center group footer-link">
-                            <span className="font-serif italic text-3xl transition-colors">{node.name}</span>
-                            <div className="w-10 h-10 border border-[var(--color-border)] rounded-full flex items-center justify-center group-hover:bg-[var(--color-text)] group-hover:text-[var(--color-bg)] transition-all duration-500">
-                               ↗
-                            </div>
-                         </a>
-                       ))}
+                        {[
+                          { name: 'GitHub', url: 'https://github.com/Ilyas-Nour', aria: 'Follow Ilyas Nour on GitHub' },
+                          { name: 'LinkedIn', url: 'https://linkedin.com/in/ilyas-nour', aria: 'Connect with Ilyas Nour on LinkedIn' },
+                          { name: 'Email', url: 'mailto:ilyasnourelislam@gmail.com', aria: 'Send an email to Ilyas Nour' }
+                        ].map(node => (
+                          <a 
+                            key={node.name} 
+                            href={node.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="flex justify-between items-center group footer-link"
+                            aria-label={node.aria}
+                          >
+                             <span className="font-serif italic text-3xl transition-colors">{node.name}</span>
+                             <div className="w-10 h-10 border border-[var(--color-border)] rounded-full flex items-center justify-center group-hover:bg-[var(--color-text)] group-hover:text-[var(--color-bg)] transition-all duration-500">
+                                ↗
+                             </div>
+                          </a>
+                        ))}
                     </div>
                  </div>
 
                  {/* Operational Context */}
-                 <div className="space-y-4 opacity-50 text-center lg:text-left">
-                    <p className="font-mono text-[10px] uppercase tracking-widest leading-relaxed">
-                       {t('contact.location')} <br />
-                       {t('contact.working')}
-                    </p>
-                 </div>
-              </div>
+                  <div className="space-y-4 opacity-50 text-center lg:text-left">
+                     <p className="font-mono text-[10px] uppercase tracking-widest leading-relaxed">
+                        {t('contact.location')} <br />
+                        {t('contact.working')}
+                     </p>
+                  </div>
+               </div>
           </div>
         </div>
+
+        {/* Structured Data for Search Engine Optimization */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Ilyas Nour",
+            "jobTitle": "Full-Stack Web Developer",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Morocco"
+            },
+            "email": "ilyasnourelislam@gmail.com",
+            "url": "https://ilyasnour.com",
+            "sameAs": [
+              "https://github.com/Ilyas-Nour",
+              "https://linkedin.com/in/ilyas-nour"
+            ]
+          })}
+        </script>
       </div>
     </section>
   );

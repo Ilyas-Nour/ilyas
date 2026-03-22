@@ -1,0 +1,16 @@
+{
+  "name": "Ilyas Nour | Full-Stack Developer",
+  "short_name": "Ilyas Nour",
+  "description": "Full-Stack Web Developer specializing in high-performance digital architectures and artistic WebGL experiences.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ]
+}

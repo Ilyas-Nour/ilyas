@@ -143,7 +143,7 @@ const HorizontalProject: React.FC<{ project: any, index: number }> = ({ project,
     // Mobile-First Layout (Vertical Stack with Optimized Media)
     if (isMobileViewport) {
       return (
-        <section className="px-6 py-24 space-y-16 flex flex-col items-center text-center">
+        <article className="px-6 py-24 space-y-16 flex flex-col items-center text-center">
           <div className="space-y-8 max-w-lg">
              <div className="space-y-4">
                 <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[var(--color-accent)] opacity-60">
@@ -183,13 +183,13 @@ const HorizontalProject: React.FC<{ project: any, index: number }> = ({ project,
                </div>
              )}
           </div>
-        </section>
+        </article>
       );
     }
 
   // Desktop Component - Experience-driven horizontal gallery
   return (
-    <section ref={targetRef} className="relative h-[400vh] md:h-[500vh]">
+    <article ref={targetRef} className="relative h-[400vh] md:h-[500vh]">
       <div className="sticky top-0 flex h-screen overflow-hidden z-30 items-center">
         <motion.div ref={scrollRef} style={{ x }} className="flex gap-12 md:gap-24 px-6 md:px-24 items-center">
           {/* Project Identity Card */}
@@ -235,7 +235,7 @@ const HorizontalProject: React.FC<{ project: any, index: number }> = ({ project,
           </div>
         </motion.div>
       </div>
-    </section>
+    </article>
   );
 };
 

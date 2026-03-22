@@ -90,6 +90,7 @@ export const ModernHero: React.FC<{ warp?: MotionValue<number> | number }> = ({ 
             <button 
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               className="group relative px-8 py-3 md:px-12 md:py-4 overflow-hidden border border-[var(--color-text)] bg-[var(--color-text)] transition-all duration-500 hover:shadow-[0_0_30px_rgba(var(--color-text-rgb),0.2)]"
+              aria-label={t('hero.work')}
             >
               <div className="absolute inset-0 bg-[var(--color-bg)] -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
               <span className="relative z-10 font-heading font-black text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[var(--color-bg)] group-hover:text-[var(--color-text)] transition-colors duration-500">
@@ -100,6 +101,7 @@ export const ModernHero: React.FC<{ warp?: MotionValue<number> | number }> = ({ 
             <button 
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               className="group relative px-8 py-3 md:px-12 md:py-4 overflow-hidden border border-[var(--color-border)] hover:border-[var(--color-text)] transition-all duration-500"
+              aria-label={t('hero.contact')}
             >
               <div className="absolute inset-0 bg-[var(--color-text)] translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
               <span className="relative z-10 font-heading font-black text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[var(--color-text)] group-hover:text-[var(--color-bg)] transition-colors duration-500">

@@ -34,9 +34,14 @@
     <link rel="alternate" hreflang="es" href="https://ilyasnour.com/es" />
     <link rel="alternate" hreflang="x-default" href="https://ilyasnour.com/" />
 
+    <!-- Web App Manifest & Mobile PWA optimizations -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
-    {
+    [{
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Ilyas Nour",
@@ -48,7 +53,29 @@
         "https://linkedin.com/in/ilyas-nour"
       ],
       "knowsAbout": ["Web Development", "React", "WebGL", "TypeScript", "Node.js", "Creative Design", "Three.js", "Framer Motion"]
-    }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Ilyas Nour Portfolio",
+      "url": "https://ilyasnour.com"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "dateCreated": "2024-01-01T00:00:00-00:00",
+      "dateModified": "2026-03-22T00:00:00-00:00",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Ilyas Nour",
+        "identifier": "ilyas-nour",
+        "interactionStatistic": {
+          "@type": "InteractionCounter",
+          "interactionType": "https://schema.org/FollowAction",
+          "userInteractionCount": 1000
+        }
+      }
+    }]
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
