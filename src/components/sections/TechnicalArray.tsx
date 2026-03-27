@@ -91,7 +91,7 @@ const RollingRow = ({ skills, reverse = false }: { skills: Skill[], reverse?: bo
   );
 };
 
-export const TechnicalArray: React.FC = () => {
+export const TechnicalArray = React.memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
   const { scrollYProgress } = useScroll({
@@ -145,6 +145,6 @@ export const TechnicalArray: React.FC = () => {
 
     </section>
   );
-};
+});
 
 export default TechnicalArray;

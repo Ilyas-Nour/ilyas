@@ -56,7 +56,7 @@ const Screenshot = React.memo(({ src, project, description = "interface showcase
  * Creates a "Section-within-a-Section" horizontal scroll experience for desktop,
  * and a traditional vertical stack for mobile devices.
  */
-const HorizontalProject: React.FC<{ project: any, index: number }> = ({ project, index }) => {
+const HorizontalProject = React.memo(({ project, index }: { project: any, index: number }) => {
   const { t } = useLanguage();
   const targetRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -237,14 +237,14 @@ const HorizontalProject: React.FC<{ project: any, index: number }> = ({ project,
       </div>
     </article>
   );
-};
+});
 
 /**
  * ProjectCatalog Section Component
  * High-performance exhibition of finished works.
  * Uses predictive scroll mapping to drive horizontal motion.
  */
-export const ProjectCatalog: React.FC = () => {
+export const ProjectCatalog = React.memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
 
@@ -325,6 +325,6 @@ export const ProjectCatalog: React.FC = () => {
       </div>
     </section>
   );
-};
+});
 
 export default ProjectCatalog;

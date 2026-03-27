@@ -24,7 +24,7 @@ const Word = ({ children, progress, range, isHighlighted }: { children: string, 
   );
 };
 
-export const KineticBlueprint: React.FC = () => {
+export const KineticBlueprint = React.memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
   const { t } = useLanguage();
@@ -125,7 +125,7 @@ export const KineticBlueprint: React.FC = () => {
       </div>
     </section>
   );
-};
+});
 
 export default KineticBlueprint;
 

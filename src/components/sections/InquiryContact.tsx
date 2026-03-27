@@ -8,7 +8,7 @@ import { useLanguage } from '../../context/LanguageContext';
  * Handles user inquiries via a secure Formspree integration.
  * Includes real-time validation feedback and submission state management.
  */
-export const InquiryContact: React.FC = () => {
+export const InquiryContact = React.memo(() => {
   const { t } = useLanguage();
   // state: 'idle' | 'sending' | 'success' | 'error'
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
@@ -221,6 +221,6 @@ export const InquiryContact: React.FC = () => {
       </div>
     </section>
   );
-};
+});
 
 export default InquiryContact;

@@ -11,7 +11,7 @@ import { useLanguage } from '../../context/LanguageContext';
  * Typography occupies ~80% of width for a monolithic feel.
  * No background layers or slices - pure 3D background.
  */
-export const ModernHero: React.FC<{ warp?: MotionValue<number> | number }> = ({ warp }) => {
+export const ModernHero = React.memo(({ warp }: { warp?: MotionValue<number> | number }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
   const { t } = useLanguage();
@@ -113,6 +113,6 @@ export const ModernHero: React.FC<{ warp?: MotionValue<number> | number }> = ({ 
       </div>
     </section>
   );
-};
+});
 
 export default ModernHero;
