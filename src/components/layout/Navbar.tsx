@@ -125,29 +125,28 @@ export const Navbar: React.FC = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          {/* Brand Identity Block - Performance Optimized Prismatic Refraction */}
-          <a 
-            href="#home" 
-            className="group relative flex items-baseline gap-0 font-serif italic text-2xl md:text-3xl leading-none transition-all duration-700 hover:skew-x-[-4deg] hover:translate-y-[-1px] hover:tracking-[0.1em]"
-            style={{ transitionProperty: 'transform, letter-spacing, text-shadow' }}
-          >
-            <span 
-              className="relative z-10 text-[var(--color-text)] transition-all duration-700 group-hover:text-[var(--color-text)]"
-              style={{ 
-                textShadow: '0 0 0 transparent' 
-              }}
+          {/* Brand Identity Block - Performance Optimized & Layout Stabilized */}
+          <div className="w-[120px] md:w-[160px] flex items-center shrink-0">
+            <a 
+              href="#home" 
+              className="group relative flex items-baseline gap-0 font-serif italic text-2xl md:text-3xl leading-none transition-all duration-300 hover:tracking-[0.08em] hover:skew-x-[-3deg]"
+              style={{ transitionProperty: 'letter-spacing, transform' }}
             >
-              <span className="group-hover:[text-shadow:1px_1px_rgba(255,0,0,0.5),-1px_-1px_rgba(0,255,255,0.5)] transition-all duration-700">
-                Ilyas
+              <span 
+                className="relative z-10 text-[var(--color-text)] transition-all duration-300"
+              >
+                <span className="group-hover:[text-shadow:1px_1px_rgba(255,0,0,0.4),-1px_-1px_rgba(0,255,255,0.4)] transition-all duration-300">
+                  Ilyas
+                </span>
               </span>
-            </span>
-            <span className="text-[var(--color-text)] transition-colors duration-700 group-hover:text-[var(--color-accent)] ml-0.5">
-              .
-            </span>
-            
-            {/* Luminous Underline Pulse */}
-            <div className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-[var(--color-accent)] to-transparent transition-all duration-700 group-hover:w-full opacity-0 group-hover:opacity-100" />
-          </a>
+              <span className="text-[var(--color-text)] transition-colors duration-300 group-hover:text-[var(--color-accent)] ml-0.5">
+                .
+              </span>
+              
+              {/* Luminous Underline Pulse */}
+              <div className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-[var(--color-accent)] to-transparent transition-all duration-300 group-hover:w-full opacity-0 group-hover:opacity-100" />
+            </a>
+          </div>
 
           {/* Navigation Links - Desktop Only */}
           <NavLinks activeTab={activeTab} />
