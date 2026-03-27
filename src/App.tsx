@@ -50,10 +50,13 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
-    // Force scroll to top on refresh with a small frame delay to ensure it catches after hydration
-    requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-    });
+    // Disable browser's automatic scroll restoration to prevent landing on 'About'
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Force scroll to top on refresh
+    window.scrollTo(0, 0);
 
     // Highly-optimized smooth scroll initialization
     const lenis = new Lenis({
@@ -76,9 +79,13 @@ function App() {
 
     requestAnimationFrame(raf);
 
+    // Store lenis for access in cleanup or for direct manipulation
+    (window as any).lenis = lenis;
+
     // Cleanup on unmount for performance
     return () => {
       lenis.destroy();
+      delete (window as any).lenis;
     };
   }, []);
 
@@ -111,6 +118,16 @@ function App() {
  */
 const PortfolioContent = ({ containerRef, loading, setLoading, smoothProgress, warpValue }: any) => {
   const { isVisible, progress } = useScrollProgress();
+  
+  const handleLoaderComplete = () => {
+    setLoading(false);
+    // Force scroll to top specifically when loading finishes
+    window.scrollTo(0, 0);
+    if ((window as any).lenis) {
+      (window as any).lenis.scrollTo(0, { immediate: true });
+    }
+  };
+
   return (
     <main ref={containerRef} className="relative min-h-screen selection:bg-[var(--color-accent)] selection:text-white transition-colors duration-500 bg-[var(--color-bg)]">
       {/* Subtle Grain Texture - Global Overlay for Prismatic Aesthetic */}
@@ -129,7 +146,7 @@ const PortfolioContent = ({ containerRef, loading, setLoading, smoothProgress, w
 
       {/* Shutter Entry Sequence */}
       <AnimatePresence mode="wait">
-        {loading && <IntroLoader onComplete={() => setLoading(false)} />}
+        {loading && <IntroLoader onComplete={handleLoaderComplete} />}
       </AnimatePresence>
 
       {/* "Light" Cinematic Parallax Transition - High Performance Slide */}
