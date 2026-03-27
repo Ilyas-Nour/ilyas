@@ -125,67 +125,21 @@ export const Navbar: React.FC = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          {/* Brand Identity Block - Upgraded with Kinetic Typography & Signature Reveal */}
-          <motion.a 
+          {/* Brand Identity Block - Performance Optimized */}
+          <a 
             href="#home" 
-            className="relative flex items-center group overflow-visible py-2"
-            initial="initial"
-            whileHover="hover"
+            className="group relative flex items-baseline gap-0 font-serif italic text-2xl md:text-3xl leading-none transition-all duration-500 hover:skew-x-[-3deg] hover:translate-y-[-2px]"
           >
-            <div className="relative font-serif italic text-2xl md:text-3xl leading-none flex items-baseline gap-0">
-              {"Ilyas.".split('').map((char, index) => (
-                <motion.span
-                  key={index}
-                  variants={{
-                    initial: { y: 0, opacity: 1 },
-                    hover: { 
-                      y: [-2, 2, -2],
-                      transition: { 
-                        repeat: Infinity, 
-                        duration: 1.5, 
-                        delay: index * 0.1,
-                        ease: "easeInOut"
-                      } 
-                    }
-                  }}
-                  className="inline-block text-[var(--color-text)] relative z-20"
-                >
-                  {char}
-                </motion.span>
-              ))}
-
-              {/* Signature Flourish Reveal */}
-              <motion.span
-                variants={{
-                  initial: { opacity: 0, x: -10, scale: 0.8 },
-                  hover: { opacity: 0.4, x: 5, scale: 1.2 }
-                }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute -right-4 -top-2 font-signature text-3xl text-[var(--color-accent)] pointer-events-none select-none z-10 blur-[1px] group-hover:blur-0 transition-all duration-700"
-              >
-                Ilyas
-              </motion.span>
-            </div>
-
-            {/* Dynamic Underline System */}
-            <motion.div 
-               className="absolute bottom-1 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--color-text)] to-transparent"
-               variants={{
-                 initial: { scaleX: 0, opacity: 0 },
-                 hover: { scaleX: 1, opacity: 0.6 }
-               }}
-               transition={{ duration: 0.5, ease: "circOut" }}
-            />
+            <span className="relative z-10 text-[var(--color-text)] transition-colors duration-500 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[var(--color-text)] group-hover:to-[var(--color-text-muted)]">
+              Ilyas
+            </span>
+            <span className="text-[var(--color-text)] transition-colors duration-500 group-hover:text-[var(--color-accent)]">
+              .
+            </span>
             
-            {/* Prismatic Glow Effect */}
-            <motion.div
-              className="absolute inset-0 bg-[var(--color-accent)] rounded-full blur-2xl opacity-0 -z-10 group-hover:opacity-10"
-              variants={{
-                hover: { scale: [1, 1.5, 1], opacity: 0.1 }
-              }}
-              transition={{ repeat: Infinity, duration: 2 }}
-            />
-          </motion.a>
+            {/* Minimalist Underline Pulse */}
+            <div className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[var(--color-accent)] transition-all duration-500 group-hover:w-full opacity-0 group-hover:opacity-100" />
+          </a>
 
           {/* Navigation Links - Desktop Only */}
           <NavLinks activeTab={activeTab} />
