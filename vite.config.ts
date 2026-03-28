@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import sitemap from 'vite-plugin-sitemap'
-import compression from 'vite-plugin-compression'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
 // https://vite.dev/config/
@@ -13,14 +12,6 @@ export default defineConfig({
     sitemap({
       hostname: 'https://ilyasnour.com',
       dynamicRoutes: ['/en', '/fr', '/es'],
-    }),
-    compression({
-      algorithm: 'brotliCompress',
-      ext: '.br',
-    }),
-    compression({
-      algorithm: 'gzip',
-      ext: '.gz',
     }),
     ViteImageOptimizer({
       png: { quality: 80 },
@@ -36,6 +27,10 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
+        // Enforce clean relative asset and chunk names to prevent absolute path leakage
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
         manualChunks(id) {
           if (id.includes('node_modules')) {
             if (id.includes('three') || id.includes('@react-three')) return 'three-vendor';
