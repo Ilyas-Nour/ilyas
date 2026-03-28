@@ -120,16 +120,12 @@ const PortfolioContent = ({ containerRef, loading, setLoading, smoothProgress, w
   const { isVisible, progress } = useScrollProgress();
   
   const handleLoaderComplete = () => {
-    // Reset scroll BEFORE hiding the loader to ensure content starts at the top
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as any });
+    // Immediate scroll reset before hiding the loader
+    window.scrollTo(0, 0);
     if ((window as any).lenis) {
       (window as any).lenis.scrollTo(0, { immediate: true });
     }
-    
-    // Tiny delay to ensure the scroll command has been processed by the browser
-    setTimeout(() => {
-      setLoading(false);
-    }, 10);
+    setLoading(false);
   };
 
   return (
