@@ -98,11 +98,19 @@
   .font-mono {
     font-family: var(--font-mono);
   }
+
+  /* Masterwork Performance: Virtualize long page layout */
+  section, footer {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1000px; /* Placeholder size for layout stability */
+  }
 }
 
 .glass {
   @apply backdrop-blur-3xl;
   background-color: rgba(var(--color-bg-rgb), 0.05); /* Slightly more opacity for better text separation */
+  contain: paint; /* Isolate backdrop filter for performance */
+  will-change: backdrop-filter;
 }
 
 /* Kinetic Background Gradients */
@@ -136,6 +144,7 @@ section[id] {
   cursor: pointer;
   padding: 4px 8px;
   filter: url(#distort);
+  contain: paint; /* Isolate filter costs */
 }
 
 .prismatic-char {

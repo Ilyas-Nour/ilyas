@@ -133,7 +133,9 @@ const PortfolioContent = ({ containerRef, loading, setLoading, smoothProgress, w
       {/* Subtle Grain Texture - Global Overlay for Prismatic Aesthetic */}
       <div className="fixed inset-0 pointer-events-none z-[999] opacity-[0.015] mix-blend-overlay"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3FfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3FfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          contain: 'strict',
+          willChange: 'opacity'
         }}
       />
 
@@ -184,7 +186,7 @@ const PortfolioContent = ({ containerRef, loading, setLoading, smoothProgress, w
                 viewport={{ margin: "-10%", once: true }}
                 transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 className="relative will-change-transform"
-                style={{ willChange: 'transform, opacity' }}
+                style={{ willChange: 'transform, opacity', contain: 'paint' }}
               >
                 <Component />
               </motion.div>
