@@ -10,13 +10,19 @@ import { useLanguage } from '../../context/LanguageContext';
 const Word = ({ children, progress, range, isHighlighted }: { children: string, progress: MotionValue<number>, range: [number, number], isHighlighted: boolean }) => {
   const baseOpacity = isHighlighted ? 0.3 : 0.15;
   const opacity = useTransform(progress, range, [baseOpacity, 1]);
+  
+  // Consolidate colors - simpler logic for the main thread
   const baseColor = isHighlighted ? "var(--color-accent)" : "var(--color-text-muted)";
-  const color = useTransform(progress, range, [baseColor, isHighlighted ? "var(--color-accent)" : "var(--color-text)"]);
-  const scale = useTransform(progress, range, [0.98, 1]);
+  const targetColor = isHighlighted ? "var(--color-accent)" : "var(--color-text)";
+  const color = useTransform(progress, range, [baseColor, targetColor]);
   
   return (
     <motion.span 
-      style={{ opacity, color, scale }} 
+      style={{ 
+        opacity, 
+        color,
+        willChange: 'opacity, color'
+      }} 
       className={`inline-block mr-[0.25em] transition-colors duration-300 ${isHighlighted ? 'italic font-serif font-normal break-keep' : 'break-words'}`}
     >
       {children}

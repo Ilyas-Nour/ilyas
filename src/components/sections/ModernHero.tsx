@@ -47,13 +47,13 @@ export const ModernHero = React.memo(({ warp }: { warp?: MotionValue<number> | n
           <h1 className="sr-only">Ilyas Nour | Full-Stack Developer & Creative Technologist</h1>
           <div aria-hidden="true" className="relative">
             <motion.div 
-              style={{ y: yIlyas, opacity }}
+              style={{ y: yIlyas, opacity, willChange: 'transform, opacity' }}
               className="text-[clamp(5.5rem,14vw,12vw)] leading-[0.7] font-serif font-bold uppercase tracking-tighter text-[var(--color-text)] mix-blend-difference drop-shadow-[0_10px_30px_rgba(0,0,0,0.3)]"
             >
               Ilyas
             </motion.div>
             <motion.div 
-              style={{ y: yNour, opacity, fontFamily: 'var(--font-signature)' }}
+              style={{ y: yNour, opacity, willChange: 'transform, opacity', fontFamily: 'var(--font-signature)' }}
               className="text-[clamp(7.5rem,20vw,18vw)] leading-[0.7] -mt-[4vw] text-[#E2E8F0] mix-blend-difference drop-shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
             >
               Nour.
