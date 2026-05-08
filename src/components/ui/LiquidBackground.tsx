@@ -23,6 +23,7 @@ const fragmentShader = `
 
   // Faster, indestructible noise for maximum hardware compatibility
   float hash(vec2 p) { return fract(sin(dot(p, vec2(12.7, 31.1))) * 43758.5453123); }
+  // Optimized noise for performance
   float noise(vec2 p) {
       vec2 i = floor(p), f = fract(p);
       float a = hash(i), b = hash(i + vec2(1.0, 0.0)), c = hash(i + vec2(0.0, 1.0)), d = hash(i + vec2(1.0, 1.0));
@@ -36,23 +37,17 @@ const fragmentShader = `
     
     // Smooth interaction distortion
     float dist = distance(st, uMouse);
-    uv += (uv - uMouse) * exp(-dist * 8.0) * 0.1;
+    uv += (uv - uMouse) * exp(-dist * 8.0) * 0.05; // Reduced intensity
 
-    // Layered Noise for "Prismatic Silk" motion (Normalized)
+    // Single layer noise for performance
     float n = noise(uv * (3.0 + uWarp) + uTime * 0.1);
-    n += 0.5 * noise(uv * (6.0 + uWarp * 2.0) - uTime * 0.2);
-    n = n / 1.5; 
     
-    // Vibrant Color Blending (Electric Indigo & Teal)
+    // Vibrant Color Blending
     vec3 color = mix(uColor1, uColor2, n);
     
-    // Controlled Highlights (Shimmer) - Reduced intensity for readability
-    float shimmer = pow(max(0.0, n), 8.0);
-    color += shimmer * vec3(0.7, 0.9, 1.0) * 1.2;
-
-    // Subtle edge glow for depth
-    float edge = 1.0 - length(vUv - 0.5) * 1.5;
-    color *= clamp(edge, 0.6, 1.0);
+    // Subtle edge glow
+    float edge = 1.0 - length(vUv - 0.5) * 1.2;
+    color *= clamp(edge, 0.7, 1.0);
 
     gl_FragColor = vec4(color, uOpacity);
   }
@@ -148,6 +143,13 @@ export const LiquidBackground: React.FC<{ theme: 'light' | 'dark', warp?: Motion
         camera={{ position: [0, 0, 1] }}
         style={{ width: '100%', height: '100%', pointerEvents: 'none' }}
         dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : [1, 2]}
+        performance={{ min: 0.5 }}
+        gl={{ 
+          powerPreference: 'high-performance',
+          antialias: false,
+          stencil: false,
+          depth: false
+        }}
       >
         <ShaderPlane color1={color1} color2={color2} opacity={opacity} warp={warp} isVisible={isVisible} />
       </Canvas>

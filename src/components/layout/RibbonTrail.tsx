@@ -13,6 +13,8 @@ export const RibbonTrail: React.FC = () => {
   const isDarkMode = theme === 'dark';
 
   useEffect(() => {
+    if (window.innerWidth < 768) return; // Completely bypass on mobile
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -32,8 +34,9 @@ export const RibbonTrail: React.FC = () => {
     window.addEventListener('resize', resize);
     resize();
 
-    // Physics constants for the "Stealth Jet Vapor Trail"
-    const numPoints = 20; // Tightened for snappier presence
+    // Physics constants - optimized for performance
+    const isMobile = width < 768;
+    const numPoints = isMobile ? 12 : 20; // Fewer points on mobile
     const points = Array.from({ length: numPoints }, () => ({ x: 0, y: 0 }));
     let mouseX = 0;
     let mouseY = 0;
@@ -88,9 +91,9 @@ export const RibbonTrail: React.FC = () => {
       ctx.lineJoin = 'round';
 
       // Theme-Reactive Colors
-      // Dark Mode: Cobalt (#3b82f6) | Light Mode: Steel Blue (#1e40af)
       const color = isDarkMode ? '#3b82f6' : '#1e40af';
-      ctx.shadowBlur = isDarkMode ? 15 : 0;
+      // Disable shadowBlur on mobile for GPU savings
+      ctx.shadowBlur = !isMobile && isDarkMode ? 15 : 0;
       ctx.shadowColor = color;
 
       for (let i = numPoints - 1; i > 0; i--) {
@@ -125,12 +128,12 @@ export const RibbonTrail: React.FC = () => {
     <>
       <canvas
         ref={canvasRef}
-        className={`fixed inset-0 w-full h-full pointer-events-none z-[9998] opacity-60 ${isDarkMode ? 'mix-blend-screen' : 'mix-blend-multiply'}`}
+        className={`fixed inset-0 w-full h-full pointer-events-none z-[9998] opacity-60 hidden md:block ${isDarkMode ? 'mix-blend-screen' : 'mix-blend-multiply'}`}
       />
       {/* Synchronized Stealth Jet Element */}
       <div 
         ref={jetRef}
-        className={`fixed top-0 left-0 pointer-events-none z-[10000] will-change-transform ${isDarkMode ? 'mix-blend-screen' : 'mix-blend-multiply'}`}
+        className={`fixed top-0 left-0 pointer-events-none z-[10000] will-change-transform hidden md:block ${isDarkMode ? 'mix-blend-screen' : 'mix-blend-multiply'}`}
       >
         <div className={`filter drop-shadow-[0_0_8px_rgba(59,130,246,0.5)] ${isDarkMode ? 'text-[#E2E8F0]' : 'text-[#1e40af]'}`}>
           <svg 

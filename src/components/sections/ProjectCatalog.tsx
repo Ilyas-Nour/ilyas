@@ -35,6 +35,7 @@ const Screenshot = React.memo(({ src, project, description = "interface showcase
             alt={`${project} - ${description}`}
             className="select-none"
             loading="lazy"
+            decoding="async"
           />
         </div>
       </div>
@@ -45,6 +46,7 @@ const Screenshot = React.memo(({ src, project, description = "interface showcase
           src={src} 
           alt={`${project} - ${description} mobile`}
           className="w-full h-auto"
+          decoding="async"
         />
       </div>
     </motion.div>
@@ -191,7 +193,7 @@ const HorizontalProject = React.memo(({ project, index }: { project: any, index:
   return (
     <article ref={targetRef} className="relative h-[400vh] md:h-[500vh]">
       <div className="sticky top-0 flex h-screen overflow-hidden z-30 items-center">
-        <motion.div ref={scrollRef} style={{ x }} className="flex gap-12 md:gap-24 px-6 md:px-24 items-center">
+        <motion.div ref={scrollRef} style={{ x, willChange: 'transform' }} className="flex gap-12 md:gap-24 px-6 md:px-24 items-center">
           {/* Project Identity Card */}
           <div className="flex-shrink-0 w-[85vw] md:w-[60vw] space-y-6 md:space-y-12 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="space-y-4 md:space-y-6">

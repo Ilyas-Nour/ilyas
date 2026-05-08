@@ -83,7 +83,7 @@ export const KineticButton: React.FC<KineticButtonProps> = ({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      style={{ x: mouseXSpring, y: mouseYSpring }}
+      style={{ x: mouseXSpring, y: mouseYSpring, willChange: 'transform' }}
       className={`btn-kinetic ${variant === 'primary' ? 'btn-kinetic-primary' : ''} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
     >
       <span>{children}</span>
