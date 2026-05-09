@@ -255,7 +255,7 @@ export const ProjectCatalog = React.memo(() => {
       title: "Animy",
       description: t('projects.animy.desc'),
       tags: ["NestJS", "Redis", "Socket.io", "PostgreSQL", "Next.js"],
-      link: "https://animy-frontend.vercel.app",
+      link: "https://animy.xyz/",
       github: "https://github.com/Ilyas-Nour/animy-frontend",
       screenshots: [
         "/projects/animy1.png", "/projects/animy2.png", "/projects/animy3.png", 

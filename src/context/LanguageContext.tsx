@@ -52,9 +52,9 @@ const translations: Translations = {
 
   // Project Descriptions
   'projects.animy.desc': {
-    en: 'Animy is a social-first anime and manga discovery platform designed to connect fans through real-time interaction and personalized tracking. It shifts the focus from simple content browsing to building a community around shared interests.',
-    fr: 'Animy est une plateforme sociale de découverte d\'animes et de mangas conçue pour connecter les passionnés grâce à des interactions en temps réel et un suivi personnalisé. Elle met l\'accent sur la création d\'une communauté autour d\'intérêts partagés.',
-    es: 'Animy es una plataforma social de descubrimiento de anime y manga diseñada para conectar a los fans mediante la interacción en tiempo real y el seguimiento personalizado. Centra su atención en construir una comunidad en torno a intereses compartidos.'
+    en: 'Animy is a premier social-first platform for anime streaming and manga reading, designed to connect fans through real-time interaction and seamless tracking. It transforms content consumption into a shared community experience.',
+    fr: 'Animy est une plateforme sociale de premier plan pour le streaming d\'animes et la lecture de mangas, conçue pour connecter les passionnés par des interactions en temps réel. Elle transforme la consommation de contenu en une expérience communautaire partagée.',
+    es: 'Animy es una plataforma social líder para el streaming de anime y la lectura de manga, diseñada para conectar a los fans mediante la interacción en tiempo real. Transforma el consumo de contenido en una experiencia comunitaria compartida.'
   },
   'projects.privaflow.desc': {
     en: 'PrivaFlow is a cutting-edge, privacy-focused productivity suite designed for high-performance file manipulation. Leveraging WebAssembly and local-only AI, it empowers users to process media and transform data entirely within the browser.',
