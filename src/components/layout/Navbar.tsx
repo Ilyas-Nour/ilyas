@@ -154,13 +154,13 @@ export const Navbar: React.FC = () => {
           {/* Action Interface Block */}
           <div className="flex items-center gap-4 md:gap-8">
              {/* Language Switcher Interface - Upgraded with Flags & Dropdown */}
-             <div className="hidden sm:block relative px-3 py-1.5 border border-[var(--color-border)] rounded-sm bg-[var(--color-bg)]/50 backdrop-blur-sm z-50">
+             <div className="hidden sm:block relative z-50">
                 <button 
                   onClick={(e) => {
                     e.stopPropagation();
                     setIsLangOpen(!isLangOpen);
                   }}
-                  className="flex items-center gap-2 group"
+                  className="flex items-center gap-2 px-3 py-1.5 border border-[var(--color-border)] rounded-sm bg-[var(--color-bg)]/50 backdrop-blur-sm group hover:border-[var(--color-text)] transition-colors"
                 >
                   <span className="text-[10px] font-mono font-bold text-[var(--color-text)] uppercase tracking-widest">
                     {language}
@@ -176,14 +176,17 @@ export const Navbar: React.FC = () => {
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute top-full mt-2 left-0 w-full min-w-[100px] border border-[var(--color-border)] bg-[var(--color-bg)] shadow-2xl overflow-hidden rounded-sm"
+                      className="absolute top-full mt-2 right-0 min-w-[120px] border border-[var(--color-border)] bg-[var(--color-bg)] shadow-2xl overflow-hidden rounded-sm z-[10002]"
                     >
                       {(['en', 'fr', 'es'] as Language[]).map((lang) => (
                         <button
                           key={lang}
-                          onClick={() => setLanguage(lang)}
+                          onClick={() => {
+                            setLanguage(lang);
+                            setIsLangOpen(false);
+                          }}
                           className={`w-full flex items-center px-4 py-3 text-left hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] transition-all duration-300 ${
-                            language === lang ? 'bg-[var(--color-text)]/5 opacity-40' : ''
+                            language === lang ? 'bg-[var(--color-text)]/10' : ''
                           }`}
                         >
                           <span className="text-[9px] font-mono font-bold uppercase tracking-[0.2em]">

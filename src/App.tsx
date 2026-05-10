@@ -130,12 +130,12 @@ const PortfolioContent = ({ containerRef, loading, setLoading, smoothProgress, w
 
   return (
     <main ref={containerRef} className="relative min-h-screen selection:bg-[var(--color-accent)] selection:text-white transition-colors duration-500 bg-[var(--color-bg)]">
-      {/* Subtle Grain Texture - Global Overlay for Prismatic Aesthetic */}
-      <div className="fixed inset-0 pointer-events-none z-[999] opacity-[0.015] mix-blend-overlay"
+      {/* Subtle Grain Texture - Global Overlay for Prismatic Aesthetic (Optimized) */}
+      <div className="fixed inset-0 pointer-events-none z-[999] opacity-[0.025] mix-blend-overlay will-change-transform"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3FfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          contain: 'strict',
-          willChange: 'opacity'
+          backgroundImage: `url("https://res.cloudinary.com/dlb7nu7gn/image/upload/v1715000000/noise_z1z1z1.png")`, // Use a lightweight tiled noise image
+          backgroundRepeat: 'repeat',
+          backgroundSize: '100px 100px',
         }}
       />
 
