@@ -100,16 +100,18 @@
   }
 
   /* Masterwork Performance: Virtualize long page layout */
-  section, footer {
+  /* Masterwork Performance: Virtualize long page layout */
+  /* Temporarily removed content-visibility as it causes rendering delays on load */
+  /* section, footer {
     content-visibility: auto;
-    contain-intrinsic-size: 1px 1000px; /* Placeholder size for layout stability */
-  }
+    contain-intrinsic-size: 1px 1000px; 
+  } */
 }
 
 .glass {
   @apply backdrop-blur-3xl;
   background-color: rgba(var(--color-bg-rgb), 0.05); /* Slightly more opacity for better text separation */
-  contain: paint; /* Isolate backdrop filter for performance */
+  /* Removed contain: paint because it acts like overflow: hidden and clips dropdowns */
   will-change: backdrop-filter;
 }
 
