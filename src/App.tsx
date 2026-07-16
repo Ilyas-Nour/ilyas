@@ -5,6 +5,7 @@ import { RibbonTrail } from './components/layout/RibbonTrail';
 import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/layout/Navbar';
 import { IntroLoader } from './components/ui/IntroLoader';
+import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import { useConsoleIdentity } from './hooks/useConsoleIdentity';
 import ModernHero from './components/sections/ModernHero';
 import { ScrollProgressProvider, useScrollProgress } from './context/ScrollProgressContext';
@@ -166,7 +167,7 @@ const PortfolioContent = ({ containerRef, loading, setLoading, smoothProgress, w
       </div>
 
       <div className="relative z-10 w-full overflow-x-clip bg-[var(--color-bg)] transition-colors duration-500 -mt-40">
-          <Suspense fallback={<div className="h-screen flex items-center justify-center opacity-5 font-mono text-[8px] uppercase tracking-widest">Hydrating Identity...</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
           {[
             { id: 'about', Component: KineticBlueprint, animate: true },
             { id: 'skills', Component: TechnicalArray, animate: true },
