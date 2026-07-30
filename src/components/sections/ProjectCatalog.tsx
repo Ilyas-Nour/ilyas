@@ -206,7 +206,7 @@ const HorizontalProject = React.memo(({ project, index }: { project: any, index:
               </p>
               <div className="flex flex-wrap justify-center md:justify-start gap-2 md:gap-3">
                 {project.tags.map((tag: string) => (
-                  <span key={tag} className="px-3 md:px-5 py-1 md:py-2 rounded-full border border-[var(--color-border)] glass font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-[var(--color-text-muted)]">
+                  <span key={tag} className="px-3 md:px-5 py-1 md:py-2 rounded-full border border-[var(--color-border)] glass font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-[var(--color-text)]">
                     {tag}
                   </span>
                 ))}
@@ -248,6 +248,7 @@ const HorizontalProject = React.memo(({ project, index }: { project: any, index:
  */
 export const ProjectCatalog = React.memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const { t } = useLanguage();
 
   const projects = [
@@ -261,8 +262,10 @@ export const ProjectCatalog = React.memo(() => {
         "/projects/animy1.png", "/projects/animy2.png", "/projects/animy3.png", 
         "/projects/animy4.png", "/projects/animy5.png", "/projects/animy6.png",
         "/projects/animy7.png", "/projects/animy8.png", "/projects/animy9.png",
-        "/projects/animy10.png", "/projects/animy11.png", "/projects/animy12.png",
-        "/projects/animy-mobile1.png", "/projects/animy-mobile2.png"
+        "/projects/animy10.png", "/projects/animy11.png",
+        "/projects/animy-mobile1.png", "/projects/animy-mobile2.png",
+        "/projects/animy-mobile3.png", "/projects/animy-mobile4.png",
+        "/projects/animy-mobile5.png"
       ],
     },
     {
@@ -291,16 +294,16 @@ export const ProjectCatalog = React.memo(() => {
   ];
 
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
+    target: headerRef,
+    offset: ["start end", "start start"]
   });
 
-  const xLeft = useTransform(scrollYProgress, [0, 0.3], [-100, 0]);
-  const xRight = useTransform(scrollYProgress, [0, 0.15], [80, 0]);
+  const xLeft = useTransform(scrollYProgress, [0, 1], [-60, 0]);
+  const xRight = useTransform(scrollYProgress, [0, 1], [60, 0]);
 
   return (
     <section id="projects" ref={sectionRef} className="relative min-h-screen flex flex-col justify-start bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-8 md:pt-12">
-      <header className="container mx-auto mb-2 md:mb-4 px-6">
+      <header ref={headerRef} className="container mx-auto mb-2 md:mb-4 px-6 overflow-hidden">
         <div className="relative select-none">
           <h2 className="sr-only">Exploration of Published Projects and Digital Artifacts</h2>
           <div aria-hidden="true">

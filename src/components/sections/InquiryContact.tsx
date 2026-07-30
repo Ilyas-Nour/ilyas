@@ -52,20 +52,21 @@ export const InquiryContact = React.memo(() => {
   };
 
   const sectionRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
+    target: headerRef,
+    offset: ["start end", "start start"]
   });
 
-  const xLeft = useTransform(scrollYProgress, [0, 0.25], [-100, 0]);
-  const xRight = useTransform(scrollYProgress, [0, 0.25], [100, 0]);
+  const xLeft = useTransform(scrollYProgress, [0, 1], [-60, 0]);
+  const xRight = useTransform(scrollYProgress, [0, 1], [60, 0]);
 
   return (
     <section id="contact" ref={sectionRef} className="min-h-screen py-20 md:py-32 flex flex-col justify-center bg-[var(--color-bg)] px-6 relative">
       <div className="container mx-auto">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <header className="mb-12 md:mb-16">
+          <header ref={headerRef} className="mb-12 md:mb-16 overflow-hidden">
             <div className="relative select-none">
               <motion.h2 
                 style={{ x: xLeft }}

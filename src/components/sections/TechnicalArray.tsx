@@ -54,6 +54,7 @@ const MarqueeItem = React.memo(({ skill }: { skill: Skill }) => {
         <Icon 
           className="text-4xl md:text-5xl lg:text-6xl transition-all duration-700 relative z-10"
           style={{ color: skill.color }}
+          title={skill.name}
         />
       </div>
       <div className="flex flex-col">
@@ -93,14 +94,15 @@ const RollingRow = ({ skills, reverse = false }: { skills: Skill[], reverse?: bo
 
 export const TechnicalArray = React.memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
+    target: headerRef,
+    offset: ["start end", "start start"]
   });
 
-  const xLeft = useTransform(scrollYProgress, [0, 0.25], [-100, 0]);
-  const xRight = useTransform(scrollYProgress, [0, 0.25], [100, 0]);
+  const xLeft = useTransform(scrollYProgress, [0, 1], [-60, 0]);
+  const xRight = useTransform(scrollYProgress, [0, 1], [60, 0]);
 
   return (
     <section id="skills" ref={sectionRef} className="min-h-screen py-20 md:py-32 flex flex-col justify-center bg-[var(--color-bg)] transition-colors duration-500 overflow-hidden relative">
@@ -114,7 +116,7 @@ export const TechnicalArray = React.memo(() => {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 mb-12 md:mb-24 relative z-10">
+      <div ref={headerRef} className="container mx-auto px-6 mb-12 md:mb-24 relative z-10 overflow-hidden">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-10 md:mb-20">
           <div className="relative select-none">
             <motion.h2 

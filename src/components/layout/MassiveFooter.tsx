@@ -33,7 +33,7 @@ export const MassiveFooter = React.memo(() => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-24 mb-0">
              {/* Navigation Section (Index) */}
             <div className="space-y-8">
-              <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">{t('footer.index')}</h4>
+              <h3 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">{t('footer.index')}</h3>
               <nav className="flex flex-col gap-3">
                   {[
                     { name: t('nav.home'), id: 'home' },
@@ -61,7 +61,7 @@ export const MassiveFooter = React.memo(() => {
 
             {/* Social Connection Section */}
             <div className="space-y-8">
-              <h4 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">{t('footer.social')}</h4>
+              <h3 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">{t('footer.social')}</h3>
               <div className="flex flex-wrap gap-8">
                 {[
                   { name: 'Github', url: 'https://github.com/Ilyas-Nour' },
