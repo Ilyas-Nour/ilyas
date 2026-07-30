@@ -95,12 +95,12 @@ function App() {
       <LanguageProvider>
         <Helmet>
           <title>Ilyas Nour | Full-Stack Developer & Creative Technologist</title>
-          <meta name="description" content="Official portfolio of Ilyas Nour. High-performance full-stack development meets artistic WebGL precision. Based in Morocco, delivering global digital excellence." />
+          <meta name="description" content="Official portfolio of Ilyas Nour. Full-Stack Web Developer in Morocco specializing in high-performance digital architectures and WebGL." />
           <meta property="og:title" content="Ilyas Nour | Full-Stack Developer & Creative Technologist" />
-          <meta property="og:description" content="Explore the digital archive of Ilyas Nour. Elite React, WebGL, and High-Performance Logic." />
+          <meta property="og:description" content="Official portfolio of Ilyas Nour. Full-Stack Web Developer in Morocco specializing in high-performance digital architectures and WebGL." />
           <meta property="og:url" content="https://ilyasnour.com" />
           <meta name="twitter:title" content="Ilyas Nour | Full-Stack Developer & Creative Technologist" />
-          <meta name="twitter:description" content="Explore the digital archive of Ilyas Nour. Elite React, WebGL, and High-Performance Logic." />
+          <meta name="twitter:description" content="Official portfolio of Ilyas Nour. Full-Stack Web Developer in Morocco specializing in high-performance digital architectures and WebGL." />
         </Helmet>
         <ScrollProgressProvider>
           <Routes>
