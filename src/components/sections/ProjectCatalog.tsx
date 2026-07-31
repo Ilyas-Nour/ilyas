@@ -275,10 +275,11 @@ export const ProjectCatalog = React.memo(() => {
       link: "https://vaultnode.vercel.app",
       github: "https://github.com/Ilyas-Nour/VaultNode",
       screenshots: [
-        "/projects/privaflow_hero.png", "/projects/privaflow1.png", "/projects/privaflow2.png",
-        "/projects/privaflow3.png", "/projects/privaflow4.png", "/projects/privaflow5.png",
-        "/projects/privaflow6.png", "/projects/privaflow7.png", "/projects/privaflow8.png",
-        "/projects/priva-mobile1.png", "/projects/priva-mobile2.png", "/projects/priva-mobile3.png"
+        "/projects/priva1.png", "/projects/priva2.png", "/projects/priva3.png",
+        "/projects/priva4.png", "/projects/priva5.png", "/projects/priva6.png",
+        "/projects/priva7.png", "/projects/priva8.png",
+        "/projects/priva-mobile1 copy.png", "/projects/priva-mobile2 copy.png",
+        "/projects/priva-mobile3 copy.png", "/projects/priva-mobile4.png"
       ],
     },
     {
