@@ -270,3 +270,5 @@ Extra specific contribution on 2026-08-01T12:47:51 : refactor: modularized core 
 
 Extra specific contribution on 2026-08-01T05:16:31 : fix: squashed final bugs for the week
 
+Extra specific contribution on 2026-08-01T11:38:25 : docs: detailed changelog for weekend
+
