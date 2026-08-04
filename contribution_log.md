@@ -8,3 +8,5 @@ Contribution on 2026-08-03T01:08:08 : fix: correct typings in interfaces
 
 Contribution on 2026-08-03T06:48:45 : fix: correct typings in interfaces
 
+Contribution on 2026-08-04T09:21:41 : test: add unit tests for utility functions
+
