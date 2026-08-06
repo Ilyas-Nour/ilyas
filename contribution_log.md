@@ -20,3 +20,5 @@ Contribution on 2026-08-05T08:44:29 : chore: configure linting rules
 
 Contribution on 2026-08-05T08:46:36 : refactor: optimize component rendering
 
+Contribution on 2026-08-06T08:58:38 : feat: add support for multiple languages
+
