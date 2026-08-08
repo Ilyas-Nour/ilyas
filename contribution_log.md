@@ -292,3 +292,5 @@ Extra specific contribution on 2026-08-08T11:46:32 : chore: deep cleaning of leg
 
 Extra specific contribution on 2026-08-08T10:05:17 : fix: squashed final bugs for the week
 
+Extra specific contribution on 2026-08-08T21:22:45 : docs: detailed changelog for weekend
+
