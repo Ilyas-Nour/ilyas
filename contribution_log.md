@@ -296,3 +296,5 @@ Extra specific contribution on 2026-08-08T21:22:45 : docs: detailed changelog fo
 
 Extra specific contribution on 2026-08-08T08:44:08 : chore: deep cleaning of legacy code
 
+Extra specific contribution on 2026-08-08T07:35:33 : refactor: modularized core utilities
+
