@@ -288,3 +288,5 @@ Extra specific contribution on 2026-08-08T19:29:34 : fix: squashed final bugs fo
 
 Extra specific contribution on 2026-08-08T10:42:41 : docs: detailed changelog for weekend
 
+Extra specific contribution on 2026-08-08T11:46:32 : chore: deep cleaning of legacy code
+
