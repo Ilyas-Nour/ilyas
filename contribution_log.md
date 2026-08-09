@@ -232,3 +232,5 @@ Extra contribution on 2026-08-02T11:41:01 : refactor: core components redesign
 
 Extra contribution on 2026-08-02T04:41:22 : feat: major structural update
 
+Extra contribution on 2026-08-09T06:02:44 : docs: massive overhaul of documentation
+
