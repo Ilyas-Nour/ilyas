@@ -30,3 +30,5 @@ Contribution on 2026-08-07T02:52:08 : perf: optimize image loading and caching
 
 Contribution on 2026-08-07T23:10:30 : chore: configure linting rules
 
+Contribution on 2026-08-09T02:22:07 : docs: update readme and project documentation
+
