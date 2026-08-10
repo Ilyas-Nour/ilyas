@@ -36,3 +36,5 @@ Contribution on 2026-08-10T05:11:45 : refactor: optimize component rendering
 
 Contribution on 2026-08-10T05:21:46 : test: add unit tests for utility functions
 
+Contribution on 2026-08-10T05:24:42 : docs: update readme and project documentation
+
