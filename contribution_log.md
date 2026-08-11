@@ -38,3 +38,5 @@ Contribution on 2026-08-10T05:21:46 : test: add unit tests for utility functions
 
 Contribution on 2026-08-10T05:24:42 : docs: update readme and project documentation
 
+Contribution on 2026-08-11T01:31:06 : fix: correct typings in interfaces
+
