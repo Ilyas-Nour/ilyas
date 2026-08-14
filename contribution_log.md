@@ -52,3 +52,5 @@ Contribution on 2026-08-14T05:40:14 : style: improve CSS transitions and animati
 
 Contribution on 2026-08-14T07:41:40 : perf: reduce bundle size
 
+Contribution on 2026-08-14T22:22:40 : style: refine dark mode color palette
+
