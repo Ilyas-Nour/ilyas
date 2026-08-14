@@ -54,3 +54,5 @@ Contribution on 2026-08-14T07:41:40 : perf: reduce bundle size
 
 Contribution on 2026-08-14T22:22:40 : style: refine dark mode color palette
 
+Contribution on 2026-08-14T22:14:07 : fix: correct typings in interfaces
+
