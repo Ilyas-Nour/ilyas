@@ -60,3 +60,5 @@ Contribution on 2026-08-15T10:30:44 : fix: handle edge cases in state management
 
 Contribution on 2026-08-15T00:17:18 : perf: optimize image loading and caching
 
+Contribution on 2026-08-16T10:08:41 : style: refine dark mode color palette
+
