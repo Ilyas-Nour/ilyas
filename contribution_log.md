@@ -72,3 +72,5 @@ Contribution on 2026-08-17T05:46:25 : refactor: extract reusable hooks
 
 Contribution on 2026-08-17T09:36:00 : fix: correct typings in interfaces
 
+Contribution on 2026-08-17T02:28:44 : perf: optimize image loading and caching
+
