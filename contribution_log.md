@@ -74,3 +74,5 @@ Contribution on 2026-08-17T09:36:00 : fix: correct typings in interfaces
 
 Contribution on 2026-08-17T02:28:44 : perf: optimize image loading and caching
 
+Contribution on 2026-08-18T09:43:20 : docs: update readme and project documentation
+
