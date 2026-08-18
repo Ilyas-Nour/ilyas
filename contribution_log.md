@@ -76,3 +76,5 @@ Contribution on 2026-08-17T02:28:44 : perf: optimize image loading and caching
 
 Contribution on 2026-08-18T09:43:20 : docs: update readme and project documentation
 
+Contribution on 2026-08-18T05:43:00 : fix: handle edge cases in state management
+
