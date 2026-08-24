@@ -110,3 +110,5 @@ Contribution on 2026-08-23T11:29:46 : fix: correct typings in interfaces
 
 Contribution on 2026-08-24T10:28:38 : perf: reduce bundle size
 
+Contribution on 2026-08-24T01:07:30 : fix: handle edge cases in state management
+
