@@ -108,3 +108,5 @@ Contribution on 2026-08-23T05:49:46 : perf: optimize image loading and caching
 
 Contribution on 2026-08-23T11:29:46 : fix: correct typings in interfaces
 
+Contribution on 2026-08-24T10:28:38 : perf: reduce bundle size
+
