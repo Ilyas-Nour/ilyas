@@ -128,3 +128,5 @@ Contribution on 2026-08-26T07:13:29 : test: add unit tests for utility functions
 
 Contribution on 2026-08-27T04:35:55 : test: add unit tests for utility functions
 
+Contribution on 2026-08-27T09:59:11 : fix: correct typings in interfaces
+
