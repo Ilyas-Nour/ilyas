@@ -132,3 +132,5 @@ Contribution on 2026-08-27T09:59:11 : fix: correct typings in interfaces
 
 Contribution on 2026-08-28T03:03:10 : refactor: optimize component rendering
 
+Contribution on 2026-08-28T03:51:07 : refactor: extract reusable hooks
+
