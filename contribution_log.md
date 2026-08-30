@@ -148,3 +148,5 @@ Contribution on 2026-08-30T02:02:22 : fix: resolve layout shift on mobile device
 
 Contribution on 2026-08-30T03:46:37 : fix: resolve layout shift on mobile devices
 
+Contribution on 2026-08-30T03:02:40 : feat: add support for multiple languages
+
