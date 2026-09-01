@@ -152,3 +152,5 @@ Contribution on 2026-08-30T03:02:40 : feat: add support for multiple languages
 
 Contribution on 2026-08-31T07:08:44 : fix: resolve layout shift on mobile devices
 
+Contribution on 2026-09-01T02:24:15 : docs: update readme and project documentation
+
