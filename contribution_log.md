@@ -154,3 +154,5 @@ Contribution on 2026-08-31T07:08:44 : fix: resolve layout shift on mobile device
 
 Contribution on 2026-09-01T02:24:15 : docs: update readme and project documentation
 
+Contribution on 2026-09-01T01:36:25 : docs: update readme and project documentation
+
