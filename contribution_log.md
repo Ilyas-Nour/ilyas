@@ -158,3 +158,5 @@ Contribution on 2026-09-01T01:36:25 : docs: update readme and project documentat
 
 Contribution on 2026-09-01T11:56:25 : perf: reduce bundle size
 
+Contribution on 2026-09-02T04:38:18 : fix: handle edge cases in state management
+
