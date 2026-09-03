@@ -168,3 +168,5 @@ Contribution on 2026-09-02T07:19:46 : fix: correct typings in interfaces
 
 Contribution on 2026-09-03T01:27:43 : feat: implement new UI components
 
+Contribution on 2026-09-03T11:47:05 : feat: add support for multiple languages
+
