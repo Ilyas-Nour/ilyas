@@ -172,3 +172,5 @@ Contribution on 2026-09-03T11:47:05 : feat: add support for multiple languages
 
 Contribution on 2026-09-04T09:13:33 : docs: update readme and project documentation
 
+Contribution on 2026-09-03T22:56:38 : fix: correct typings in interfaces
+
