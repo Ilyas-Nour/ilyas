@@ -188,3 +188,5 @@ Contribution on 2026-09-08T11:18:02 : fix: correct typings in interfaces
 
 Contribution on 2026-09-08T10:14:58 : refactor: extract reusable hooks
 
+Contribution on 2026-09-08T04:20:14 : fix: resolve layout shift on mobile devices
+
