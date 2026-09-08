@@ -182,3 +182,5 @@ Contribution on 2026-09-07T08:59:09 : test: add unit tests for utility functions
 
 Contribution on 2026-09-07T06:30:55 : feat: add support for multiple languages
 
+Contribution on 2026-09-08T09:41:40 : fix: correct typings in interfaces
+
