@@ -192,3 +192,5 @@ Contribution on 2026-09-08T04:20:14 : fix: resolve layout shift on mobile device
 
 Contribution on 2026-09-09T07:23:46 : chore: configure linting rules
 
+Contribution on 2026-09-09T00:55:08 : feat: add support for multiple languages
+
