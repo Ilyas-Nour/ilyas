@@ -346,7 +346,7 @@ export const Navbar: React.FC = () => {
         </AnimatePresence>
 
         {/* Scroll Progress Bar for Projects */}
-        <div className="absolute bottom-0 left-0 w-full h-[2px] pointer-events-none overflow-hidden">
+        <div className="hidden md:block absolute bottom-0 left-0 w-full h-[2px] pointer-events-none overflow-hidden">
           <AnimatePresence>
             {isVisible && (
               <motion.div
