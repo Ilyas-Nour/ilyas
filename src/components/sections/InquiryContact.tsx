@@ -62,11 +62,11 @@ export const InquiryContact = React.memo(() => {
   const xRight = useTransform(scrollYProgress, [0, 1], [60, 0]);
 
   return (
-    <section id="contact" ref={sectionRef} className="min-h-screen py-20 md:py-32 flex flex-col justify-center bg-[var(--color-bg)] px-6 relative">
+    <section id="contact" ref={sectionRef} className="min-h-screen py-12 md:py-32 flex flex-col justify-center bg-[var(--color-bg)] px-5 md:px-6 relative">
       <div className="container mx-auto">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <header ref={headerRef} className="mb-12 md:mb-16 overflow-hidden">
+          <header ref={headerRef} className="mb-8 md:mb-16 overflow-hidden">
             <div className="relative select-none">
               <motion.h2 
                 style={{ x: xLeft }}
@@ -83,11 +83,11 @@ export const InquiryContact = React.memo(() => {
             </div>
           </header>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-24">
              {/* Form Interface Layer */}
              <div className="lg:col-span-8">
-                <form onSubmit={handleSubmit} className="space-y-16">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <form onSubmit={handleSubmit} className="space-y-8 md:space-y-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
                         {/* Name Input Block */}
                         <div className="space-y-4">
                            <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold block transition-colors">{t('contact.name_label')}</label>
@@ -97,7 +97,7 @@ export const InquiryContact = React.memo(() => {
                              placeholder={t('contact.name_placeholder')} 
                              value={formData.name}
                              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                             className="w-full bg-transparent border-b border-[var(--color-border)] py-4 text-xl font-serif italic text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors placeholder:text-[var(--color-text-muted)]/30" 
+                             className="w-full bg-transparent border-b border-[var(--color-border)] py-3 md:py-4 text-lg md:text-xl font-serif italic text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors placeholder:text-[var(--color-text-muted)]/30" 
                            />
                         </div>
                         {/* Email Input Block */}
@@ -109,7 +109,7 @@ export const InquiryContact = React.memo(() => {
                              placeholder={t('contact.email_placeholder')} 
                              value={formData.email}
                              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                             className="w-full bg-transparent border-b border-[var(--color-border)] py-4 text-xl font-serif italic text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors placeholder:text-[var(--color-text-muted)]/30" 
+                             className="w-full bg-transparent border-b border-[var(--color-border)] py-3 md:py-4 text-lg md:text-xl font-serif italic text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors placeholder:text-[var(--color-text-muted)]/30" 
                            />
                         </div>
                     </div>
@@ -119,16 +119,16 @@ export const InquiryContact = React.memo(() => {
                        <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold block transition-colors">{t('contact.message_label')}</label>
                        <textarea 
                          required
-                         rows={4} 
+                         rows={3} 
                          placeholder={t('contact.message_placeholder')} 
                          value={formData.message}
                          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                         className="w-full bg-transparent border-b border-[var(--color-border)] py-4 text-xl font-serif italic text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors placeholder:text-[var(--color-text-muted)]/30 resize-none" 
+                         className="w-full bg-transparent border-b border-[var(--color-border)] py-3 md:py-4 text-lg md:text-xl font-serif italic text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors placeholder:text-[var(--color-text-muted)]/30 resize-none" 
                        />
                     </div>
 
                     {/* Action & Feedback Layer */}
-                    <div className="pt-8 flex items-center gap-8">
+                    <div className="pt-4 md:pt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 md:gap-8">
                        <InsaneContactButton 
                          status={status}
                          disabled={status === 'sending' || status === 'success'}
@@ -164,9 +164,9 @@ export const InquiryContact = React.memo(() => {
               </div>
 
               {/* Social Registry Block */}
-              <div className="lg:col-span-4 space-y-12">
-                 <div className="space-y-8">
-                    <div className="flex flex-col gap-8">
+              <div className="lg:col-span-4 space-y-8 md:space-y-12">
+                 <div className="space-y-6 md:space-y-8">
+                    <div className="flex flex-col gap-4 md:gap-8">
                         {[
                           { name: 'GitHub', url: 'https://github.com/Ilyas-Nour', aria: 'Follow Ilyas Nour on GitHub' },
                           { name: 'LinkedIn', url: 'https://linkedin.com/in/ilyas-nour', aria: 'Connect with Ilyas Nour on LinkedIn' },
@@ -180,8 +180,8 @@ export const InquiryContact = React.memo(() => {
                             className="flex justify-between items-center group footer-link"
                             aria-label={node.aria}
                           >
-                             <span className="font-serif italic text-3xl transition-colors">{node.name}</span>
-                             <div className="w-10 h-10 border border-[var(--color-border)] rounded-full flex items-center justify-center group-hover:bg-[var(--color-text)] group-hover:text-[var(--color-bg)] transition-all duration-500">
+                             <span className="font-serif italic text-xl md:text-3xl transition-colors">{node.name}</span>
+                             <div className="w-8 h-8 md:w-10 md:h-10 border border-[var(--color-border)] rounded-full flex items-center justify-center group-hover:bg-[var(--color-text)] group-hover:text-[var(--color-bg)] transition-all duration-500 text-sm md:text-base">
                                 ↗
                              </div>
                           </a>

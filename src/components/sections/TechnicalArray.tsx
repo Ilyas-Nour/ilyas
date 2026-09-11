@@ -43,7 +43,7 @@ const MarqueeItem = React.memo(({ skill }: { skill: Skill }) => {
   return (
     <motion.div 
       whileHover={{ scale: 1.1, zIndex: 10 }}
-      className="flex items-center gap-4 md:gap-6 px-6 md:px-12 py-4 md:py-8 group cursor-pointer transition-all duration-500"
+      className="flex items-center gap-2 md:gap-6 px-4 md:px-12 py-2 md:py-8 group cursor-pointer transition-all duration-500"
     >
       <div className="relative">
         {/* Brand Glow Effect */}
@@ -52,13 +52,13 @@ const MarqueeItem = React.memo(({ skill }: { skill: Skill }) => {
           style={{ backgroundColor: skill.color }}
         />
         <Icon 
-          className="text-4xl md:text-5xl lg:text-6xl transition-all duration-700 relative z-10"
+          className="text-2xl md:text-5xl lg:text-6xl transition-all duration-700 relative z-10"
           style={{ color: skill.color }}
           title={skill.name}
         />
       </div>
       <div className="flex flex-col">
-        <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[var(--color-text)] transition-colors duration-500 group-hover:text-[var(--color-text)]">
+        <h3 className="text-lg md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-[var(--color-text)] transition-colors duration-500 group-hover:text-[var(--color-text)]">
           {skill.name}
         </h3>
       </div>
@@ -69,16 +69,26 @@ const MarqueeItem = React.memo(({ skill }: { skill: Skill }) => {
 const RollingRow = ({ skills, reverse = false }: { skills: Skill[], reverse?: boolean }) => {
   // Triple the skills to ensure seamless looping without gaps
   const items = [...skills, ...skills, ...skills];
+  const [isMobile, setIsMobile] = React.useState(false);
+  
+  React.useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const range = isMobile ? 1200 : 2500;
   
   return (
-    <div className="flex overflow-hidden relative py-4 border-y border-[var(--color-border)]/10 bg-[var(--color-bg)] transition-colors duration-500 selection:bg-transparent">
+    <div className="flex overflow-hidden relative py-2 md:py-4 border-y border-[var(--color-border)]/10 bg-[var(--color-bg)] transition-colors duration-500 selection:bg-transparent">
       <motion.div 
-        animate={{ x: reverse ? [0, -2500] : [-2500, 0] }}
+        animate={{ x: reverse ? [0, -range] : [-range, 0] }}
         transition={{ 
           x: {
             repeat: Infinity,
             repeatType: "loop",
-            duration: 40,
+            duration: isMobile ? 25 : 40,
             ease: "linear"
           }
         }}
@@ -105,7 +115,7 @@ export const TechnicalArray = React.memo(() => {
   const xRight = useTransform(scrollYProgress, [0, 1], [60, 0]);
 
   return (
-    <section id="skills" ref={sectionRef} className="min-h-screen py-20 md:py-32 flex flex-col justify-center bg-[var(--color-bg)] transition-colors duration-500 overflow-hidden relative">
+    <section id="skills" ref={sectionRef} className="py-12 md:py-32 md:min-h-screen flex flex-col justify-center bg-[var(--color-bg)] transition-colors duration-500 overflow-hidden relative">
       
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 overflow-hidden">
         <div className="absolute left-6 top-20 text-[25vw] md:text-[15vw] font-black uppercase tracking-widest leading-none rotate-90 origin-left">
@@ -116,8 +126,8 @@ export const TechnicalArray = React.memo(() => {
         </div>
       </div>
 
-      <div ref={headerRef} className="container mx-auto px-6 mb-12 md:mb-24 relative z-10 overflow-hidden">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-10 md:mb-20">
+      <div ref={headerRef} className="container mx-auto px-5 md:px-6 mb-6 md:mb-24 relative z-10 overflow-hidden">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 mb-6 md:mb-20">
           <div className="relative select-none">
             <motion.h2 
               style={{ x: xLeft }}
@@ -140,7 +150,7 @@ export const TechnicalArray = React.memo(() => {
       </div>
 
       {/* The Kinetic Marquee System */}
-      <div className="space-y-4 relative z-10">
+      <div className="space-y-2 md:space-y-4 relative z-10">
         <RollingRow skills={SHIFT_1} />
         <RollingRow skills={SHIFT_2} reverse />
       </div>

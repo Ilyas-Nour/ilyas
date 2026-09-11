@@ -60,11 +60,12 @@ export const KineticBlueprint = React.memo(() => {
   const warp = useTransform(smoothProgress, [0, 0.5, 1], [0, 2, 0]);
   const bgOpacity = useTransform(smoothProgress, [0, 0.1, 0.9, 1], [0.3, 0.8, 0.8, 0.3]);
 
+
   return (
     <section 
       id="about" 
       ref={containerRef}
-      className="h-[400vh] relative bg-[var(--color-bg)]"
+      className="h-[200vh] md:h-[400vh] relative bg-[var(--color-bg)]"
     >
       {/* Sticky Content Wrapper */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
@@ -83,27 +84,28 @@ export const KineticBlueprint = React.memo(() => {
           />
         </motion.div>
 
-        <div className="container mx-auto px-6 md:px-24 relative z-10 flex flex-col justify-start pt-[20vh] md:pt-[25vh] pb-12 min-h-screen">
-          <div className="max-w-6xl mx-auto w-full flex flex-col gap-[3vh] md:gap-[4vh]">
+        {/* Mobile: Center content vertically. Desktop: keep original top-aligned layout */}
+        <div className="container mx-auto px-5 md:px-24 relative z-10 flex flex-col justify-center md:justify-start md:pt-[25vh] pb-8 md:pb-12 h-full">
+          <div className="max-w-6xl mx-auto w-full flex flex-col gap-[1.5vh] md:gap-[4vh]">
             
-            {/* Restored Old Title Layout - Now in Flow */}
+            {/* Title Layout */}
             <div className="relative select-none">
               <motion.h2 
                 style={{ x: xLeft, opacity: titleOpacity }}
-                className="text-[clamp(3.50rem,15vw,12vh)] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
+                className="text-[clamp(3rem,14vw,12vh)] leading-[0.8] font-heading font-black uppercase tracking-tighter text-[var(--color-text)]"
               >
                 {t('about.title1')}
               </motion.h2>
               <motion.h2 
                 style={{ x: xRight, opacity: titleOpacity, fontFamily: 'var(--font-signature)' }}
-                className="text-[clamp(4.5rem,18vw,14vh)] leading-[0.8] -mt-[2vh] md:-mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
+                className="text-[clamp(3.8rem,16vw,14vh)] leading-[0.8] -mt-[1.5vh] md:-mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
               >
                 {t('about.title2')}
               </motion.h2>
             </div>
 
-            {/* The Raw Narrative Paragraph */}
-            <div className="flex flex-wrap text-[clamp(1.2rem,4.5vw,4.2vh)] font-sans font-medium leading-[1.15] md:leading-[1.3] tracking-tight max-w-full">
+            {/* The Raw Narrative Paragraph — larger on mobile to fill space */}
+            <div className="flex flex-wrap text-[clamp(1.15rem,4.8vw,4.2vh)] md:text-[clamp(1.2rem,4.5vw,4.2vh)] font-sans font-medium leading-[1.35] md:leading-[1.3] tracking-tight max-w-full">
               {words.map((word, i) => {
                 const start = i / words.length;
                 const end = start + (1 / words.length);
@@ -118,13 +120,14 @@ export const KineticBlueprint = React.memo(() => {
                 );
               })}
             </div>
+
           </div>
         </div>
 
       </div>
 
-      {/* Decorative Technical HUD */}
-      <div className="absolute inset-x-0 bottom-10 flex justify-between px-12 md:px-24 opacity-[0.05] font-mono text-[8px] pointer-events-none uppercase tracking-[0.5em] z-20">
+      {/* Decorative Technical HUD — desktop only */}
+      <div className="hidden md:flex absolute inset-x-0 bottom-10 justify-between px-24 opacity-[0.05] font-mono text-[8px] pointer-events-none uppercase tracking-[0.5em] z-20">
          <span>{t('about.hud1')}</span>
          <span>{t('about.hud2')}</span>
          <span>{t('about.hud3')}</span>

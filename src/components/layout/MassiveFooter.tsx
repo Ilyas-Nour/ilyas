@@ -14,7 +14,7 @@ export const MassiveFooter = React.memo(() => {
   const { t } = useLanguage();
   
   return (
-    <footer className="bg-[var(--color-bg)] pt-32 pb-12 px-6 overflow-hidden border-t border-[var(--color-border)] relative transition-colors duration-500">
+    <footer className="bg-[var(--color-bg)] pt-16 md:pt-32 pb-12 px-5 md:px-6 overflow-hidden border-t border-[var(--color-border)] relative transition-colors duration-500">
       <div className="w-full relative">
         {/* Massive Background Signature - Refined to prevent clipping and provide depth */}
         <motion.div
@@ -24,17 +24,17 @@ export const MassiveFooter = React.memo(() => {
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="absolute inset-x-0 -bottom-20 select-none pointer-events-none z-0 flex justify-center w-full px-[5vw]"
         >
-          <h2 className="text-[clamp(12rem,40vw,22vw)] text-center whitespace-nowrap text-[var(--color-text)] opacity-[0.05] leading-none" style={{ fontFamily: 'var(--font-signature)' }}>
+          <h2 className="text-[clamp(6rem,30vw,22vw)] md:text-[clamp(12rem,40vw,22vw)] text-center whitespace-nowrap text-[var(--color-text)] opacity-[0.05] leading-none" style={{ fontFamily: 'var(--font-signature)' }}>
              Ilyas Nour
           </h2>
         </motion.div>
 
         <div className="max-w-screen-2xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-24 mb-0">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-24 mb-0">
              {/* Navigation Section (Index) */}
-            <div className="space-y-8">
+            <div className="space-y-5 md:space-y-8">
               <h3 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">{t('footer.index')}</h3>
-              <nav className="flex flex-col gap-3">
+              <nav className="flex flex-row flex-wrap md:flex-col gap-3 md:gap-3">
                   {[
                     { name: t('nav.home'), id: 'home' },
                     { name: t('nav.about'), id: 'about' },
@@ -47,10 +47,10 @@ export const MassiveFooter = React.memo(() => {
                       className="artistic-nav-link group overflow-hidden"
                     >
                       <div className="artistic-nav-inner relative flex flex-col transition-transform duration-700 ease-[0.16,1,0.3,1] group-hover:-translate-y-1/2">
-                        <span className="text-2xl md:text-3xl font-serif italic text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors duration-500 py-2 md:py-1">
+                        <span className="text-xl md:text-3xl font-serif italic text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors duration-500 py-1">
                           {link.name}
                         </span>
-                        <span className="text-2xl md:text-3xl font-serif italic text-[var(--color-accent)] py-2 md:py-1">
+                        <span className="text-xl md:text-3xl font-serif italic text-[var(--color-accent)] py-1">
                           {link.name}
                         </span>
                       </div>
@@ -60,9 +60,9 @@ export const MassiveFooter = React.memo(() => {
             </div>
 
             {/* Social Connection Section */}
-            <div className="space-y-8">
+            <div className="space-y-5 md:space-y-8">
               <h3 className="text-[10px] font-mono tracking-[0.4em] text-[var(--color-text-muted)] uppercase">{t('footer.social')}</h3>
-              <div className="flex flex-wrap gap-8">
+              <div className="flex flex-wrap gap-4 md:gap-8">
                 {[
                   { name: 'Github', url: 'https://github.com/Ilyas-Nour' },
                   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/ilyasnour/' },
@@ -84,7 +84,7 @@ export const MassiveFooter = React.memo(() => {
             </div>
 
             {/* Studio Credits Section */}
-            <div className="space-y-4 md:text-right flex flex-col justify-end h-full">
+            <div className="space-y-4 text-center md:text-right flex flex-col justify-end h-full">
               <p className="font-mono text-[10px] text-[var(--color-text-muted)] leading-relaxed uppercase tracking-widest">
                 {t('footer.designed')} <br />
                 {t('footer.by')} Ilyas Nour<br />

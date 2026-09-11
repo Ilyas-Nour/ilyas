@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { KineticButton } from '../ui/KineticButton';
 import { ProjectButton } from '../ui/ProjectButton';
 import { useScrollProgress } from '../../context/ScrollProgressContext';
@@ -52,6 +52,196 @@ const Screenshot = React.memo(({ src, project, description = "interface showcase
     </motion.div>
   );
 });
+
+/**
+ * MobileProjectCard Component
+ * Premium card-based project showcase optimized for mobile.
+ * Each project is a self-contained card with an integrated image slider.
+ */
+const MobileProjectCard = React.memo(({ project, index, t }: { project: any, index: number, t: any }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
+  const handleDragEnd = useCallback((_: any, info: { offset: { x: number }, velocity: { x: number } }) => {
+    const threshold = containerWidth * 0.15;
+    const velocity = info.velocity.x;
+    const offset = info.offset.x;
+
+    if (offset < -threshold || velocity < -400) {
+      setCurrentIndex(prev => Math.min(prev + 1, project.screenshots.length - 1));
+    } else if (offset > threshold || velocity > 400) {
+      setCurrentIndex(prev => Math.max(prev - 1, 0));
+    }
+  }, [containerWidth, project.screenshots.length]);
+
+  const goNext = useCallback(() => {
+    setCurrentIndex(prev => Math.min(prev + 1, project.screenshots.length - 1));
+  }, [project.screenshots.length]);
+
+  const goPrev = useCallback(() => {
+    setCurrentIndex(prev => Math.max(prev - 1, 0));
+  }, []);
+
+  const isMobileScreenshot = project.screenshots[currentIndex]?.includes('mobile');
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="relative"
+    >
+      {/* Project Card */}
+      <div className="mx-4 rounded-2xl border border-[var(--color-border)]/20 bg-[var(--color-bg)] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.15)]">
+        
+        {/* Image Slider Area — fixed aspect ratio prevents empty space */}
+        <div 
+          ref={containerRef}
+          className="relative w-full overflow-hidden bg-black/20"
+          style={{ aspectRatio: isMobileScreenshot ? '9/16' : '16/10' }}
+        >
+          <motion.div
+            className="flex h-full"
+            animate={{ x: -currentIndex * containerWidth }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.12}
+            onDragEnd={handleDragEnd}
+            style={{ touchAction: 'pan-y' }}
+          >
+            {project.screenshots.map((src: string, idx: number) => (
+              <div
+                key={idx}
+                className="flex-shrink-0 h-full flex items-center justify-center"
+                style={{ width: containerWidth || '100%' }}
+              >
+                <img
+                  src={src}
+                  alt={`${project.title} - Screenshot ${idx + 1}`}
+                  className="w-full h-full object-cover select-none pointer-events-none"
+                  loading={idx < 2 ? "eager" : "lazy"}
+                  decoding="async"
+                  onLoad={() => idx === 0 && setImgLoaded(true)}
+                />
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Gradient overlay at bottom for depth */}
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[var(--color-bg)] to-transparent pointer-events-none" />
+
+          {/* Navigation arrows — thumb accessible */}
+          {currentIndex > 0 && (
+            <button 
+              onClick={goPrev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white/80 active:scale-90 transition-transform z-10"
+              aria-label="Previous screenshot"
+            >
+              ‹
+            </button>
+          )}
+          {currentIndex < project.screenshots.length - 1 && (
+            <button 
+              onClick={goNext}
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white/80 active:scale-90 transition-transform z-10"
+              aria-label="Next screenshot"
+            >
+              ›
+            </button>
+          )}
+
+          {/* Slide counter badge */}
+          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-sm z-10">
+            <span className="font-mono text-[9px] text-white/80 tracking-wider">
+              {currentIndex + 1} / {project.screenshots.length}
+            </span>
+          </div>
+        </div>
+
+        {/* Dot indicators — compact, scrollable for many slides */}
+        <div className="flex items-center justify-center gap-1 py-3 px-4 overflow-x-auto">
+          {project.screenshots.map((_: string, idx: number) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              className={`flex-shrink-0 rounded-full transition-all duration-300 ${
+                idx === currentIndex
+                  ? 'w-5 h-1.5 bg-[var(--color-text)]'
+                  : 'w-1.5 h-1.5 bg-[var(--color-text)]/15'
+              }`}
+              aria-label={`Go to screenshot ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Project Info */}
+        <div className="px-5 pb-6 space-y-4">
+          {/* Title & Index */}
+          <div className="flex items-end justify-between gap-2">
+            <h3 className="text-[clamp(1.8rem,8vw,3rem)] font-display italic text-[var(--color-text)] leading-[0.9] tracking-tight" style={{ fontWeight: 400 }}>
+              {project.title}
+            </h3>
+            <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[var(--color-text-muted)] opacity-40 pb-1 flex-shrink-0">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+          </div>
+          
+          {/* Description */}
+          <p className="text-[13px] text-[var(--color-text-muted)] font-sans font-light leading-[1.6]">
+            {project.description}
+          </p>
+
+          {/* Tags — inline flow */}
+          <div className="flex flex-wrap gap-1.5">
+            {project.tags.map((tag: string) => (
+              <span key={tag} className="px-2.5 py-1 bg-[var(--color-text)]/5 border border-[var(--color-border)]/15 text-[8px] font-mono uppercase tracking-[0.15em] text-[var(--color-text-muted)] rounded-md">
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Action Buttons — full width for thumb targets */}
+          <div className="flex gap-2.5 pt-1">
+            {project.link && (
+              <button
+                onClick={() => window.open(project.link, '_blank')}
+                className="flex-1 h-11 rounded-lg bg-[var(--color-text)] text-[var(--color-bg)] flex items-center justify-center gap-2 active:scale-[0.97] transition-transform"
+              >
+                <span className="text-[10px] font-heading font-black uppercase tracking-[0.2em]">Visit Site</span>
+                <span className="text-xs">↗</span>
+              </button>
+            )}
+            {project.github && (
+              <button
+                onClick={() => window.open(project.github, '_blank')}
+                className={`${project.link ? 'flex-1' : 'flex-1'} h-11 rounded-lg border border-[var(--color-border)] text-[var(--color-text)] flex items-center justify-center gap-2 active:scale-[0.97] transition-transform`}
+              >
+                <span className="text-[10px] font-heading font-black uppercase tracking-[0.2em]">Source</span>
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </motion.article>
+  );
+});
+
 
 /**
  * HorizontalProject Component
@@ -141,53 +331,10 @@ const HorizontalProject = React.memo(({ project, index }: { project: any, index:
 
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `calc(-${scrollRange}px)`]);
 
-  // Mobile Fragment - UX optimized for vertical touch interaction
-    // Mobile-First Layout (Vertical Stack with Optimized Media)
-    if (isMobileViewport) {
-      return (
-        <article className="px-6 py-24 space-y-16 flex flex-col items-center text-center">
-          <div className="space-y-8 max-w-lg">
-             <div className="space-y-4">
-                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[var(--color-accent)] opacity-60">
-                  {t('projects.artifact')} // {String(index + 1).padStart(2, '0')}
-                </span>
-                <h3 className="text-[clamp(2.8rem,14vw,6rem)] font-display italic text-[var(--color-text)] leading-[0.9] tracking-tight" style={{ fontWeight: 400 }}>{project.title}</h3>
-             </div>
-             
-             <p className="text-base text-[var(--color-text-muted)] font-sans font-light leading-relaxed px-4">
-               {project.description}
-             </p>
-
-             {/* Dynamic Tag Matrix */}
-             <div className="flex flex-wrap justify-center gap-2 px-2">
-                {project.tags.map((tag: string) => (
-                  <span key={tag} className="px-3 py-1 bg-[var(--color-text)]/5 border border-[var(--color-border)]/10 text-[9px] font-mono uppercase tracking-widest text-[var(--color-text)] rounded-full">
-                    {tag}
-                  </span>
-                ))}
-             </div>
-
-             <div className="flex flex-wrap justify-center gap-4 pt-4">
-               {project.link && <ProjectButton link={project.link} title={project.title} />}
-               {project.github && <ProjectButton link={project.github} title={project.title} isSource />}
-             </div>
-          </div>
-
-          {/* Primary Visual Showcase (Mobile Optimized) */}
-          <div className="w-full space-y-6">
-             <div className="relative group">
-                <Screenshot src={project.screenshots[0]} project={project.title} description="Mobile Dashboard" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-transparent to-transparent opacity-40" />
-             </div>
-             {project.screenshots[1] && (
-               <div className="px-8 scale-[0.95] opacity-80">
-                  <Screenshot src={project.screenshots[1]} project={project.title} description="Sub-interface View" />
-               </div>
-             )}
-          </div>
-        </article>
-      );
-    }
+  // Mobile-First: Premium Card Layout
+  if (isMobileViewport) {
+    return <MobileProjectCard project={project} index={index} t={t} />;
+  }
 
   // Desktop Component - Experience-driven horizontal gallery
   return (
@@ -249,7 +396,15 @@ const HorizontalProject = React.memo(({ project, index }: { project: any, index:
 export const ProjectCatalog = React.memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const { t } = useLanguage();
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobileViewport(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const projects = [
     {
@@ -304,7 +459,7 @@ export const ProjectCatalog = React.memo(() => {
 
   return (
     <section id="projects" ref={sectionRef} className="relative min-h-screen flex flex-col justify-start bg-[var(--color-bg)] border-t border-[var(--color-border)] pt-8 md:pt-12">
-      <header ref={headerRef} className="container mx-auto mb-2 md:mb-4 px-6 overflow-hidden">
+      <header ref={headerRef} className="container mx-auto mb-2 md:mb-4 px-5 md:px-6 overflow-hidden">
         <div className="relative select-none">
           <h2 className="sr-only">Exploration of Published Projects and Digital Artifacts</h2>
           <div aria-hidden="true">
@@ -324,7 +479,8 @@ export const ProjectCatalog = React.memo(() => {
         </div>
       </header>
 
-      <div className="relative">
+      {/* Mobile: vertical card stack with spacing. Desktop: horizontal scroll sections */}
+      <div className={`relative ${isMobileViewport ? 'flex flex-col gap-6 pb-8 pt-4' : ''}`}>
         {projects.map((project, i) => (
           <HorizontalProject key={project.title} project={project} index={i} />
         ))}

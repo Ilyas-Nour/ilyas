@@ -102,7 +102,7 @@ export const InsaneContactButton: React.FC<InsaneContactButtonProps> = ({
         rotateY,
         perspective: 1000
       }}
-      className={`relative px-12 py-5 bg-[var(--color-text)] text-[var(--color-bg)] font-mono text-[11px] uppercase tracking-[0.3em] overflow-hidden group transition-all duration-300 ${disabled ? 'opacity-50 grayscale' : 'hover:scale-105 active:scale-95'}`}
+      className={`relative px-6 py-3.5 md:px-12 md:py-5 bg-[var(--color-text)] text-[var(--color-bg)] font-mono text-[9px] md:text-[11px] uppercase tracking-[0.15em] md:tracking-[0.3em] overflow-hidden group transition-all duration-300 ${disabled ? 'opacity-50 grayscale' : 'hover:scale-105 active:scale-95'}`}
     >
       {/* Prismatic Glow Layer */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"

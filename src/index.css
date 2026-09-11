@@ -126,7 +126,7 @@
 }
 
 .section-padding {
-  @apply py-24 md:py-40 px-6 md:px-12 lg:px-24;
+  @apply py-16 md:py-40 px-5 md:px-12 lg:px-24;
 }
 
 /* Cinematic Anchor Centering */
@@ -356,7 +356,7 @@ section[id] {
 
 /* Artistic Footer Navigation */
 .artistic-nav-link {
-  @apply relative block w-fit h-[40px] overflow-hidden;
+  @apply relative block w-fit h-[32px] md:h-[40px] overflow-hidden;
 }
 
 .artistic-nav-inner {
