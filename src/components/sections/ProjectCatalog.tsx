@@ -60,42 +60,27 @@ const Screenshot = React.memo(({ src, project, description = "interface showcase
  */
 const MobileProjectCard = React.memo(({ project, index, t }: { project: any, index: number, t: any }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [containerWidth, setContainerWidth] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [imgLoaded, setImgLoaded] = useState(false);
-
-  useEffect(() => {
-    const updateWidth = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth);
-      }
-    };
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
-  }, []);
-
-  const handleDragEnd = useCallback((_: any, info: { offset: { x: number }, velocity: { x: number } }) => {
-    const threshold = containerWidth * 0.15;
-    const velocity = info.velocity.x;
-    const offset = info.offset.x;
-
-    if (offset < -threshold || velocity < -400) {
-      setCurrentIndex(prev => Math.min(prev + 1, project.screenshots.length - 1));
-    } else if (offset > threshold || velocity > 400) {
-      setCurrentIndex(prev => Math.max(prev - 1, 0));
-    }
-  }, [containerWidth, project.screenshots.length]);
-
-  const goNext = useCallback(() => {
-    setCurrentIndex(prev => Math.min(prev + 1, project.screenshots.length - 1));
-  }, [project.screenshots.length]);
-
-  const goPrev = useCallback(() => {
-    setCurrentIndex(prev => Math.max(prev - 1, 0));
-  }, []);
-
+  const sliderRef = useRef<HTMLDivElement>(null);
   const isMobileScreenshot = project.screenshots[currentIndex]?.includes('mobile');
+
+  // Sync dot indicator with native scroll position
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    const onScroll = () => {
+      const idx = Math.round(slider.scrollLeft / slider.offsetWidth);
+      setCurrentIndex(idx);
+    };
+    slider.addEventListener('scroll', onScroll, { passive: true });
+    return () => slider.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const goTo = useCallback((idx: number) => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    slider.scrollTo({ left: idx * slider.offsetWidth, behavior: 'smooth' });
+    setCurrentIndex(idx);
+  }, []);
 
   return (
     <motion.article
@@ -108,28 +93,22 @@ const MobileProjectCard = React.memo(({ project, index, t }: { project: any, ind
       {/* Project Card */}
       <div className="mx-4 rounded-2xl border border-[var(--color-border)]/20 bg-[var(--color-bg)] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.15)]">
         
-        {/* Image Slider Area — fixed aspect ratio prevents empty space */}
-        <div 
-          ref={containerRef}
-          className="relative w-full overflow-hidden bg-black/20"
-          style={{ aspectRatio: isMobileScreenshot ? '9/16' : '16/10', touchAction: 'pan-y' }}
-        >
-          <motion.div
-            className="flex h-full"
-            animate={{ x: -currentIndex * containerWidth }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.12}
-            dragDirectionLock
-            onDragEnd={handleDragEnd}
-            style={{ touchAction: 'pan-y' }}
+        {/* Image Slider Area — native CSS scroll snap, zero JS touch interception */}
+        <div className="relative w-full bg-black/20" style={{ aspectRatio: isMobileScreenshot ? '9/16' : '16/10' }}>
+          {/* Native scroll container — browser handles touch separation natively */}
+          <div
+            ref={sliderRef}
+            className="absolute inset-0 flex overflow-x-auto snap-x snap-mandatory"
+            style={{
+              scrollbarWidth: 'none',
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'pan-x',  // tells browser: horizontal only for THIS element
+            }}
           >
             {project.screenshots.map((src: string, idx: number) => (
               <div
                 key={idx}
-                className="flex-shrink-0 h-full flex items-center justify-center"
-                style={{ width: containerWidth || '100%' }}
+                className="flex-shrink-0 w-full h-full snap-center flex items-center justify-center"
               >
                 <img
                   src={src}
@@ -137,20 +116,19 @@ const MobileProjectCard = React.memo(({ project, index, t }: { project: any, ind
                   className="w-full h-full object-cover select-none pointer-events-none"
                   loading={idx < 2 ? "eager" : "lazy"}
                   decoding="async"
-                  onLoad={() => idx === 0 && setImgLoaded(true)}
                 />
               </div>
             ))}
-          </motion.div>
+          </div>
 
           {/* Gradient overlay at bottom for depth */}
-          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[var(--color-bg)] to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[var(--color-bg)] to-transparent pointer-events-none z-10" />
 
           {/* Navigation arrows — thumb accessible */}
           {currentIndex > 0 && (
             <button 
-              onClick={goPrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white/80 active:scale-90 transition-transform z-10"
+              onClick={() => goTo(currentIndex - 1)}
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white/80 active:scale-90 transition-transform z-20"
               aria-label="Previous screenshot"
             >
               ‹
@@ -158,8 +136,8 @@ const MobileProjectCard = React.memo(({ project, index, t }: { project: any, ind
           )}
           {currentIndex < project.screenshots.length - 1 && (
             <button 
-              onClick={goNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white/80 active:scale-90 transition-transform z-10"
+              onClick={() => goTo(currentIndex + 1)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white/80 active:scale-90 transition-transform z-20"
               aria-label="Next screenshot"
             >
               ›
@@ -167,7 +145,7 @@ const MobileProjectCard = React.memo(({ project, index, t }: { project: any, ind
           )}
 
           {/* Slide counter badge */}
-          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-sm z-10">
+          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-sm z-20">
             <span className="font-mono text-[9px] text-white/80 tracking-wider">
               {currentIndex + 1} / {project.screenshots.length}
             </span>
@@ -175,11 +153,11 @@ const MobileProjectCard = React.memo(({ project, index, t }: { project: any, ind
         </div>
 
         {/* Dot indicators — compact, scrollable for many slides */}
-        <div className="flex items-center justify-center gap-1 py-3 px-4 overflow-x-auto">
+        <div className="flex items-center justify-center gap-1 py-3 px-4 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
           {project.screenshots.map((_: string, idx: number) => (
             <button
               key={idx}
-              onClick={() => setCurrentIndex(idx)}
+              onClick={() => goTo(idx)}
               className={`flex-shrink-0 rounded-full transition-all duration-300 ${
                 idx === currentIndex
                   ? 'w-5 h-1.5 bg-[var(--color-text)]'
@@ -233,7 +211,7 @@ const MobileProjectCard = React.memo(({ project, index, t }: { project: any, ind
                 className={`${project.link ? 'flex-1' : 'flex-1'} h-11 rounded-lg border border-[var(--color-border)] text-[var(--color-text)] flex items-center justify-center gap-2 active:scale-[0.97] transition-transform`}
               >
                 <span className="text-[10px] font-heading font-black uppercase tracking-[0.2em]">Source</span>
-                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               </button>
             )}
           </div>

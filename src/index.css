@@ -108,17 +108,16 @@
   } */
 }
 
-/* Touch scroll optimizations — prevent Lenis/Framer fighting with native gestures on mobile */
+/* Touch scroll optimizations — prevent JS fighting with native gestures on mobile */
 @media (hover: none) and (pointer: coarse) {
   html, body {
-    /* Prevent rubber-band fighting between page overscroll and scroll components */
-    overscroll-behavior-y: none;
+    /* Allow natural rubber-band / momentum on iOS — don't block it */
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Ensure vertical page scroll is never blocked by child elements */
+  /* The main page scrolls vertically — ensure nothing blocks it */
   main, section {
-    touch-action: pan-y;
+    touch-action: pan-y pinch-zoom;
   }
 }
 
