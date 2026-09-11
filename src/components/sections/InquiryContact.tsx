@@ -66,7 +66,7 @@ export const InquiryContact = React.memo(() => {
       <div className="container mx-auto">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <header ref={headerRef} className="mb-8 md:mb-16 overflow-hidden">
+          <header ref={headerRef} className="mb-8 md:mb-16 overflow-hidden -ml-2 pl-2 md:-ml-4 md:pl-4 py-2 -my-2">
             <div className="relative select-none">
               <motion.h2 
                 style={{ x: xLeft }}

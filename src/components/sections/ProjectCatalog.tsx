@@ -414,13 +414,13 @@ export const ProjectCatalog = React.memo(() => {
       link: "https://animy.xyz/",
       github: "https://github.com/Ilyas-Nour/animy-frontend",
       screenshots: [
-        "/projects/animy1.png", "/projects/animy2.png", "/projects/animy3.png", 
-        "/projects/animy4.png", "/projects/animy5.png", "/projects/animy6.png",
-        "/projects/animy7.png", "/projects/animy8.png", "/projects/animy9.png",
-        "/projects/animy10.png", "/projects/animy11.png",
-        "/projects/animy-mobile1.png", "/projects/animy-mobile2.png",
-        "/projects/animy-mobile3.png", "/projects/animy-mobile4.png",
-        "/projects/animy-mobile5.png"
+        "/projects/animy1.webp", "/projects/animy2.webp", "/projects/animy3.webp", 
+        "/projects/animy4.webp", "/projects/animy5.webp", "/projects/animy6.webp",
+        "/projects/animy7.webp", "/projects/animy8.webp", "/projects/animy9.webp",
+        "/projects/animy10.webp", "/projects/animy11.webp",
+        "/projects/animy-mobile1.webp", "/projects/animy-mobile2.webp",
+        "/projects/animy-mobile3.webp", "/projects/animy-mobile4.webp",
+        "/projects/animy-mobile5.webp"
       ],
     },
     {
@@ -430,11 +430,11 @@ export const ProjectCatalog = React.memo(() => {
       link: "https://vaultnode.vercel.app",
       github: "https://github.com/Ilyas-Nour/VaultNode",
       screenshots: [
-        "/projects/priva1.png", "/projects/priva2.png", "/projects/priva3.png",
-        "/projects/priva4.png", "/projects/priva5.png", "/projects/priva6.png",
-        "/projects/priva7.png", "/projects/priva8.png",
-        "/projects/priva-mobile1 copy.png", "/projects/priva-mobile2 copy.png",
-        "/projects/priva-mobile3 copy.png", "/projects/priva-mobile4.png"
+        "/projects/priva1.webp", "/projects/priva2.webp", "/projects/priva3.webp",
+        "/projects/priva4.webp", "/projects/priva5.webp", "/projects/priva6.webp",
+        "/projects/priva7.webp", "/projects/priva8.webp",
+        "/projects/priva-mobile1 copy.webp", "/projects/priva-mobile2 copy.webp",
+        "/projects/priva-mobile3 copy.webp", "/projects/priva-mobile4.webp"
       ],
     },
     {
@@ -443,8 +443,8 @@ export const ProjectCatalog = React.memo(() => {
       tags: ["Next.js 16", "React 19", "E-commerce", "Stripe", "Prisma"],
       github: "https://github.com/Ilyas-Nour/TopNature",
       screenshots: [
-        "/projects/topnature1.png", "/projects/topnature2.png", 
-        "/projects/topnature3.png", "/projects/topnature4.png"
+        "/projects/topnature1.webp", "/projects/topnature2.webp", 
+        "/projects/topnature3.webp", "/projects/topnature4.webp"
       ],
     }
   ];

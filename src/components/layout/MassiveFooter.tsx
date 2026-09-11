@@ -22,9 +22,9 @@ export const MassiveFooter = React.memo(() => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="absolute inset-x-0 -bottom-20 select-none pointer-events-none z-0 flex justify-center w-full px-[5vw]"
+          className="absolute inset-x-0 bottom-0 select-none pointer-events-none z-0 flex justify-center w-full px-4"
         >
-          <h2 className="text-[clamp(6rem,30vw,22vw)] md:text-[clamp(12rem,40vw,22vw)] text-center whitespace-nowrap text-[var(--color-text)] opacity-[0.05] leading-none" style={{ fontFamily: 'var(--font-signature)' }}>
+          <h2 className="text-[clamp(4rem,23vw,14rem)] md:text-[clamp(7rem,28vw,18rem)] text-center whitespace-nowrap text-[var(--color-text)] opacity-10 leading-none pb-4" style={{ fontFamily: 'var(--font-signature)' }}>
              Ilyas Nour
           </h2>
         </motion.div>
