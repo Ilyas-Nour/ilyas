@@ -59,32 +59,39 @@ function App() {
     // Force scroll to top on refresh
     window.scrollTo(0, 0);
 
-    // Highly-optimized smooth scroll initialization
+    // On touch devices, native scroll is buttery smooth and conflict-free.
+    // Lenis intercepts touch events and fights with native momentum, causing
+    // jank, jumps, and wrong-position snapping. Skip it on mobile.
+    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    if (isTouchDevice) return;
+
+    // Desktop-only smooth scroll
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.1,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 2,
       infinite: false,
     });
 
     // RAF loop for Lenis
+    let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
-      ScrollTrigger.update(); // CRITICAL: Keep ScrollTrigger in sync for Blueprint zoom
-      requestAnimationFrame(raf);
+      ScrollTrigger.update();
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     // Store lenis for access in cleanup or for direct manipulation
     (window as any).lenis = lenis;
 
     // Cleanup on unmount for performance
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
       delete (window as any).lenis;
     };

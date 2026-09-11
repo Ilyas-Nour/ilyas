@@ -108,6 +108,21 @@
   } */
 }
 
+/* Touch scroll optimizations — prevent Lenis/Framer fighting with native gestures on mobile */
+@media (hover: none) and (pointer: coarse) {
+  html, body {
+    /* Prevent rubber-band fighting between page overscroll and scroll components */
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure vertical page scroll is never blocked by child elements */
+  main, section {
+    touch-action: pan-y;
+  }
+}
+
+
 .glass {
   @apply backdrop-blur-3xl;
   background-color: rgba(var(--color-bg-rgb), 0.05); /* Slightly more opacity for better text separation */

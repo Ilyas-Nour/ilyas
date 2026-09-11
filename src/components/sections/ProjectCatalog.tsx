@@ -112,7 +112,7 @@ const MobileProjectCard = React.memo(({ project, index, t }: { project: any, ind
         <div 
           ref={containerRef}
           className="relative w-full overflow-hidden bg-black/20"
-          style={{ aspectRatio: isMobileScreenshot ? '9/16' : '16/10' }}
+          style={{ aspectRatio: isMobileScreenshot ? '9/16' : '16/10', touchAction: 'pan-y' }}
         >
           <motion.div
             className="flex h-full"
@@ -121,6 +121,7 @@ const MobileProjectCard = React.memo(({ project, index, t }: { project: any, ind
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.12}
+            dragDirectionLock
             onDragEnd={handleDragEnd}
             style={{ touchAction: 'pan-y' }}
           >

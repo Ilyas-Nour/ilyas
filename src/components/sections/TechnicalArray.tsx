@@ -131,13 +131,13 @@ export const TechnicalArray = React.memo(() => {
           <div className="relative select-none">
             <motion.h2 
               style={{ x: xLeft }}
-              className="text-[clamp(3.5rem,15vw,12vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
+              className="text-[clamp(2.5rem,11vw,12vh)] md:text-[clamp(3.5rem,15vw,12vh)] font-heading font-black uppercase tracking-tighter text-[var(--color-text)] leading-[0.8]"
             >
               {t('skills.title1')}
             </motion.h2>
             <motion.h2 
               style={{ x: xRight, fontFamily: 'var(--font-signature)' }}
-              className="text-[clamp(4.5rem,18vw,14vh)] leading-[0.8] -mt-[2vh] md:-mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
+              className="text-[clamp(3rem,14vw,14vh)] md:text-[clamp(4.5rem,18vw,14vh)] leading-[0.8] -mt-[1vh] md:-mt-[3vh] font-normal text-[var(--color-text)] opacity-80"
             >
               {t('skills.title2')}
             </motion.h2>
